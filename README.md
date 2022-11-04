@@ -1,15 +1,15 @@
 <h1>ALBERO DEL REPOSITORY</h1>
-<t>
-├── LFT-Es<br>
-│   └── filevuoto.txt<br>
-├── LFT-Prog<br>
-│   └── filevuoto.txt<br>
-├── README.md<br>
-├── SO-Es<br>
-│   ├── es1.c<br>
-│   └── file.txt<br>
-└── SO-Prog<br>
-    └── filevuoto.txt<br>
-<br>
-4 directories, 6 files<br>
-</t>
+<pre>
+├── LFT-Es
+│   └── filevuoto.txt
+├── LFT-Prog
+│   └── filevuoto.txt
+├── README.md
+├── SO-Es
+│   ├── es1.c
+│   └── file.txt
+└── SO-Prog
+    └── filevuoto.txt
+
+4 directories, 6 files
+</pre>
