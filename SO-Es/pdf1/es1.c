@@ -37,10 +37,10 @@ int main() {
     int n_elementi;
     char **lista;
 
-    f1 = fopen("file.txt", "r");
+    f1 = fopen("file1.txt", "r");
     n_elementi = conta(f1);
 
-    lista = leggi_lista(fopen("file.txt", "r"), &n_elementi);
+    lista = leggi_lista(fopen("file1.txt", "r"), &n_elementi);
     stampa_lista(lista, n_elementi);
-    exit(0);
+    exit(1);
 }
