@@ -40,7 +40,8 @@ int main() {
     f1 = fopen("file1.txt", "r");
     n_elementi = conta(f1);
 
-    lista = leggi_lista(fopen("file1.txt", "r"), &n_elementi);
+    fseek(f1, 0, 0); //fseek(variabile, offset, partenza)
+    lista = leggi_lista(f1, &n_elementi);
     stampa_lista(lista, n_elementi);
     exit(1);
 }
