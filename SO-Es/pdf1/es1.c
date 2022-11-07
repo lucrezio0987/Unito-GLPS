@@ -42,5 +42,5 @@ int main() {
 
     lista = leggi_lista(fopen("file.txt", "r"), &n_elementi);
     stampa_lista(lista, n_elementi);
-    exit(0);
+    exit(1);
 }
