@@ -2,46 +2,49 @@
 #include <stdlib.h>
 #include <string.h>
 
-char ** leggi_lista(FILE* file_in, int* nof_elements) {
-    char **lista = malloc(sizeof(char*)*(*nof_elements));
-    char temp[30];
+#define BUFSIZE 128
+char ** leggi_lista(FILE *file_in, int *nof_elements) {
+    char buf[BUFSIZE];
+    int nof_rows = 0, i = 0;
+    char ** new_array = NULL;
+    //conto quanti elementi sono presenti in lista nome
+   
+    while(fgets(buf, BUFSIZE, file_in)) 
+        nof_rows++;
+    //al termine del ciclo nof_rows contiene il numero di righe lette
+    *nof_elements = nof_rows;
+    //riposiziono il ptr a inizio file
+    rewind(file_in);
 
-    for (int i = 0; i < (*nof_elements); ++i) {
-        fgets(temp, 30, file_in);
-        if (temp[0] != '\r') {
-            lista[i] =  malloc(sizeof(char)*(strlen(temp)));
-            strcpy(lista[i], temp);
-        } else --i;
+    if((new_array = malloc(sizeof(char*)*nof_rows)) == NULL) {
+        fprintf(stderr, "malloc error; terminating\n");
+        exit(1);
     }
-    return lista;
+
+    while(fgets(buf, BUFSIZE, file_in)) 
+        new_array[i++] = strdup(buf);
+    
+    return new_array;
 }
 
-void stampa_lista(char** mio_ar, int n_elems) {
-    for (int i = 0; i < n_elems; i++)
-        printf("%s", mio_ar[i]);
-    return;
-}
-
-int conta(FILE *file) {
-    int i = 0;
-    char temp[30];
-    while (fgets(temp, 30, file) != NULL) {
-        if (temp[0] != '\r') 
-            i++;
-    }
-    return i;
+void stampa_lista(char ** mio_ar, int n_elems) {
+    int i;
+    for (i = 0; i < n_elems; ++i) 
+        printf("mio_ar[%2d]: %s", i, mio_ar[i]);
+    printf("\n");
 }
 
 int main() {
-    FILE *f1;
-    int n_elementi;
-    char **lista;
+    FILE* file_in = NULL;
+    int nof_elements = 0;
+    char ** string_arr = NULL;
 
-    f1 = fopen("file1.txt", "r");
-    n_elementi = conta(f1);
+    if ((file_in = fopen("file1.txt", "r")) == NULL) {
+        fprintf(stderr, "fopen error; exiting\n");
+        exit(1);
+    }
 
-    fseek(f1, 0, 0); //fseek(variabile, offset, partenza)
-    lista = leggi_lista(f1, &n_elementi);
-    stampa_lista(lista, n_elementi);
-    exit(1);
+    string_arr = leggi_lista(file_in, &nof_elements);
+    stampa_lista(string_arr, nof_elements);
+    fclose(file_in);
 }
