@@ -1,4 +1,3 @@
-/*
 ------------------------------------------------------------------------------------------------------------------------------------------
 #include <unistd.h>   --> restituisce l'id del processo chiamante
 pid_t getpid(void); 
@@ -60,7 +59,7 @@ MONITORAGGIO DI PROCESSI
     - in caso di errore wait() restituisce -1. Un possibile errore è che il processo chiamante potrebbe non avere figli,
       il che è indicato dal valore ECHILD di errno
 
--waitpid()
+- waitpid()
     la wait permette semplicemente di attendere che uno dei figli del chiamante termini, in alcuni casi è preferibile eseguire 
     una nonblocking wait, in modo da ottenere immediatamente che nessun figlio ha terminato
     la waitpid permette invece di indicare il PID specifico da aspettare
@@ -121,4 +120,3 @@ int execve(const char *pathname, char *const argv[], char *const envp[]);
     - ENOEXEC: il file riferito dal pathname è marcato come un eseguibile ma non è riconosciuto come formato effettivamente eseguibile
     - ETXTBSY: il file riferito dal pathname è aperto in scrittura da un altro processo
     - E2BIG: lo spazio complessivo richiesto dalla lista degli argomenti e dalla lista supera la massima dimensione consentita
-*/
