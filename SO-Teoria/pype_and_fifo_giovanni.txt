@@ -1,0 +1,70 @@
+Pype_and_Fifo
+/------------------------------------------------------------\
+
+Unix offre vari strumenti per la sincronizzazione, posso essere divisi in tre ampie categorie:
+
+>-Comunicazione:
+    -facilities utilizzate per lo scambio di dati fra processi
+>-Sincronizzazione:
+    -facilities utilizzate per sincronizzare le azioni dei processi
+>-Segnali:
+    -in alcune circostanze possono essere utulizzati come strumenti di sincronizzazione
+
+
+Communication facilities:
+/------------------------------------------------------------\
+
+>-Data-transfer-facilities:
+    -L'elelemento fondamentale che distingue questi strumenti è la nozione di scrttura e lettura.
+    -Per comunicare, un processo scrive i dati alla facility per l'IPC e un altro processo legge questi dati
+    -questi strumenti richiedono due trasfermenti dati fra la memoria utente e quella del kernel(trn. durante lett e scritt)
+
+>-Memoria condivisa:
+    -permette ai processi di scambiarsi le info mettendole in una regione dellla memoria condivisa fra i processi
+    -un processo può rendere i dati disponibili per gli altri processi collocandili in una regione di memoria condivisa
+    -la memoria condivisa è uno strumento di comunicazione molto veloce, poichè la comunicazione non richiede sycall
+        o transferimento di dati tra la memoria utente e quella del kernel
+
+Data-transfer facilities:
+/------------------------------------------------------------\
+
+Le data transfer facilities possono essere suddivise ancora:
+    >-Byte stream:
+        -i dati scambiati per mezzo di pipe, FIFOs e datagram sockets sono uno stream di byte
+        -ogni operazione di lettura può leggere un numero arbitrario di byte, senza considerare la dimensione dei blocchi scritti
+        -questo modello riflette il modello UNIX in cui il file è visto come una sequenza di byte
+    >-Messaggio:
+        -i dati scambiati con le code di messaggi, e i socket hanno la forma di messaggi delimitati
+        -ogni operazione di lettura legge un intero messaggio, così come scritto dal processo scrivente
+        -nono è possibile leggere parzialmente un messaggio, lasciando il resto sulla IPC facility e non è possibile leggere
+            molteplici messaggi con una singola operazione di lettura
+
+Le data transfer facilities sono distinte dalla memoria condiviaa per alcune caratteristiche generali:
+    -le operazioni di lettura sono distruttive(una "read" consuma i dati e li revoca per altri proc)
+    -la sincronizzazione (fra proc lett e scritt) è automatica
+
+Shared memory:
+/------------------------------------------------------------\
+
+Nonostante la memoria condivisa fornisca una comunicazione veloce, questo vantaggio è bilanciato dalla necesssità di sincronizzare
+    le operazioni sulla memoria condivisa
+
+    >-Semaforo:
+        -strumento di sincronizzazione abitualmente utilizzato con la memoria condivisa
+        -i dati nella mem condivisa sono visibili a tutti i processi che condividono il segmento di mem, 
+            diversamente dalla semantica distruttiva delle operazioni di lettura messe a disposizione 
+            dalle data-transfer facilities
+
+Synchtonization facilities
+/------------------------------------------------------------\
+
+>-Semafori:
+    -un semaforo è un intero mantenuto dal kernel, il cui valore non può divenire minore di 0
+    -un processo può decrementare o incrementare il valore di un semforo(se va sotto lo 0 il kernel blocca)
+    -se va sotto lo 0, in alternativa viene restituito un errore (indica che l'operazione non può essere eseguita immediatamente)
+
+pipe:
+/------------------------------------------------------------\
+
+I pipe forniscono una soluzione a un problema frequente:
+    -avendo creato due processi per eseguir 
