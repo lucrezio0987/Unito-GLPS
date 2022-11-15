@@ -15,9 +15,7 @@ public class Lexer {
 
     public Token lexical_scan(BufferedReader br) {
         boolean flag_commenti=true;
-        if(peek!=' ') {
-            
-        }
+        if (peek==' ') // se il è rimasto un peek dalla lettura precedente (es: dopo aver letto print) non leggere un nuovo carattere ma gestisce quello gia presente;
         while (peek == ' ' || peek == '\t' || peek == '\n'  || peek == '\r' || peek == '/') {
                 if(peek=='/') {
                     readch(br);

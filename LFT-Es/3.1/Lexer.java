@@ -14,7 +14,7 @@ public class Lexer {
     }
 
     public Token lexical_scan(BufferedReader br) {
-        
+        if (peek==' ') // se il è rimasto un peek dalla lettura precedente (es: dopo aver letto print) non leggere un nuovo carattere ma gestisce quello gia presente;
         while (peek == ' ' || peek == '\t' || peek == '\n'  || peek == '\r') {
             if (peek == '\n') {
                 line++;
@@ -137,37 +137,37 @@ public class Lexer {
                         readch(br);
                     }
                     if (temp.equals("assign")) {
-                        peek=' ';
+                        //peek=' ';
                         return Word.assign;
                     } else if (temp.equals("to")){
-                        peek=' ';
+                        //peek=' ';
                         return Word.to;
                     } else if (temp.equals("conditional")){
-                        peek=' ';
+                        //peek=' ';
                         return Word.conditional;
                     } else if (temp.equals("option")){
-                        peek=' ';
+                        //peek=' ';
                         return Word.option;
                     } else if (temp.equals("do")){
-                        peek=' ';
+                        //peek=' ';
                         return Word.dotok;
                     } else if (temp.equals("else")){
-                        peek=' ';
+                        //peek=' ';
                         return Word.elsetok;
                     } else if (temp.equals("while")){
-                        peek=' ';
+                        //peek=' ';
                         return Word.whiletok;
                     } else if (temp.equals("begin")){
-                        peek=' ';
+                        //peek=' ';
                         return Word.begin;
                     } else if (temp.equals("end")){
-                        peek=' ';
+                        //peek=' ';
                         return Word.end;
                     } else if (temp.equals("print")){
-                        peek=' ';
+                        //peek=' ';
                         return Word.print;
                     } else if (temp.equals("read")){
-                        peek=' ';
+                        //peek=' ';
                         return Word.read;
                     } else {
                         return new Word(Tag.ID, temp);
