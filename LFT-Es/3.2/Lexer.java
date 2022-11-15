@@ -14,12 +14,27 @@ public class Lexer {
     }
 
     public Token lexical_scan(BufferedReader br) {
-        
-        while (peek == ' ' || peek == '\t' || peek == '\n'  || peek == '\r') {
+        boolean flag_commenti=true;
+        if (peek==' ') // se il è rimasto un peek dalla lettura precedente (es: dopo aver letto print) non leggere un nuovo carattere ma gestisce quello gia presente;
+        while (peek == ' ' || peek == '\t' || peek == '\n'  || peek == '\r' || peek == '/') {
+                if(peek=='/') {
+                    readch(br);
+                    if(peek=='/') {
+                        while(peek != '\n') 
+                            readch(br);
+                    } else if (peek=='*') {
+                        while(flag_commenti){
+                            readch(br);
+                            if(peek=='*') {
+                                readch(br);
+                                if(peek=='/') flag_commenti=false; 
+                            }
+                        } 
+                    } else return Token.div;
+                }
             if (peek == '\n') {
                 line++;
             }
-
             readch(br);
         }
         
@@ -56,9 +71,6 @@ public class Lexer {
             case '*':
                 peek = ' ';
                 return Token.mult;
-            case '/':
-                peek = ' ';
-                return Token.div;
             case ';':
                 peek = ' ';
                 return Token.semicolon;
@@ -136,38 +148,41 @@ public class Lexer {
                         temp = temp + peek;
                         readch(br);
                     }
+                    //Token tok = lexical_scan(br);
+                    //System.out.println("Scan: " + tok);
+
                     if (temp.equals("assign")) {
-                        peek=' ';
+                        //peek=' ';
                         return Word.assign;
                     } else if (temp.equals("to")){
-                        peek=' ';
+                        //peek=' ';
                         return Word.to;
                     } else if (temp.equals("conditional")){
-                        peek=' ';
+                        //peek=' ';
                         return Word.conditional;
                     } else if (temp.equals("option")){
-                        peek=' ';
+                        //peek=' ';
                         return Word.option;
                     } else if (temp.equals("do")){
-                        peek=' ';
+                        //peek=' ';
                         return Word.dotok;
                     } else if (temp.equals("else")){
-                        peek=' ';
+                        //peek=' ';
                         return Word.elsetok;
                     } else if (temp.equals("while")){
-                        peek=' ';
+                        //peek=' ';
                         return Word.whiletok;
                     } else if (temp.equals("begin")){
-                        peek=' ';
+                        //peek=' ';
                         return Word.begin;
                     } else if (temp.equals("end")){
-                        peek=' ';
+                        //peek=' ';
                         return Word.end;
                     } else if (temp.equals("print")){
-                        peek=' ';
+                        //peek=' ';
                         return Word.print;
                     } else if (temp.equals("read")){
-                        peek=' ';
+                        //peek=' ';
                         return Word.read;
                     } else {
                         return new Word(Tag.ID, temp);

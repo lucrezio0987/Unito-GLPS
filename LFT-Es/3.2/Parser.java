@@ -26,90 +26,190 @@ public class Parser {
 	    } else error("syntax error");
     }
 
-    public void start() {
-    // ... completare ...
-	expr();
-	match(Tag.EOF);
-	// ... completare ...
+    public void prog() {
+        statlist();
+        match(Tag.EOF);
+    }
+
+    private void statlist() {
+        stat();
+        statlistp();
+    }
+
+    private void statlistp() {
+        switch(look.tag) {
+            case ';':
+                match(';');
+                stat();
+                statlistp();
+            default:
+                break;
+        }
+    }
+
+    private void stat() {
+        switch(look.tag) {
+            case Tag.ASSIGN:
+                match(Tag.ASSIGN);
+                expr();
+                match(Tag.TO);
+                idlist();
+                break;
+
+            case Tag.PRINT:
+                match(Tag.PRINT);
+                match(Token.lpq.tag); // [
+                
+                exprlist();
+                match(Token.rpq.tag); // ]
+                break; 
+
+            case Tag.READ:
+                match(Tag.READ);
+                match(Token.lpq.tag); // [
+                idlist();
+                match(Token.rpq.tag); // ]
+                break; 
+
+            case Tag.WHILE:
+                match(Tag.WHILE);
+                match(Token.lpt.tag); // (
+                bexpr();
+                match(Token.rpt.tag); // )
+                stat();
+                break;
+
+            case Tag.COND:
+                match(Tag.COND);
+                match(Token.lpq.tag); // [
+                optlist();
+                match(Token.rpq.tag); // ]
+                switch(look.tag) {
+                    case Tag.END:
+                        match(Tag.END);
+                        break;
+                    
+                    case Tag.ELSE:
+                        match(Tag.ELSE);
+                        stat();
+                        match(Tag.END);
+                        break;
+                    
+                    default:
+                        break;
+                }
+                break;
+
+            case '{':
+                match(Token.lpg.tag); // {
+                statlist();
+                match(Token.rpg.tag); // }
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void idlist() {
+        match(Tag.ID);
+        idlistp();
+    }
+
+    private void idlistp() {
+        switch(look.tag) {
+            case ',':
+                match(Token.comma.tag);
+                match(Tag.ID);
+                idlistp();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void optlist() {
+        optitem();
+        optlistp();
+    }
+
+    private void optlistp() {
+        optitem();
+        optlist();
+    }
+
+    private void optitem() {
+        match(Tag.OPTION);
+        match(Token.lpt.tag); 
+        bexpr();
+        match(Token.rpt.tag);
+        match(Tag.DO);
+        stat();
+    }
+
+    private void bexpr() {
+        match(Tag.RELOP);
+        expr();
+        expr();
     }
 
     private void expr() { 
-        term();
-        exprp();
-}
-
-    private void exprp() {
-        switch (look.tag) {
+        switch(look.tag) {
             case '+':
-                match('+');
-                if(look.tag != Tag.NUM && look.tag != Token.lpt.tag && look.tag != Tag.ID) 
-                    error("Errore, inseriti due operatori di fila");
-                term();
-                exprp();
+                match(Token.plus.tag);
+                match(Token.lpt.tag);
+                exprlist();
+                match(Token.rpt.tag);
                 break;
+            
+            case '*':
+                match(Token.mult.tag);
+                match(Token.lpt.tag);
+                exprlist();
+                match(Token.rpt.tag);
+                break;
+            
             case '-':
-                match('-');
-                if(look.tag != Tag.NUM && look.tag != Token.lpt.tag && look.tag != Tag.ID) 
-                    error("Errore, inseriti due operatori di fila");
-                term();
-                exprp();
+                match(Token.minus.tag);
+                expr();
+                expr();
                 break;
-            default:  
-                if(look.tag == Tag.ID)
-                    error("errore in exprp, carattere non valido " + look);
-                else if(look.tag == Token.lpt.tag)
-                    error("errore in exprp, carattere non valido. Atteso un operatore, invece -> (");
-                else break;
-        } 
+
+            case '/':
+                match(Token.div.tag);
+                expr();
+                expr();
+                break;
+            
+            case Tag.NUM:
+                match(Tag.NUM);
+                break;
+
+            case Tag.ID:
+                match(Tag.ID);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void exprlist() {
+        expr();
+        exprlistp();
 	}
     
-    private void term() {
-        fact();
-        termp();
-    }
-
-    private void termp() {
-        switch (look.tag) {
-            case '*':
-                match('*');
-                if(look.tag != Tag.NUM && look.tag != Token.lpt.tag && look.tag != Tag.ID) 
-                    error("Errore, inseriti due operatori di fila");
-                fact();
-                termp();
-                break; 
-            case '/':
-                match('/');
-                if(look.tag != Tag.NUM && look.tag != Token.lpt.tag && look.tag != Tag.ID) 
-                    error("Errore, inseriti due operatori di fila");
-                fact();
-                termp();
+    private void exprlistp() {
+        switch(look.tag) {
+            case ',':
+                match(Token.comma.tag);
+                expr();
+                exprlistp();
                 break;
-            default: 
-                if(look.tag == Tag.ID)
-                    error("errore in termp, carattere non valido " + look);
-                else if(look.tag == Token.lpt.tag)
-                    error("errore in termp, carattere non valido. Atteso un operatore, invece -> (");
-                else break;
-                    
-        } 
-    }
 
-    private void fact() {
-            switch(look.tag) {
-                case Tag.NUM:
-                    match(Tag.NUM);
-                    break;
-                case '(':
-                    match('(');
-                    expr();
-                    match(')');
-                    break;
-                default: 
-                    if (look.tag != '(' && look.tag != Tag.NUM)
-                        error("errore in fact, carattere non valido. Atteso un numero o una parentesi, invece -> " + look);
-                    break;
-
-            }
+            default:
+                break;
+        }
     }
 
     public static void main(String[] args) {
@@ -118,7 +218,7 @@ public class Parser {
         try {
             BufferedReader br = new BufferedReader(new FileReader(path));
             Parser parser = new Parser(lex, br);
-            parser.start();
+            parser.prog();
             System.out.println("Input OK");
             br.close();
         } catch (IOException e) {e.printStackTrace();}

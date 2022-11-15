@@ -1,2 +1,1 @@
-vfdssssss_________//ddd
-fff /*vvvvv*/ cccc
+print()
