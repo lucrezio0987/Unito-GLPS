@@ -67,4 +67,80 @@ pipe:
 /------------------------------------------------------------\
 
 I pipe forniscono una soluzione a un problema frequente:
-    -avendo creato due processi per eseguir 
+    -i FIFO sono una variazione del concetto di pipe
+    -i FIFO possono essere utilizzati per la comunicazione fra procesi qualsiasi
+    -i due processi sono collegati al pipe: il processo scrittore(ls) ha il suo standardout(file descriptor) collegato con il write
+        end del pipe, mentre il processo lettore(wc) ha il proprio standard input collegto al read end del pipe
+    -un pipe è uno stram di byte: usando un pipe non c'è riferimeto ad alcun concetto di messaggio o di delimitazione di messaggio
+    -i dati passano attraverso il pipe in sequenza, i byte sono letti nello stesso ordine in cui sono stati scritti
+
+>-lettura da pipe:
+    -i tentativi di leggere da un pipe vuoto restano bloccati finché almeno un byte non è stato scritto sul pipe
+    -Se il write end di un pipe viene chiuso, un processo che legge dal pipe riceverà il codice end-of-file
+        (i.e., read() restituirà 0) una volta che avrà letto tutti i dati presenti nel pipe
+    -i pipe sono unidirezionali, i dati possono viaggiare solo in una direzione
+    -un'estremità(end) del pipe è utilizzato in scrittura e l'altro in lettura
+
+>-Capacità limitata:
+    -un pipe è semplicemente un buffere mantenuto in memoria
+    -quesrto buffer p una capacità massima, appena pieno altri tentativi di scrittura si bloccano
+    -un'applicazione non ha bisogno di sapere la capacità del pipe
+    -se vogliamo evitare blocchi, bisogna progettare processi in modo da leggere i dati appena sono disponibili
+    -non ci sono motivi per cui un pipe deve utilizzare capacità minime, fino al buffer costutuito da un sono byte
+
+Comunicazione fra processi non imparentati:
+/------------------------------------------------------------\
+
+I pipe possono essere utilizzate per comunicare fra processi parenti:
+    -es. un pipe potrebbe mettere in comunicazione un processo e un proc nipote(granchild) del primo
+    -es. un pipe può far comunicare due processi fratelli(siblings)
+
+Chiusura dei descrittori inutilizzati (lettore):
+/------------------------------------------------------------\
+
+I file descriptors inutilizzati in lettura e in scrittura devono essere chiusi:
+    -Il proc che legge dal pipe chiude il proprio write descriptor così che quando l'altro processo completa il
+       proprio output e chiude il proprio descrittore write, il lettore riceve un carattere terminatore, 
+       end-of-file
+
+Fifo e pipe:
+/------------------------------------------------------------\
+
+-Un fifo è simile ad un pipe. Un fifo ha un nome all'interno del file system ed è aperto nello stesso modo di un file
+-Un fifo può essere utilizzato per comunicazioni fra processi non imparentati
+-Una volta che un fifo è stato aperto possiamo utulizzare le stesse system call 
+-anche i fido hanno un'estremità aperta in lettura e i dati sono letti nello stesso ordine in cui sono stati scritti
+
+Sincronizzazione con FI.FO
+/------------------------------------------------------------\
+
+-L'utilizzo di fifo serve ad avere un processo lettore e uno scrittore alle due estremità del fifo
+-di default, l'apertura di un fifo si blocca fichè un altro processo apre il fifo in scrittura
+-per contro, l'apertura del fifo in scrittura si blocca fichè un altro processo non apre la fifo in lettura
+
+FIFOs and tee()
+/------------------------------------------------------------\
+
+-Una delle caratteristiche delle pipeline di shell è che sono sequenziali
+-Utilizzando i fifo è possibile creare una fork nella pipeline, così che un duplicato dell'output di un processo
+    viene inviato a un altro processo oltre che al proprio successore nella pipeline
+-si utilizza il comando "tee" che scrive due copie di ciò che legge dal proprio standard input: uno su standard output
+    e l'altro sul file specificato dal suo argomento della linea di comando
+
+Un'applicazione client-server di esempio
+/------------------------------------------------------------\
+
+>-Client-Server Application with FIFOs:
+    -il server richiede il servizio di assegnazione di cifre numeriche sequenziali ad ogni client che le richiede
+    -tutti i client mandano le richieste al server utilizzando un singolo server FIFO
+    -però non è possibile usare un singolo FIFO per rispondere a tutti i client
+    -ogni client crea un FIFO unico che il server stesso utilizza per riconoscerlo e quindi rispondergli
+    -Client e server possono concordare una convenzione per la costruzione di a client percorso FIFO
+
+>-protocol:
+    -
+
+    
+
+
+
