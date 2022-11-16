@@ -1,4 +1,5 @@
 #eps-a 16/11/22 2.52
+library("UsingR")
 
 data("babyboom")
 str(babyboom)
