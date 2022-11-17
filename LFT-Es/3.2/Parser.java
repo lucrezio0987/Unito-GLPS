@@ -27,21 +27,16 @@ public class Parser {
     }
 
     public void prog() {
-	System.out.println("PROG-Start\n");
         statlist();
         match(Tag.EOF);
-	System.out.println("PROG-End\n");
     }
 
     private void statlist() {
-	System.out.println("STATLIS-Start\n");
         stat();
         statlistp();
-	System.out.println("STATLIS-End\n");
     }
 
     private void statlistp() {
-	System.out.println("STATLISTP-Start\n");
         switch(look.tag) {
             case ';':
                 match(';');
@@ -50,11 +45,9 @@ public class Parser {
             default:
                 break;
         }
-	System.out.println("STATLISTP-End\n");
     }
 
     private void stat() {
-	System.out.println("STAT-Start\n");
         switch(look.tag) {
             case Tag.ASSIGN:
                 match(Tag.ASSIGN); // ASSIGN
@@ -115,18 +108,14 @@ public class Parser {
             default:
                 break;
         }
-	System.out.println("STAT-End\n");
     }
 
     private void idlist() {
-	System.out.println("IDLIST-Start\n");
         match(Tag.ID);
         idlistp();
-	System.out.println("IDLIST-End\n");
     }
 
     private void idlistp() {
-	System.out.println("IDLISTP-Start\n");
         switch(look.tag) {
             case ',':
                 match(Token.comma.tag);
@@ -136,18 +125,14 @@ public class Parser {
             default:
                 break;
         }
-	System.out.println("IDLISTP-End\n");
     }
 
     private void optlist() {
-	System.out.println("OPTLIST-Start\n");
         optitem();
         optlistp();
-	System.out.println("OPTLIST-End\n");
     }
 
     private void optlistp() {
-	System.out.println("OPTLISTP-Start\n");
 	switch(look.tag){
 	  case Tag.OPTION:
             optitem();
@@ -156,30 +141,24 @@ public class Parser {
 	  default:
 	    break;
 	}
-	System.out.println("OPTLISTP-End\n");
     }
 
     private void optitem() {
-	System.out.println("OPTTEM-Start\n");
         match(Tag.OPTION);  // OPTION
         match(Token.lpt.tag); // [
         bexpr();
         match(Token.rpt.tag); // ]
         match(Tag.DO);  // DO
         stat();
-	System.out.println("OPTTEM-End\n");
     }
 
     private void bexpr() {
-	System.out.println("BEXPR-Start\n");
         match(Tag.RELOP);
         expr();
         expr();
-	System.out.println("BEXPR-End\n");
     }
 
     private void expr() { 
-	System.out.println("EXPR-Start\n");
         switch(look.tag) {
             case '+':
                 match(Token.plus.tag);
@@ -218,18 +197,14 @@ public class Parser {
             default:
                 break;
         }
-	System.out.println("EXPR-End\n");
     }
 
     private void exprlist() {
-	System.out.println("ESPRLIST-Start\n");
         expr();
         exprlistp();
-	System.out.println("ESPRLIST-End\n");
     }
     
     private void exprlistp() {
-	System.out.println("EXPRLISTP-Start\n");
         switch(look.tag) {
             case ',':
                 match(Token.comma.tag);
@@ -240,7 +215,6 @@ public class Parser {
             default:
                 break;
         }
-	System.out.println("EXPRLISTP-End\n");
     }
 
     public static void main(String[] args) {
