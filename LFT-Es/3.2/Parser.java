@@ -134,13 +134,13 @@ public class Parser {
 
     private void optlistp() {
 	switch(look.tag){
-	  case Tag.OPTION:
+        case Tag.OPTION:
             optitem();
             optlistp();
-	    break;
-	  default:
-	    break;
-	}
+            break;
+        default:
+            break;
+        }
     }
 
     private void optitem() {
@@ -166,7 +166,7 @@ public class Parser {
                 exprlist();
                 match(Token.rpt.tag);
                 break;
-            
+               
             case '*':
                 match(Token.mult.tag);
                 match(Token.lpt.tag);
