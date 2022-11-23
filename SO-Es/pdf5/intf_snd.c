@@ -29,5 +29,9 @@ int main() {
 
     while (strcmp(buf, "stop") != 0) { 
         struct message msg = {n, buf};
+        printf("inserire un tipo (intero): \n");
+        scanf("%d", &n);
+        printf("inserire un messaggio (stop per terminare): \n");
+        scanf("%s", buf);
     } 
 }
