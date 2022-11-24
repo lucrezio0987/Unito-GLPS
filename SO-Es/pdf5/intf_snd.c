@@ -12,26 +12,38 @@
 struct message {
     long mtype;
     char mtext[BUF_SIZE];
-    int 
-}
+};
 
 int main() {
     int id, n;
     char buf[BUF_SIZE];
+    
+    struct msqid_ds myqueue;
 
-    if ((id = msgget(IPC_PRIVATE, IPC_CREAT | 0600)) == -1)
+    if ((id = msgget(1234, IPC_CREAT | 0644)) == -1)
         ERROR;
-
-    printf("inserire un tipo (intero): \n");
+    if(msgctl(id, IPC_RMID, &myqueue) == -1) {
+        ERROR;
+    } else 
+        printf("Coda deallocata \n");
+    if ((id = msgget(1234, IPC_CREAT | 0644)) == -1)
+        ERROR;
+    
+   
+    printf("inserire un tipo (intero): ");
     scanf("%d", &n);
-    printf("inserire un messaggio (stop per terminare): \n");
+    printf("inserire un messaggio (stop per terminare): ");
     scanf("%s", buf);
 
     while (strcmp(buf, "stop") != 0) { 
         struct message msg = {n, buf};
-        printf("inserire un tipo (intero): \n");
+
+        if(msgsnd(id, &msg, (sizeof(msg) - sizeof(long)), IPC_NOWAIT) == -1)
+            ERROR;
+        
+        printf("inserire un tipo (intero): ");
         scanf("%d", &n);
-        printf("inserire un messaggio (stop per terminare): \n");
+        printf("inserire un messaggio (stop per terminare): ");
         scanf("%s", buf);
     } 
 }

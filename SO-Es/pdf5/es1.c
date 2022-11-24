@@ -29,6 +29,7 @@ int main() {
     printf("Tempo dell'ultima msg snd(): %d \n", myqueue.msg_stime);
 
     struct mymsg message = {sizeof(char), "hello world"};
+    struct mymsg message2;
 
     if ((msgsnd(id, &message, (sizeof(message)-sizeof(long)), IPC_NOWAIT)) == -1) 
         ERROR;
@@ -39,6 +40,11 @@ int main() {
     printf("Numero di messaggi in coda: %d \n", myqueue.msg_qnum);
     printf("Tempo dell'ultima msg snd(): %d \n", myqueue.msg_stime);
     printf("Tempo in cui è occorsa la msgsnd: %d \n", myqueue.msg_ctime);
+
+    if ((msgrcv(id, &message2, (sizeof(message2)-sizeof(long)), 1, IPC_NOWAIT)) == -1) 
+        ERROR;
+        
+    printf("-----%s\n", message2.mtext);
 
     if(msgctl(id, IPC_RMID, &myqueue) == -1) {
         ERROR;
