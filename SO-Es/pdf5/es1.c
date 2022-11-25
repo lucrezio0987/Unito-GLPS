@@ -5,7 +5,7 @@
 #include <errno.h>
 
 #define ERROR if(errno) { \
-    printf("%d: pid %ld (%s)\n", 1, (long)getpid(), errno, strerror(errno)); \
+    printf("%d: pid %ld errno: - %d - (%s)\n", 1, (long)getpid(), errno, strerror(errno)); \
     exit(1); \
 }
 

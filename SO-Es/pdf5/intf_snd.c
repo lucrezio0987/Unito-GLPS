@@ -5,7 +5,7 @@
 
 #define BUF_SIZE 30
 #define ERROR if(errno) { \
-    printf("%d: pid %ld (%s)\n", 1, (long)getpid(), errno, strerror(errno)); \
+    printf("%d: pid %ld errno: - %d - (%s)\n", 1, (long)getpid(), errno, strerror(errno)); \
     exit(1); \
 }
 
@@ -36,7 +36,9 @@ int main() {
     scanf("%s", buf);
 
     while (strcmp(buf, "stop") != 0) { 
-        struct message msg = {n, buf};
+        struct message msg;
+        msg.mtype = n;
+        sprintf(msg.mtext, "%s", buf);
 
         if(msgsnd(id, &msg, (sizeof(msg) - sizeof(long)), IPC_NOWAIT) == -1)
             ERROR;
