@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <errno.h>
 #include <sys/msg.h>
+#include <stdlib.h>
 
 #define ERROR if(errno) { \
-    printf("%d: pid %ld  - %d - (%s)\n", 1, (long)getpid(), errno, strerror(errno)); \
+    printf("ERROR - %d: pid %ld  - %d - (%d)\n", __LINE__, (long)getpid(), errno, strerror(errno)); \
     exit(1); \
 }
 
@@ -16,7 +17,7 @@ int main() {
     int id;
 
     struct msqid_ds myqueue;
-    
+    struct msg message;
     if ((id = msgget(IPC_PRIVATE, IPC_CREAT | 0600)) == -1)
         ERROR;
 
@@ -24,17 +25,17 @@ int main() {
     case -1: ERROR
     
     case 0: 
-        struct msg message = {getpid(), "saluti da "};
+        message.mtype=(long)getpid();
+        sprintf(message.mtext, "saluti da ");
         msgsnd(id, &message, (sizeof(message) - sizeof(long)), IPC_NOWAIT);
         
         exit(0);
     default:
         wait();
-        struct msg receive;
 
-        if(msgrcv(id, &receive, sizeof(receive) - sizeof(long), 0, MSG_NOERROR | IPC_NOWAIT) == -1)
+        if(msgrcv(id, &message, sizeof(message) - sizeof(long), 0, MSG_NOERROR | IPC_NOWAIT) == -1)
             ERROR;
-        printf("%s %d \n", receive.mtext, receive.mtype);
+        printf("%s %ld \n", message.mtext, message.mtype);
         
         if(msgctl(id, IPC_RMID, &myqueue) == -1) {
             ERROR;
