@@ -18,11 +18,12 @@ int main() {
 
     struct msqid_ds myqueue;
     struct msg message;
-    if ((id = msgget(IPC_PRIVATE, IPC_CREAT | 0600)) == -1)
+    if ((id = msgget(IPC_PRIVATE, IPC_CREAT | 0600)) < 0)
         ERROR;
 
     switch (fork()) {
-    case -1: ERROR
+    case -1: 
+        ERROR;
     
     case 0: 
         message.mtype=(long)getpid();
