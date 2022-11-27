@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 #define ERROR if(errno) { \
-    printf("ERROR - %d: pid %ld  - %d - (%d)\n", __LINE__, (long)getpid(), errno, strerror(errno)); \
+    printf("ERROR - l %d: pid %ld - n %d - (%d)\n", __LINE__, (long)getpid(), errno, strerror(errno)); \
     exit(1); \
 }
 
