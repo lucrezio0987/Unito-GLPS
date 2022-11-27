@@ -38,11 +38,10 @@ int main() {
             ERROR;
         printf("%s %ld \n", message.mtext, message.mtype);
         
-        /*if(msgctl(id, IPC_RMID, &myqueue) == -1) {
+        if(msgctl(id, IPC_RMID, &myqueue) == -1) {
             ERROR;
         } else 
             printf("Coda deallocata \n");
         exit(0);
-    }*/
-}
+    }
 }
