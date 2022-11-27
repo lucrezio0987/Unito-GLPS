@@ -20,13 +20,13 @@ int main() {
     
     struct msqid_ds myqueue;
 
-    if ((id = msgget(1234, IPC_CREAT | 0644)) == -1)
+    if ((id = msgget(ftok("vuoto", 'a'), IPC_CREAT | 0644)) == -1)
         ERROR;
     if(msgctl(id, IPC_RMID, &myqueue) == -1) {
         ERROR;
     } else 
         printf("Coda deallocata \n");
-    if ((id = msgget(1234, IPC_CREAT | 0644)) == -1)
+    if ((id = msgget(ftok("vuoto", 'a'), IPC_CREAT | 0644)) == -1)
         ERROR;
     
    

@@ -18,7 +18,7 @@ int main() {
 
     struct msqid_ds myqueue;
     struct msg message;
-    if ((id = msgget(IPC_PRIVATE, IPC_CREAT | 0600)) < 0)
+    if ((id = msgget(ftok("vuoto", 'a'), IPC_CREAT | 0600)) < 0)
         ERROR;
 
     switch (fork()) {
@@ -38,10 +38,11 @@ int main() {
             ERROR;
         printf("%s %ld \n", message.mtext, message.mtype);
         
-        if(msgctl(id, IPC_RMID, &myqueue) == -1) {
+        /*if(msgctl(id, IPC_RMID, &myqueue) == -1) {
             ERROR;
         } else 
             printf("Coda deallocata \n");
         exit(0);
-    }
+    }*/
+}
 }

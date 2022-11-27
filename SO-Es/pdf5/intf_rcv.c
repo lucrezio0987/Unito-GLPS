@@ -17,7 +17,7 @@ struct message {
 int main() {
     int id, n;
     
-    if ((id = msgget(1234, 0644)) < 0)
+    if ((id = msgget(ftok("vuoto", 'a'), 0644)) < 0)
         ERROR;
     
     printf("Che tipo di messaggi vuoi stampare (intero): \n");
