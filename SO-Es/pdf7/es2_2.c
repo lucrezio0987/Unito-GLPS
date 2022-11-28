@@ -9,9 +9,8 @@
 }
 
 typedef struct my_data {
-    char stringa[30];
+    char buf[30];
 } data;
-
 
 int reserveSem(int id_sem, int n_sem) {
     struct sembuf s_ops[2];
@@ -34,21 +33,20 @@ int releaseSem(int id_sem, int n_sem) {
 }
 
 int main() {
-    int sem, id;
-    if((sem = semget(ftok("ftok", 'b'), 2, 0600)) == -1)
-        ERROR;
+    int semID, shmID;
+    data* shmp;
+
+    if((semID = semget(ftok("ftok", 'a'), 2, 0600)) == -1) ERROR;
     
-    reserveSem(sem,0);
+    if(reserveSem(semID,0) == -1 ) ERROR;
 
-    if((id = shmget(ftok("ftok", 'b'), sizeof(data), 0600)) == -1)
-        ERROR;
+    if((shmID = shmget(ftok("ftok", 'a'), sizeof(data), 0600)) == -1) ERROR;
 
-    data* shmp = shmat(id, NULL, 0);
+    if((shmp = shmat(shmID, NULL, 0)) == (void *)-1) ERROR;
+    printf("%s\n", shmp->buf);
 
-    printf("%s \n", shmp -> stringa);
-
-    releaseSem(sem, 1);
-    printf("reader terminato\n");
+    if(shmdt(shmp) == -1) ERROR;
+    if(releaseSem(semID,1) == -1) ERROR;
 
     exit(0);
 }

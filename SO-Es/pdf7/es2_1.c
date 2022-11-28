@@ -9,9 +9,8 @@
 }
 
 typedef struct my_data {
-    char stringa[30];
+    char buf[30];
 } data;
-
 
 int reserveSem(int id_sem, int n_sem) {
     struct sembuf s_ops[2];
@@ -34,28 +33,28 @@ int releaseSem(int id_sem, int n_sem) {
 }
 
 int main() {
-    int sem, id;
-    if((id = shmget(ftok("ftok", 'b'), sizeof(data), IPC_CREAT | 0600)) == -1)
-        ERROR;
+    int semID, shmID;
+    data* shmp;
 
-    if((sem = semget(ftok("ftok", 'b'), 2, IPC_CREAT | 0600)) == -1)
-        ERROR;
+    if((shmID = shmget(ftok("ftok", 'a'), sizeof(struct my_data), IPC_CREAT | 0600)) == -1) ERROR;
+    if((semID = semget(ftok("ftok", 'a'), 2, IPC_CREAT | 0600)) == -1) ERROR;
+    
+    if((shmp = shmat(shmID, NULL, 0)) == (void *)-1) ERROR;
+    
+    printf("%s", shmp->buf);
 
-    data* shmp = shmat(id, NULL, 0);
-    scanf("%s",shmp -> stringa);
+    if(releaseSem(semID,0) == -1) ERROR;
+    if(reserveSem(semID,1) == -1) ERROR;
 
-    releaseSem(sem, 0);
-    reserveSem(sem,1);
+    printf("reader terminato\n");
 
-    shmdt(shmp);
+    if(shmdt(shmp) == -1) ERROR;
 
-    if(semctl(sem, IPC_RMID, 2) == -1) {
-        ERROR;
-    } else 
-        printf("Semafori deallocati \n");
+    if(semctl(semID, IPC_RMID, 2) == -1) { ERROR; } 
+    else printf("Semafori deallocati \n");
 
-    if(shmctl(id, IPC_RMID, 0) == -1) {
-        ERROR;
-    } else 
-        printf("Memoria deallocata \n");
+    if(shmctl(shmID, IPC_RMID, 0) == -1) { ERROR; } 
+    else printf("Memoria deallocata \n");
+    
+    exit(0);
 }
