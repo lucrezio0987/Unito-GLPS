@@ -29,7 +29,7 @@ int main() {
     if ((id = msgget(ftok("vuoto", 'a'), IPC_CREAT | 0600)) < 0) ERROR;
     
     //--MESSAGGIO AL SERVER--
-    printf("Client: Inserisci testo da stamoare in rosso: ");
+    printf("Client: Inserisci testo da stampare in rosso: ");
     fgets(buf, BUF_SIZE, stdin);
         messageC.mtype = CTOS;                  // mtype  = INVIO
         sprintf(messageC.mtext, "%s", buf);     // mtext
