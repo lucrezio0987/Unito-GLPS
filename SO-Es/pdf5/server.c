@@ -8,9 +8,15 @@
     exit(1);                                                                                            \
 }
 
+#define BLU "\033[0;36m"
+#define RED "\033[0;31m"
+#define WHITE "\033[0;37m"
+
+#define BUF_SIZE 30
+
 struct msg {
     long mtype;
-    char mtext[30];
+    char mtext[BUF_SIZE];
     long clientPID;
 };
 
@@ -39,11 +45,14 @@ int main() {
                     ERROR;
                 
                 case 0:
+                    printf("Server: %sMessaggio ricevuto dal server%s\n", BLU, WHITE);
                     messageS.mtype = messageC.clientPID;
-                    sprintf(messageS.mtext, "\e033[31m %s", messageC.mtext);
+                    messageS.clientPID=messageC.clientPID;
+                    sprintf(messageS.mtext, "%s%s%s", RED, messageC.mtext, WHITE);
                     
                     if(msgsnd(id, &messageS, (sizeof(messageS) - sizeof(long)), IPC_NOWAIT) == -1)
                         ERROR;
+                    printf("Server: %sMessaggio inviato dal server%s\n", BLU, WHITE);
                     exit(0);
 
                 default:
