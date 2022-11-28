@@ -45,14 +45,14 @@ int main() {
                     ERROR;
                 
                 case 0:
-                    printf("Server: %sMessaggio ricevuto dal server%s\n", BLU, WHITE);
+                    printf("--> Server: %sMessaggio ricevuto dal server%s\n", BLU, WHITE);
                     messageS.mtype = messageC.clientPID;
                     messageS.clientPID=messageC.clientPID;
                     sprintf(messageS.mtext, "%s%s%s", RED, messageC.mtext, WHITE);
                     
                     if(msgsnd(id, &messageS, (sizeof(messageS) - sizeof(long)), IPC_NOWAIT) == -1)
                         ERROR;
-                    printf("Server: %sMessaggio inviato dal server%s\n", BLU, WHITE);
+                    printf("<-- Server: %sMessaggio inviato dal server%s\n", BLU, WHITE);
                     exit(0);
 
                 default:
