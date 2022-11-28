@@ -13,37 +13,37 @@ typedef struct my_data {
 } data;
 
 int reserveSem(int id_sem, int n_sem) {
-    struct sembuf s_ops[2];
+    struct sembuf s_ops;
 
-    s_ops[n_sem].sem_num = n_sem;
-    s_ops[n_sem].sem_op = -1;
-    s_ops[n_sem].sem_flg = 0;
+    s_ops.sem_num = n_sem;
+    s_ops.sem_op = -1;
+    s_ops.sem_flg = 0;
 
-    return semop(id_sem, s_ops, 2);
+    return semop(id_sem, &s_ops, 1);
 }
 
 int releaseSem(int id_sem, int n_sem) {
-    struct sembuf s_ops[2];
+    struct sembuf s_ops;
 
-    s_ops[n_sem].sem_num = n_sem;
-    s_ops[n_sem].sem_op = 1;
-    s_ops[n_sem].sem_flg = 0;
+    s_ops.sem_num = n_sem;
+    s_ops.sem_op = 1;
+    s_ops.sem_flg = 0;
 
-    return semop(id_sem, s_ops, 2);
+    return semop(id_sem, &s_ops, 1);
 }
 
 int main() {
     int semID, shmID;
     data* shmp;
 
-    if((shmID = shmget(ftok("ftok", 'a'), sizeof(struct my_data), IPC_CREAT | 0600)) == -1) ERROR;
-    if((semID = semget(ftok("ftok", 'a'), 2, IPC_CREAT | 0600)) == -1) ERROR;
-    
+    if((semID = semget(ftok("ftok", 'a'), 2, IPC_CREAT | 0644)) == -1) ERROR;
+    if((shmID = shmget(ftok("ftok", 'a'), sizeof(data), IPC_CREAT | 0644)) == -1) ERROR;
     if((shmp = shmat(shmID, NULL, 0)) == (void *)-1) ERROR;
-    
-    printf("%s", shmp->buf);
+
+    scanf("%s", shmp->buf);
 
     if(releaseSem(semID,0) == -1) ERROR;
+ 
     if(reserveSem(semID,1) == -1) ERROR;
 
     printf("reader terminato\n");
