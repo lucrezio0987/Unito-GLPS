@@ -9,11 +9,11 @@ int main() {
     if((semID = semget(ftok("ftok", 'a'), 2, IPC_CREAT | 0644)) == -1) ERROR;
     if((shmID = shmget(ftok("ftok", 'a'), sizeof(data), IPC_CREAT | 0644)) == -1) ERROR;
 
-    // INIZIALIZZAIONE: Sem1, Sem2 = 0
-    initSemInUse(semID, 0);
-    initSemAvailable(semID, 1);
+    // INIZIALIZZAIONE: Sem1, Sem2
+    initSemInUse(semID, 0);       // LETTURA = 0
+    initSemAvailable(semID, 1);   // SCRITTURA = 1
 
-    if(releaseSem(semID,1) == -1) ERROR;  // fa partire la scrittura
+    if(reserveSem(semID,1) == -1) ERROR;  // fa partire la scrittura
 
     //SHELL MEMORY: mount - caricamento - unmount
     if((shmp = shmat(shmID, NULL, 0)) == (void *)-1) ERROR;
