@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include "lib_sem.h"
 
-
 int main() {
     int semID, shmID;
     data* shmp;

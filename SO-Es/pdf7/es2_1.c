@@ -4,12 +4,6 @@
 int main() {
     int semID, shmID;
     data* shmp;
-    // read = 0; write = 1
-    if((semID = semget(ftok("ftok", 'b'), 2, IPC_CREAT | 0644)) == -1)
-        ERROR;
-    
-    if((shmID = shmget(ftok("ftok", 'b'), sizeof(struct my_data), IPC_CREAT | 0644)) == -1)
-        ERROR;
 
     // CREAZIONE: Sem1, Sem2 ; shm
     if((semID = semget(ftok("ftok", 'a'), 2, IPC_CREAT | 0644)) == -1) ERROR;
