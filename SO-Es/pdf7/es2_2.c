@@ -1,56 +1,23 @@
 #include <stdio.h>
-#include <sys/shm.h>
-#include <sys/sem.h>
-#include <errno.h>
+#include "lib_sem.h"
 
-#define ERROR if(errno) {                                                                               \     
-    printf("ERROR - l %d: pid %ld - n %d - (%s)\n", __LINE__, (long)getpid(), errno, strerror(errno));  \
-    exit(1);                                                                                            \
-}
-
-typedef struct my_data {
-    char buf[30];
-} data;
-
-int reserveSem(int id_sem, int n_sem) {
-    struct sembuf s_ops;
-
-    s_ops.sem_num = n_sem;
-    s_ops.sem_op = -1;
-    s_ops.sem_flg = 0;
-
-    return semop(id_sem, &s_ops, 1);
-}
-
-int releaseSem(int id_sem, int n_sem) {
-    struct sembuf s_ops;
-
-    s_ops.sem_num = n_sem;
-    s_ops.sem_op = 1;
-    s_ops.sem_flg = 0;
-
-    return semop(id_sem, &s_ops, 1);
-}
 
 int main() {
     int semID, shmID;
     data* shmp;
 
-    if ((semID = semget(ftok("ftok", 'b'), 2, 0644)) == -1)
-        ERROR;
-    
-    reserveSem(semID, 1);
+    // CREAZIONE: Sem1, Sem2 ; shm
+    if((semID = semget(ftok("ftok", 'a'), 2, 0644)) == -1) ERROR;
+    if((shmID = shmget(ftok("ftok", 'a'), sizeof(data), 0644)) == -1) ERROR;
 
-    if ((shmID = shmget(ftok("ftok", 'b'), sizeof(struct my_data), 0644)) == -1)
-        ERROR;
+    if(reserveSem(semID,0) == -1 ) ERROR;  // aspetta la scrittura
 
-    if((shmp = shmat(shmID, NULL, 0)) == (void *)-1) 
-        ERROR;
+    //SHELL MEMORY: mount - lettura - unmount
+    if((shmp = shmat(shmID, NULL, 0)) == (void *)-1) ERROR;
+    printf("%s \n", shmp->buf);            // legge da shm
+    if(shmdt(shmp) == -1) ERROR;
 
-    printf("%s \n", shmp->buf);
+    if(releaseSem(semID,1) == -1) ERROR;   // fa ripartire la scrittura
 
-    if(shmdt(shmp) == -1) 
-        ERROR;
-    
-    releaseSem(semID, 0);
+    exit(0);
 }

@@ -1,36 +1,5 @@
 #include <stdio.h>
-#include <sys/shm.h>
-#include <sys/sem.h>
-#include <errno.h>
-
-#define ERROR if(errno) {                                                                               \     
-    printf("ERROR - l %d: pid %ld - n %d - (%s)\n", __LINE__, (long)getpid(), errno, strerror(errno));  \
-    exit(1);                                                                                            \
-}
-
-typedef struct my_data {
-    char buf[30];
-} data;
-
-int reserveSem(int id_sem, int n_sem) {
-    struct sembuf s_ops;
-
-    s_ops.sem_num = n_sem;
-    s_ops.sem_op = -1;
-    s_ops.sem_flg = 0;
-
-    return semop(id_sem, &s_ops, 1);
-}
-
-int releaseSem(int id_sem, int n_sem) {
-    struct sembuf s_ops;
-
-    s_ops.sem_num = n_sem;
-    s_ops.sem_op = 1;
-    s_ops.sem_flg = 0;
-
-    return semop(id_sem, &s_ops, 1);
-}
+#include "lib_sem.h"
 
 int main() {
     int semID, shmID;
@@ -42,27 +11,29 @@ int main() {
     if((shmID = shmget(ftok("ftok", 'b'), sizeof(struct my_data), IPC_CREAT | 0644)) == -1)
         ERROR;
 
-    if((shmp = shmat(shmID, NULL, 0)) == (void *)-1) 
-        ERROR;
+    // CREAZIONE: Sem1, Sem2 ; shm
+    if((semID = semget(ftok("ftok", 'a'), 2, IPC_CREAT | 0644)) == -1) ERROR;
+    if((shmID = shmget(ftok("ftok", 'a'), sizeof(data), IPC_CREAT | 0644)) == -1) ERROR;
 
-    scanf("%s", shmp -> buf);
+    // INIZIALIZZAIONE: Sem1, Sem2 = 0
+    initSemInUse(semID, 0);
+    initSemInUse(semID, 1);
 
-    releaseSem(semID, 1);
-    reserveSem(semID, 0);
+    //SHELL MEMORY: mount - caricamento - unmount
+    if((shmp = shmat(shmID, NULL, 0)) == (void *)-1) ERROR;
+    scanf("%s", shmp->buf);                // carinca nella shm
+    if(shmdt(shmp) == -1) ERROR;
     
-    if(shmdt(shmp) == -1) 
-        ERROR;
-    printf("reader terminato \n");
-    
-    if(semctl(semID, IPC_RMID, 0) == -1) {
-        ERROR;
-    } else
-        printf("Semaforo deallocato\n");
+    if(releaseSem(semID,0) == -1) ERROR;  // fa partire la lettura
+ 
+    if(reserveSem(semID,1) == -1) { ERROR; }  // aspetta la terminazione della lettura
+    else printf("Reader terminato\n");
 
-    if(shmctl(shmID, IPC_RMID, 0) == -1) {
-        ERROR;
-    } else
-        printf("Memoria deallocata\n");
+    //RIMOZIONE: Sem1, Sem2 ; shm
+    if(semctl(semID, IPC_RMID, 0) == -1) { ERROR; } 
+    else printf("Semafori deallocati \n");
+    if(shmctl(shmID, IPC_RMID, 0) == -1) { ERROR; } 
+    else printf("Memoria deallocata \n");
     
     exit(0);
 }
