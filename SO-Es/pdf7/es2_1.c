@@ -11,7 +11,9 @@ int main() {
 
     // INIZIALIZZAIONE: Sem1, Sem2 = 0
     initSemInUse(semID, 0);
-    initSemInUse(semID, 1);
+    initSemAvailable(semID, 1);
+
+    if(releaseSem(semID,1) == -1) ERROR;  // fa partire la scrittura
 
     //SHELL MEMORY: mount - caricamento - unmount
     if((shmp = shmat(shmID, NULL, 0)) == (void *)-1) ERROR;
