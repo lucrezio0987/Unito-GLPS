@@ -36,17 +36,21 @@ int main() {
     int semID, shmID;
     data* shmp;
 
-    if((semID = semget(ftok("ftok", 'a'), 2, 0644)) == -1) ERROR;
+    if ((semID = semget(ftok("ftok", 'b'), 2, 0644)) == -1)
+        ERROR;
+    
+    reserveSem(semID, 1);
 
-    if(reserveSem(semID,0) == -1 ) ERROR;
+    if ((shmID = shmget(ftok("ftok", 'b'), sizeof(struct my_data), 0644)) == -1)
+        ERROR;
 
-    if((shmID = shmget(ftok("ftok", 'a'), sizeof(data), 0644)) == -1) ERROR;
+    if((shmp = shmat(shmID, NULL, 0)) == (void *)-1) 
+        ERROR;
 
-    if((shmp = shmat(shmID, NULL, 0)) == (void *)-1) ERROR;
     printf("%s \n", shmp->buf);
 
-    //if(shmdt(shmp) == -1) ERROR;
-    if(releaseSem(semID,1) == -1) ERROR;
-
-    exit(0);
+    if(shmdt(shmp) == -1) 
+        ERROR;
+    
+    releaseSem(semID, 0);
 }

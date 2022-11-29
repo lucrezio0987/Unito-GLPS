@@ -29,6 +29,7 @@ int main() {
         default:
             break;
     }
+
     int id;
     if((id = shmget(ftok("ftok", 'a'), sizeof(data), IPC_CREAT | 0600)) == -1)
         ERROR;
