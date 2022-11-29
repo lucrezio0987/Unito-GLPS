@@ -9,6 +9,7 @@
 
 typedef struct my_data {
     char buf[30];
+    int val;
 } data;
 
 union semun {
