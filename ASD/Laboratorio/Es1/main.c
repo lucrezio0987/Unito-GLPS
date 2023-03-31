@@ -9,23 +9,26 @@
 
 void main() {
     //INPUT
-    int A[DIM1]= {10, 8 , 9, 11, 6, 5, 1, 3, 2, 5};
 
-    int B[DIM2]= {10, 8 , 9, 11, 6, 5, 1, 3, 2, 5, 
-                 10, 8 , 9, 11, 6, 5, 1, 3, 2, 5,
-                 10, 8 , 9, 11, 6, 5, 1, 3, 2, 5,
-                 10, 8 , 9, 11, 6, 5, 1, 3, 2, 5,
-                 10, 8 , 9, 11, 6, 5, 1, 3, 2, 5,
-                 10, 8 , 9, 11, 6, 5, 1, 3, 2, 5,
-                 10, 8 , 9, 11, 6, 5, 1, 3, 2, 5,
-                 10, 8 , 9, 11, 6, 5, 1, 3, 2, 5,
-                 10, 8 , 9, 11, 6, 5, 1, 3, 2, 5,
-                 10, 8 , 9, 11, 6, 5, 1, 3, 2, 5, 0};
+    int A_in[DIM1] = {10, 8 , 9, 11, 6, 5, 1, 3, 2, 5};
+    int B_in[DIM2] = {10, 8 , 9, 11, 6, 5, 1, 3, 2, 5, 
+                      10, 8 , 9, 11, 6, 5, 1, 3, 2, 5,
+                      10, 8 , 9, 11, 6, 5, 1, 3, 2, 5,
+                      10, 8 , 9, 11, 6, 5, 1, 3, 2, 5,
+                      10, 8 , 9, 11, 6, 5, 1, 3, 2, 5,
+                      10, 8 , 9, 11, 6, 5, 1, 3, 2, 5,
+                      10, 8 , 9, 11, 6, 5, 1, 3, 2, 5,
+                      10, 8 , 9, 11, 6, 5, 1, 3, 2, 5,
+                      10, 8 , 9, 11, 6, 5, 1, 3, 2, 5,
+                      10, 8 , 9, 11, 6, 5, 1, 3, 2, 5, 0};
 
-    printf("Vettore A[10]\n");
-    merge_binary_insertion_sort(A, DIM1, sizeof(A[0]), DIM1, Compare);
-    printf("Vettore A[101]\n");
-    merge_binary_insertion_sort(B, DIM2, sizeof(B[0]), DIM2, Compare);
+    Array *A = ArrayCreateInteger(A_in, DIM1);
+    Array *B = ArrayCreateInteger(B_in, DIM2);
+
+    printf("Vettore A[%d]\n",A->nitems);
+    merge_binary_insertion_sort(A->array, A->nitems, sizeof((A->array)[0]), A->nitems, A->compar);
+    printf("Vettore B[%d]\n",B->nitems);
+    merge_binary_insertion_sort(B->array, B->nitems, sizeof((B->array)[0]), B->nitems, B->compar);
 
     return;
 }

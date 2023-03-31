@@ -1,38 +1,49 @@
-void stampa(int A[], int nitems){
+typedef struct _Array Array;
+
+struct _Array{
+  void** array;
+  unsigned long nitems;
+  int (*compar)(void*,void*);
+};
+
+void stampa(void* A, int nitems){
     printf("[ ");
-    for(int i=0; i<nitems; ++i) printf("%d ",A[i]);
+    for(int i=0; i<nitems; ++i) printf("%ld ",((long int*)A)[i]);
     printf("]\n");
     return;
 }
 
-int search(int x, int A[], int i, int j){
+int search(int x, void *A, int i, int j, int (*compar)(const void *, const void*)){
     int m;
     if (i>=j) {
-        if(A[i]<x)                  return i+1;
-        else if(x<A[j] && j>=0)     return j;
+        if((compar)(A+sizeof(void)*i,x)==-1)                  return i+1;
+        else if((compar)(x,A+sizeof(void)*j)==-1 && j>=0)     return j;
         else                        return i;
     } else {
         m = (i+j)/2;
-        if(A[m] == x)               return m;
+        if((compar)(A+sizeof(void)*m,x)==0)               return m;
         else {
-            if(x < A[m])            return search(x, A, i, m-1);
-            else                    return search(x, A, m+1, j);
+            if((compar)(x,A+sizeof(void)*m)==-1)            return search(x, A, i, m-1,compar);
+            else                    return search(x, A, m+1, j,compar);
         }
     }
 }
 
-void swap(int A[], int i, int j){
-    int temp_el = A[j];
-    for(;i<j;--j)   A[j] = A[j-1];
-    A[i] = temp_el;
+void swap(void *A, int i, int j){
+    long int temp_el = *(A+sizeof(void)*j);
+    
+    for(;i<j;--j)   *(A+sizeof(void)*j) = *(A+sizeof(void)*(j-1));
+    
+    *(A+sizeof(void)*i) = (void)temp_el;
+    
     return;
 }
 
-void InsertionSort(int A[], int nitems){
+void InsertionSort(void *A, int nitems, int (*compar)(const void *, const void*)){
     int i,j;
     for(i=1; i < nitems; ++i) {
-        if(A[i]<A[i-1]){
-            j=search(A[i], A, 0, i-1);
+        if((compar)(A+sizeof(void)*i, A+sizeof(void)*(i-1)) == -1){
+            j=search(A+sizeof(void)*i, A, 0, i-1,compar);
             if(j<0) printf("Errore %d\n",j);
             else swap(A,j,i);
         }
@@ -67,10 +78,26 @@ void MergeSort(int A[], int i, int j, int nitems) {
     return;
 }
 
-int Compare(const void* i, const void* j){   
-    if (*(int *)i < *(int *)j)       return -1;
-    else if (*(int *)i == *(int *)j) return 0;
-    else                     return 1;
+int CompareInt(const void* i, const void* j){   
+    if (*(int *)i < *(int *)j)          return -1;
+    else if (*(int *)i == *(int *)j)    return 0;
+    else                                return 1;
+}
+
+Array* ArrayCreateInteger(int list[], int nitems){
+    Array* A = (Array*) malloc(sizeof(Array));
+
+    A->array = (void**)malloc(sizeof(void*)*nitems);
+    A->nitems = nitems;
+    A->compar = CompareInt;
+    
+    int i;
+
+    for(i=0; i<nitems; ++i) {
+        (A->array)[i] = (void*)list[i];
+    }
+
+    return A;
 }
 
 void merge_binary_insertion_sort(void *base, size_t nitems, size_t size, size_t k, int (*compar)(const void *, const void*)){
@@ -84,16 +111,10 @@ void merge_binary_insertion_sort(void *base, size_t nitems, size_t size, size_t 
         MergeSort(base, 0, nitems-1,nitems);
     } else {                        // Min
         printf("    (BinaryInsertionSorte): ");
-        InsertionSort(base, nitems);
+        InsertionSort(base, nitems, compar);
     }  
 
     stampa(base, nitems);
-
-    // COMPARAZIONE
-    printf("\n  ## Comparezione: base[0] e base[1]\n");
-    printf("    --> %d\n",(compar)(base,base+size));
-    printf("    --> %d\n",(compar)(base,base));
-    printf("    --> %d\n\n",(compar)(base+size,base));
 
     return;
 }
