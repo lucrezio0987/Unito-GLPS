@@ -30,7 +30,7 @@ int search(int x, void *A, int i, int j, int (*compar)(const void *, const void*
 }
 
 void swap(void *A, int i, int j){
-    long int temp_el = *(A+sizeof(void)*j);
+    void temp_el = *(A+sizeof(void)*j);
     
     for(;i<j;--j)   *(A+sizeof(void)*j) = *(A+sizeof(void)*(j-1));
     
