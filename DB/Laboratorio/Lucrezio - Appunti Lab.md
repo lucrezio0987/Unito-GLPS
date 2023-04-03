@@ -1,4 +1,4 @@
-## Modello Entità-Relazione (**[ ER ]**)
+##   (**[ ER ]**)
   - Non modella il comportamento del sistema (come invece UML), ma *modella i dati*
 
 
@@ -66,10 +66,19 @@
 
 ### Strategia di progetto
 
-- [top-down]: A partire dalle specifiche si individuano e specificano i concetti cardine creando la struttura dello schema e successivamente mediante trasformazioni lo si raffina descrivendo i vari concetti con maggiore dettaglio
-- [bottom-up]:  Le specifiche sono suddivise in parti elementari, che vengono poi tradotte in semplici schemi concettuali e poi fusi fino a giungere a uno schema completo
-- [inside-out]: (variante do bottom-up) Si individuano alcuni concetti importanti e poi da questi ci si muove a macchia d’olio. Si rappresentano prima i concetti legati a quelli già definiti 
-- [mista]: (In pratica) 
++ [top-down]: A partire dalle specifiche si individuano e specificano i concetti cardine creando la struttura dello schema e successivamente mediante trasformazioni lo si raffina descrivendo i vari concetti con maggiore dettaglio 
+  - **PRO**    : permette inizialmente di trascurare alcuni dettagli che possono essere specificati successivamente
+  - **CONTRO** : è possibile solo quando si possiede una visione globale di tutte le componenti,
+
++ [bottom-up]:  Le specifiche sono suddivise in parti elementari, che vengono poi tradotte in semplici schemi concettuali e poi fusi fino a giungere a uno schema completo
+  - **PRO**    : Adatta a una progettazione di gruppo nella quale diversi progettisti possono sviluppare parti separate che successivamente vengono assemblate
+  - **CONTRO** : L’integrazione di sistemi concettuali diversi può comportare difficoltà notevoli
+
++ [inside-out]: (variante do bottom-up) Si individuano alcuni concetti importanti e poi da questi ci si muove a macchia d’olio. Si rappresentano prima i concetti legati a quelli già definiti
+  - **PRO**    : Non richiede passi di integrazione.
+  - **CONTRO** : È necessario continuamente riesaminare tutte le specifiche per individuare concetti non ancora rappresentati e descriverli nel dettaglio
+
++ [mista]: (In pratica) 
   1. si inizia con uno shcema scheletro
   2. poi viene decomposta, espansa e integrata attreverso le altre strategie.
 
@@ -97,6 +106,10 @@
 
   [Fasi]: 
     1. **Ristrutturazione dello schema concettuale** (EER)
+      [Obbietttivi]:
+       - semplificare la traduzione nel modello logico
+       - “ottimizzare” le prestazioni
+      [Passi]:
       - *Analisi delle ridondanze*: si decide se eliminare o aggiungere ridondanze presenti nello schema
       - *Eliminazione delle generalizzazioni*: tutte le generalizzazioni presenti vengono analizzate e sostituite da altri concetti
       - *Partizionamento/accorpamento di entità e associazioni*: si decide se è opportuno partizionare o accorpare concetti dello schema unico concetto
@@ -104,6 +117,12 @@
       - *Eliminazione degli attributi multivalore*
       - *Eliminazione degli attributi composti*
     2. **Traduzione verso il modello logico e ottimizzazioni**
+      - *Associazioni molti a molti*
+      - *Associazioni ricorsive*
+      - *Associazioni n-arie*
+      - *Associazioni uno a molti*
+      - *Entità con identificazione esterna*
+      - *Associazioni uno a uno*
 
 ### Analisi delle PRESTAZIONI:
   [Indicatori]:
@@ -128,9 +147,54 @@
     - Operazioni di inserimento e modifica dei dati *Meno efficienti*
     - Maggiore occupazione di spazio
 
-[...]
-### Associazione uno a uno
-[...]
+  [Struttura]:
+    1. Elencare le ridondanze rilevate
+      2. Per ogni ridondanza:
+      3. Elencare le operazioni significative su cui la presenza o assenza della ridondanza può avere effetto
+      4. Per ogni operazione:
+        5. Per i due scenari A (assenza) e B (presenza di ridondanza):
+          6. Schema di navigazione relativo all’operazione
+          7. Tavola degli accessi
+          8. Calcolo numero accessi
+      9. Calcolo spazio e tempo in presenza e assenza di ridondanza considerando le varie operazioni e la loro frequenza
+      10.  Confronto e scelta se introdurre o non introdurre la ridondanza
+
+###  Eliminazione delle GENERALIZZAZIONI
+  Si eliminano perciò le generalizzazioni sostituendole con entità, associazioni e regole aziendali
+
+  [Possibilità]:
+  i.  *Accorpamento figli nel genitore*: conviene se gliaccessi non fanno distinzioni tra i figli
+  ii. *Accorpamento genitore nei figli*: possibile solo se è totale; conviene se gli accessi alle entità figlie sono distinti
+  iii. *Sostituzione generalizzazione con associazioni*: conviene se gli accessi ai figli sono separati dagli accessi al genitore
+
+###  Partizionamento/accorpamento di entità e associazioni
+  [Possibilità]:
+  i.  Separare attributi di uno stesso concetto ai quali si accede in operazioni diverse
+  ii. Accorpando attributi di concetti diversi a cui si accede con le medesime operazioni
+
+### Scelta degli identificatori principali
+
+  [Criteri]:
+  - *Assenza di opzionalità*
+  - *Semplicità*
+  - Utilizzo nelle *operazioni più frequenti* o importanti
+
+### Eliminazione degli attributi multivalore
+  Posso trasformare gli attributi multivalore, reificando l’attributo e aggiungendo un’associazione
+
+### Eliminazione degli attributi composti
+  Anche gli attributi composti non sono rappresentabili direttamente in relazionale e devono essere trasformati
+
+## Traduzione verso il modello logico
+  > ENTITÀ        ---[diventano]--->  *relazioni con gli stessi attributi* delle entità
+  > ASSOCIAZIONI  ---[diventano]--->  *relazioni con attributi delle associazioni* + *gli identificatori delle entità* coinvolte
+
+  + **Associazioni molti a molti**
+  + **Associazioni ricorsive**
+  + **Associazioni n-arie**
+  + **Associazioni uno a molti**
+  + **Associazioni uno a uno**
+
 
 ### Traduzione in realzione
   suggerimento: ristrutturiamo e poi partiamo da Sede
@@ -139,3 +203,4 @@
 -------------------
 
 ## SQL
+  

@@ -390,3 +390,17 @@
 
 > metodo dell'iterazione
 > metodo dell'induzione
+
+------
+
+## Programmazione Dinamica
+ 
+  Programmazione dinamica (PD)    VS    Divide-et-Impera (DI)
+
+  [Condizioni_di_applicabilità]:
+  - Sottostruttira della soluzione
+  - Sottoproblemi ripetuti
+
+  [Fasi_di_sviluppo]:
+
+### Successione di fibonacci
