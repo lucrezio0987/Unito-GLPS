@@ -22,17 +22,16 @@ void main() {
                       10, 8 , 9, 11, 6, 5, 1, 3, 2, 5,
                       10, 8 , 9, 11, 6, 5, 1, 3, 2, 5, 0};
 
-    Array *A; Array *B;
-
-    ArrayCreate(A, FIELD_INT);
-    ArrayCreate(B, FIELD_INT);
-    
-
+    Array *A = ArrayCreateInteger(A_in, DIM1);
+    Array *B = ArrayCreateInteger(B_in, DIM2);
 
     printf("Vettore A[%d]\n",A->nitems);
     merge_binary_insertion_sort(A->array, A->nitems, sizeof((A->array)[0]), A->nitems, A->compar);
     printf("Vettore B[%d]\n",B->nitems);
     merge_binary_insertion_sort(B->array, B->nitems, sizeof((B->array)[0]), B->nitems, B->compar);
+
+
+    sort_records("../ordered_array_sample_file.csv", "outfile.csv", 10, FIELD_INT);
 
     return;
 }
