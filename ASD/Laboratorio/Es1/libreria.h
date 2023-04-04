@@ -138,7 +138,7 @@ void sort_records(const char *infile, const char *outfile, size_t k, size_t fiel
     fclose(fp);
 
     fp = fopen(outfile, "w+");
-    for(i=0; i<A->nitems, ++i)
+    for(i=0; i<A->nitems; ++i)
         fprintf(fp,"%d\n", A->array[i]);
     fclose(fp);
 

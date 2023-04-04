@@ -2,7 +2,7 @@
 // field2: (tipo intero);
 // field3: (tipo floating point).
 
-enum FIELD{NONE,FIELD_STRING,FIELD_INT,FIELD_FLOAT}
+enum FIELD{NONE,FIELD_STRING,FIELD_INT,FIELD_FLOAT};
 
 typedef struct _Array Array;
 
@@ -12,6 +12,15 @@ struct _Array{
   unsigned short field;
   int (*compar)(void*,void*);
 };
+
+int CompareInt(const void* i, const void* j){   
+    if (*(int *)i < *(int *)j)          return -1;
+    else if (*(int *)i == *(int *)j)    return 0;
+    else                                return 1;
+}
+
+int CompareFloat(const void* i, const void* j);
+int CompareString(const void* i, const void* j);
 
 void ArrayCreate(Array* A, size_t field){
     A = (Array*) malloc(sizeof(Array));
@@ -35,26 +44,20 @@ void ArrayCreate(Array* A, size_t field){
     return A;
 }
 
-int CompareInt(const void* i, const void* j){   
-    if (*(int *)i < *(int *)j)          return -1;
-    else if (*(int *)i == *(int *)j)    return 0;
-    else                                return 1;
-}
-
 void ArrayAddItem(Array* A, void *item, size_t field) {
     A->nitems = A->nitems + 1;
     switch(A->field){
         case 1: 
-            A->array = (char**)realloc(sizeof(char*)*A->nitems);
-            (A->array)[i] = (char) *item;
+            realloc(A->array, sizeof(char*)*A->nitems);
+            A->array[A->nitems-1] = *(char *)item;
             break;
         case 2: 
-            A->array = (int**)realloc(sizeof(int*)*A->nitems);
-            (A->array)[i] = (int) *item;
+            realloc(A->array, sizeof(int*)*A->nitems);
+            (A->array)[A->nitems-1] = *(int *)item;
             break;
         case 3:
-            A->array = (float**)realloc(sizeof(float*)*A->nitems);
-            (A->array)[i] = (float) *item;
+            realloc(A->array, sizeof(float*)*A->nitems);
+            (A->array)[A->nitems-1] = *(float *)item;
             break;
         default: break;
     }
