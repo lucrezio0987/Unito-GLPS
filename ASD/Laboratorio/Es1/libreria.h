@@ -1,10 +1,4 @@
-typedef struct _Array Array;
-
-struct _Array{
-  void** array;
-  unsigned long nitems;
-  int (*compar)(void*,void*);
-};
+#include "field.h"
 
 void stampa(void* A, int nitems){
     printf("[ ");
@@ -78,28 +72,6 @@ void MergeSort(int A[], int i, int j, int nitems) {
     return;
 }
 
-int CompareInt(const void* i, const void* j){   
-    if (*(int *)i < *(int *)j)          return -1;
-    else if (*(int *)i == *(int *)j)    return 0;
-    else                                return 1;
-}
-
-Array* ArrayCreateInteger(int list[], int nitems){
-    Array* A = (Array*) malloc(sizeof(Array));
-
-    A->array = (void**)malloc(sizeof(void*)*nitems);
-    A->nitems = nitems;
-    A->compar = CompareInt;
-    
-    int i;
-
-    for(i=0; i<nitems; ++i) {
-        (A->array)[i] = (void*)list[i];
-    }
-
-    return A;
-}
-
 void merge_binary_insertion_sort(void *base, size_t nitems, size_t size, size_t k, int (*compar)(const void *, const void*)){
     
     printf("  ## Ordinamento\n    base: ");
@@ -129,4 +101,6 @@ void merge_binary_insertion_sort(void *base, size_t nitems, size_t size, size_t 
    maggiore, uguale o minore del secondo).
 */
 
-void sort_records(const char *infile, const char *outfile, size_t k, size_t field);
+void sort_records(const char *infile, const char *outfile, size_t k, size_t field){
+
+}

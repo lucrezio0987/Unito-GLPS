@@ -22,8 +22,12 @@ void main() {
                       10, 8 , 9, 11, 6, 5, 1, 3, 2, 5,
                       10, 8 , 9, 11, 6, 5, 1, 3, 2, 5, 0};
 
-    Array *A = ArrayCreateInteger(A_in, DIM1);
-    Array *B = ArrayCreateInteger(B_in, DIM2);
+    Array *A; Array *B;
+
+    ArrayCreate(A, FIELD_INT);
+    ArrayCreate(B, FIELD_INT);
+    
+
 
     printf("Vettore A[%d]\n",A->nitems);
     merge_binary_insertion_sort(A->array, A->nitems, sizeof((A->array)[0]), A->nitems, A->compar);
