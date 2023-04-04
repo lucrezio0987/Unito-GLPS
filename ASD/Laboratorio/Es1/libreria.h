@@ -128,3 +128,5 @@ void merge_binary_insertion_sort(void *base, size_t nitems, size_t size, size_t 
    restituisce un numero maggiore, uguale o minore di zero se il primo argomento è rispettivamente 
    maggiore, uguale o minore del secondo).
 */
+
+void sort_records(const char *infile, const char *outfile, size_t k, size_t field);

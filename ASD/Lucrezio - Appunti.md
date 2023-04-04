@@ -257,6 +257,12 @@
 
 ## Relazioni di ricorrenza
   La funzione T(algoritmo_ricorsivo) è ricorsiva e può essere descritta tramite una relazione di ricorrenza.
+  
+  [Algoritmo_Fattoriale]:
+  ``` Fattoriale(n)
+        if n < 2 then return 1
+        return n·Fattoriale(n − 1)
+  ```
 
   [Metodi]:   ( Es: fattoriale )
   - **Iterazione**: ripetizione della ricorsione fino alla soluzione
@@ -284,7 +290,16 @@
              = c + nd + d     [utilizzando l'ipotesi induttiva]
              = c + (n+1)d     [dimostrato]
     ```
-  [Relazioni_lineari_a_partizione_costante]:
+
+    [Algoritmo_Torri_di_Hanoi]:
+  ``` MoveTower(n, A, B, C )
+        if n ≥ 1 then
+          MoveTower(n − 1, A, C, B )
+          move 1 disk from A to C
+          MoveTower(n − 1, B, A, C )
+  ```
+  ....
+  - Relazioni_lineari_a_partizione_costante:
     $  T(n) = T(n-1) + d  $
   
   ```  
@@ -293,6 +308,7 @@
          = c^" * (c*T(n-3) + d) + cd + d =  c^3 * T(n-3) + c^2 * d + cd + d
           ......
   ```
+  .....
 
 ### Ordinamento Ricorsivo
 
@@ -366,7 +382,21 @@
     - 
     [Complessità]: 
 
-### Relazioni lineari a partizione bilanciata
+### Relazioni lineari di ricorrenza a partizione bilanciata
+  + **divide et impera** (Approccio Generico)
+  ```DeI(P, n)                                [n è la dimensione del problema P]
+      if n ≤ k then
+        r ← soluzione diretta del problema
+        return r
+      else
+        dividi il problema in sotto-problemi Pi, ..., Ph di dimensione n1 , ..., nh
+        for i ← 1 to h do
+          ri ← DeI(Pi, ni )
+        end for
+        return combinazione di r1 , ..., rh
+      end if
+  ```
+
   + **Ricerca Binaria Ricorsiva**
   [Algoritmo]:
   ```BinSearch-Ric(x,A,i,j)
@@ -386,11 +416,62 @@
       end if
     ```
    [Complessità]: 
-    T(n) = Θ(log(n))
+    __Cp__: T(n) = Θ(log(n))
 
 > metodo dell'iterazione
 > metodo dell'induzione
 
+  + **Merge-Sort**
+  [Algoritmo]:
+  ```Merge-Sort(A[1..n])
+      if n > 1 then
+        m ← bn/2c
+        Merge-Sort(A[1..m])
+        Merge-Sort(A[m + 1..n])
+        Merge(A, 1, m, n)
+      end if
+  ```
+
+  ```Merge(A, f, m, l)               [ITERATIVO]
+      i, j, k ← f, m + 1, 1
+      while i ≤ m ∧ j ≤ l do
+        if A[i] ≤ A[j] then
+          B[k] ← A[i]
+          i ← i +1
+        else
+          B[k] ← A[j]
+          j ← j +1
+        end if
+        k ← k +1
+      end while
+      if i ≤ m then
+        B[k..k + m − i] ← A[i..m]
+      else
+        B[k..k + l − j] ← A[j..l]
+      end if
+      A[f, l] ← B[1..l − f + 1]
+  ```
+  ```Merge(B[1..nB ], C[1..nC ])     [RICORSIVO]
+      if nB = 0 then
+        return C
+      else 
+        if nC = 0 then
+          return B
+        else 
+          if B[1] ≤ C[1] then
+            return [B[1], Merge(B[2..nB ], C)]
+          else
+            return [C[1], Merge(B, C[2..nC ])]
+          end if
+        end if
+      end if
+  ```
+     [Complessità]: 
+    __Cp__: Θ(n*log(n))
+  
+  <Teorema_Master: fornisce una ricetta per trovare un limite superiore in senso O data una relazione di ricorrenza a partizioni bilanciate.>
+  ........
+  
 ------
 
 ## Programmazione Dinamica
