@@ -13,6 +13,13 @@ struct _Array{
   int (*compar)(void*,void*);
 };
 
+union _temp_element{
+    int* field_int;
+    char** field_char;
+    float* field_float;
+};
+
+
 // -- PROTOTIPI
 /* x */ //int CompareInt(const void* i, const void* j);
 /*   */ //int CompareFloat(const void* i, const void* j);
@@ -33,8 +40,12 @@ int CompareInt(const void* i, const void* j){
     else                                return 1;
 }
 
-int CompareFloat(const void* i, const void* j);
-int CompareString(const void* i, const void* j);
+int CompareFloat(const void* i, const void* j){
+    return 0;
+}
+int CompareString(const void* i, const void* j) {
+    return 0;
+}
 
 Array* ArrayCreate(size_t field){
     Array* A = (Array*) malloc(sizeof(Array));
@@ -109,27 +120,58 @@ void sort_records(const char *infile, const char *outfile, size_t k, size_t fiel
     return;
 }
 
+int search(void *x, Array* A, unsigned int i, unsigned int j, int (*compar)(const void *, const void*)){
+    unsigned int m;
+    if (i>=j) {
+        if((compar)((A->array)[i],*x)==-1)                  return i+1;
+        else if((compar)(*x,(A->array)[j])==-1 && j>=0)     return j;
+        else                        return i;
+    } else {
+        m = (i+j)/2;
+        if((compar)((A->array)[m],*x)==0)               return m;
+        else {
+            if((compar)(*x,(A->array)[m])==-1)            return search(x, A, i, m-1,compar);
+            else                    return search(x, A, m+1, j,compar);
+        }
+    }
+}
+
 void swap(Array* A, unsigned int i, unsigned int j){
+    union _temp_element temp_el;
     switch(A->field){
         case 1: 
-            char* temp_el = malloc(sizeof(char*));
+            temp_el.field_char = malloc(sizeof(char*));
+            temp_el.field_char = (A->array)[i];
             break;
         case 2: 
-            int* temp_el = malloc(sizeof(int)); 
+            temp_el.field_int = malloc(sizeof(int)); 
+            temp_el.field_int = (A->array)[i];
             break;
         case 3:
-            float* temp_el = malloc(sizeof(float)); 
+            temp_el.field_float = malloc(sizeof(float));
+            temp_el.field_float = (A->array)[i]; 
             break;
         default: break;
     }
-    *temp_el = (A->array)[i];
+
 
     while(i<j) {   
         (A->array)[j] = (A->array)[j-1];
         --j;
     }
     
-    (A->array)[i] = *temp_el;
+        switch(A->field){
+        case 1: 
+            (A->array)[i] = temp_el.field_char;
+            break;
+        case 2: 
+            (A->array)[i] = temp_el.field_int;
+            break;
+        case 3:
+            (A->array)[i] = temp_el.field_float; 
+            break;
+        default: break;
+    }
     
     return;
 }
@@ -138,7 +180,7 @@ void InsertionSort(Array* A, unsigned int nitems, int (*compar)(const void *, co
     int i,j;
     for(i=1; i < nitems; ++i) {
         if((compar)((A->array)[i], (A->array)[i-1]) == -1){
-            j=search((A->array)[i], (A->array), 0, i-1,compar);
+            j=search(A->array, (A->array), 0, i-1,compar);
             if(j<0) printf("Errore %d\n",j);
             else swap(A,j,i);
         }

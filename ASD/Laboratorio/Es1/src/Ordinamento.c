@@ -31,7 +31,7 @@ void main() {
     merge_binary_insertion_sort(B, B->nitems, sizeof((B->array)[0]), B->nitems, B->compar);
 
 
-//    sort_records("../ordered_array_sample_file.csv", "outfile.csv", 10, FIELD_INT);
+//    sort_records("../../ordered_array_sample_file.csv", "outfile.csv", 10, FIELD_INT);
 
     return;
 }
