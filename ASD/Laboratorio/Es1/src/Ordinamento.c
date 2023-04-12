@@ -5,7 +5,7 @@
 #define DIM1 10
 #define DIM2 101
 
-#include "Ordinamento.h"
+#include "libreria.h"
 
 void main() {
     //INPUT
@@ -26,12 +26,12 @@ void main() {
     Array *B = ArrayCreateInteger(B_in, DIM2);
 
     printf("Vettore A[%d]\n",A->nitems);
-    merge_binary_insertion_sort(A->array, A->nitems, sizeof((A->array)[0]), A->nitems, A->compar);
+    merge_binary_insertion_sort(A, A->nitems, sizeof((A->array)[0]), A->nitems, A->compar);
     printf("Vettore B[%d]\n",B->nitems);
-    merge_binary_insertion_sort(B->array, B->nitems, sizeof((B->array)[0]), B->nitems, B->compar);
+    merge_binary_insertion_sort(B, B->nitems, sizeof((B->array)[0]), B->nitems, B->compar);
 
 
-    sort_records("../ordered_array_sample_file.csv", "outfile.csv", 10, FIELD_INT);
+//    sort_records("../ordered_array_sample_file.csv", "outfile.csv", 10, FIELD_INT);
 
     return;
 }

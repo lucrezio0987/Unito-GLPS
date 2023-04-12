@@ -24,10 +24,13 @@ int search(int x, void *A, int i, int j, int (*compar)(const void *, const void*
 }
 
 void swap(void *A, int i, int j){
-    void* temp_el; 
-    *temp_el = *(A+sizeof(A)*j);
+    void* temp_el = malloc(sizeof(void)); 
+    *temp_el = (void) A[j];
     
-    for(;i<j;--j)   *(A+sizeof(void)*j) = *(A+sizeof(void)*(j-1));
+    while(i<j) {   
+        *(A+sizeof(void)*j) = *(A+sizeof(void)*(j-1));
+        --j;
+    }
     
     *(A+sizeof(void)*i) = *temp_el;
     
@@ -46,9 +49,9 @@ void InsertionSort(void *A, int nitems, int (*compar)(const void *, const void*)
     return;
 }
 
-void Merge(int A[], int l , int m, int r, int nitems) {
+void Merge(void *A, int l , int m, int r, int nitems) {
     int *B,  i = l,  j = m+1,   k = 0;
-    B = malloc(nitems);
+    B = malloc(A-> * nitems);
 
     for(;i<=m && j<=r; ++k){
       if (A[i]<A[j])   { B[k] = A[i];  ++i; } 
@@ -62,7 +65,7 @@ void Merge(int A[], int l , int m, int r, int nitems) {
     return;
 }
 
-void MergeSort(int A[], int i, int j, int nitems) {
+void MergeSort(void *A, int i, int j, int nitems) {
     int m;
     if(i<j) {
         m = (i+j)/2;
@@ -98,7 +101,7 @@ Array* ArrayCreateInteger(int list[], int nitems){
 void merge_binary_insertion_sort(void *base, size_t nitems, size_t size, size_t k, int (*compar)(const void *, const void*)){
     
     printf("  ## Ordinamento\n    base: ");
-    stampa(base, nitems);
+    stampa(base->array, nitems);
 
     // ORDINAMENTO
     if(k>DISC){                      // Mag
@@ -142,7 +145,6 @@ void sort_records(const char *infile, const char *outfile, size_t k, size_t fiel
         fprintf(fp,"%d\n", A->array[i]);
     fclose(fp);
 
-
-
+    return;
 
 }
