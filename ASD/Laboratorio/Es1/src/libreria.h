@@ -69,6 +69,22 @@ Array* ArrayCreate(size_t field){
     return A;
 }
 
+Array* ArrayCreateInteger(int list[], int nitems){
+    Array* A = (Array*) malloc(sizeof(Array));
+
+    A->array = (void**)malloc(sizeof(void*)*nitems);
+    A->nitems = nitems;
+    A->compar = CompareInt;
+    
+    int i;
+
+    for(i=0; i<nitems; ++i) {
+        (A->array)[i] = (void*)list[i];
+    }
+
+    return A;
+}
+
 void ArrayAddItem(Array* A, void *item) {
     A->nitems = A->nitems + 1;
     switch(A->field){
@@ -120,18 +136,18 @@ void sort_records(const char *infile, const char *outfile, size_t k, size_t fiel
     return;
 }
 
-int search(void *x, Array* A, unsigned int i, unsigned int j, int (*compar)(const void *, const void*)){
+int search(void *item, Array* A, unsigned int i, unsigned int j, int (*compar)(const void*, const void*)){
     unsigned int m;
     if (i>=j) {
-        if((compar)((A->array)[i],*x)==-1)                  return i+1;
-        else if((compar)(*x,(A->array)[j])==-1 && j>=0)     return j;
+        if((compar)(&(A->array)[i],item)==-1)                  return i+1;
+        else if((compar)(item,&(A->array)[j])==-1 && j>=0)     return j;
         else                        return i;
     } else {
         m = (i+j)/2;
-        if((compar)((A->array)[m],*x)==0)               return m;
+        if((compar)(&(A->array)[m],item)==0)               return m;
         else {
-            if((compar)(*x,(A->array)[m])==-1)            return search(x, A, i, m-1,compar);
-            else                    return search(x, A, m+1, j,compar);
+            if((compar)(item,&(A->array)[m])==-1)            return search(item, A, i, m-1,compar);
+            else                    return search(item, A, m+1, j,compar);
         }
     }
 }
