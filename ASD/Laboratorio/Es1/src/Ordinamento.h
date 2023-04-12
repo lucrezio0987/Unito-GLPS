@@ -24,11 +24,12 @@ int search(int x, void *A, int i, int j, int (*compar)(const void *, const void*
 }
 
 void swap(void *A, int i, int j){
-    void temp_el = *(A+sizeof(void)*j);
+    void* temp_el; 
+    *temp_el = *(A+sizeof(A)*j);
     
     for(;i<j;--j)   *(A+sizeof(void)*j) = *(A+sizeof(void)*(j-1));
     
-    *(A+sizeof(void)*i) = (void)temp_el;
+    *(A+sizeof(void)*i) = *temp_el;
     
     return;
 }
@@ -127,9 +128,8 @@ void sort_records(const char *infile, const char *outfile, size_t k, size_t fiel
     FILE *fp;
     char temp[10];
     int i, item;
-    Array *A;
-
-    ArrayCreate(A, field);
+    
+    Array *A = ArrayCreate(A, field);
 
     fp = fopen(infile, "r");
     for(i=0; i<k; ++i)

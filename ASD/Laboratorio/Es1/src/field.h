@@ -22,8 +22,8 @@ int CompareInt(const void* i, const void* j){
 int CompareFloat(const void* i, const void* j);
 int CompareString(const void* i, const void* j);
 
-void ArrayCreate(Array* A, size_t field){
-    A = (Array*) malloc(sizeof(Array));
+void ArrayCreate(size_t field){
+    Array* A = (Array*) malloc(sizeof(Array));
     A->nitems = 0;
     A->field=field;
     switch(field){
@@ -57,9 +57,8 @@ void ArrayAddItem(Array* A, void *item, size_t field) {
             break;
         case 3:
             realloc(A->array, sizeof(float*)*A->nitems);
-            (A->array)[A->nitems-1] = *(float *)item;
+            (A->array)[A->nitems-1] = item;
             break;
         default: break;
     }
     return;
-}

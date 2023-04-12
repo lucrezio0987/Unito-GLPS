@@ -5,7 +5,7 @@
 #define DIM1 10
 #define DIM2 101
 
-#include "libreria.h"
+#include "Ordinamento.h"
 
 void main() {
     //INPUT

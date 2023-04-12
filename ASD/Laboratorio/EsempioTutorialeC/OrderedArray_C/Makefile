@@ -1,5 +1,5 @@
 CC = gcc
-all: bin/ordered_array bin/ordered_array_tests
+all: bin/ordered_array bin/ordered_array_tests folder
 
 CFLAGS = -g -Wall -Wextra -Wpedantic -Wconversion
 
@@ -9,6 +9,9 @@ COMMON_DEPS = $(INCLUDES) Makefile
 
 build/%.o: src/%.c $(COMMON_DEPS)
 	$(CC) $(CFLAGS) -c $< -o $@
+
+folder: bin build
+	mkdir bin build
 
 bin/ordered_array: build/ordered_array.o build/ordered_array_main.o $(COMMON_DEPS)
 	$(CC) -o bin/ordered_array build/ordered_array.o build/ordered_array_main.o
