@@ -89,16 +89,19 @@ void ArrayAddItem(Array* A, void *item) {
     A->nitems = A->nitems + 1;
     switch(A->field){
         case 1: 
-            realloc(A->array, sizeof(char*)*A->nitems);
-            A->array[A->nitems-1] = *(char *)item;
+            A->array = realloc(A->array, sizeof(char*)*A->nitems);
+            A->array[A->nitems-1] = (char*) malloc(sizeof(char)); 
+            A->array[A->nitems-1] = item;
             break;
         case 2: 
-            realloc(A->array, sizeof(int*)*A->nitems);
-            (A->array)[A->nitems-1] = *(int *)item;
+            A->array = realloc(A->array, sizeof(int*)*A->nitems);
+            A->array[A->nitems-1] = (int*) malloc(sizeof(int));
+            A->array[A->nitems-1] = item;
             break;
         case 3:
-            realloc(A->array, sizeof(float*)*A->nitems);
-            (A->array)[A->nitems-1] = item;
+            A->array = realloc(A->array, sizeof(float*)*A->nitems);
+            A->array[A->nitems-1] = (float*) malloc(sizeof(float));
+            A->array[A->nitems-1] = item;
             break;
         default: break;
     }
@@ -114,17 +117,27 @@ void merge_binary_insertion_sort(void *base, size_t nitems, size_t size, size_t 
 }
 
 void sort_records(const char *infile, const char *outfile, size_t k, size_t field){
-    FILE *fp;
-    char temp[10];
-    int i, item;
+    char temp[15], temp_line[20];
+    int i, item, j;
+    char* token;
     
     Array *A = ArrayCreate(field);
+    
 
-    fp = fopen(infile, "r");
-    for(i=0; i<k; ++i)
-        fscanf("%s,%d\n", temp, item);
+    FILE *fp = fopen(infile, "r");
+    if(fp == NULL) printf("errore");
+
+    for(i=0; i<k; ++i, j=0) {
+        fscanf(fp, "%s\n", temp_line);
+        token = strtok(temp_line, ",");
+        strcpy(temp, token);
+        token = strtok(NULL, ",");
+        item = atoi(token);
+        printf("%s,%d\n",temp, item);
         ArrayAddItem(A, item);
+    }
     fclose(fp);
+
 
     merge_binary_insertion_sort(A, A->nitems, sizeof((A->array)[0]), A->nitems, A->compar);
 

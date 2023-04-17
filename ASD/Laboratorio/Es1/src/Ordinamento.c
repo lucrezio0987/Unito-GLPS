@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define DISC 100
 #define DIM1 10
@@ -25,13 +26,13 @@ void main() {
     Array *A = ArrayCreateInteger(A_in, DIM1);
     Array *B = ArrayCreateInteger(B_in, DIM2);
 
-    printf("Vettore A[%d]\n",A->nitems);
-    merge_binary_insertion_sort(A, A->nitems, sizeof((A->array)[0]), A->nitems, A->compar);
-    printf("Vettore B[%d]\n",B->nitems);
-    merge_binary_insertion_sort(B, B->nitems, sizeof((B->array)[0]), B->nitems, B->compar);
+//    printf("Vettore A[%d]\n",A->nitems);
+//    merge_binary_insertion_sort(A, A->nitems, sizeof((A->array)[0]), A->nitems, A->compar);
+//    printf("Vettore B[%d]\n",B->nitems);
+//    merge_binary_insertion_sort(B, B->nitems, sizeof((B->array)[0]), B->nitems, B->compar);
 
-
-//    sort_records("../../ordered_array_sample_file.csv", "outfile.csv", 10, FIELD_INT);
+    test();
+    sort_records("/home/lucrezio0987/Documenti/Unito-GLPS/ASD/Laboratorio/Es1/ordered_array_sample_file.csv", "outfile.csv", 10, FIELD_INT);
 
     return;
 }
