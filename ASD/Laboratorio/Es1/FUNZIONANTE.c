@@ -5,7 +5,7 @@
 #define INPUT_FILE "../records.csv"
 #define INPUT_FILE_BIG "ordered_array_sample_file.csv"
 #define OUTPUT_FILE "outfile.csv"
-#define N_RECORDS 1000
+#define N_RECORDS 10
 
 #define DISC 100
 
@@ -26,9 +26,16 @@ int CompareInt(const void* i, const void* j){
 }
 
 int CompareFloat(const void* i, const void* j){
-    return 0;
+    if (*(float *)i < *(float *)j)          return -1;
+    else if (*(float *)i == *(float *)j)    return 0;
+    else                                    return 1;
 }
+
 int CompareChar(const void* i, const void* j) {
+    for(int k=0; ((char *)i)[k]!='\0' || ((char *)j)[k]!='\0'; ++k) {
+        if(((char *)i)[k] < ((char *)j)[k])       return -1;
+        else if (((char *)i)[k] > ((char *)j)[k]) return 1;
+    }
     return 0;
 }
 
