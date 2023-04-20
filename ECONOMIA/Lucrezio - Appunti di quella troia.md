@@ -25,5 +25,9 @@
    1. politiche e norme governative
    2. Mercato
    3. Infrastutture
-    (Unsa solida infrastuttura consente agli imprenditori di focalizzarsi sul buisness)
-    
+   4. Cultura
+   5. Mondo accademico e istituti educativi
+   6. Buisness consolidati
+
+## Industria 4.0
+????
