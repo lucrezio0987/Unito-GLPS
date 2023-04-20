@@ -300,11 +300,11 @@
    1. **Analisi** lessicale, sintattica semantica
    2. **Ottimizzazione Logica**:
      - indipendente dalle strutture di memorizzazione
-      _____________________                                     _____________________    
-     |                     |                                   |                     |  
-     | Albero sintattico   | -->  Proprietà dell'algebra  -->  | Albero sintattico   |   
-     | dell'interrogazione | -->     Relazionale          -->  |    equivalente      |  
-     |_____________________|                                   |_____________________|  
+      _____________________                                     _____________________
+     |                     |                                   |                     |
+     | Albero sintattico   | -->  Proprietà dell'algebra  -->  | Albero sintattico   |
+     | dell'interrogazione | -->     Relazionale          -->  |    equivalente      |
+     |_____________________|                                   |_____________________|
   
    3. **Ottimizzazione Fisica**
 
@@ -357,3 +357,46 @@
     $        !p            $   ---Stima_di_fp--->    $ 1 - fp                                        $
     $  p1 || p2 || ... pn  $   ---Stima_di_fp--->    $ 1 - ((1 - fp1) * (1 - fp2) * ... * (1 - fpn)) $
 
+  [Stima_della_cardinalità_del_join]: (prendiamo l' equi-join come esempio)
+  
+    $ |r(A) ⋈_(Ai=Bj) s(B)| = min{1/VAL(A i, r), 1/VAL(Bj, s)} × CARD(r) × CARD(s)  $
+
+  [Euristica_del_DBMS_per_la_stima]:
+    Posso stimare VAL(COD, σp1(pazienti)) partendo dai dati che il DBMS conosce.
+    Il numero da stimare non può essere maggiore di:
+    - $ VAL(COD,pazienti) = 105                                            $    (numero di tuple in pazienti con valori distinti per COD)
+    - $ CARD(σ_p1 (pazienti)) = f_p1 × CARD(pazienti) = 1/100 × 105 = 103  $    (numero di tuple nel risultato della selezione σp1 )
+
+
+## Calcolo Relazionale  
+  > L’`algebra relazionale` è un linguaggio di tipo *procedurale*
+
+  [Calcolo_relazionale_su_tuple_con_dichiarazione_di_range]: (base teorica di SQL)
+    <calcolo_su_tuple: le variabili denotano `tuple`>
+    <con_dichiarazione_di_range: permette di specificare qual è il range di valori (cioè le relazioni) che le variabili possono assumere>
+  
+  [Composizione_interrogazione]:    $ { T | L | F } $     (es: { p.Nome, p.Cognome | p(Pazienti) | p.Residenza='TO' })
+   1. **Target** (T): 
+      > Specifica quali attributi compaiono nel risultato
+      - Introduce variabili abbinate a relazioni di base con la seguente sintassi
+   2. **Range list** (L):
+      > Specifica il dominio delle variabili libere (cioè non quantificate) in F
+      - È un predicato del primo ordine che vincola le variabili della range list.
+   3. **Formula** (F):
+      > Specifica una formula logica che il risultato deve soddisfare
+      - La target list è l’elenco delle informazioni che voglio in uscita
+  
+  [Variante_con_quantificazione_esistenziale]:
+    - Supponiamo che nell’interrogazione siano richieste solo informazioni sul paziente e nessuna informazione sul ricovero.
+  
+      $ {p.Cognome,p.Nome | p(Pazienti),r(Ricoveri) | p.COD=r.PAZ Ù r.Reparto='A' }  $
+    
+    - Posso cancellare dalla target list il riferimento a ricovero e riformulare l’interrogazione utilizzando la quantificazione esistenziale (e quindi eliminarla dalla range list):
+
+      $ {p.Cognome,p.Nome | p(Pazienti) | Esiste r(Ricoveri)(p.COD=r.PAZ Ù r.Reparto='A')} $
+
+  [Sintassi_della_quantificazione_universale_ed_esistenziale]:
+    - Esiste variabile(Relazione)(formula)
+    - Per Ogni variabile(Relazione)(formula)
+  
+  

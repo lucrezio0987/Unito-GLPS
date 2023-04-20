@@ -485,3 +485,74 @@
   [Fasi_di_sviluppo]:
 
 ### Successione di fibonacci
+
+
+------------
+
+# Heap, heap-sort, code di priorità
+## Heap massimo
+  [def]: ... ...
+  [Heap_come_array]: ... ...
+
+  >> per spostarci facilmente nell'array, cerchiamo la relazione fra l'indice di un nodo e l'indice del suo figlio sinistro assumendo che esista
+
+   + (pre) -> 1 <= i <= H,N
+  [Parent]
+  ```Parenth(H,i)
+        return[i/2]
+  ```
+    + (post) -> posizione del Genitore (se esiste, altrimenti 0)
+  [Right]
+  ```Right(H,i)
+        if 2i +1 <= H,N then
+          return 2i + 1
+        else
+          return i
+        end if
+  ```
+    + (post) -> posizione del figlio Destro (se esiste, altrimenti i)
+  [Left]
+  ```Left(H,i)
+        if 2i <= H,N then
+          return 2i
+        else
+          return i
+        end if
+  ```
+    + (post) -> posizione del figlio Sinistro (se esiste, altrimenti i)
+
+  <Foglie: In un Heap `H[1..N]` le FOGLIE occuano esattamente il semivettore `H[[n/2]+1..N]`>
+
+  [INSERIMENTO]: si aggiunge x come foglia in H; quindi la fa risalire lungo il ramo cui è stato aggiunto sinché non sia ricostruito lo heap.
+
+    + (pre) -> H è un heap
+    ```HeapInsert(H, x)
+        H.N ← H.N + 1
+        p ← H.N
+        H[p] ← x
+        while p > 1 ∧ H[p] > H[Parent(H, p)] do
+        scambia H[p] e H[Parent(H, p)]
+        p ← Parent(H, p)
+        end while
+    ```
+    + (Post) -> H è un heap con x inserito
+  
+  [ESTRAZIONE](del Massimo): 2 fasi:
+  1. l'elemento più a destra dell'ultimo livello rimpiazza la radice;
+  2. l'elemento ora in radice viene fatto discendere lungo l'albero finché non sia maggiore di entrambi i figli; nel discendere si sceglie sempre il figlio con l'etichetta maggiore.
+   
+    + (pre) -> H è un heap
+    ```HeapExtract(H )
+        H[1] ← H[H.N ]
+        H.N ← H.N − 1
+        Heapify(H, 1)
+        Heapify(H, i)
+        . Pre: 1 ≤ i ≤ H.N , i sottoalberi con radice in Left(H, i) e Right(H, i) sono heap
+        . Post: l'albero con radice in i è heap
+        m ← index of Max{H[i], H[Left(H, i)],H[Right(H, i)]}
+        if m 6= i then
+        scambia H[m] e H[i]
+        Heapify(H, m)
+        end if
+    ```
+    + (Post) -> H è un heap con etichetta massimo eliminata
