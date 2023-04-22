@@ -84,29 +84,21 @@ Array* ArrayCreate(size_t field){
     return A;
 }
 
-
-/*
-void Insert(Array* A, int a, int b) {
+void Insert(Array* A, int i, int loc) {
     Array* temp = (Array*) malloc(sizeof(Array));
     temp->array = (int**) malloc(sizeof(int*));
     temp->array[0] = (int*) malloc(sizeof(int));
-    temp->array[0] = A->array[b];
-    
-    for(int i = b; i>a; b--){
 
+    if (i-loc>1) {
+        for(temp->array[0] = A->array[i] ; i>loc ; --i){
+            A->array[i] = A->array[i-1];
+        }
+        A->array[loc] = temp->array[0];
+    } else {
+        temp->array[0] = A->array[i];
+        A->array[i] = A->array[loc];
+        A->array[loc] = temp->array[0];
     }
-    
-    swap(A,a,b);
-}
-
-void swap(Array* A, int a, int b){
-    Array* temp = (Array*) malloc(sizeof(Array));
-    temp->array = (int**) malloc(sizeof(int*));
-    temp->array[0] = (int*) malloc(sizeof(int));
-
-    temp->array[0] = A->array[b];
-    A->array[b] = A->array[a];
-    A->array[a] = temp->array[0];
 }
 
 int search(void* item, Array* A, unsigned int i, unsigned int j){
@@ -125,45 +117,17 @@ int search(void* item, Array* A, unsigned int i, unsigned int j){
     }
 }
 
-void InsertionSort(Array* A, unsigned int nitems){
-    int i,j, k;
+void BineryInsertionSort(Array* A, unsigned int nitems){
+    int i,loc, k;
     for(i=1; i < nitems; ++i) {
         if((A->compar)(&A->array[i], &A->array[i-1]) == -1){
-            j = search(&A->array[i], A, 0, i-1);
-            if(j<0) printf("Errore %d\n",j);
-            else if (j>0)Insert(A,i,j);
+            loc = search(&A->array[i], A, 0, i-1);
+            if(loc<0) printf("Errore %d\n",loc);
+            else Insert(A,i,loc);
         }
     }
     return;
-}
-*/
-
-void BinaryInsertionSort(Array* A, unsigned int nitems) {
-    int i, j, left, right, mid;
-    int temp;
-
-    for (i = 1; i < nitems; i++) {
-        temp = A->array[i];
-        left = 0;
-        right = i - 1;
-
-        while (left <= right) {
-            mid = (left + right) / 2;
-
-            if (temp < A->array[mid]) {
-                right = mid - 1;
-            } else {
-                left = mid + 1;
-            }
-        }
-
-        for (j = i - 1; j >= left; j--) {
-            A->array[j + 1] = A->array[j];
-        }
-
-        A->array[left] = temp;
-    }
-}
+};
 
 void Merge(Array* A, unsigned int l , unsigned int m, unsigned int r, unsigned int nitems) {
     int i = l,  j = m+1,   k = 0;
@@ -209,7 +173,7 @@ void merge_binary_insertion_sort(void *base, size_t nitems, size_t size, size_t 
     if(k>DISC) 
         MergeSort(base, 0, nitems-1,nitems);
     else        
-        BinaryInsertionSort(base, nitems); 
+        BineryInsertionSort(base, nitems); 
     return;
 }
 
@@ -241,6 +205,9 @@ void sort_records(const char *infile, const char *outfile, size_t k, size_t fiel
     }
     fclose(fp);
 
+    A->array[0] = 10;
+    A->array[2] = 4;
+
     printf("VETTORE: [");
     for(i=0; i<A->nitems; ++i) {
         printf(" %d",A->array[i]); 
@@ -261,6 +228,13 @@ void sort_records(const char *infile, const char *outfile, size_t k, size_t fiel
     free(A);
 }
 
+void stampa(Array *A) {
+    int i;
+    printf("VETTORE: [");
+    for(i=0; i<A->nitems; ++i) 
+        printf(" %d",A->array[i]); 
+    printf(" ]");
+}
 void main() {
     sort_records(INPUT_FILE, OUTPUT_FILE, N_RECORDS, 2);
     
