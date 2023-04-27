@@ -2,37 +2,213 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define INPUT_FILE "/home/lucrezio0987/Documenti/Unito-GLPS/ASD/Laboratorio/records.csv"
+#define INPUT_FILE_BIG "ordered_array_sample_file.csv"
+#define OUTPUT_FILE "outfile.csv"
+#define N_RECORDS 10
+
 #define DISC 100
-#define DIM1 10
-#define DIM2 101
+#define FIELD 0 
+           // 0 = pos 
+           // 1 = string
+           // 2 = int
+           // 3 = float 
 
-#include "libreria.h"
+typedef struct _Array Array;
+typedef struct _Record Record;
 
-void main() {
-    //INPUT
+struct _Array{
+  Record** records;
+  unsigned long nitems;
+  unsigned short field;
+  int (*compar)(Record*, Record*);
+};
 
-    int A_in[DIM1] = {10, 8 , 9, 11, 6, 5, 1, 3, 2, 5};
-    int B_in[DIM2] = {10, 8 , 9, 11, 6, 5, 1, 3, 2, 5, 
-                      10, 8 , 9, 11, 6, 5, 1, 3, 2, 5,
-                      10, 8 , 9, 11, 6, 5, 1, 3, 2, 5,
-                      10, 8 , 9, 11, 6, 5, 1, 3, 2, 5,
-                      10, 8 , 9, 11, 6, 5, 1, 3, 2, 5,
-                      10, 8 , 9, 11, 6, 5, 1, 3, 2, 5,
-                      10, 8 , 9, 11, 6, 5, 1, 3, 2, 5,
-                      10, 8 , 9, 11, 6, 5, 1, 3, 2, 5,
-                      10, 8 , 9, 11, 6, 5, 1, 3, 2, 5,
-                      10, 8 , 9, 11, 6, 5, 1, 3, 2, 5, 0};
+struct _Record {
+  long int pos; 
+  long int item_int;
+  double item_float;
+  char *item_string;
+};
 
-    Array *A = ArrayCreateInteger(A_in, DIM1);
-    Array *B = ArrayCreateInteger(B_in, DIM2);
+int ComparePos(Record* i, Record* j){
+    if      (i->pos  < j->pos)    return -1;
+    else if (i->pos == j->pos)    return 0;
+    else                          return 1;
+}
 
-//    printf("Vettore A[%d]\n",A->nitems);
-//    merge_binary_insertion_sort(A, A->nitems, sizeof((A->array)[0]), A->nitems, A->compar);
-//    printf("Vettore B[%d]\n",B->nitems);
-//    merge_binary_insertion_sort(B, B->nitems, sizeof((B->array)[0]), B->nitems, B->compar);
+int CompareInt(Record* i, Record* j){
+    if      (i->item_int  < j->item_int)    return -1;
+    else if (i->item_int == j->item_int)    return 0;
+    else                                    return 1;
+}
 
-    test();
-    sort_records("/home/lucrezio0987/Documenti/Unito-GLPS/ASD/Laboratorio/Es1/ordered_array_sample_file.csv", "outfile.csv", 10, FIELD_INT);
+int CompareFloat(Record* i, Record* j){
+    if      (i->item_float  < j->item_float)    return -1;
+    else if (i->item_float == j->item_float)    return 0;
+    else                                        return 1;
+}
+int CompareString(Record* i, Record* j){
+    int res = strcmp(i->item_string,j->item_string);
+    if      (res  < 0)    return -1;
+    else if (res == 0)    return 0;
+    else                  return 1;
+    return 0;
+}
 
+void printRecord(Array* A, int i_el, void *fp) { 
+   fprintf(fp,"%2d%14s%9d%14lf\n", A->records[i_el]->pos, A->records[i_el]->item_string, A->records[i_el]->item_int, A->records[i_el]->item_float);
+}
+
+void scambia(Array* A, int i, int j){
+    Record *temp;
+    temp = A->records[i];
+    A->records[i] = A->records[j];
+    A->records[j] = temp;
+}
+
+int conf(Array* A, Array* B){
+    for(int i=0; i<A->nitems;++i)
+        if(A->records[i]->pos!=B->records[i]->pos) return -1;
+    return 0;
+}
+
+Array* ArrayCreate(unsigned short field){
+    Array* A = (Array*) malloc(sizeof(Array));
+    A->nitems = 0;
+    A->field = field;
+    A->records = (Record**) malloc(sizeof(Record*));
+    
+    switch(field) {
+        case 0: A->compar = ComparePos; break;
+        case 1: A->compar = CompareString; break;
+        case 2: A->compar = CompareInt; break;
+        case 3: A->compar = CompareFloat; break;
+    }
+    
+    return A;
+}
+void set_field(Array* A, unsigned short newField) {
+    A->field=newField;
+    switch(newField) {
+        case 0: A->compar = ComparePos; break;
+        case 1: A->compar = CompareString; break;
+        case 2: A->compar = CompareInt; break;
+        case 3: A->compar = CompareFloat; break;
+    }
+}
+
+void arrayAdd(Array* A, Record *rec) { 
+   A->records = (Record**) realloc(A->records, sizeof(Record*)*(A->nitems+2));
+   A->records[A->nitems] = (Record*) malloc(sizeof(Record));
+   A->records[A->nitems]->item_string = malloc(sizeof(char)*strlen(rec->item_string));
+   
+   A->records[A->nitems]->pos         = rec->pos;
+   A->records[A->nitems]->item_int    = rec->item_int;
+   A->records[A->nitems]->item_float  = rec->item_float;
+   strcpy(A->records[A->nitems]->item_string, rec->item_string);
+
+   A->nitems++;
+}
+
+void Merge(Array* A, unsigned int l , unsigned int m, unsigned int r, unsigned int nitems) {
+    int i = l,  j = m+1,   k = 0;
+    Array *B = ArrayCreate(A->field);
+    B->records = (Record**) realloc(B->records, sizeof(Record*)*(A->nitems));
+    
+    for(;i<=m && j<=r; ++k){
+      if ((A->compar)(A->records[i],A->records[j]) == -1)   
+                       { B->records[k] = A->records[i];  ++i; } 
+      else             { B->records[k] = A->records[j];  ++j; }
+    }
+    for(;i<=m; ++k,++i)  B->records[k] = A->records[i];
+    for(;j<=r; ++j,++k)  B->records[k] = A->records[j];
+    for(k=l; k<=r; ++k)  A->records[k] = B->records[k-l];
+
+    free(B);
     return;
 }
+
+void MergeSort(Array* A, unsigned int i, unsigned int j, unsigned int nitems) {
+    int m;
+    if(i<j) {
+        m = (i+j)/2;
+        MergeSort(A,i,m,nitems);
+        MergeSort(A,m+1,j,nitems);
+        Merge(A,i,m,j,nitems);
+    }
+    return;
+}
+
+void Insert(Array* A, int i, int loc) {
+    Record* temp = A->records[i];
+    if (i-loc>1) {
+        for(; i>loc ; --i){
+            A->records[i] = A->records[i-1];
+        }
+        A->records[loc] = temp;
+    } else {
+        A->records[i] = A->records[loc];
+        A->records[loc] = temp;
+    }
+}
+
+int search(int x, Array* A, int i, int j) {
+    if (i > j) return i;
+    int m = (i + j) / 2;
+    if ((A->compar)(A->records[x], A->records[m])==0)         return m;
+    else if ((A->compar)(A->records[x], A->records[m])==-1)   return search(x, A, i, m - 1);
+    else                                                      return search(x, A, m + 1, j);
+}
+
+
+void BineryInsertionSort(Array* A, unsigned int nitems){
+    int i,loc, k;
+    for(i=1; i < nitems; ++i) {
+        if((A->compar)(A->records[i], A->records[i-1]) == -1){
+            loc = search(i, A, 0, i-1);
+            if(loc<0) printf("Errore %d\n",loc);
+            else Insert(A,i,loc);
+        }
+    }
+    return;
+}
+
+void merge_binary_insertion_sort(void *base, size_t nitems, unsigned short int field, size_t k){
+    if(k>=DISC) 
+        MergeSort(base, 0, nitems-1,nitems);
+    else        
+        BineryInsertionSort(base, nitems); 
+    return;
+}
+
+void sort_records(const char *infile, const char *outfile, size_t k, size_t field){
+    int i, j;
+    Record *rec = (Record*) malloc(sizeof(Record));
+    rec->item_string = (char*) malloc(sizeof(char)*100);
+    
+    Array *A = ArrayCreate(field);
+
+    FILE *fp = fopen(infile, "r");
+    if(fp == NULL) printf("errore");
+    
+    for(i=0; i<k; ++i, j=0) {
+        fscanf(fp, "%ld,%[^,],%ld,%lf\n", &rec->pos, rec->item_string, &rec->item_int, &rec->item_float);
+        arrayAdd(A, rec);
+    }
+
+    fclose(fp);
+
+    merge_binary_insertion_sort(A, A->nitems, field, field);
+
+    fp = fopen(outfile, "w+");
+    for(i=0; i<k; ++i, j=0) printRecord(A,i,fp);
+    fclose(fp);
+
+    free(A);
+}
+
+void main() {
+    sort_records(INPUT_FILE, OUTPUT_FILE, N_RECORDS, FIELD);
+}
+

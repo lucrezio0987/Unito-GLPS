@@ -479,10 +479,14 @@
 ### Teoria di Armstrong
  (Conviene quindi avere un modo più efficiente di procedere piuttosto che utilizzare la sola definizione di dipendenza funzionale per verificare le equivalenze).
 
- [ASSIOMI]: Dati X e Y insiemi di attributi:
- - **Assioma di RIFLESSIVITÀ**:   se Y SOTTOINSIEME DI X,   allora X -> Y
- - **Assioma di UNIONE**:         se X -> Y e X -> Z,       allora X -> YZ  dove YZ = Y UNION Z
- - **Assioma di TRANSITIVITÀ**:   se X -> Y e Y -> Z,       allora X -> Z
+  [ASSIOMI]: Dati X e Y insiemi di attributi:
+  - **Assioma di RIFLESSIVITÀ**:   se Y SOTTOINSIEME DI X,   allora X -> Y
+  - **Assioma di UNIONE**:         se X -> Y e X -> Z,       allora X -> YZ  dove YZ = Y UNION Z
+  - **Assioma di TRANSITIVITÀ**:   se X -> Y e Y -> Z,       allora X -> Z
+
+  [Correttezza]:
+  
+
 
 ### Chiusura di un insieme di dipendenze funzionali
 ### Chiusura di un insieme di attributi
