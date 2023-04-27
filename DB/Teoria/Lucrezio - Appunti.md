@@ -376,16 +376,19 @@
     <con_dichiarazione_di_range: permette di specificare qual è il range di valori (cioè le relazioni) che le variabili possono assumere>
   
   [Composizione_interrogazione]:    $ { T | L | F } $     (es: { p.Nome, p.Cognome | p(Pazienti) | p.Residenza='TO' })
-   1. **Target** (T): 
+   1. **Target** (T): `SELECT`
       > Specifica quali attributi compaiono nel risultato
       - Introduce variabili abbinate a relazioni di base con la seguente sintassi
-   2. **Range list** (L):
+   2. **Range list** (L): `FROM`
       > Specifica il dominio delle variabili libere (cioè non quantificate) in F
       - È un predicato del primo ordine che vincola le variabili della range list.
-   3. **Formula** (F):
+   3. **Formula** (F): `WHERE`
       > Specifica una formula logica che il risultato deve soddisfare
       - La target list è l’elenco delle informazioni che voglio in uscita
   
+  [Prodotto_Cartesiano]: $ { x.*, y.* | x(R),y(S) } $
+  [Implicazione]:  a ==> b ----> (¬a V b)
+
   [Variante_con_quantificazione_esistenziale]:
     - Supponiamo che nell’interrogazione siano richieste solo informazioni sul paziente e nessuna informazione sul ricovero.
   
@@ -399,4 +402,88 @@
     - Esiste variabile(Relazione)(formula)
     - Per Ogni variabile(Relazione)(formula)
   
+  [Considerazioni_finali]: Con i formalismi dell'algebra relazionale e del calcolo relazionale, sono in grado di esprimere tutte le interrogazioni potenzialmente computabili?
+   > No, perché manca la ricorsione!
+
+## TEORIA DELLA NORMALIZZAZIONE
+### Introduzione
+  [Forme_Normali]:
+   > Una forma normale è una proprietà di una base di dati relazionale che ne garantisce la  “qualità”, cioè l’assenza di determinati difetti
   
+  [Relazione_non_in_forma_normale]:
+   - ridondanze
+   - anomalie quando si aggiornano, cancellano e inseriscono dati
+  
+  <Normalizzazione: Procedura che permette di trasformare schemi non normali in schemi che soddisfano una forma normale>
+  (può essere usata come *tecnica di verifica*, ma NON come metodo di progettazione).
+
+### Anomalie di inserimento, cancellazione e aggiornamento
+  <Criticità_di_esprimibilità: incapacità di inserire un’informazione concettualmente significativa proveniente dal sistema informativo>
+  
+  - **Anomalie di INSERIMENTO**
+  - **Anomalie di CANCELLAZIONE**
+  - **Anomalie di AGGIORNAMENTO**
+
+  [Dipendenre_funzionali]: permettono di minimizzare le anomalie trasformando la relazione>
+
+### Dipendenze funzionali
+
+  [def]: Dati una relazione r(A) e due sottoinsiemi X e Y di attributi di A (X,YÍ A), 
+    il vincolo di dipendenza funzionale 
+        $ X -> Y (X determina Y) $
+    è soddisfatto se e solo se 
+        $ PerOgni t1 ,t2 in r(t1[X]=t2[X] ==> t1 [Y]=t2[Y]) $
+  
+   - Le dipendenze funzionali vengono raccolte attraverso un’analisi attenta della realtà
+   - Per ogni relazione r abbiamo un insieme F di dipendenze funzionali
+  
+  [Equivalenza_delle_dipendenze_funionali]:
+   <Equivalenza: Due basi di dati, una progettata con i vincoli F’ e un’altra progettata con i vincoli F’’, se F’ e F’’ sono equivalenti, evolvono esattamente nello stesso modo.>
+   
+  >    F’={f’1 }    ===    F’’={f’’1,f’’2 }     ?
+   1. Applichiamo la definizione di dipendenza funzionale e dimostriamo che:
+       vale f’’1 AND f’’2   <==>   vale f’1
+  
+  ```[ESEMPIO]
+
+  Primo insieme F’:       f'1 : MATR -> NS,IS,CAP,CF,DN
+
+  Secondo insieme F’’:    f''1: MATR -> NS,IS,CAP
+                          f''2: MATR -> CF,DN
+
+    f''1 : FORALL t1,t2 IN r(t1[MATR] = t2[MATR] ==> t1[NS,IS,CAP] = t2[NS,IS,CAP]) AND
+    f''2 : FORALL t1,t2 IN r(t1[MATR] = t2[MATR] ==> t1[CF,DN] = t2[CF,DN])
+  
+  Cioè
+
+    FORALL t1,t2 IN r(t1[MATR] = t2[MATR] ==> t1[NS,IS,CAP] = t2[NS,IS,CAP] AND 
+                      t1[MATR] = t2[MATR] ==> t1[CF,DN]     = t2[CF,DN]       )
+  
+  Quindi
+
+    FORALL t1,t2 IN r(t1[MATR] = t2[MATR] ==> (t1[NS,IS,CAP] = t2[NS,IS,CAP] AND 
+                                               t1[CF,DN]     = t2[CF,DN]       ) )
+
+  Che è equivalente a
+
+    f'1: FORALL t1,t2 IN r(t1[MATR] = t2[MATR] ==> t1[NS,IS,CAP,CF,DN] = t2[NS,IS,CAP,CF,DN])
+
+  Che è la definizione di   f’1: MATR -> NS,IS,CAP,CF,DN
+  Ma vale anche il viceversa ...
+
+  In modo analogo da f’1 posso ricavare f’’2
+
+  Quindi il rispetto di f'1 implica il rispetto di f''1 e f'' 2
+  ```
+
+### Teoria di Armstrong
+ (Conviene quindi avere un modo più efficiente di procedere piuttosto che utilizzare la sola definizione di dipendenza funzionale per verificare le equivalenze).
+
+ [ASSIOMI]: Dati X e Y insiemi di attributi:
+ - **Assioma di RIFLESSIVITÀ**:   se Y SOTTOINSIEME DI X,   allora X -> Y
+ - **Assioma di UNIONE**:         se X -> Y e X -> Z,       allora X -> YZ  dove YZ = Y UNION Z
+ - **Assioma di TRANSITIVITÀ**:   se X -> Y e Y -> Z,       allora X -> Z
+
+### Chiusura di un insieme di dipendenze funzionali
+### Chiusura di un insieme di attributi
+### Dipendenze funzionali e superchiavi
