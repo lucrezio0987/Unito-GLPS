@@ -49,10 +49,12 @@ void printRecord(Array* A, int i_el, void *fp) {
 }
 
 Array* ArrayCreate(unsigned short field){
-    Array* A = (Array*) malloc(sizeof(Array));
+    Array* A;
+
+    if((A = (Array*) malloc(sizeof(Array))) < 0) return -1;
     A->nitems = 0;
     A->field = field;
-    A->records = (Record**) malloc(sizeof(Record*));
+    if((A->records = (Record**) malloc(sizeof(Record*))) < 0) return -1;
     
     switch(field) {
         case 0: A->compar = ComparePos; break;
@@ -127,7 +129,6 @@ int search(int x, Array* A, int i, int j) {
     else                                                      return search(x, A, m + 1, j);
 }
 
-
 void BineryInsertionSort(Array* A, unsigned int nitems){
     int i,loc, k;
     for(i=1; i < nitems; ++i) {
@@ -148,7 +149,7 @@ void merge_binary_insertion_sort(void *A, size_t nitems, unsigned short int fiel
     return;
 }
 
-void sort_records(const char *infile, const char *outfile, size_t k, size_t field){
+int sort_records(const char *infile, const char *outfile, size_t k, size_t field){
     int i, j;
     Record *rec = (Record*) malloc(sizeof(Record));
     rec->item_string = (char*) malloc(sizeof(char)*100);
@@ -156,7 +157,7 @@ void sort_records(const char *infile, const char *outfile, size_t k, size_t fiel
     Array *A = ArrayCreate(field);
 
     FILE *fp = fopen(infile, "r");
-    if(fp == NULL) printf("errore");
+    if(fp == NULL) return 1;
     
     for(i=0; i<k; ++i, j=0) {
         fscanf(fp, "%ld,%[^,],%ld,%lf\n", &rec->pos, rec->item_string, &rec->item_int, &rec->item_float);
@@ -172,5 +173,5 @@ void sort_records(const char *infile, const char *outfile, size_t k, size_t fiel
     fclose(fp);
 
     free(A);
+    return 0;
 }
-

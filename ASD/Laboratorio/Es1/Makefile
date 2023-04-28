@@ -1,40 +1,21 @@
-# CC = gcc
-# CFLAGS = -g -Wall -Wextra -Wpedantic -Wconversion -w
-# SRC_DIR = src
-# BUILD_DIR = build
-# BIN_DIR = bin
-# TARGET = $(BIN_DIR)/ordinamento
-# 
-# SRCS = $(wildcard $(SRC_DIR)/*.c)
-# OBJS = $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRCS))
-# 
-# .PHONY: all clean
-# 
-# all: $(TARGET)
-# 
-# $(TARGET): $(OBJS) | $(BIN_DIR)
-# 	$(CC) $(CFLAGS) $^ -o $@
-# 
-# $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
-# 	$(CC) $(CFLAGS) -c $< -o $@
-# 
-# $(BUILD_DIR):
-# 	mkdir -p $(BUILD_DIR)
-# 
-# $(BIN_DIR):
-# 	mkdir -p $(BIN_DIR)
-# 
-# clean:
-# 	rm -rf $(BUILD_DIR) $(BIN_DIR)
+all: build/Ordinamento.o bin/Ordinamento #build/Test.o build/unity.o bin/Test
 
-all: build/ordinamento.o bin/ordinamento
+build/Ordinamento.o: src/Libreria.c src/Interfaccia.h
+	$(CC) $(CFLAGS) -c src/Libreria.c -o build/Libreria.o
+
+bin/Ordinamento: src/Interfaccia.h build/Libreria.o src/Ordinamento.c
+	$(CC) $(CFLAGS) -o bin/Ordinamento build/Libreria.o src/Ordinamento.c
+
+
+# build/Test.o: src/Libreria.c src/Interfaccia.h src/unity.c src/unity.h src/unity_internals.h
+# 	$(CC) $(CFLAGS) -c src/Libreria.c -o build/Libreria.o 
+# 
+# build/unity.o: src/unity.c src/unity.h src/unity_internals.h
+# 	$(CC) $(CFLAGS) -c src/unity.c -o build/unity.o
+# 
+# bin/Test: src/Interfaccia.h build/Libreria.o src/Test.c	 build/unity.o src/unity.c src/unity.h src/unity_internals.h
+# 	$(CC) $(CFLAGS) -o bin/Test build/Libreria.o src/Test.c build/unity.o
 
 clean: 
 	$(RM) -rf bin/*
 	$(RM) -rf build/*
-
-build/ordinamento.o: src/Libreria.c src/Interfaccia.h
-	$(CC) $(CFLAGS) -c src/Libreria.c -o build/Libreria.o
-
-bin/ordinamento: src/Interfaccia.h build/Libreria.o src/Ordinamento.c
-	$(CC) $(CFLAGS) -o bin/Ordinamento build/Libreria.o src/Ordinamento.c

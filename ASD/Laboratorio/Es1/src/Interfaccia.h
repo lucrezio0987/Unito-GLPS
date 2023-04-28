@@ -28,6 +28,6 @@ void BineryInsertionSort(Array* A, unsigned int nitems);
 
 // Macro-Funzioni
 void merge_binary_insertion_sort(void *A, size_t nitems, unsigned short int field, size_t k);
-void sort_records(const char *infile, const char *outfile, size_t k, size_t field);
+int sort_records(const char *infile, const char *outfile, size_t k, size_t field);
 
 #endif /* ORDERED_ARRAY_H_laokjsdnbudjllvfidkfmqm */

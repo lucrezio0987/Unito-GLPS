@@ -4,7 +4,6 @@
 #include "Interfaccia.h"
 
 #define INPUT_FILE "../records.csv"
-#define INPUT_FILE_BIG "ordered_array_sample_file.csv"
 #define OUTPUT_FILE "bin/outfile.csv"
 
 void main(int argc, const char* argv[]) {
@@ -15,10 +14,9 @@ void main(int argc, const char* argv[]) {
         field = 0;
         n_records = 10;
     } else {
-        field = atoi(argv[1]);
-        n_records = atoi(argv[2]);
+        n_records = atoi(argv[1]);
+        field = atoi(argv[2]);
     }
 
     sort_records(INPUT_FILE, OUTPUT_FILE, field, n_records);
 }
-
