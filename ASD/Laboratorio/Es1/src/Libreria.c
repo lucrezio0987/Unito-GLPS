@@ -3,7 +3,7 @@
 #include <string.h>
 #include "Interfaccia.h"
 
-#define DISC 100
+#define DISC 5
 
 struct _Record {
   long int pos; 
@@ -143,9 +143,9 @@ void BineryInsertionSort(Array* A, unsigned int nitems){
 
 void merge_binary_insertion_sort(void *A, size_t nitems, unsigned short int field, size_t k){
     if(k>=DISC) 
-        MergeSort(A, 0, nitems-1,nitems);
-    else        
-        BineryInsertionSort(A, nitems); 
+        BineryInsertionSort(A, nitems);
+    else
+        MergeSort(A, 0, nitems-1,nitems); 
     return;
 }
 
