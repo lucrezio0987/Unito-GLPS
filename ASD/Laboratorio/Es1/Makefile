@@ -1,10 +1,7 @@
-all: build/Ordinamento.o bin/Ordinamento #build/Test.o build/unity.o bin/Test
+all: bin/Ordinamento #build/Test.o build/unity.o bin/Test
 
-build/Ordinamento.o: src/Libreria.c src/Interfaccia.h
-	$(CC) $(CFLAGS) -c src/Libreria.c -o build/Libreria.o
-
-bin/Ordinamento: src/Interfaccia.h build/Libreria.o src/Ordinamento.c
-	$(CC) $(CFLAGS) -o bin/Ordinamento build/Libreria.o src/Ordinamento.c
+bin/Ordinamento: src/Interfaccia.h src/Ordinamento.c src/Lib-MergeSorte.c src/Lib-Generale.c src/Lib-BinaryInsertionSort.c
+	$(CC) -w -o bin/Ordinamento src/Lib-MergeSorte.c src/Lib-Generale.c src/Lib-BinaryInsertionSort.c src/Ordinamento.c
 
 
 # build/Test.o: src/Libreria.c src/Interfaccia.h src/unity.c src/unity.h src/unity_internals.h
