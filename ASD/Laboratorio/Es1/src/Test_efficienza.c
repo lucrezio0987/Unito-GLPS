@@ -1,14 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+
 #include <time.h>
+
 #include "Interfaccia.h"
 
 #define INPUT_FILE "../records.csv"
-#define OUTPUT_FILE "bin/outfile.csv"
+#define OUTPUT_FILE "outfile.csv"
 
 #define MAX_REC 100000
-#define N_CONTROLLI 30
+#define N_CONTROLLI 10
 
 typedef struct _Clock {
     int start;
@@ -16,19 +17,17 @@ typedef struct _Clock {
     int time;
 } Clock;
 
-struct _Record {
+typedef struct _Record {
   long int pos; 
   long int item_int;
   double item_float;
   char *item_string;
-};
+} Records;
 
-struct _Array{
-  Record** records;
-  unsigned long nitems;
-  unsigned short field;
-  int (*compar)(Record*, Record*);
-};
+typedef struct _Array {
+    Records **base;
+    unsigned int nitems;
+} Array;
 
 void main() {
     int field = 1;
@@ -49,8 +48,6 @@ void main() {
             if(n_records == 0) {++flag_trovato; ++k_null;}
             else time = calcDif(n_records, field);
             
-//            printf(" %6d                   %6d\n", n_records, time);
-
             if(time == 0 || min >= max)    ++flag_trovato;
             else if(time < 0 )             min = n_records + 1;
             else if(time > 0)              max = n_records -1; 
@@ -66,40 +63,40 @@ void main() {
 
 }
 
-
-int calcDif(int n_records, int field){
+int calcDif(unsigned int n_records,unsigned int field){
     int i;
     Clock ms, is;
     
-    Record *rec = (Record*) malloc(sizeof(Record));
-    rec->item_string = (char*) malloc(sizeof(char)*100);
-
-    Array *A = ArrayCreate(0);
-    Array *B = ArrayCreate(0);
-
-    FILE *fp = fopen("../../records.csv", "r");
-
-    if(fp == NULL) return 1;
+    Array *A = CreateArray();
+    Array *B = CreateArray();
     
-    for(i=0; i<n_records; ++i) {
-        fscanf(fp, "%ld,%[^,],%ld,%lf\n", &rec->pos, rec->item_string, &rec->item_int, &rec->item_float);
-        arrayAdd(A, rec);
-        arrayAdd(B, rec);
-    }  
-    free(rec);
-    fclose(fp);
+    LoadArrayMAX(A, INPUT_FILE, n_records);
+    LoadArrayMAX(B, INPUT_FILE, n_records);
 
     ms.start = clock();
-    MergeSort(A, 0, A->nitems-1, A->nitems);
+    switch(field){
+        case 1:  MergeSort(A->base, 0, A->nitems-1, CompareString); break;
+        case 2:  MergeSort(A->base, 0, A->nitems-1, CompareInt);    break;
+        case 3:  MergeSort(A->base, 0, A->nitems-1, CompareFloat);  break;
+        default: MergeSort(A->base, 0, A->nitems-1, ComparePos);    break;
+    }
     ms.end = clock();
     ms.time =  ms.end - ms.start;
 
     is.start = clock();
-    BineryInsertionSort(B, A->nitems);    
+//    switch(field){
+//        case 1:  BinaryInsertionSort(B->base, B->nitems, CompareString);    break;
+//        case 2:  BinaryInsertionSort(B->base, B->nitems, CompareInt);       break;
+//        case 3:  BinaryInsertionSort(B->base, B->nitems, CompareFloat);     break;
+//        default: BinaryInsertionSort(B->base, B->nitems, ComparePos);       break;
+//    }
     is.end = clock();
     is.time = is.end - is.start;
 
-    if(controllo(A,B,n_records ) != 0) printf("ERRORE\n");
+//    if(controllo(A,B,n_records ) != 0) printf("ERRORE\n");
+
+    free(A);
+    free(B);
 
     return  ms.time - is.time;
 
@@ -111,7 +108,7 @@ int controllo(Array *A, Array *B, int n_records) {
     if(A->nitems != B->nitems || A->nitems != n_records ) return -1;
 
     for(i=0; i<A->nitems; ++i) {
-        if(A->records[i]->pos != B->records[i]->pos) return -1;
+        if(A->base[i]->pos != B->base[i]->pos) return -1;
     }
 
     return 0;

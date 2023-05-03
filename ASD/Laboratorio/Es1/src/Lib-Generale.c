@@ -57,8 +57,8 @@ int CompareString(Records* i, Records* j){
 }
 
 void merge_binary_insertion_sort(void **base, size_t nitems, size_t k, int (*compar)(const void *, const void*)) {
-    //MergeSort(base, 0, nitems-1, compar);
-    BinaryInsertionSort(base,nitems,compar);
+    MergeSort(base, 0, nitems-1, compar);
+    //BinaryInsertionSort(base,nitems,compar);
 }
 
 Records** CreateArray() {
@@ -89,7 +89,24 @@ void LoadArray(Array *A, const char *infile) {
     FILE *fp = fopen(infile, "r");
     if(fp == NULL) return 1;
     
-    while( (fscanf(fp, "%ld,%[^,],%ld,%lf\n", &rec->pos, rec->item_string, &rec->item_int, &rec->item_float)) == 4 && ++i != 100)
+    while( (fscanf(fp, "%ld,%[^,],%ld,%lf\n", &rec->pos, rec->item_string, &rec->item_int, &rec->item_float)) == 4 )
+        arrayAdd(A, rec);
+
+    fclose(fp);
+
+    free(rec->item_string);
+    free(rec);
+}
+
+void LoadArrayMAX(Array *A, const char *infile, unsigned int max_records) {
+    unsigned int i = 0;
+    Records *rec = (Records*) malloc(sizeof(Records));
+    rec->item_string = (char*) malloc(sizeof(char)*100);
+    
+    FILE *fp = fopen(infile, "r");
+    if(fp == NULL) return 1;
+    
+    while( (fscanf(fp, "%ld,%[^,],%ld,%lf\n", &rec->pos, rec->item_string, &rec->item_int, &rec->item_float)) == 4 && ++i != max_records)
         arrayAdd(A, rec);
 
     fclose(fp);
@@ -109,7 +126,7 @@ void PrintArray(const char *outfile, Array *A){
 
 void sort_records(const char *infile, const char *outfile, size_t k, size_t field){
     Array *A = CreateArray();
-    LoadArray(A, infile);
+    LoadArrayMAX(A, infile,100);
     
     switch(field){
         case 1: merge_binary_insertion_sort(A->base, A->nitems, k, CompareString); break;

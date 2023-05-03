@@ -1,18 +1,22 @@
-all: bin/Ordinamento #build/Test.o build/unity.o bin/Test
+MAIN = src/Main.c
+INTERFACCIA = src/Interfaccia.h	
+LIBRERIE = src/Lib-Generale.c src/Lib-MergeSorte.c src/Lib-BinaryInsertionSort.c
 
-bin/Ordinamento: src/Interfaccia.h src/Ordinamento.c src/Lib-MergeSorte.c src/Lib-Generale.c src/Lib-BinaryInsertionSort.c
-	$(CC) -w -o bin/Ordinamento src/Lib-MergeSorte.c src/Lib-Generale.c src/Lib-BinaryInsertionSort.c src/Ordinamento.c
+ESEGUIBILE = build/main_ex1
 
+FLAG = -w
 
-# build/Test.o: src/Libreria.c src/Interfaccia.h src/unity.c src/unity.h src/unity_internals.h
-# 	$(CC) $(CFLAGS) -c src/Libreria.c -o build/Libreria.o 
-# 
-# build/unity.o: src/unity.c src/unity.h src/unity_internals.h
-# 	$(CC) $(CFLAGS) -c src/unity.c -o build/unity.o
-# 
-# bin/Test: src/Interfaccia.h build/Libreria.o src/Test.c	 build/unity.o src/unity.c src/unity.h src/unity_internals.h
-# 	$(CC) $(CFLAGS) -o bin/Test build/Libreria.o src/Test.c build/unity.o
+all: $(ESEGUIBILE)
+
+$(ESEGUIBILE): $(MAIN) $(LIBRERIE)
+	$(CC) $(FLAG) -o $(ESEGUIBILE) $(MAIN) $(LIBRERIE)
+
+TEST = src/Test_efficienza.c
+ESEGUIBILE_TEST = build/test_ex1
+
+test: $(TEST) $(LIBRERIE) 
+	$(CC) $(FLAG) -o $(ESEGUIBILE_TEST) $(TEST) $(LIBRERIE)
 
 clean: 
-	$(RM) -rf bin/*
 	$(RM) -rf build/*
+	$(RM) -rf outfile.csv

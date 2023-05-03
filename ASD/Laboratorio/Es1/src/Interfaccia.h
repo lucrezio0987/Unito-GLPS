@@ -18,6 +18,7 @@ int CompareString(Records* i, Records* j);
 Records** CreateArray();
 void arrayAdd(Array* A, Records *rec);
 void LoadArray(Array *A, const char *infile);
+void LoadArrayMAX(Array *A, const char *infile, unsigned int max_records);
 void PrintArray(const char *outfile, Array *A);
 
 // Algoritmo Merge-Sort

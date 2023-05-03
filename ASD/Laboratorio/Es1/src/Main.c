@@ -4,7 +4,7 @@
 #include "Interfaccia.h"
 
 #define INPUT_FILE "../records.csv"
-#define OUTPUT_FILE "bin/outfile.csv"
+#define OUTPUT_FILE "outfile.csv"
 
 #define K 100
 
