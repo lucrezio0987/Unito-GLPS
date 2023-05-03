@@ -1,5 +1,8 @@
 #include "Interfaccia.h"
 
+#define DISC 50
+#define MAX_REC 30
+
 //--------- PROTOTIPI ---------//
 
 int ComparePos(Records* i, Records* j);
@@ -57,8 +60,10 @@ int CompareString(Records* i, Records* j){
 }
 
 void merge_binary_insertion_sort(void **base, size_t nitems, size_t k, int (*compar)(const void *, const void*)) {
-    MergeSort(base, 0, nitems-1, compar);
-    //BinaryInsertionSort(base,nitems,compar);
+    if(k>DISC)
+        MergeSort(base, 0, nitems-1, compar);
+    else 
+        BinaryInsertionSort(base,nitems,compar);
 }
 
 Records** CreateArray() {
@@ -91,7 +96,7 @@ void LoadArray(Array *A, const char *infile) {
     
     while( (fscanf(fp, "%ld,%[^,],%ld,%lf\n", &rec->pos, rec->item_string, &rec->item_int, &rec->item_float)) == 4 )
         arrayAdd(A, rec);
-
+ 
     fclose(fp);
 
     free(rec->item_string);
@@ -106,9 +111,8 @@ void LoadArrayMAX(Array *A, const char *infile, unsigned int max_records) {
     FILE *fp = fopen(infile, "r");
     if(fp == NULL) return 1;
     
-    while( (fscanf(fp, "%ld,%[^,],%ld,%lf\n", &rec->pos, rec->item_string, &rec->item_int, &rec->item_float)) == 4 && ++i != max_records)
+    while( (fscanf(fp, "%ld,%[^,],%ld,%lf\n", &rec->pos, rec->item_string, &rec->item_int, &rec->item_float)) == 4 && i++ != max_records)
         arrayAdd(A, rec);
-
     fclose(fp);
 
     free(rec->item_string);
@@ -119,14 +123,14 @@ void PrintArray(const char *outfile, Array *A){
     unsigned int i;
     FILE *fp = fopen(outfile, "w+");
     for (i=0; i<A->nitems; ++i)
-        fprintf(fp,"%d,%s,%d,%f\n", A->base[i]->pos, A->base[i]->item_string, A->base[i]->item_int, A->base[i]->item_float);
+        fprintf(fp,"%d\t%s,%d,%f\n", A->base[i]->pos, A->base[i]->item_string, A->base[i]->item_int, A->base[i]->item_float);
     fclose(fp);
 
 }
 
 void sort_records(const char *infile, const char *outfile, size_t k, size_t field){
     Array *A = CreateArray();
-    LoadArrayMAX(A, infile,100);
+    LoadArrayMAX(A, infile,MAX_REC);
     
     switch(field){
         case 1: merge_binary_insertion_sort(A->base, A->nitems, k, CompareString); break;

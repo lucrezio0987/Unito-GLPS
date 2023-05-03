@@ -8,7 +8,6 @@
 #define INPUT_FILE "../records.csv"
 #define OUTPUT_FILE "outfile.csv"
 
-#define MAX_REC 100000
 #define N_CONTROLLI 10
 
 typedef struct _Clock {
@@ -30,7 +29,7 @@ typedef struct _Array {
 } Array;
 
 void main() {
-    int field = 1;
+    int field = 2;
     int min = 1;
     int max = MAX_REC;
     int n_records=0;
@@ -45,6 +44,7 @@ void main() {
         max = MAX_REC;
         while(flag_trovato == 0 ) {
             n_records = (min+max)/2;
+            printf(":::: test: %d\n", n_records);
             if(n_records == 0) {++flag_trovato; ++k_null;}
             else time = calcDif(n_records, field);
             
@@ -52,14 +52,14 @@ void main() {
             else if(time < 0 )             min = n_records + 1;
             else if(time > 0)              max = n_records -1; 
         }
-        printf("(%d) k = %d\n", i, n_records);
+        printf("================================ (%d) k = %d\n", i, n_records);
         --flag_trovato;
         media_k += n_records;
     }
 
     media_k = media_k / (N_CONTROLLI -k_null);
 
-    printf("----------------------------\nk_medio = %d\n", media_k);
+    printf(">>> k_medio = %d\n", media_k);
 
 }
 
@@ -73,6 +73,7 @@ int calcDif(unsigned int n_records,unsigned int field){
     LoadArrayMAX(A, INPUT_FILE, n_records);
     LoadArrayMAX(B, INPUT_FILE, n_records);
 
+    printf(":: (I) Merge - ");
     ms.start = clock();
     switch(field){
         case 1:  MergeSort(A->base, 0, A->nitems-1, CompareString); break;
@@ -83,29 +84,36 @@ int calcDif(unsigned int n_records,unsigned int field){
     ms.end = clock();
     ms.time =  ms.end - ms.start;
 
+    printf("(F) Merge (%d)\n:: (I) BinaryInsertion - ",ms.time);
     is.start = clock();
-//    switch(field){
-//        case 1:  BinaryInsertionSort(B->base, B->nitems, CompareString);    break;
-//        case 2:  BinaryInsertionSort(B->base, B->nitems, CompareInt);       break;
-//        case 3:  BinaryInsertionSort(B->base, B->nitems, CompareFloat);     break;
-//        default: BinaryInsertionSort(B->base, B->nitems, ComparePos);       break;
-//    }
+    switch(field){
+        case 1:  BinaryInsertionSort(B->base, B->nitems, CompareString);    break;
+        case 2:  BinaryInsertionSort(B->base, B->nitems, CompareInt);       break;
+        case 3:  BinaryInsertionSort(B->base, B->nitems, CompareFloat);     break;
+        default: BinaryInsertionSort(B->base, B->nitems, ComparePos);       break;
+    }
     is.end = clock();
     is.time = is.end - is.start;
+    
+    printf("(F) BinaryInsertion (%d)\n", is.time);
 
-//    if(controllo(A,B,n_records ) != 0) printf("ERRORE\n");
+    if(controllo(A,B,n_records ) != 0) printf(":: ERRORE: vettori non uguali\n");
+    printf("\n");
 
     free(A);
     free(B);
 
-    return  ms.time - is.time;
+    return   is.time - ms.time;
 
 }
 
 int controllo(Array *A, Array *B, int n_records) {
     int i;
 
-    if(A->nitems != B->nitems || A->nitems != n_records ) return -1;
+    //printf("\n%d - %d: %d", A->nitems, B->nitems, n_records);
+
+
+    if(A->nitems != B->nitems || A->nitems != n_records ) return -2;
 
     for(i=0; i<A->nitems; ++i) {
         if(A->base[i]->pos != B->base[i]->pos) return -1;
