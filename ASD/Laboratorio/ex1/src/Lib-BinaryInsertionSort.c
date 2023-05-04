@@ -36,7 +36,7 @@ void Insert(void** base, unsigned int i, unsigned int loc, int (*compar)(const v
 int search(unsigned int x, void** base, unsigned int i, unsigned int j, int (*compar)(const void *, const void*)) {
     int left = i, right = j;
     while (left <= right) {
-        int mid = left + (right - left) / 2;
+        int mid = (right + left) / 2;
         if ((compar)(base[x], base[mid])==0)
             return mid;
         else if ((compar)(base[x], base[mid])==1)
@@ -52,7 +52,7 @@ int search(unsigned int x, void** base, unsigned int i, unsigned int j, int (*co
 void BinaryInsertionSort(void** base,  unsigned int nitems, int (*compar)(const void *, const void*)){
     unsigned int i,loc;
     for(i=1; i < nitems; ++i) {
-        if((compar)(base[i], base[i-1]) <= 0){
+        if((compar)(base[i], base[i-1]) == -1){
             loc = search(i, base, 0, i-1, compar);
             if(loc<0) printf("Errore %d\n",loc);
             else Insert(base,i,loc,compar);
