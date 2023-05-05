@@ -3,8 +3,8 @@
 
 #include "Interfaccia.h"
 
-#define DICTIONARY "../dictionary.txt"
-#define TEXT_FILE "../correctme.txt"
+#define DICTIONARY "dictionary.txt"//"../dictionary.txt"
+#define TEXT_FILE "text.txt"//"../correctme.txt"
 #define MAX_HEIGHT 10
 
 
