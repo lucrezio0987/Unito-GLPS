@@ -11,7 +11,7 @@ void find_errors(const char *dictfile, const char *textfile, size_t max_height);
 //--------- STRUTTURE ---------//
 
 struct Node {
-  struct _Node **next;
+  struct Node **next;
   size_t size;
   void *item;
 };
@@ -47,62 +47,60 @@ void clear_skiplist(struct SkipList **list){
   Node *nodo_attuale = (*list)->head->next[0];
 
   while (nodo_attuale != NULL) {
-        Node *next = node->next[0];
-        free(nodo_attuale->next);
-        free(nodo_attuale);
-        nodo_attuale = next;
-    }
+    Node *next = nodo_attuale->next;
+    free(nodo_attuale->next);
+    free(nodo_attuale);
+    nodo_attuale = next;
+  }
 
   free((*list)->head->next);
   free((*list)->head);
   free(*list);
 }
 
-void insert_skiplist(struct SkipList *list, void *item){
-  
-  Node *nuovo_nodo= (Node*) malloc(sizeof(Node));
+void insert_skiplist(struct SkipList *list, void *item) {
+    /* Creazione del nuovo nodo */
+    struct Node *new_node = (struct Node*)malloc(sizeof(struct Node));
+    new_node->next = (struct Node**)malloc(sizeof(struct Node*) * list->max_height);
+    new_node->size = 1;
+    new_node->item = (char*)item;
 
-  nuovo_nodo->next = (struct Node**) malloc(sizeof(struct Node*));
-  nuovo_nodo->size = 0;
-  nuovo_nodo->item = item;
-  nuovo_nodo->next[0] = NULL;
-  
-  Node *nodo_attuale = list->head;
+    /* Inserimento del nuovo nodo in lista */
+    struct Node *current_node = list->head;
+    int level = list->max_level - 1;
 
-  for (int i = list->max_level; i >= 0; i--) {
-    while (nodo_attuale->next[i] != NULL && list->compare(nodo_attuale->next[i]->item, item) < 0)
-      nodo_attuale = nodo_attuale->next[i];
-    if (i <= list->max_height) {
-      nuovo_nodo->next[i] = nodo_attuale->next[i];
-      nodo_attuale->next[i] = nuovo_nodo;
-      nodo_attuale->size++;
-    } 
-  }
-  if (list->max_level < nuovo_nodo->size)
-    list->max_level = nodo_attuale->size;
-
-  return;
+    while (level >= 0) {
+        while (current_node->next[level] && list->compare(current_node->next[level]->item, item) < 0) {
+            current_node = current_node->next[level];
+        }
+        if (level < new_node->size) {
+            new_node->next[level] = current_node->next[level];
+            current_node->next[level] = new_node;
+        }
+        level--;
+    }
 }
+const void* search_skiplist(struct SkipList *list, void *item) {
+    struct Node *current_node = list->head;
+    int level = list->max_level - 1;
 
-const void* search_skiplist(struct SkipList *list, void *item){
-  Node *nodo_attuale = list->head;
-
-  for (int i = list->max_level; i >= 0; i--) {
-      while (nodo_attuale->next[i] != NULL && list->compare(nodo_attuale->next[i]->item, item) <= 0) {
-          if (list->compare(nodo_attuale->next[i]->item, item) == 0)
-              return nodo_attuale->next[i]->item;
-          nodo_attuale = nodo_attuale->next[i];
-      }
-  }
-  
-  return NULL;
+    while (level >= 0) {
+        while (current_node->next[level] && list->compare(current_node->next[level]->item, item) < 0) {
+            current_node = current_node->next[level];
+        }
+        if (current_node->next[level] && list->compare(current_node->next[level]->item, item) == 0) {
+            return current_node->next[level]->item;
+        }
+        level--;
+    }
+    return NULL;
 }
 
 void LoadData(struct SkipList *list, const char *file){
   FILE *fp = fopen(file, "r");
   char temp[100];
 
-  while(fscan(fp, "%[^ ]", temp) != 0){
+  while(fscanf(fp, "%[^ ]", temp) != 0){
     insert_skiplist(list, temp);
   }
 
@@ -116,13 +114,16 @@ void find_errors(const char *dictfile, const char *textfile, size_t max_height){
   new_skiplist(&Dict, max_height, &strcmp);
   LoadData(Dict, dictfile);
   
+  int i=0;
   char temp[100];
 
-  FILE *fp_textfile = fopen(textfile, "r");
+  FILE *fp_textfile;
 
-  while(fscan(fp_textfile, "%[^ ]", temp) != 0)
+  if((fp_textfile = fopen(textfile, "r")) == 0) { printf("Errore: Apertura file (%s)\n", textfile); return 0; }
+
+  while(fscanf(fp_textfile, "%s", temp) == 1 && ++i !=10)
     if(search_skiplist(Dict, temp) == NULL)
-      printf("%d\n", temp);
+      printf("%s\n", temp);
   
   fclose(fp_textfile);
 

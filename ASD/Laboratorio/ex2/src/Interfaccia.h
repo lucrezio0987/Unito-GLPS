@@ -8,8 +8,8 @@
 
 //--------- STRUTTURE ---------//
 
-typedef struct _Node Node;
-typedef struct _SkipList SkipList;
+typedef struct Node Node;
+typedef struct SkipList SkipList;
 
 
 //--------- PROTOTIPI ---------//
