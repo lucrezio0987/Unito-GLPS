@@ -11,7 +11,7 @@ all: $(ESEGUIBILE)
 $(ESEGUIBILE): $(MAIN) $(LIBRERIE)
 	gcc $(FLAG) -o $(ESEGUIBILE) $(MAIN) $(LIBRERIE)
 
-TEST = src/Test_efficienza.c
+TEST = test/Test.c
 ESEGUIBILE_TEST = build/test_ex1
 
 test: $(TEST) $(LIBRERIE) 

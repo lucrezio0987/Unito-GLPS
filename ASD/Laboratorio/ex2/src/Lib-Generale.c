@@ -100,11 +100,14 @@ void insert_skiplist(struct SkipList *list, void *item) {
     /* ricerca il punto di inserimento */
     update = (struct Node **) calloc(1, sizeof(struct Node *));
     p = list->head;
+    
     if(list->compare(item, list->head) < 0){
       new_node->next[0] = list->head;
       list->head = new_node->next[0];
       return;
     }
+
+    
     for (h = list->max_level; h > 0; h--) {
         while (p->next[h-1] != NULL && list->compare(item, p->next[h-1]->item) > 0) {
             p = p->next[h-1];

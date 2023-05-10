@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "Interfaccia.h"
+#include "../src/Interfaccia.h"
 #include "unity.h"
 
 //#define INPUT_FILE "../records.csv"
@@ -12,7 +12,7 @@
  */
 
 int field, n_records;
-Record *rec;
+Records *rec;
 Array *A;
 
 void setUp(void){
