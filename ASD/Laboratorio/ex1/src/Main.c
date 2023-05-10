@@ -11,7 +11,7 @@
 enum enum_field {FIELD_POS, FIELD_STRING, FIELD_INT, FIELD_FLOAT};
 
 void main(int argc, const char* argv[]) {
-        
+    print("ciao");
     if(argc == 3)
         sort_records(argv[1], argv[2], K, FIELD_POS);
     else 
