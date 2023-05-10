@@ -90,7 +90,7 @@
 
 #### Problema: Divisione Intera Ricorsiva
 
-### Indizione: Completa vs Semplice
+### Induzione: Completa vs Semplice
  [Semplice]: nel passo induttivo il parametro è diminuito di  1
     il P.I. può essere    P(m)   ⟹ P(m+1)
     ma anche              P(m−1) ⟹ P(m)

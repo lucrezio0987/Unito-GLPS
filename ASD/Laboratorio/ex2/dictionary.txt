@@ -1,6 +1,8 @@
 ciao 
 come 
 stai
+amico
+mio
 io
 sto
 bene

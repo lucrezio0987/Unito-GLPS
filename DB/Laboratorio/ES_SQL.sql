@@ -181,45 +181,68 @@ WHERE SP.PNum = ANY ( 	SELECT P.PNum
 
 SELECT S.City
 FROM S
-WHERE S.Status >= (	SELECT avg(S.Status) FROM S	);
+WHERE S.Status >= (	SELECT avg(S.Status) 
+					FROM S					);
 
 ---- Esercizio 6.1
 -- Trovare i codici dei prodotti che hanno il peso
 -- massimo (come esercizio sulle query correlate,
--- scrivere una versione determinando il peso massimo
--- come il peso non inferiore ai pesi di tutti gli altri
--- prodotti e un’altra versione con not exists)
+-- scrivere una versione determinando il peso massimo come il peso non inferiore ai pesi di tutti gli altri prodotti e un’altra versione con not exists)
 ----
 
 SELECT P.PNum
 FROM P
-WHERE P.Weight = (	SELECT max(P.Weight) FROM P	);
+WHERE P.Weight = (	SELECT max(P.Weight) 
+					FROM P					);
 
-
-SELECT P1.PNum
-FROM P P1
-WHERE P1.PNum not exists ( SELECT *
-							FROM P P2
-							WHERE P2.Weight < P1.Weight	);
---[NON FUNZIONA]--
+SELECT P.PNum
+FROM P 
+WHERE not exists (	SELECT * 
+					FROM P P1 
+					WHERE P1.Weight > P.Weight	);
 
 ---- Esercizio 6.2
--- Trovare i nomi dei fornitori che forniscono tutte le
--- parti (senza utilizzare operatori aggregati)
+-- Trovare i nomi dei fornitori che forniscono tutte le parti (senza utilizzare operatori aggregati)
 -- (suggerimento: scrivere prima una query che trovi le
 -- parti non fornite da S2 e poi generalizzare su ogni
 -- fornitore)
 ----
 
-
+SELECT S.SName
+From S
+WHERE not exists ( 	SELECT *
+					FROM P
+					WHERE not exists (	SELECT *
+										FROM SP
+										WHERE SP.SNum = S.Snum 
+										  AND SP.PNum = P.Pnum	)	);
 
 ---- Esercizio 6.3
--- Trovare i nomi dei fornitori che forniscono almeno
--- tutti i prodotti forniti da S2 (senza utilizzare
+-- Trovare i nomi dei fornitori che forniscono almeno tutti i prodotti forniti da S2 (senza utilizzare
 -- operatori aggregati) (suggerimento: scrivere prima
 -- una query che trovi i prodotti forniti da S2 ma non
 -- da S3 e poi generalizzare su ogni fornitore)
 ----
 
+SELECT S.SName 
+FROM S 
+WHERE not exists (	SELECT * 
+       				FROM P P1 
+       				WHERE not exists (	SELECT * 
+              							FROM SP SP1
+              							WHERE  S.SNum = SP1.SNum 
+										  AND P1.PNum = SP1.PNum							) 
+             		  AND P1.PNum in (	SELECT P2.PNum 
+              							FROM SP SP2 JOIN P P2 ON SP2.PNum = P2.PNum 
+              							WHERE SP2.SNum = 'S2'							)	);
 
-
+---- Esercizio 7.1
+-- Create una copia delle tabelle S e P, nominandole S_x, P_x, dove x è il vostro numero di matricola
+----
+-- Sperimentate con aggiornamenti, modifiche,
+-- cancellazioni, creazioni di viste, ecc...
+----
+-- Creando la tabella SP_x come copia di SP,
+-- come vengono trattati i vincoli? Risolvete
+-- utilizzando SQL
+----

@@ -113,13 +113,13 @@
 
 ## Modello Relazionale
  
-  ["Realzione":Accazzioni]
+  ["Relazione":Accazzioni]
    - <Relazione_matematica: sottoinsieme del prodotto cartesiano (insieme di ennumple distinte, ciascna ordinata al suo interno)>
       (è posizionale, a differenza della Relazione nei database)
    - <Relazione_dei_dati: ho uno schema di relazione e specifico un insieme di attributi>
       (una base di dati è un insieme di relazioni.)
    - <Relazione_classe_di_fatti: /associazione>
- 
+
   [Definizioni]:
    - <tupla: insieme di attributi> (relazione = insieme di tuple)
 
