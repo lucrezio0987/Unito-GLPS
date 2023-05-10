@@ -89,18 +89,18 @@ void insert_skiplist(struct SkipList *list, void *item) {
     struct Node **update;
 
     /* crea il nuovo nodo */
-    struct Node *new_node = create_node(2,item);
+    struct Node *new_node = create_node(1,item);
 
     if(list->head == NULL){
       list->max_level = new_node->size;
       list->head = new_node;
       return;
     }
-    
+
     /* ricerca il punto di inserimento */
     update = (struct Node **) calloc(1, sizeof(struct Node *));
     p = list->head;
-    if(list->compare(item, list->head) > 0) 
+    if(list->compare(item, list->head) > 0)
 
     for (h = list->max_level; h > 0; h--) {
         while (p->next[h-1] != NULL && list->compare(item, p->next[h-1]->item) > 0) {
@@ -130,7 +130,7 @@ void insert_skiplist(struct SkipList *list, void *item) {
 
 void print_list(struct SkipList *list) {
   struct Node *Attuale = list->head;
-  struct Node * p= list->head;
+  struct Node *p = list->head;
   int i;
   int h;
   printf("\033[0;30m   PRINT LIST: \033[0;31m\n");
