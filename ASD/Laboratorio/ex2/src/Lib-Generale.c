@@ -41,8 +41,8 @@ Node* create_node(size_t size, void *item){
 
 void new_skiplist(struct SkipList **list, size_t max_height, int (*compar)(const void *, const void*)) {
     *list = (struct SkipList *) malloc(sizeof(struct SkipList));
-    (*list)->head = NULL;
-    (*list)->max_level = 0;
+    (*list)->head = create_node(0,NULL);;
+    (*list)->max_level = 1;
     (*list)->max_height = max_height;
     (*list)->compare = compar;
 }
@@ -77,44 +77,123 @@ int list_is_empty(struct SkipList *list){
 }
 
 
-const void* search_skiplist(struct SkipList *list, void *item) {
-  if(list_is_empty(list) == 1) return NULL;
+/*
+searchSkipList(list, item)
+    x = list->head
+
+    // loop invariant: x->item < item
+    for i = list->max_level downto 1 do
+        while x->next[i]->item < item do
+            x = x->next[i]
+
+    // x->item < item <= x->next[1]->item
+    x = x->next[1]
+    if x->item == item then
+        return x->item
+    else
+        return failure
+*/
+
+const void* search_skiplist(struct SkipList *list, void *item){
+  struct Node *Attuale = list->head;
+  //! ERRORE
+  for(int k = list->max_level - 1; k >= 0; --k) {
+    while(list->compare(Attuale->next[k]->item, item) < 0)
+      Attuale = Attuale->next[k]->item;
+  }
+
+  Attuale = Attuale->next[0];
+  if( list->compare(Attuale->item, item) == 0)
+    return Attuale->item;
+  else 
+    return NULL;
 
 
 }
 
+const void* search_skiplist_OLD(struct SkipList *list, void *item) {
+  if(list_is_empty(list) == 1) return NULL;
+
+  size_t h;
+  
+  /* cerca l'elemento */
+  struct Node *p = list->head;
+  for (h = list->max_level; h > 0; h--) {
+      while (p->next[h-1] != NULL && list->compare(item, p->next[h-1]->item) > 0) {
+          p = p->next[h-1];
+      }
+  }
+  p = p->next[0];
+  /* restituisce il risultato */
+  if (p != NULL && list->compare(item, p->item) == 0) {
+      return p->item;
+  } else {
+      return NULL;
+  }
+
+}
+/*
+insertSkipList(list, item)
+
+    new = createNode(item, randomLevel())
+    if new->size > list->max_level
+        list->max_level = new->size
+
+    x = list->head
+    for k = list->max_level downto 1 do
+        if (x->next[k] == NULL || item < x->next[k]->item)
+            if k < new->size {
+              new->next[k] = x->next[k]
+              x->next[k] = new
+            }
+        else
+            x = x->next[k]
+            k++
+*/
 void insert_skiplist(struct SkipList *list, void *item) {
+  Node *New_Node = create_node(1, item);
+  Node *Attuale = list->head;
+
+  if(New_Node->size > list->max_level)
+    list->max_level = New_Node->size;
+
+  for(int k = list->max_level - 1; k >= 0; --k) {
+    if(Attuale->next[k] == NULL || list->compare(item, Attuale->next[k]->item) < 0) {
+      if(k < New_Node->size){
+        New_Node->next[k] = Attuale->next[k];
+        Attuale->next[k] = New_Node;
+      } else {
+        Attuale = Attuale->next[k];
+        ++k;
+      } 
+    }
+  }
+
+  //for (int i = list->max_level - 1; i >= 0; --i) {
+  //  while (Attuale->next[i] != NULL && list->compare(Attuale->next[i]->item, item) < 0)
+  //    Attuale = Attuale->next[i];
+  //  if (i < size) {
+  //    New_Node->next[i] = Attuale->next[i];
+  //    Attuale->next[i] = New_Node;
+  //  }
+  //}
+}
+
+void insert_skiplist_OLD(struct SkipList *list, void *item) {
     size_t h, i;
-    struct Node *p;
-    struct Node **update;
+    struct Node *p = list->head;;
+    struct Node **update = (struct Node **) calloc(1, sizeof(struct Node *));;
 
     /* crea il nuovo nodo */
-    struct Node *new_node = create_node(1,item);
-
-    if(list->head == NULL){
-      list->max_level = new_node->size;
-      list->head = new_node;
-      return;
-    }
+    struct Node *new_node = create_node(2,item);
 
     /* ricerca il punto di inserimento */
-    update = (struct Node **) calloc(1, sizeof(struct Node *));
-    p = list->head;
-    
-    if(list->compare(item, list->head) < 0){
-      new_node->next[0] = list->head;
-      list->head = new_node->next[0];
-      return;
-    }
-
-    
     for (h = list->max_level; h > 0; h--) {
-        while (p->next[h-1] != NULL && list->compare(item, p->next[h-1]->item) > 0) {
-            p = p->next[h-1];
-        }
-        update[h-1] = p;
+      while (p->size>h && p->next[h-1] != NULL && list->compare(item, p->next[h-1]->item) > 0) 
+        p = p->next[h-1];
+      update[h-1] = p;
     }
-    p = p->next[0];
+    p = p->next[h];
     
     /* controlla se l'elemento è già presente */
     if (p != NULL && list->compare(item, p->item) == 0) {
