@@ -181,7 +181,7 @@ void insert_skiplist(struct SkipList *list, void *item) {
 
 void insert_skiplist_OLD(struct SkipList *list, void *item) {
     size_t h, i;
-    struct Node *p = list->head;;
+    struct Node *p = list->head;
     struct Node **update = (struct Node **) calloc(1, sizeof(struct Node *));;
 
     /* crea il nuovo nodo */
