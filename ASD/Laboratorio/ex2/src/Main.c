@@ -3,8 +3,8 @@
 
 #include "Interfaccia.h"
 
-#define DICTIONARY "/home/lucrezio0987/Documenti/Unito-GLPS/ASD/Laboratorio/ex2/dictionary.txt"//"../dictionary.txt"
-#define TEXT_FILE "/home/lucrezio0987/Documenti/Unito-GLPS/ASD/Laboratorio/ex2/text.txt"//"../correctme.txt"
+#define DICTIONARY "dictionary.txt"
+#define TEXT_FILE  "text.txt"
 #define MAX_HEIGHT 10
 
 
