@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Traduzione di espressioni aritmetiche</title>
+    <link rel="stylesheet" type="text/css" href="../assets/reveal/reveal.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/vs.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/main.css">
+  </head>
+  <body>
+    <div class="reveal">
+      <div id="root" class="slides">
+	<h1 class="no_toc" id="linguaggi-formali-e-traduttori">Linguaggi Formali e Traduttori</h1>
+
+<h2 class="sezione" id="54-traduzione-di-espressioni-aritmetiche">5.4 Traduzione di espressioni aritmetiche</h2>
+
+<ul class="smaller" id="markdown-toc">
+  <li><a href="#sommario" id="markdown-toc-sommario">Sommario</a></li>
+  <li><a href="#grammatica" id="markdown-toc-grammatica">Grammatica delle espressioni aritmetiche</a></li>
+  <li><a href="#sdd-per-espressioni-aritmetiche" id="markdown-toc-sdd-per-espressioni-aritmetiche">SDD per espressioni aritmetiche</a></li>
+  <li><a href="#sdt-per-la-grammatica-ambigua" id="markdown-toc-sdt-per-la-grammatica-ambigua">SDT per la grammatica ambigua</a></li>
+  <li><a href="#sdt-on-the-fly-per-la-grammatica-ll1" id="markdown-toc-sdt-on-the-fly-per-la-grammatica-ll1">SDT “on-the-fly” per la grammatica LL(1)</a></li>
+  <li><a href="#esercizi" id="markdown-toc-esercizi">Esercizi</a></li>
+</ul>
+
+<div class="license">
+
+  <p>È proibito condividere e divulgare in qualsiasi forma i materiali
+didattici caricati sulla piattaforma e le lezioni svolte in
+videoconferenza: ogni azione che viola questa norma sarà denunciata
+agli organi di Ateneo e perseguita a termini di legge.</p>
+
+</div>
+
+<h1 id="sommario">Sommario</h1>
+
+<h2 id="problema">Problema</h2>
+
+<ul>
+  <li>Traduzione delle espressioni aritmetiche.</li>
+</ul>
+
+<h2 id="in-questa-lezione">In questa lezione</h2>
+
+<ul>
+  <li>Definiamo SDD e SDT per la traduzione di espressioni aritmetiche.</li>
+</ul>
+
+<h2 id="riferimenti-esterni">Riferimenti esterni</h2>
+
+<ul>
+  <li><a href="https://docs.oracle.com/javase/specs/index.html">Java Language and Virtual Machine Specifications</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Java_bytecode_instruction_listings">JVM Instruction set</a></li>
+</ul>
+
+<h1 id="grammatica">Grammatica delle espressioni aritmetiche</h1>
+
+<table class="sdd smaller">
+  <thead>
+    <tr>
+      <th style="text-align: left">Produzioni</th>
+      <th style="text-align: left">Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">$E → E₁ \tplus E₂$</td>
+      <td style="text-align: left">Somma</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">$E → E₁ \tminus E₂$</td>
+      <td style="text-align: left">Sottrazione</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">$E → E₁ \ttimes E₂$</td>
+      <td style="text-align: left">Moltiplicazione</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">$E → E₁ \tdiv E₂$</td>
+      <td style="text-align: left">Divisione intera</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">$E → E₁ \trem E₂$</td>
+      <td style="text-align: left">Resto della divisione intera</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">$E → \tparens{E₁}$</td>
+      <td style="text-align: left">Stesso valore di $E₁$</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">$E → \tnum$</td>
+      <td style="text-align: left">Costante</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">$E → x$</td>
+      <td style="text-align: left">Variabile</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="block ">
+  <h2 id="attenzione">Attenzione</h2>
+
+  <p>Al fine di presentare la traduzione in codice intermedio adotteremo
+spesso <em>grammatiche ambigue</em> o comunque <em>non LL(1)</em>.
+Disambiguazione, fattorizzazione, eliminazione della ricorsione
+spesso richiedono <em>modifiche significative anche agli SDT</em>
+corrispondenti, come l’introduzione di <em class="hl">attributi ereditati</em>.</p>
+
+</div>
+
+<h1 id="sdd-per-espressioni-aritmetiche">SDD per espressioni aritmetiche</h1>
+
+<div class="columns ">
+  <div class="half ">
+    <table class="sdd smaller">
+      <thead>
+        <tr>
+          <th style="text-align: left">Produzioni</th>
+          <th style="text-align: left">Regole semantiche</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left">$E → \tnum$</td>
+          <td style="text-align: left">$E.\code = \ILDC~\tnum.v$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left"> </td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$E → x$</td>
+          <td style="text-align: left">$E.\code = \IILOAD~\address{x}$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left"> </td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$E → E₁ \tplus E₂$</td>
+          <td style="text-align: left">$E.\code = E₁.\code$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left">${} \append E₂.\code$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left">${} \append \IIADD$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left"> </td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$E → \tparens{E₁}$</td>
+          <td style="text-align: left">$E.\code = E₁.\code$</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="attributi">Attributi</h2>
+
+    <ul>
+      <li>$E.\code$ = codice che calcola il valore di $E$ e lo lascia in
+cima alla pila.</li>
+    </ul>
+  </div>
+
+  <div class="">
+    <div class="jekyll-diagrams diagrams graphviz">
+      <p><!-- Generated by graphviz version 5.0.1 (20220820.1526)
+ -->
+<!-- Pages: 1 --></p>
+      <svg width="96pt" height="99pt" viewBox="0.00 0.00 96.00 99.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 95)">
+<g id="clust1" class="cluster">
+<title>cluster_E</title>
+<path fill="none" stroke="black" d="M20,-8C20,-8 68,-8 68,-8 74,-8 80,-14 80,-20 80,-20 80,-71 80,-71 80,-77 74,-83 68,-83 68,-83 20,-83 20,-83 14,-83 8,-77 8,-71 8,-71 8,-20 8,-20 8,-14 14,-8 20,-8" />
+<text text-anchor="middle" x="44" y="-67.8" font-family="Overlock" font-size="14.00">E → n</text>
+</g>
+<!-- goto -->
+<g id="node1" class="node">
+<title>goto</title>
+<polygon fill="#cccccc" stroke="black" points="72,-52 16,-52 16,-16 72,-16 72,-52" />
+<text text-anchor="middle" x="44" y="-30.3" font-family="Overlock" font-size="14.00">ldc n.v</text>
+</g>
+</g>
+</svg>
+
+    </div>
+
+    <div class="jekyll-diagrams diagrams graphviz">
+      <p><!-- Generated by graphviz version 5.0.1 (20220820.1526)
+ -->
+<!-- Pages: 1 --></p>
+      <svg width="106pt" height="99pt" viewBox="0.00 0.00 106.00 99.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 95)">
+<g id="clust1" class="cluster">
+<title>cluster_E</title>
+<path fill="none" stroke="black" d="M20,-8C20,-8 78,-8 78,-8 84,-8 90,-14 90,-20 90,-20 90,-71 90,-71 90,-77 84,-83 78,-83 78,-83 20,-83 20,-83 14,-83 8,-77 8,-71 8,-71 8,-20 8,-20 8,-14 14,-8 20,-8" />
+<text text-anchor="middle" x="49" y="-67.8" font-family="Overlock" font-size="14.00">E → x</text>
+</g>
+<!-- iload -->
+<g id="node1" class="node">
+<title>iload</title>
+<polygon fill="#cccccc" stroke="black" points="81.5,-52 16.5,-52 16.5,-16 81.5,-16 81.5,-52" />
+<text text-anchor="middle" x="49" y="-30.3" font-family="Overlock" font-size="14.00">iload &amp;x</text>
+</g>
+</g>
+</svg>
+
+    </div>
+
+  </div>
+  <div class="">
+    <div class="jekyll-diagrams diagrams graphviz">
+      <p><!-- Generated by graphviz version 5.0.1 (20220820.1526)
+ -->
+<!-- Pages: 1 --></p>
+      <svg width="113pt" height="199pt" viewBox="0.00 0.00 113.00 199.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 195)">
+<g id="clust1" class="cluster">
+<title>cluster_B</title>
+<path fill="none" stroke="black" d="M20,-8C20,-8 85,-8 85,-8 91,-8 97,-14 97,-20 97,-20 97,-171 97,-171 97,-177 91,-183 85,-183 85,-183 20,-183 20,-183 14,-183 8,-177 8,-171 8,-171 8,-20 8,-20 8,-14 14,-8 20,-8" />
+<text text-anchor="middle" x="52.5" y="-167.8" font-family="Overlock" font-size="14.00">E → E₁ + E₂</text>
+</g>
+<!-- E₁ -->
+<g id="node1" class="node">
+<title>E₁</title>
+<path fill="none" stroke="black" d="M67,-152C67,-152 37,-152 37,-152 31,-152 25,-146 25,-140 25,-140 25,-128 25,-128 25,-122 31,-116 37,-116 37,-116 67,-116 67,-116 73,-116 79,-122 79,-128 79,-128 79,-140 79,-140 79,-146 73,-152 67,-152" />
+<text text-anchor="middle" x="52" y="-130.3" font-family="Overlock" font-size="14.00">E₁</text>
+</g>
+<!-- E₂ -->
+<g id="node2" class="node">
+<title>E₂</title>
+<path fill="none" stroke="black" d="M67,-102C67,-102 37,-102 37,-102 31,-102 25,-96 25,-90 25,-90 25,-78 25,-78 25,-72 31,-66 37,-66 37,-66 67,-66 67,-66 73,-66 79,-72 79,-78 79,-78 79,-90 79,-90 79,-96 73,-102 67,-102" />
+<text text-anchor="middle" x="52" y="-80.3" font-family="Overlock" font-size="14.00">E₂</text>
+</g>
+<!-- E₁&#45;&gt;E₂ -->
+<g id="edge1" class="edge">
+<title>E₁&#45;&gt;E₂</title>
+<path fill="none" stroke="black" d="M52,-115.94C52,-113.11 52,-110.14 52,-107.21" />
+<polygon fill="black" stroke="black" points="53.75,-107 52,-102 50.25,-107 53.75,-107" />
+</g>
+<!-- add -->
+<g id="node3" class="node">
+<title>add</title>
+<polygon fill="#cccccc" stroke="black" points="79,-52 25,-52 25,-16 79,-16 79,-52" />
+<text text-anchor="middle" x="52" y="-30.3" font-family="Overlock" font-size="14.00">iadd</text>
+</g>
+<!-- E₂&#45;&gt;add -->
+<g id="edge2" class="edge">
+<title>E₂&#45;&gt;add</title>
+<path fill="none" stroke="black" d="M52,-65.94C52,-63.11 52,-60.14 52,-57.21" />
+<polygon fill="black" stroke="black" points="53.75,-57 52,-52 50.25,-57 53.75,-57" />
+</g>
+</g>
+</svg>
+
+    </div>
+
+    <div class="jekyll-diagrams diagrams graphviz">
+      <p><!-- Generated by graphviz version 5.0.1 (20220820.1526)
+ -->
+<!-- Pages: 1 --></p>
+      <svg width="94pt" height="99pt" viewBox="0.00 0.00 94.00 99.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 95)">
+<g id="clust1" class="cluster">
+<title>cluster_B</title>
+<path fill="none" stroke="black" d="M20,-8C20,-8 66,-8 66,-8 72,-8 78,-14 78,-20 78,-20 78,-71 78,-71 78,-77 72,-83 66,-83 66,-83 20,-83 20,-83 14,-83 8,-77 8,-71 8,-71 8,-20 8,-20 8,-14 14,-8 20,-8" />
+<text text-anchor="middle" x="43" y="-67.8" font-family="Overlock" font-size="14.00">E → (E₁)</text>
+</g>
+<!-- E₁ -->
+<g id="node1" class="node">
+<title>E₁</title>
+<path fill="none" stroke="black" d="M58,-52C58,-52 28,-52 28,-52 22,-52 16,-46 16,-40 16,-40 16,-28 16,-28 16,-22 22,-16 28,-16 28,-16 58,-16 58,-16 64,-16 70,-22 70,-28 70,-28 70,-40 70,-40 70,-46 64,-52 58,-52" />
+<text text-anchor="middle" x="43" y="-30.3" font-family="Overlock" font-size="14.00">E₁</text>
+</g>
+</g>
+</svg>
+
+    </div>
+
+  </div>
+</div>
+
+<h1 id="sdt-per-la-grammatica-ambigua">SDT per la grammatica ambigua</h1>
+
+<div class="columns ">
+  <div class="">
+
+    <h2 id="sdt-con-accumulo-del-codice">SDT con accumulo del codice</h2>
+
+    <table class="sdd smaller">
+      <thead>
+        <tr>
+          <th style="text-align: left">Produzioni</th>
+          <th style="text-align: left">Azioni semantiche</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left">$E → E₁ \tplus E₂$</td>
+          <td style="text-align: left">$\set{ E.\code = E₁.\code \append E₂.\code \append \IIADD }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$E → E₁ \tminus E₂$</td>
+          <td style="text-align: left">$\set{ E.\code = E₁.\code \append E₂.\code \append \IISUB }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$E → E₁ \ttimes E₂$</td>
+          <td style="text-align: left">$\set{ E.\code = E₁.\code \append E₂.\code \append \IIMUL }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$E → E₁ \tdiv E₂$</td>
+          <td style="text-align: left">$\set{ E.\code = E₁.\code \append E₂.\code \append \IIDIV }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$E → E₁ \trem E₂$</td>
+          <td style="text-align: left">$\set{ E.\code = E₁.\code \append E₂.\code \append \IIREM }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$E → \tparens{E₁}$</td>
+          <td style="text-align: left">$\set{ E.\code = E₁.\code }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$E → \tnum$</td>
+          <td style="text-align: left">$\set{ E.\code = \ILDC~\tnum.v }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$E → x$</td>
+          <td style="text-align: left">$\set{ E.\code = \IILOAD~\address{x} }$</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+  <div class="fragment fade-left ">
+
+    <h2 id="sdt-on-the-fly">SDT “on-the-fly”</h2>
+
+    <table class="sdd smaller">
+      <thead>
+        <tr>
+          <th style="text-align: left">Azioni semantiche</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left">$\set{ \emit(\IIADD) }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$\set{ \emit(\IISUB) }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$\set{ \emit(\IIMUL) }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$\set{ \emit(\IIDIV) }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$\set{ \emit(\IIREM) }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$\mathstrut$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$\set{ \emit(\ILDC~\tnum.v) }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$\set{ \emit(\IILOAD~\address{x}) }$</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+<h1 id="sdt-on-the-fly-per-la-grammatica-ll1">SDT “on-the-fly” per la grammatica LL(1)</h1>
+
+<div class="row ">
+
+  <table class="sdd smaller">
+    <thead>
+      <tr>
+        <th style="text-align: left">Produzioni</th>
+        <th style="text-align: left">Azioni semantiche</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="text-align: left">$E → TE’$</td>
+        <td style="text-align: left"> </td>
+      </tr>
+      <tr>
+        <td style="text-align: left">$E’ → \es$</td>
+        <td style="text-align: left"> </td>
+      </tr>
+      <tr>
+        <td style="text-align: left">$E’ → {\tplus}T$</td>
+        <td style="text-align: left">$\set{ \emit(\IIADD) }$</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">$\phantom{E’ → {}}E’$</td>
+        <td style="text-align: left"> </td>
+      </tr>
+      <tr>
+        <td style="text-align: left">$E’ → {\tminus}T$</td>
+        <td style="text-align: left">$\set{ \emit(\IISUB) }$</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">$\phantom{E’ → {}}E’$</td>
+        <td style="text-align: left"> </td>
+      </tr>
+      <tr>
+        <td style="text-align: left">$T → FT’$</td>
+        <td style="text-align: left"> </td>
+      </tr>
+      <tr>
+        <td style="text-align: left">$T’ → \es$</td>
+        <td style="text-align: left"> </td>
+      </tr>
+      <tr>
+        <td style="text-align: left">$T’ → {\ttimes}F$</td>
+        <td style="text-align: left">$\set{ \emit(\IIMUL) }$</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">$\phantom{T’ → {}}T’$</td>
+        <td style="text-align: left"> </td>
+      </tr>
+      <tr>
+        <td style="text-align: left">…</td>
+        <td style="text-align: left"> </td>
+      </tr>
+      <tr>
+        <td style="text-align: left">$F → \tnum$</td>
+        <td style="text-align: left">$\set{ \emit(\ILDC~\tnum.v) }$</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">$F → x$</td>
+        <td style="text-align: left">$\set{ \emit(\IILOAD~\address{x}) }$</td>
+      </tr>
+      <tr>
+        <td style="text-align: left">$F → \tparens{E}$</td>
+        <td style="text-align: left"> </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="kt">void</span> <span class="no">E</span><span class="err">'</span><span class="o">()</span> <span class="o">{</span>
+  <span class="k">switch</span> <span class="o">(</span><span class="n">peek</span><span class="o">())</span> <span class="o">{</span>
+  <span class="k">case</span> <span class="sc">'+'</span><span class="o">:</span> <span class="c1">// E' → +TE'</span>
+    <span class="n">match</span><span class="o">(</span><span class="sc">'+'</span><span class="o">);</span>
+    <span class="no">T</span><span class="o">();</span>
+    <span class="n">emit</span><span class="o">(</span><span class="s">"iadd"</span><span class="o">);</span>
+    <span class="no">E</span><span class="err">'</span><span class="o">();</span>
+    <span class="k">break</span><span class="o">;</span>
+  <span class="k">case</span> <span class="sc">'-'</span><span class="o">:</span> <span class="c1">// E' → -TE'</span>
+    <span class="n">match</span><span class="o">(</span><span class="sc">'-'</span><span class="o">);</span>
+    <span class="no">T</span><span class="o">();</span>
+    <span class="n">emit</span><span class="o">(</span><span class="s">"isub"</span><span class="o">);</span>
+    <span class="no">E</span><span class="err">'</span><span class="o">();</span>
+    <span class="k">break</span><span class="o">;</span>
+  <span class="k">case</span> <span class="sc">')'</span><span class="o">:</span>
+  <span class="k">case</span> <span class="sc">'$'</span><span class="o">:</span> <span class="c1">// E' → ε</span>
+    <span class="k">break</span><span class="o">;</span>
+  <span class="k">default</span><span class="o">:</span>
+    <span class="k">throw</span> <span class="nf">error</span><span class="o">(</span><span class="s">"E'"</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>  </div>
+
+</div>
+
+<h1 id="esercizi">Esercizi</h1>
+
+<ol>
+  <li>Calcolare il codice generato per l’espressione <code class="language-plaintext highlighter-rouge">x * x + 2 * x +
+1</code>.</li>
+  <li>Scrivere le regole semantiche per tradurre la <em>negazione</em> $E →
+\tminus E₁$.</li>
+  <li>Scrivere le regole semantiche per tradurre l’<em>accesso ad array</em>
+$E → E₁\tbracks{E₂}$.</li>
+  <li>Scrivere le regole semantiche per tradurre l’<em>invocazione di un
+metodo statico</em>
+\[
+    E → m\tparens\Elist
+    \qquad
+    \Elist → \es \mid \Elistp
+    \qquad
+    \Elistp → E \mid E\tcomma\Elistp
+\]
+usando l’istruzione $\IINVOKESTATIC~m$ per invocare $m$.</li>
+  <li>Scrivere le regole semantiche per tradurre l’<em>assegnamento</em> $E →
+x = E₁$ ricordando che, in Java, tale comando è anche
+un’espressione il cui valore coincide con quello di
+$E₁$. <strong>Suggerimento</strong>: usare l’istruzione <code class="language-plaintext highlighter-rouge">dup</code> per evitare di
+valutare $E₁$ due volte.</li>
+  <li>Scrivere le regole semantiche per tradurre <em>pre- e
+post-incremento</em> di variabili
+\[
+    E → {\tplus}{\tplus} x \mid x{\tplus}{\tplus}
+\]
+tenendo presente la differente semantica delle due forme.</li>
+  <li>Scrivere le regole semantiche per la traduzione del
+post-incremento dell’elemento di un array $E →
+E₁\tbracks{E₂}{\tplus}{\tplus}$ ricordando che il valore di tale
+espressione è quello dell’elemento prima
+dell’incremento. <strong class="hl">DIFFICILE!</strong> Per risolvere l’esercizio
+<a href="https://en.wikipedia.org/wiki/Java_bytecode_instruction_listings">usare <code class="language-plaintext highlighter-rouge">dup2</code> e <code class="language-plaintext highlighter-rouge">dup_x2</code></a>.</li>
+</ol>
+
+
+      </div>
+    </div>
+    <script type="text/javascript" src="../js/slider.js"></script>
+    <script type="text/javascript" src="../assets/reveal/reveal.js"></script>
+    <script>
+      initialize_slider();
+      Reveal.initialize({
+	  controls:    false,  // No control arrows
+	  slideNumber: 'c/t',  // Print slide number
+	  center:      false,  // Do not align slide vertically
+	  progress:    false,  // Do not display progress bar
+	  hash:        true,   // Store slide number in URL
+	  touch:       true,   // Enables touch navigation
+	  transition:  'none', // Transition mode
+	  transitionSpeed: 'fast',
+	  pdfSeparateFragments: true,
+	  pdfMaxPagesPerSlide: 1,
+	  pdfPageHeightOffset: -1,
+	  width: 846,
+	  height: 600,
+	  margin: 0.05,
+      });
+    </script>
+    <script type="text/javascript" src="../js/mathjax.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  </body>
+</html>

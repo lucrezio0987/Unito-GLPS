@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Proprietà di chiusura dei linguaggi regolari</title>
+    <link rel="stylesheet" type="text/css" href="../assets/reveal/reveal.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/vs.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/main.css">
+  </head>
+  <body>
+    <div class="reveal">
+      <div id="root" class="slides">
+	<h1 class="no_toc" id="linguaggi-formali-e-traduttori">Linguaggi Formali e Traduttori</h1>
+
+<h2 class="sezione" id="25-proprietà-di-chiusura-dei-linguaggi-regolari">2.5 Proprietà di chiusura dei linguaggi regolari</h2>
+
+<ul class="smaller" id="markdown-toc">
+  <li><a href="#sommario" id="markdown-toc-sommario">Sommario</a></li>
+  <li><a href="#unione-e-concatenazione" id="markdown-toc-unione-e-concatenazione">Unione e concatenazione</a></li>
+  <li><a href="#complemento" id="markdown-toc-complemento">Complemento</a></li>
+  <li><a href="#intersezione" id="markdown-toc-intersezione">Intersezione</a></li>
+  <li><a href="#intersezione-diretta" id="markdown-toc-intersezione-diretta">Intersezione (costruzione diretta)</a></li>
+  <li><a href="#differenza" id="markdown-toc-differenza">Differenza</a></li>
+  <li><a href="#inversione" id="markdown-toc-inversione">Inversione</a></li>
+  <li><a href="#esercizi" id="markdown-toc-esercizi">Esercizi</a></li>
+</ul>
+
+<div class="license">
+
+  <p>È proibito condividere e divulgare in qualsiasi forma i materiali
+didattici caricati sulla piattaforma e le lezioni svolte in
+videoconferenza: ogni azione che viola questa norma sarà denunciata
+agli organi di Ateneo e perseguita a termini di legge.</p>
+
+</div>
+
+<h1 id="sommario">Sommario</h1>
+
+<p>In questa lezione studiamo le più importanti proprietà di chiusura
+dei linguaggi regolari ponendoci la seguente domanda: dati due
+linguaggi regolari $L$ ed $L’$, i seguenti linguaggi sono regolari?</p>
+
+<ul>
+  <li>$L ∪ L’$</li>
+  <li>$L ∩ L’$</li>
+  <li>$LL’$</li>
+  <li>$\overline{L}$</li>
+  <li>$L - L’$</li>
+  <li>$L^R$</li>
+</ul>
+
+<p>In tutti i casi possiamo rispondere affermativamente.</p>
+
+<h1 id="unione-e-concatenazione">Unione e concatenazione</h1>
+
+<h2 id="teorema">Teorema</h2>
+
+<p>I linguaggi regolari sono chiusi per unione e concatenazione.</p>
+
+<h2 id="dimostrazione">Dimostrazione</h2>
+
+<p>Siano $L_1$ ed $L_2$ linguaggi regolari.</p>
+
+<p>Dunque esistono due espressioni regolari $E_1$ ed $E_2$ tali che
+$L_1 = L(E_1)$ e $L_2 = L(E_2)$.</p>
+
+<p>Ora $E_1 + E_2$ e $E_1E_2$ sono espressioni regolari che generano,
+rispettivamente, $L_1 ∪ L_2$ e $L_1L_2$.</p>
+
+<p>Concludiamo che $L_1 ∪ L_2$ e $L_1L_2$ sono regolari.</p>
+
+<h1 id="complemento">Complemento</h1>
+
+<h2 id="teorema-1">Teorema</h2>
+
+<p>I linguaggi regolari sono chiusi per complemento.</p>
+
+<h2 id="dimostrazione-1">Dimostrazione</h2>
+
+<p>Sia $L$ un linguaggio regolare.</p>
+
+<p>Dunque esiste un DFA $A = (Q, Σ, \delta, q_0, F)$ tale che $L = L(A)$.</p>
+
+<p>Definiamo $B = (Q, Σ, \delta, q_0, Q - F)$ e osserviamo che</p>
+
+<p>\[
+	w ∈ L(A) ⇔ \hat\delta(q_0, w) ∈ F ⇔ w \not∈ L(B)
+\]</p>
+
+<p>Concludiamo che $\overline{L} = L(B)$ e che $\overline{L}$ è
+regolare.</p>
+
+<h1 id="intersezione">Intersezione</h1>
+
+<h2 id="teorema-2">Teorema</h2>
+
+<p>I linguaggi regolari sono chiusi per intersezione.</p>
+
+<h2 id="dimostrazione-2">Dimostrazione</h2>
+
+<p>Siano $L_1$ ed $L_2$ linguaggi regolari su un alfabeto $Σ$.</p>
+
+<p>Usando le <strong>leggi di De Morgan</strong>, osserviamo che</p>
+
+<p>\[
+	L_1 ∩ L_2 = \overline{\overline{L_1 ∩ L_2}} = \overline{\overline{L_1} \cup \overline{L_2}}
+\]</p>
+
+<p>Siccome i linguaggi regolari sono chiusi per unione e complemento,
+concludiamo che $L_1 ∩ L_2$ è regolare.</p>
+
+<h1 id="intersezione-diretta">Intersezione (costruzione diretta)</h1>
+
+<h2 id="dimostrazione-alternativa">Dimostrazione alternativa</h2>
+
+<p>Siano $L_1$ ed $L_2$ linguaggi regolari su un alfabeto $Σ$.</p>
+
+<p>Dunque esistono due DFA $A_1 = (Q_1, Σ, \delta_1, q_1, F_1)$ e $A_2 =
+(Q_2, Σ, \delta_2, q_2, F_2)$ tali che $L_1 = L(A_1)$ e $L_2 = L(A_2)$.</p>
+
+<p>Definiamo $B = (Q_1 × Q_2, Σ, \delta, (q_1, q_2), F_1 × F_2)$ dove</p>
+
+<p>\[
+	\delta((p, q), a) = (\delta_1(p, a), \delta_2(q, a))
+\]</p>
+
+<p>per ogni $p \in Q_1$, $q \in Q_2$ e $a \in Σ$. Concludiamo
+osservando che</p>
+
+<p>\[
+	\begin{array}{rcl}
+		w ∈ L(B)
+		&amp; ⇔ &amp; \hat\delta((q_1, q_2), w) ∈ F_1 × F_2 \newline
+		&amp; ⇔ &amp; \hat\delta_1(q_1, w) ∈ F_1 ∧ \hat\delta_2(q_2, w) ∈ F_2 \newline
+		&amp; ⇔ &amp; w ∈ L(A_1) ∧ w ∈ L(A_2) \newline
+		&amp; ⇔ &amp; w ∈ L_1 ∩ L_2
+	\end{array}
+\]</p>
+
+<h1 id="differenza">Differenza</h1>
+
+<h2 id="teorema-3">Teorema</h2>
+
+<p>I linguaggi regolari sono chiusi per differenza.</p>
+
+<h2 id="dimostrazione-3">Dimostrazione</h2>
+
+<p>Siano $L_1$ ed $L_2$ linguaggi regolari su un alfabeto $Σ$.</p>
+
+<p>Per concludere basta osservare che $L_1 - L_2 = L_1 ∩
+\overline{L_2}$ e ricordare che i linguaggi regolari sono chiusi per
+intersezione e complemento.</p>
+
+<h1 id="inversione">Inversione</h1>
+
+<h2 id="teorema-4">Teorema</h2>
+
+<p>I linguaggi regolari sono chiusi per inversione.</p>
+
+<h2 id="dimostrazione-4">Dimostrazione</h2>
+
+<p>Se $L$ è un linguaggio regolare deve esistere un’espressione
+regolare $E$ tale che $L = L(E)$.</p>
+
+<p>Definiamo l’espressione regolare $E^R$ per induzione sulla struttura
+di $E$ e per casi sulla sua forma, usando le seguenti equazioni:</p>
+
+\[\begin{array}{rcl}
+	  \emptyset^R &amp; = &amp; \emptyset \\
+	  \es^R       &amp; = &amp; \es \\
+	  a^R         &amp; = &amp; a \\
+	  (E_1 + E_2)^R &amp; = &amp; E_1^R + E_2^R \\
+	  (E_1E_2)^R  &amp; = &amp; E_2^RE_1^R \\
+	  (E^*)^R     &amp; = &amp; (E^R)^* \\
+	\end{array}\]
+
+<p>È facile dimostrare che $L(E^R) = L(E)^R$, dunque $L^R$ è regolare.</p>
+
+<h1 id="esercizi">Esercizi</h1>
+
+<p>Aiutandosi con le tecniche illustrate in questa lezione, risolvere i
+seguenti esercizi.</p>
+
+<ol>
+  <li>Se $L$ è un linguaggio regolare, cosa si può dire di $L^\ast$ e
+di $L^+$? Sono regolari?</li>
+  <li>Definire un DFA che riconosca il linguaggio delle stringhe
+sull’alfabeto $\set{0,1}$ in cui non c’è uno 0 seguito da due 1.</li>
+  <li>Definire un DFA che riconosca il linguaggio delle stringhe
+sull’alfabeto $\set{0,1}$ di lunghezza pari e che contengono
+almeno un $1$.</li>
+  <li>Definire un’espressione regolare per il linguaggio $L(E)^R$, dove
+$E = (ab)^\ast(b+a^\ast)^\ast$.</li>
+</ol>
+
+      </div>
+    </div>
+    <script type="text/javascript" src="../js/slider.js"></script>
+    <script type="text/javascript" src="../assets/reveal/reveal.js"></script>
+    <script>
+      initialize_slider();
+      Reveal.initialize({
+	  controls:    false,  // No control arrows
+	  slideNumber: 'c/t',  // Print slide number
+	  center:      false,  // Do not align slide vertically
+	  progress:    false,  // Do not display progress bar
+	  hash:        true,   // Store slide number in URL
+	  touch:       true,   // Enables touch navigation
+	  transition:  'none', // Transition mode
+	  transitionSpeed: 'fast',
+	  pdfSeparateFragments: true,
+	  pdfMaxPagesPerSlide: 1,
+	  pdfPageHeightOffset: -1,
+	  width: 846,
+	  height: 600,
+	  margin: 0.05,
+      });
+    </script>
+    <script type="text/javascript" src="../js/mathjax.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  </body>
+</html>

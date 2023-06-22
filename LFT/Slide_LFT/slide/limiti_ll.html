@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Grammatiche fattorizzabili e ricorsive a sinistra</title>
+    <link rel="stylesheet" type="text/css" href="../assets/reveal/reveal.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/vs.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/main.css">
+  </head>
+  <body>
+    <div class="reveal">
+      <div id="root" class="slides">
+	<h1 class="no_toc" id="linguaggi-formali-e-traduttori">Linguaggi Formali e Traduttori</h1>
+
+<h2 class="sezione" id="43-grammatiche-fattorizzabili-e-ricorsive-a-sinistra">4.3 Grammatiche fattorizzabili e ricorsive a sinistra</h2>
+
+<ul class="smaller" id="markdown-toc">
+  <li><a href="#sommario" id="markdown-toc-sommario">Sommario</a></li>
+  <li><a href="#fattorizzazione" id="markdown-toc-fattorizzazione">Fattorizzazione</a></li>
+  <li><a href="#esempio-di-fattorizzazione" id="markdown-toc-esempio-di-fattorizzazione">Esempio di fattorizzazione</a></li>
+  <li><a href="#ricorsione-immediata-a-sinistra" id="markdown-toc-ricorsione-immediata-a-sinistra">Ricorsione immediata a sinistra</a></li>
+  <li><a href="#esempio-di-eliminazione-della-ricorsione" id="markdown-toc-esempio-di-eliminazione-della-ricorsione">Esempio di eliminazione della ricorsione</a></li>
+  <li><a href="#ricorsione-a-sinistra-caso-generale" id="markdown-toc-ricorsione-a-sinistra-caso-generale">Ricorsione a sinistra: caso generale</a></li>
+  <li><a href="#ricorsione-indiretta-a-sinistra" id="markdown-toc-ricorsione-indiretta-a-sinistra">Ricorsione indiretta a sinistra</a></li>
+  <li><a href="#eliminazione-della-ricorsione-indiretta" id="markdown-toc-eliminazione-della-ricorsione-indiretta">Eliminazione della ricorsione indiretta</a></li>
+  <li><a href="#esercizi" id="markdown-toc-esercizi">Esercizi</a></li>
+</ul>
+
+<div class="license">
+
+  <p>È proibito condividere e divulgare in qualsiasi forma i materiali
+didattici caricati sulla piattaforma e le lezioni svolte in
+videoconferenza: ogni azione che viola questa norma sarà denunciata
+agli organi di Ateneo e perseguita a termini di legge.</p>
+
+</div>
+
+<h1 id="sommario">Sommario</h1>
+
+<h2 id="problema">Problema</h2>
+
+<ul>
+  <li>Molte grammatiche utili per descrivere linguaggi di programmazione
+non sono LL(1).
+    <ol>
+      <li>Presenza di <strong>produzioni fattorizzabili</strong>
+\[
+   A \to \alpha\beta_1 \mid \alpha\beta_2
+\]</li>
+      <li>Presenza di <strong>produzioni ricorsive a sinistra</strong>
+\[
+  A \to A\alpha \mid \beta
+\]</li>
+      <li>Presenza di <strong>ambiguità</strong></li>
+    </ol>
+  </li>
+</ul>
+
+<h2 id="in-questa-lezione">In questa lezione</h2>
+
+<ul>
+  <li>Studiamo alcune tecniche per modificare produzioni fattorizzabili
+e ricorsive a sinistra senza cambiare il linguaggio generato dalla
+grammatica in modo da renderla – spesso, ma <em>non sempre</em> – LL(1).</li>
+</ul>
+
+<h1 id="fattorizzazione">Fattorizzazione</h1>
+
+<h2 id="problema-1">Problema</h2>
+
+<p>Data una grammatica con le produzioni</p>
+
+<p>\[
+	A \to \alpha\beta_1 \mid \alpha\beta_2
+\]</p>
+
+<p>abbiamo</p>
+
+<p>\[
+	\predict(A \to \alpha\beta_1) \supseteq \first(\alpha)
+	\qquad
+	\predict(A \to \alpha\beta_2) \supseteq \first(\alpha)
+\]</p>
+
+<p>dunque</p>
+
+<p>\[
+	\predict(A \to \alpha\beta_1) \cap \predict(A \to \alpha\beta_2) \ne \emptyset
+\]</p>
+
+<p>tranne nel caso degenere in cui $\alpha$ genera solo $\es$.</p>
+
+<h2 id="soluzione">Soluzione</h2>
+
+<p><strong>Fattorizzare</strong> il prefisso comune $\alpha$ <em>introducendo una nuova
+variabile</em> $A’$:</p>
+
+<p>\[
+	A \to \alpha A’
+	\qquad
+	A’ \to \beta_1 \mid \beta_2
+\]</p>
+
+<h1 id="esempio-di-fattorizzazione">Esempio di fattorizzazione</h1>
+
+<p>La grammatica</p>
+
+<ul>
+  <li>$S → \ttIf~E~\ttThen~S~\ttElse~S~\ttFi$</li>
+  <li>$S → \ttIf~E~\ttThen~S~\ttFi$</li>
+  <li>$S → a$</li>
+  <li>$E → b$</li>
+</ul>
+
+<p>non è LL(1) infatti, dovendo espandere la variabile $S$ quando il
+prossimo token nella stringa da riconoscere è $\ttIf$, il parser non
+saprebbe quale delle produzioni per $S$ usare.</p>
+
+<p>La grammatica è fattorizzabile nel modo seguente:</p>
+
+<ul>
+  <li>$S → \ttIf~E~\ttThen~S~S’$</li>
+  <li>$S’ → \ttElse~S~\ttFi \mid \ttFi$</li>
+  <li>$S → a$</li>
+  <li>$E → b$</li>
+</ul>
+
+<p>In particolare, gli <em>insiemi guida</em> delle produzioni della
+grammatica modificata sono ora <em>disgiunti</em> due a due.</p>
+
+<h1 id="ricorsione-immediata-a-sinistra">Ricorsione immediata a sinistra</h1>
+
+<h2 id="problema-2">Problema</h2>
+
+<p>Una grammatica con le produzioni</p>
+
+<p>\[
+	A → A\alpha \mid \beta
+\]</p>
+
+<p>è detta <strong>immediatamente ricorsiva a sinistra</strong> in quanto la
+produzione $A → A\alpha$ ha $A$ sia in testa che come primo simbolo
+del suo corpo. La grammatica non è LL(1):</p>
+
+<p>\[
+	\predict(A \to A\alpha) \supseteq \first(A) \supseteq \first(\beta)
+	\qquad
+	\predict(A \to \beta) \supseteq \first(\beta)
+\]</p>
+
+<h2 id="osservazione">Osservazione</h2>
+
+<p>La grammatica genera stringhe $\beta\alpha\alpha\cdots\alpha$
+composte da <em>una</em> $\beta$ seguita da <em>zero o più</em> $\alpha$.</p>
+
+<h2 id="soluzione-1">Soluzione</h2>
+
+<p>Introdurre una <em>nuova variabile</em> per spostare la ricorsione da
+sinistra a destra:</p>
+
+<p>\[
+	A → \beta A’
+	\qquad
+	A’ → \es \mid \alpha A’
+\]</p>
+
+<h1 id="esempio-di-eliminazione-della-ricorsione">Esempio di eliminazione della ricorsione</h1>
+
+<p>La grammatica</p>
+
+<ul>
+  <li>$E → E \tplus T \mid T$</li>
+  <li>$T → T \ttimes F \mid F$</li>
+  <li>$F → n \mid \tparens{E}$</li>
+</ul>
+
+<p>è immediatamente ricorsiva a sinistra nelle produzioni per $E$ e per
+$T$. Ad esempio:</p>
+
+<p>\[
+	\begin{array}{rcl}
+		\predict(E → E \tplus T) &amp; = &amp; \first(E) = \set{ n, {\toparen} }
+		<br />
+		\predict(E → T) &amp; = &amp; \first(T) = \set{ n, {\toparen} }
+	\end{array}
+\]</p>
+
+<div class="fragment ">
+  <p>Eliminando la ricorsione immediata a sinistra otteniamo la
+grammatica:</p>
+
+  <ul>
+    <li>$E → TE’$</li>
+    <li>$E’ → {\tplus}TE’ \mid \es$</li>
+    <li>$T → FT’$</li>
+    <li>$T’ → {\ttimes}FT’ \mid \es$</li>
+    <li>$F → n \mid \tparens{E}$</li>
+  </ul>
+</div>
+
+<h1 id="ricorsione-a-sinistra-caso-generale">Ricorsione a sinistra: caso generale</h1>
+
+<p>Una grammatica con le produzioni</p>
+
+<p>\[
+	A \to A\alpha_1 \mid A\alpha_2 \mid \cdots \mid A\alpha_m \mid \beta_1 \mid \beta_2 \mid \cdots \mid \beta_n
+\]</p>
+
+<p>in cui nessun $\beta_i$ inizia con $A$, genera stringhe della forma</p>
+
+<p>\[
+	\beta_i\alpha_{k_1}\alpha_{k_2}\cdots\alpha_{k_l}
+\]</p>
+
+<p>L’eliminazione della ricorsione immediata a sinistra porta alla
+grammatica</p>
+
+<p>\[
+	\begin{align}
+		A &amp; \to \beta_1A’ \mid \beta_2A’ \mid \cdots \mid \beta_nA’
+		<br />
+		A’ &amp; \to \es \mid \alpha_1A’ \mid \alpha_2A’ \mid \cdots \mid \alpha_mA’
+	\end{align}
+\]</p>
+
+<h2 id="osservazioni">Osservazioni</h2>
+
+<ul>
+  <li>In generale, l’eliminazione della ricorsione a sinistra <em>non
+garantisce</em> che la grammatica risultante sia LL(1).</li>
+  <li>Ad esempio, nella grammatica qui sopra basta che uno degli
+$\alpha_i$ sia annullabile per avere insiemi guida delle
+produzioni per $A’$ non disgiunti.</li>
+</ul>
+
+<h1 id="ricorsione-indiretta-a-sinistra">Ricorsione indiretta a sinistra</h1>
+
+<p>In alcune grammatiche alcune ricorsioni a sinistra sono “indirette”:</p>
+
+<p>\[
+	\begin{array}{rcl}
+		S &amp; \to &amp; Aa \mid b
+		<br />
+		A &amp; \to &amp; Ac \mid Sd \mid \es
+	\end{array}
+\]</p>
+
+<p>Tentando di eliminare la ricorsione a sinistra per le produzioni di
+$A$ otteniamo</p>
+
+<p>\[
+	\begin{array}{rcl}
+		S &amp; \to &amp; Aa \mid b
+		<br />
+		A &amp; \to &amp; SdA’ \mid A’
+		<br />
+		A’ &amp; \to &amp; \es \mid cA’
+	\end{array}
+\]</p>
+
+<p>ma la grammatica non è LL(1), infatti:</p>
+
+<ul>
+  <li>$\predict(A \to SdA’) \supseteq \first(S) \supseteq \first(A)
+\supseteq \first(A’) \ni c$</li>
+  <li>$\predict(A \to A’) \supseteq \first(A’) \ni c$</li>
+</ul>
+
+<h2 id="cè-una-ricorsione-indiretta-a-sinistra-che-riguarda-la-variabile-a">C’è una <strong>ricorsione indiretta</strong> a sinistra che riguarda la variabile $A$</h2>
+
+<p>\[
+	A \der Sd \der Aad
+\]</p>
+
+<h1 id="eliminazione-della-ricorsione-indiretta">Eliminazione della ricorsione indiretta</h1>
+
+<h2 id="idea">Idea</h2>
+
+<p>Si può <em>esporre la ricorsione indiretta</em> facendo opportune
+<em>riscritture</em> di variabili.</p>
+
+<h2 id="algoritmo">Algoritmo</h2>
+
+<ol>
+  <li>Si impone un <em>ordine</em> (arbitrario) alle variabili della
+grammatica.</li>
+  <li>Considerando ogni variabile secondo l’ordine imposto, si <em>elimina
+la ricorsione immediata</em> per quella variabile e si <em>riscrivono</em>
+le occorrenze di quella variabile che compaiono nei corpi delle
+produzioni delle variabili seguenti.</li>
+</ol>
+
+<h2 id="esempio">Esempio</h2>
+
+<p>\[
+	\begin{array}{rclcrclcrcl}
+		S &amp; \to &amp; Aa \mid b &amp; \Rightarrow &amp;
+		S &amp; \to &amp; Aa \mid b &amp; \Rightarrow &amp;
+		S &amp; \to &amp; Aa \mid b
+		<br />
+		A &amp; \to &amp; Ac \mid Sd \mid \es &amp; \Rightarrow &amp;
+		A &amp; \to &amp; Ac \mid Aad \mid bd \mid \es &amp; \Rightarrow &amp;
+		A &amp; \to &amp; bdA’ \mid A’
+		<br />
+		&amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp;
+		A’ &amp; \to &amp; \es \mid cA’ \mid adA’
+	\end{array}
+\]</p>
+
+<h1 id="esercizi">Esercizi</h1>
+
+<ol>
+  <li>Applicare le trasformazioni studiate in questa lezione alla
+grammatica non ambigua delle formule booleane per farla diventare
+LL(1).</li>
+  <li>Implementare il parser top-down per la grammatica ottenuta
+nell’esercizio precedente così ottenuta. Scegliere caratteri
+ASCII “normali” per rappresentare i connettivi logici, ad esempio
+<code class="language-plaintext highlighter-rouge">&amp;</code> per $∧$, <code class="language-plaintext highlighter-rouge">|</code> per $∨$ e <code class="language-plaintext highlighter-rouge">~</code> per $¬$.</li>
+</ol>
+
+      </div>
+    </div>
+    <script type="text/javascript" src="../js/slider.js"></script>
+    <script type="text/javascript" src="../assets/reveal/reveal.js"></script>
+    <script>
+      initialize_slider();
+      Reveal.initialize({
+	  controls:    false,  // No control arrows
+	  slideNumber: 'c/t',  // Print slide number
+	  center:      false,  // Do not align slide vertically
+	  progress:    false,  // Do not display progress bar
+	  hash:        true,   // Store slide number in URL
+	  touch:       true,   // Enables touch navigation
+	  transition:  'none', // Transition mode
+	  transitionSpeed: 'fast',
+	  pdfSeparateFragments: true,
+	  pdfMaxPagesPerSlide: 1,
+	  pdfPageHeightOffset: -1,
+	  width: 846,
+	  height: 600,
+	  margin: 0.05,
+      });
+    </script>
+    <script type="text/javascript" src="../js/mathjax.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  </body>
+</html>
