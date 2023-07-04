@@ -25,6 +25,10 @@ Menu_2() {
         5) 
             ;;
         *) 
+            tput cnorm
+            tput rmcup -T xterm
+            tput sgr0
+            clear
             exit 0
             ;;
     esac    
@@ -105,13 +109,32 @@ Menu_1() {
             done    
             ;;
         *)
+            tput cnorm
+            tput rmcup -T xterm
+            tput sgr0
+            clear
             exit 0
             ;;
     esac
 }
 
+# Ottiene le dimensioni del terminale
+rows=$(tput lines)
+cols=$(tput cols)
+
+# Nasconde il cursore del terminale
+tput civis
+
+# Disabilita lo scrolling del terminale
+tput rmcup
+
+
+# Imposta il testo del terminale su bianco
+tput setaf 7
+
 while true; do
     clear
+
     echo -e "\033[1;32m:::::::::::::::::::::::::::"
     echo -e "\033[1;32m:: PROGETTO DI ALGORITMI ::"
     echo -e "\033[1;32m:::::::::::::::::::::::::::"
