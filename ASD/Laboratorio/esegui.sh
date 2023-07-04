@@ -27,7 +27,7 @@ Menu_2() {
         *) 
             exit 0
             ;;
-    esac
+    esac    
 }
 
 Menu_1() {
@@ -65,26 +65,32 @@ Menu_1() {
             ;;
         3)
             cd ex3
-            echo -e "TODO: intero esercizio"
+            echo -e "\033[1;32m::\033[0;91m TODO: \033[0;37mINTERO ESERCIZZIO da implementare"
             cd ..
             ;;
         4)  
             cd ex3
-            echo -e "TODO: intero esercizio (non so nemmeno dove sia la consegna)"
+            echo -e "\033[1;32m::\033[0;91m TODO: \033[0;37mINTERO ESERCIZZIO da implementare (non so nemmeno dove sia la consegna)"
             cd ..
             ;;
         5) 
             scelta=1
             while [ $scelta -ne 5 ]; do
-                echo -e "\033[1;32m::::::::::"
-                echo -e "\033[1;32m:: TEST ::"
-                echo -e "\033[1;32m::::::::::"
+                clear
+                echo -e "\033[1;32m:::::::::::::::::::::::::::"
+                echo -e "\033[1;32m:: PROGETTO DI ALGORITMI ::"
+                echo -e "\033[1;32m:::::::::::::::::::::::::::"
                 echo -e ""
-                echo -e "\033[1;34m  1.\033[0;37m Test \033[1;37mex1"
-                echo -e "\033[1;34m  2.\033[0;37m Test \033[1;37mex2"
-                echo -e "\033[1;34m  3.\033[0;37m Test \033[1;37mex3"
-                echo -e "\033[1;34m  4.\033[0;37m Test \033[1;37mex4"
-                echo -e "\033[1;34m  5.\033[0;32m Torna indietro"
+                echo -e "\033[0;34m  -.\033[0;37m Compila ed esegui \033[1;37mex1 \033[0;33m[\033[0;35mX\033[0;33m]"
+                echo -e "\033[0;34m  -.\033[0;37m Compila ed esegui \033[1;37mex2 \033[0;33m[\033[0;35mX\033[0;33m]"
+                echo -e "\033[0;34m  -.\033[0;37m Compila ed esegui \033[1;37mex3 \033[0;33m[\033[0;35m \033[0;33m]"
+                echo -e "\033[0;34m  -.\033[0;37m Compila ed esegui \033[1;37mex4 \033[0;33m[\033[0;35m \033[0;33m]"
+                echo -e "\033[0;34m  -.\033[0;32m Test"
+                echo -e "\033[1;34m     1.\033[0;37m Test \033[1;37mex1 \033[0;33m[\033[0;35m \033[0;33m]"
+                echo -e "\033[1;34m     2.\033[0;37m Test \033[1;37mex2 \033[0;33m[\033[0;35m \033[0;33m]"
+                echo -e "\033[1;34m     3.\033[0;37m Test \033[1;37mex3 \033[0;33m[\033[0;35m \033[0;33m]"
+                echo -e "\033[1;34m     4.\033[0;37m Test \033[1;37mex4 \033[0;33m[\033[0;35m \033[0;33m]"
+                echo -e "\033[1;34m     5.\033[0;32m Torna indietro"
                 echo -e "\033[1;34m  *.\033[0;32m Esci dallo script"
                 echo -e ""
                 echo -e -n "\033[1;32mScegli un'opzione: \033[1;34m"
@@ -92,7 +98,10 @@ Menu_1() {
                 echo -e ""
 
                 Menu_2 "$scelta"
-                
+                if [ "$scelta" -ne 5 ]; then
+                    echo -e "\033[1;37m"
+                    read -n1 -s -r
+                fi
             done    
             ;;
         *)
@@ -102,23 +111,26 @@ Menu_1() {
 }
 
 while true; do
-
+    clear
     echo -e "\033[1;32m:::::::::::::::::::::::::::"
     echo -e "\033[1;32m:: PROGETTO DI ALGORITMI ::"
     echo -e "\033[1;32m:::::::::::::::::::::::::::"
     echo -e ""
-    echo -e "\033[1;34m  1.\033[0;37m Compila ed esegui \033[1;37mex1"
-    echo -e "\033[1;34m  2.\033[0;37m Compila ed esegui \033[1;37mex2"
-    echo -e "\033[1;34m  3.\033[0;37m Compila ed esegui \033[1;37mex3"
-    echo -e "\033[1;34m  4.\033[0;37m Compila ed esegui \033[1;37mex4"
+    echo -e "\033[1;34m  1.\033[0;37m Compila ed esegui \033[1;37mex1 \033[0;33m[\033[0;35mX\033[0;33m]"
+    echo -e "\033[1;34m  2.\033[0;37m Compila ed esegui \033[1;37mex2 \033[0;33m[\033[0;35mX\033[0;33m]"
+    echo -e "\033[1;34m  3.\033[0;37m Compila ed esegui \033[1;37mex3 \033[0;33m[\033[0;35m \033[0;33m]"
+    echo -e "\033[1;34m  4.\033[0;37m Compila ed esegui \033[1;37mex4 \033[0;33m[\033[0;35m \033[0;33m]"
     echo -e "\033[1;34m  5.\033[0;32m Test"
     echo -e "\033[1;34m  *.\033[0;32m Esci dallo script"
     echo -e ""
     echo -e -n "\033[1;32mScegli un'opzione: \033[1;34m"
     read scelta
-    echo -e ""
+    echo -e "\033[1;37m"
 
     Menu_1 "$scelta"
 
-    echo -e ""
+    if [ "$scelta" -ne 5 ]; then
+        echo -e "\033[1;37m"
+        read -n1 -s -r
+    fi
 done
