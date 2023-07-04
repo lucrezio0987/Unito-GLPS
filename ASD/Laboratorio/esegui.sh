@@ -51,6 +51,10 @@ Menu_1() {
             echo -e "\033[0;37m"
             cat outfile.csv
             echo -e ""
+            echo -e "\033[1;32m::\033[0;91m NOTE:"
+            echo -e "\033[0;36m"
+            cat note.txt
+            echo -e ""
             echo -e "\033[1;32m::\033[0;91m USCITA..."
             cd ..
             ;;
@@ -61,8 +65,12 @@ Menu_1() {
             make
             echo -e ""
             echo -e "\033[1;32m::\033[0;91m ESECUZIONE:"
-            echo -e "\033[0;37m"
+            echo -e "\033[0;36m"
             ./build/main_ex2
+            echo -e ""
+            echo -e "\033[1;32m::\033[0;91m NOTE:"
+            echo -e "\033[0;36m"
+            cat note.txt
             echo -e ""
             echo -e "\033[1;32m::\033[0;91m USCITA..."
             cd ..
@@ -70,11 +78,21 @@ Menu_1() {
         3)
             cd ex3
             echo -e "\033[1;32m::\033[0;91m TODO: \033[0;37mINTERO ESERCIZZIO da implementare"
+            echo -e ""
+            echo -e "\033[1;32m::\033[0;91m NOTE:"
+            echo -e "\033[0;36m"
+            cat note.txt
+            echo -e ""
             cd ..
             ;;
         4)  
             cd ex3
             echo -e "\033[1;32m::\033[0;91m TODO: \033[0;37mINTERO ESERCIZZIO da implementare (non so nemmeno dove sia la consegna)"
+            echo -e ""
+            echo -e "\033[1;32m::\033[0;91m NOTE:"
+            echo -e "\033[0;36m"
+            cat note.txt
+            echo -e ""
             cd ..
             ;;
         5) 
