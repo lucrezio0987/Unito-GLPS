@@ -51,6 +51,7 @@ int CompareFloat(Records* i, Records* j){
     else if (i->item_float == j->item_float)    return 0;
     else                                        return 1;
 }
+
 int CompareString(Records* i, Records* j){
     int res = strcmp(i->item_string,j->item_string);
     if      (res  < 0)    return -1;
