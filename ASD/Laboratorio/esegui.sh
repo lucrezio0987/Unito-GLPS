@@ -47,6 +47,14 @@ Menu_1() {
             ;;
         2)  # TEST
             echo -e "\033[1;32m::\033[0;91m TODO: \033[0;37mTEST da implementare"
+            echo -e "\033[1;32m::\033[0;91m MAKE:"
+            echo -e "\033[0;33m"
+            make test
+            echo -e "\033[1;32m::\033[0;91m ESECUZIONE:"
+            echo -e "\033[0;36m"
+            ./build/test_ex1
+            echo -e ""
+            echo -e "\033[1;32m::\033[0;91m USCITA..."
             ;;
         *)
             return 1
@@ -97,6 +105,14 @@ Menu_2() {
             ;;
         2)  # TEST
             echo -e "\033[1;32m::\033[0;91m TODO: \033[0;37mTEST da implementare"
+            echo -e "\033[1;32m::\033[0;91m MAKE:"
+            echo -e "\033[0;33m"
+            make test
+            echo -e "\033[1;32m::\033[0;91m ESECUZIONE:"
+            echo -e "\033[0;36m"
+            ./build/test_ex2
+            echo -e ""
+            echo -e "\033[1;32m::\033[0;91m USCITA..."
             ;;
         *)
             return 1
