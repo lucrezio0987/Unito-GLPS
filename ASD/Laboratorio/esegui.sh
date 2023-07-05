@@ -1,10 +1,9 @@
 #!/bin/bash
 
-# Ottiene le dimensioni del terminale
-rows=$(tput lines)
-cols=$(tput cols)
-tput civis      # Nasconde il cursore del terminale
-tput rmcup      # Disabilita lo scrolling del terminale
+#rows=$(tput lines)
+#cols=$(tput cols)
+tput civis
+tput rmcup
 
 Menu_1() {
     clear
