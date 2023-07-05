@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifndef ORDERED_ARRAY_H_laokjsdnbudjllvfidkfmqm
-#define ORDERED_ARRAY_H_laokjsdnbudjllvfidkfmqm
+#ifndef BINARY_INSERTION_H_laokjsdnbudjllvfidkfmqm
+#define BINARY_INSERTION_H_laokjsdnbudjllvfidkfmqm
 
 typedef struct _Array Array;
 typedef struct _Record Records;
@@ -34,4 +34,4 @@ void BinaryInsertionSort(void** base,  unsigned int nitems, int (*compar)(const 
 void merge_binary_insertion_sort(void **base, size_t nitems, size_t k, int (*compar)(const void *, const void*));
 void sort_records(const char *infile, const char *outfile, size_t k, size_t field);
 
-#endif /* ORDERED_ARRAY_H_laokjsdnbudjllvfidkfmqm */
+#endif /* BINARY_INSERTION_H_laokjsdnbudjllvfidkfmqm */

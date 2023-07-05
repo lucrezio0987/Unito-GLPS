@@ -18,7 +18,18 @@ void find_errors(const char *dictfile, const char *textfile, size_t max_height);
 
 typedef enum {FALSE, TRUE};
 
-struct Node { struct Node **next; size_t size;void *item;}; struct SkipList { struct Node *head; size_t max_level; size_t max_height;int (*compare)(const void*, const void*);};
+struct Node { 
+  struct Node **next; 
+  size_t size;
+  void *item;
+}; 
+
+struct SkipList { 
+  struct Node *head; 
+  size_t max_level; 
+  size_t max_height;
+  int (*compare)(const void*, const void*);
+};
 
 //------ IMPLEMENTAZIONI ------//
 
