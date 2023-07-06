@@ -4,13 +4,13 @@ public class Valutatore {
     private Lexer lex;
     private BufferedReader pbr;
     private Token look;
-
+    
     public Valutatore(Lexer l, BufferedReader br) { 
         lex = l; 
         pbr = br;
         move(); 
     }
-   
+    
     void move() { 
         look = lex.lexical_scan(pbr);
         System.out.println("token = " + look);
