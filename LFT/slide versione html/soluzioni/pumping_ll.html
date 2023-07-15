@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Pumping lemma dei linguaggi liberi - Soluzioni</title>
+    <link rel="stylesheet" type="text/css"  href="../assets/pygments-css/vs.css">
+    <link rel="stylesheet" type="text/css"  href="../assets/css/page.css">
+  </head>
+  <body>
+    <h1>Linguaggi Formali e Traduttori</h1>
+    <h2>3.6 Pumping lemma dei linguaggi liberi – Soluzioni</h2>
+    <h2 id="linguaggi-non-liberi">Linguaggi non liberi</h2>
+
+<h3 id="esercizio-1">Esercizio 1</h3>
+
+<p>Si veda l’esempio 7.21 del libro di testo.</p>
+
+<h3 id="esercizio-2">Esercizio 2</h3>
+
+<p>Si veda l’esempio 7.20 del libro di testo.</p>
+
+<h3 id="esercizio-3">Esercizio 3</h3>
+
+<p>Sia $L = \set{ 0^i1^j2^k \mid i &lt; j &lt; k }$. Supponiamo per assurdo
+che $L$ sia un linguaggio libero e sia $n$ la costante del <a href="/slide/pumping_ll.html#pumping">pumping
+lemma</a>. Consideriamo ora
+la stringa</p>
+
+<p>\[
+	z \eqdef {}0^n1^{n+1}2^{n+2}
+\]</p>
+
+<p>e osserviamo che $\len{z} = 3n + 3 \geq n$. Dunque, esiste una
+scomposizione $z = uvwxy$ che soddisfa le 3 proprietà nell’enunciato
+del pumping lemma.</p>
+
+<p>Dalla proprietà $vx ≠ \es$ deduciamo che $vx$ contiene almeno un simbolo.</p>
+
+<p>Dalla proprietà $\len{vwx} \leq n$ deduciamo che $vx$ non può
+contenere sia $0$ che $2$. Distinguiamo allora i seguenti casi:</p>
+
+<ul>
+  <li>se $vx$ contiene solo $0$, allora $uv^2wx^2y$ ha almeno tanti $0$
+quanti $1$, che contraddice la definizione di $L$.</li>
+  <li>se $vx$ contiene sia $0$ che $1$, allora $uv^2wx^2y$ ha almeno
+tanti $1$ quanti $2$, che contraddice la definizione di $L$.</li>
+  <li>se $vx$ contiene solo $1$, allora $uwy$ ha almeno tanti $0$ quanti
+$1$, che contraddice la definizione di $L$.</li>
+  <li>se $vx$ contiene sia $1$ che $2$, allora $uwy$ ha almeno tanti $0$
+quanti $1$, che contraddice la definizione di $L$.</li>
+  <li>se $vx$ contiene solo $2$, allora $uwy$ ha almeno tanti $1$ quanti
+$2$, che contraddice la definizione di $L$.</li>
+</ul>
+
+<p>Non essendoci altri casi da considerare, concludiamo che $L$ non è
+un linguaggio libero.</p>
+
+    <script type="text/javascript" src="../js/mathjax.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  </body>
+</html>

@@ -1,0 +1,56 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css?family=Fira+Code:400,600|Fira+Sans:400,600&display=swap&subset=latin-ext");
+@page { size: A4 portrait;
+  margin: 2cm; }
+
+html { font-family: "Fira Sans", sans-serif; font-size: 11pt; margin: 0; padding: 0; }
+
+body { max-width: 21cm; margin: 1ex auto; counter-reset: esercizio; counter-reset: parte; }
+
+h1 { text-align: center; font-size: 175%; margin: 0; }
+
+h1 { font-size: 175%; counter-reset: esercizio; counter-increment: parte; }
+
+h1:first-of-type { text-align: center; }
+
+h1:nth-of-type(2) { page-break-before: always; }
+
+h2, h3 { font-size: 100%; }
+
+h2::after { counter-increment: esercizio; content: " " counter(parte) "." counter(esercizio) " (3 punti)"; }
+
+h2.big::after { counter-increment: esercizio; content: " " counter(parte) "." counter(esercizio) " (6 punti)"; }
+
+p { text-align: justify; }
+
+.clearpage { page-break-before: always; }
+
+ul.scelta { list-style-type: none; }
+
+ul.scelta > li:before { font-size: 175%; content: "□"; margin-right: 1ex; }
+
+ul.leaders { max-width: 100%; padding: 0; overflow-x: hidden; list-style: none; }
+
+ul.leaders li { margin-top: 1em; border-style: none none solid none; border-width: 1px; border-color: #CCC; }
+
+ul.leaders li * { z-index: 1; background: white; padding: 0 1ex 1ex 0; }
+
+@media print { table { page-break-inside: avoid; } div.nobreak { page-break-inside: avoid; } }
+
+.graphviz { text-align: center; }
+
+table.sdd { margin: 1em auto; border-style: solid none; }
+
+table.sdd > thead > tr { border-style: none none solid none; }
+
+table.sdd > * > tr > td, table.sdd th { border-style: none; }
+
+table.sdd > * > tr > td:nth-child(2), table.sdd th:nth-child(2) { padding-left: 1rem; }
+
+table.bordered { margin: 1em auto; border-style: none; border-width: 1px; border-spacing: 0; }
+
+table.bordered td, table.bordered th { border-style: solid solid none none; border-width: 1px; }
+
+table.bordered tr:last-child td { border-style: solid solid solid none; }
+
+/*# sourceMappingURL=esame.css.map */

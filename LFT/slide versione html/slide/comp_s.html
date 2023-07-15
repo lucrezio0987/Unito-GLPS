@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Traduzione di comandi</title>
+    <link rel="stylesheet" type="text/css" href="../assets/reveal/reveal.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/vs.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/main.css">
+  </head>
+  <body>
+    <div class="reveal">
+      <div id="root" class="slides">
+	<h1 class="no_toc" id="linguaggi-formali-e-traduttori">Linguaggi Formali e Traduttori</h1>
+
+<h2 class="sezione" id="56-traduzione-di-comandi">5.6 Traduzione di comandi</h2>
+
+<ul class="smaller" id="markdown-toc">
+  <li><a href="#sommario" id="markdown-toc-sommario">Sommario</a></li>
+  <li><a href="#grammatica" id="markdown-toc-grammatica">Grammatica dei comandi</a></li>
+  <li><a href="#assegnamento" id="markdown-toc-assegnamento">Assegnamento</a></li>
+  <li><a href="#comandi-condizionali" id="markdown-toc-comandi-condizionali">Comandi condizionali</a></li>
+  <li><a href="#comandi-iterativi" id="markdown-toc-comandi-iterativi">Comandi iterativi</a></li>
+  <li><a href="#composizione-sequenziale" id="markdown-toc-composizione-sequenziale">Composizione sequenziale</a></li>
+  <li><a href="#esempio-somma-dei-primi-10-numeri-naturali" id="markdown-toc-esempio-somma-dei-primi-10-numeri-naturali">Esempio: somma dei primi 10 numeri naturali</a></li>
+  <li><a href="#esercizi" id="markdown-toc-esercizi">Esercizi</a></li>
+</ul>
+
+<div class="license">
+
+  <p>È proibito condividere e divulgare in qualsiasi forma i materiali
+didattici caricati sulla piattaforma e le lezioni svolte in
+videoconferenza: ogni azione che viola questa norma sarà denunciata
+agli organi di Ateneo e perseguita a termini di legge.</p>
+
+</div>
+
+<h1 id="sommario">Sommario</h1>
+
+<ul>
+  <li>In questa lezione presentiamo le SDD per la traduzione di comandi.</li>
+</ul>
+
+<h2 id="riferimenti-esterni">Riferimenti esterni</h2>
+
+<ul>
+  <li><a href="https://docs.oracle.com/javase/specs/index.html">Java Language and Virtual Machine Specifications</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Java_bytecode_instruction_listings">JVM Instruction set</a></li>
+</ul>
+
+<h1 id="grammatica">Grammatica dei comandi</h1>
+
+<table class="sdd smaller">
+  <thead>
+    <tr>
+      <th style="text-align: left">Produzioni</th>
+      <th style="text-align: left">Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">$S → x \teq E\tsemi$</td>
+      <td style="text-align: left">Assegna il valore di $E$ ad $x$</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">$S → \ttIf~\tparens{B}~S₁$</td>
+      <td style="text-align: left">Esegue $S₁$ se $B$ è vera, non fa nulla altrimenti</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">$S → \ttIf~\tparens{B}~S₁~\ttElse~S₂$</td>
+      <td style="text-align: left">Esegue $S₁$ se $B$ è vera e $S₂$ altrimenti</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">$S → \twhile~\tparens{B}~S₁$</td>
+      <td style="text-align: left">Esegue $S₁$ finché $B$ è vera</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">$S → \tdo~S₁~\twhile~\tparens{B}\tsemi$</td>
+      <td style="text-align: left">Esegue $S₁$ finché $B$ è vera e <em>almeno una volta</em></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">$S → \tbraces\Slist$</td>
+      <td style="text-align: left">Esegue in sequenza i comandi in $\Slist$</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">$\Slist → \es$</td>
+      <td style="text-align: left">Non fa nulla</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">$\Slist → S\Slist$</td>
+      <td style="text-align: left">Esegue $S$ e poi i comandi in $\Slist$</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="attributi">Attributi</h2>
+
+<ul>
+  <li>$S.\next$ = etichetta a cui saltare dopo che $S$ è stato eseguito
+(<em>ereditato</em>)</li>
+  <li>$S.\code$ = codice che esegue $S$ e salta a $S.\next$</li>
+</ul>
+
+<h1 id="assegnamento">Assegnamento</h1>
+
+<div class="columns ">
+  <div class="half ">
+
+    <table class="sdd smaller">
+      <thead>
+        <tr>
+          <th style="text-align: left">Produzioni</th>
+          <th style="text-align: left">Regole semantiche</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left">$S → x = E\tsemi$</td>
+          <td style="text-align: left">$S.\code = E.\code$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left">${} \ap \IISTORE~\address{x}$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left">${} \ap \IJUMP~S.\next$</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="half ">
+    <div class="jekyll-diagrams diagrams graphviz">
+      <p><!-- Generated by graphviz version 5.0.1 (20220820.1526)
+ -->
+<!-- Pages: 1 --></p>
+      <svg width="126pt" height="219pt" viewBox="0.00 0.00 126.00 219.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 215)">
+<g id="clust1" class="cluster">
+<title>cluster_S</title>
+<path fill="none" stroke="black" d="M20,-8C20,-8 98,-8 98,-8 104,-8 110,-14 110,-20 110,-20 110,-191 110,-191 110,-197 104,-203 98,-203 98,-203 20,-203 20,-203 14,-203 8,-197 8,-191 8,-191 8,-20 8,-20 8,-14 14,-8 20,-8" />
+<text text-anchor="middle" x="59" y="-187.8" font-family="Overlock" font-size="14.00">S → x = E;</text>
+</g>
+<!-- E -->
+<g id="node1" class="node">
+<title>E</title>
+<path fill="none" stroke="black" d="M74,-172C74,-172 44,-172 44,-172 38,-172 32,-166 32,-160 32,-160 32,-148 32,-148 32,-142 38,-136 44,-136 44,-136 74,-136 74,-136 80,-136 86,-142 86,-148 86,-148 86,-160 86,-160 86,-166 80,-172 74,-172" />
+<text text-anchor="middle" x="59" y="-150.3" font-family="Overlock" font-size="14.00">E</text>
+</g>
+<!-- store -->
+<g id="node2" class="node">
+<title>store</title>
+<polygon fill="#cccccc" stroke="black" points="93.5,-112 24.5,-112 24.5,-76 93.5,-76 93.5,-112" />
+<text text-anchor="middle" x="59" y="-90.3" font-family="Overlock" font-size="14.00">istore &amp;x</text>
+</g>
+<!-- E&#45;&gt;store -->
+<g id="edge1" class="edge">
+<title>E&#45;&gt;store</title>
+<path fill="none" stroke="black" d="M59,-135.91C59,-130.06 59,-123.43 59,-117.24" />
+<polygon fill="black" stroke="black" points="60.75,-117.17 59,-112.17 57.25,-117.17 60.75,-117.17" />
+</g>
+<!-- goto -->
+<g id="node3" class="node">
+<title>goto</title>
+<polygon fill="#cccccc" stroke="black" points="101.5,-52 16.5,-52 16.5,-16 101.5,-16 101.5,-52" />
+<text text-anchor="middle" x="59" y="-30.3" font-family="Overlock" font-size="14.00">goto S.next</text>
+</g>
+<!-- store&#45;&gt;goto -->
+<g id="edge2" class="edge">
+<title>store&#45;&gt;goto</title>
+<path fill="none" stroke="black" d="M59,-75.91C59,-70.06 59,-63.43 59,-57.24" />
+<polygon fill="black" stroke="black" points="60.75,-57.17 59,-52.17 57.25,-57.17 60.75,-57.17" />
+</g>
+</g>
+</svg>
+
+    </div>
+
+  </div>
+</div>
+
+<h1 id="comandi-condizionali">Comandi condizionali</h1>
+
+<div class="columns ">
+  <div class="">
+
+    <table class="sdd smaller">
+      <thead>
+        <tr>
+          <th style="text-align: left">Produzioni</th>
+          <th style="text-align: left">Regole semantiche</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left">$S → \ttIf~\tparens{B}~S₁$</td>
+          <td style="text-align: left">$B.\true = \newlabel()$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left">$B.\false = S.\next$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left">$S₁.\next = S.\next$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left">$S.\code = B.\code$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left">${} \ap B.\true: S₁.\code$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left"> </td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$S → \ttIf~\tparens{B}~S₁~\ttElse~S₂$</td>
+          <td style="text-align: left">$B.\true = \newlabel()$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left">$B.\false = \newlabel()$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left">$S₁.\next = S.\next$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left">$S₂.\next = S.\next$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left">$S.\code = B.\code$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left">${} \ap B.\true: S₁.\code$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left">${} \ap B.\false: S₂.\code$</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+  <div class="">
+    <div class="skip" style="margin-top: -3rem"></div>
+    <div class="jekyll-diagrams diagrams graphviz">
+      <p><!-- Generated by graphviz version 5.0.1 (20220820.1526)
+ -->
+<!-- Pages: 1 --></p>
+      <svg width="156pt" height="225pt" viewBox="0.00 0.00 156.00 225.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 221)">
+<g id="clust1" class="cluster">
+<title>cluster_S</title>
+<path fill="none" stroke="black" d="M20,-67C20,-67 88,-67 88,-67 94,-67 100,-73 100,-79 100,-79 100,-197 100,-197 100,-203 94,-209 88,-209 88,-209 20,-209 20,-209 14,-209 8,-203 8,-197 8,-197 8,-79 8,-79 8,-73 14,-67 20,-67" />
+<text text-anchor="middle" x="54" y="-193.8" font-family="Overlock" font-size="14.00">S → if (B) S₁</text>
+</g>
+<!-- B -->
+<g id="node1" class="node">
+<title>B</title>
+<path fill="none" stroke="black" d="M69,-178C69,-178 39,-178 39,-178 33,-178 27,-172 27,-166 27,-166 27,-154 27,-154 27,-148 33,-142 39,-142 39,-142 69,-142 69,-142 75,-142 81,-148 81,-154 81,-154 81,-166 81,-166 81,-172 75,-178 69,-178" />
+<text text-anchor="middle" x="54" y="-156.3" font-family="Overlock" font-size="14.00">B</text>
+</g>
+<!-- S₁ -->
+<g id="node2" class="node">
+<title>S₁</title>
+<path fill="none" stroke="black" d="M63,-111C63,-111 33,-111 33,-111 27,-111 21,-105 21,-99 21,-99 21,-87 21,-87 21,-81 27,-75 33,-75 33,-75 63,-75 63,-75 69,-75 75,-81 75,-87 75,-87 75,-99 75,-99 75,-105 69,-111 63,-111" />
+<text text-anchor="middle" x="48" y="-89.3" font-family="Overlock" font-size="14.00">S₁</text>
+</g>
+<!-- B&#45;&gt;S₁ -->
+<g id="edge1" class="edge">
+<title>B&#45;&gt;S₁</title>
+<path fill="none" stroke="black" d="M52.42,-141.92C51.7,-134.07 50.83,-124.66 50.06,-116.26" />
+<polygon fill="black" stroke="black" points="51.79,-116.01 49.59,-111.19 48.3,-116.33 51.79,-116.01" />
+<text text-anchor="middle" x="70.5" y="-122.8" font-family="Overlock" font-size="14.00">B.true</text>
+</g>
+<!-- Snext -->
+<g id="node3" class="node">
+<title>Snext</title>
+<text text-anchor="middle" x="80" y="-14.3" font-family="Overlock" font-size="14.00">S.next:</text>
+</g>
+<!-- B&#45;&gt;Snext -->
+<g id="edge2" class="edge">
+<title>B&#45;&gt;Snext</title>
+<path fill="none" stroke="black" d="M81.36,-146.29C85.97,-142.94 90.17,-138.87 93,-134 113.14,-99.39 108.78,-82.27 97,-44 96.69,-42.98 96.32,-41.97 95.9,-40.97" />
+<polygon fill="black" stroke="black" points="97.27,-39.79 93.49,-36.07 94.13,-41.33 97.27,-39.79" />
+<text text-anchor="middle" x="127" y="-89.3" font-family="Overlock" font-size="14.00">B.false</text>
+</g>
+<!-- S₁&#45;&gt;Snext -->
+<g id="edge3" class="edge">
+<title>S₁&#45;&gt;Snext</title>
+<path fill="none" stroke="black" d="M47.4,-74.76C47.73,-65.24 49.26,-53.46 54,-44 54.66,-42.69 55.41,-41.41 56.24,-40.16" />
+<polygon fill="black" stroke="black" points="57.71,-41.12 59.31,-36.07 54.91,-39.02 57.71,-41.12" />
+<text text-anchor="middle" x="75.5" y="-47.8" font-family="Overlock" font-size="14.00">S₁.next</text>
+</g>
+</g>
+</svg>
+
+    </div>
+
+    <div class="skip" style="margin-top: -2rem"></div>
+    <div class="jekyll-diagrams diagrams graphviz">
+      <p><!-- Generated by graphviz version 5.0.1 (20220820.1526)
+ -->
+<!-- Pages: 1 --></p>
+      <svg width="166pt" height="225pt" viewBox="0.00 0.00 166.00 225.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 221)">
+<g id="clust1" class="cluster">
+<title>cluster_S</title>
+<path fill="none" stroke="black" d="M20,-67C20,-67 138,-67 138,-67 144,-67 150,-73 150,-79 150,-79 150,-197 150,-197 150,-203 144,-209 138,-209 138,-209 20,-209 20,-209 14,-209 8,-203 8,-197 8,-197 8,-79 8,-79 8,-73 14,-67 20,-67" />
+<text text-anchor="middle" x="79" y="-193.8" font-family="Overlock" font-size="14.00">S → if (B) S₁ else S₂</text>
+</g>
+<!-- B -->
+<g id="node1" class="node">
+<title>B</title>
+<path fill="none" stroke="black" d="M86,-178C86,-178 56,-178 56,-178 50,-178 44,-172 44,-166 44,-166 44,-154 44,-154 44,-148 50,-142 56,-142 56,-142 86,-142 86,-142 92,-142 98,-148 98,-154 98,-154 98,-166 98,-166 98,-172 92,-178 86,-178" />
+<text text-anchor="middle" x="71" y="-156.3" font-family="Overlock" font-size="14.00">B</text>
+</g>
+<!-- S₁ -->
+<g id="node2" class="node">
+<title>S₁</title>
+<path fill="none" stroke="black" d="M58,-111C58,-111 28,-111 28,-111 22,-111 16,-105 16,-99 16,-99 16,-87 16,-87 16,-81 22,-75 28,-75 28,-75 58,-75 58,-75 64,-75 70,-81 70,-87 70,-87 70,-99 70,-99 70,-105 64,-111 58,-111" />
+<text text-anchor="middle" x="43" y="-89.3" font-family="Overlock" font-size="14.00">S₁</text>
+</g>
+<!-- B&#45;&gt;S₁ -->
+<g id="edge1" class="edge">
+<title>B&#45;&gt;S₁</title>
+<path fill="none" stroke="black" d="M46.23,-141.83C44.14,-139.44 42.32,-136.82 41,-134 38.42,-128.49 37.84,-122.07 38.19,-116.01" />
+<polygon fill="black" stroke="black" points="39.93,-116.18 38.68,-111.04 36.45,-115.84 39.93,-116.18" />
+<text text-anchor="middle" x="59.5" y="-122.8" font-family="Overlock" font-size="14.00">B.true</text>
+</g>
+<!-- S₂ -->
+<g id="node3" class="node">
+<title>S₂</title>
+<path fill="none" stroke="black" d="M130,-111C130,-111 100,-111 100,-111 94,-111 88,-105 88,-99 88,-99 88,-87 88,-87 88,-81 94,-75 100,-75 100,-75 130,-75 130,-75 136,-75 142,-81 142,-87 142,-87 142,-99 142,-99 142,-105 136,-111 130,-111" />
+<text text-anchor="middle" x="115" y="-89.3" font-family="Overlock" font-size="14.00">S₂</text>
+</g>
+<!-- B&#45;&gt;S₂ -->
+<g id="edge2" class="edge">
+<title>B&#45;&gt;S₂</title>
+<path fill="none" stroke="black" d="M82.56,-141.92C87.97,-133.92 94.49,-124.3 100.25,-115.79" />
+<polygon fill="black" stroke="black" points="102.01,-116.31 103.36,-111.19 99.11,-114.35 102.01,-116.31" />
+<text text-anchor="middle" x="117" y="-122.8" font-family="Overlock" font-size="14.00">B.false</text>
+</g>
+<!-- Snext -->
+<g id="node4" class="node">
+<title>Snext</title>
+<text text-anchor="middle" x="79" y="-14.3" font-family="Overlock" font-size="14.00">S.next:</text>
+</g>
+<!-- S₁&#45;&gt;Snext -->
+<g id="edge3" class="edge">
+<title>S₁&#45;&gt;Snext</title>
+<path fill="none" stroke="black" d="M41.66,-74.61C41.67,-65.05 42.96,-53.27 48,-44 48.66,-42.78 49.42,-41.59 50.24,-40.45" />
+<polygon fill="black" stroke="black" points="51.88,-41.2 53.71,-36.23 49.18,-38.98 51.88,-41.2" />
+<text text-anchor="middle" x="69.5" y="-47.8" font-family="Overlock" font-size="14.00">S₁.next</text>
+</g>
+<!-- S₂&#45;&gt;Snext -->
+<g id="edge4" class="edge">
+<title>S₂&#45;&gt;Snext</title>
+<path fill="none" stroke="black" d="M106.47,-74.7C101.45,-64.52 95.05,-51.55 89.7,-40.69" />
+<polygon fill="black" stroke="black" points="91.25,-39.89 87.47,-36.18 88.11,-41.43 91.25,-39.89" />
+<text text-anchor="middle" x="119.5" y="-47.8" font-family="Overlock" font-size="14.00">S₂.next</text>
+</g>
+</g>
+</svg>
+
+    </div>
+
+  </div>
+</div>
+
+<h1 id="comandi-iterativi">Comandi iterativi</h1>
+
+<div class="columns ">
+  <div class="">
+
+    <table class="sdd smaller">
+      <thead>
+        <tr>
+          <th style="text-align: left">Produzioni</th>
+          <th style="text-align: left">Regole semantiche</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left">$S → \twhile~\tparens{B}~S₁$</td>
+          <td style="text-align: left">$B.\true = \newlabel()$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left">$B.\false = S.\next$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left">$S₁.\next = \newlabel()$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left">$S.\code = S₁.\next : B.\code$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left">${} \ap B.\true : S₁.\code$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left"> </td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$S → \tdo~S₁~\twhile~\tparens{B}\tsemi$</td>
+          <td style="text-align: left">$S₁.\next = \newlabel()$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left">$B.\true = \newlabel()$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left">$B.\false = S.\next$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left">$S.\code = B.\true: S₁.\code$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left">${} \ap S₁.\next: B.\code$</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+  <div class="">
+    <div class="skip" style="margin-top: -3rem"></div>
+    <div class="jekyll-diagrams diagrams graphviz">
+      <p><!-- Generated by graphviz version 5.0.1 (20220820.1526)
+ -->
+<!-- Pages: 1 --></p>
+      <svg width="221pt" height="166pt" viewBox="0.00 0.00 220.50 166.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 162)">
+<g id="clust1" class="cluster">
+<title>cluster_S</title>
+<path fill="none" stroke="black" d="M20,-8C20,-8 133,-8 133,-8 139,-8 145,-14 145,-20 145,-20 145,-138 145,-138 145,-144 139,-150 133,-150 133,-150 20,-150 20,-150 14,-150 8,-144 8,-138 8,-138 8,-20 8,-20 8,-14 14,-8 20,-8" />
+<text text-anchor="middle" x="76.5" y="-134.8" font-family="Overlock" font-size="14.00">S → while (B) S₁</text>
+</g>
+<!-- B -->
+<g id="node1" class="node">
+<title>B</title>
+<path fill="none" stroke="black" d="M115,-119C115,-119 85,-119 85,-119 79,-119 73,-113 73,-107 73,-107 73,-95 73,-95 73,-89 79,-83 85,-83 85,-83 115,-83 115,-83 121,-83 127,-89 127,-95 127,-95 127,-107 127,-107 127,-113 121,-119 115,-119" />
+<text text-anchor="middle" x="100" y="-97.3" font-family="Overlock" font-size="14.00">B</text>
+</g>
+<!-- S₁ -->
+<g id="node2" class="node">
+<title>S₁</title>
+<path fill="none" stroke="black" d="M95,-52C95,-52 65,-52 65,-52 59,-52 53,-46 53,-40 53,-40 53,-28 53,-28 53,-22 59,-16 65,-16 65,-16 95,-16 95,-16 101,-16 107,-22 107,-28 107,-28 107,-40 107,-40 107,-46 101,-52 95,-52" />
+<text text-anchor="middle" x="80" y="-30.3" font-family="Overlock" font-size="14.00">S₁</text>
+</g>
+<!-- B&#45;&gt;S₁ -->
+<g id="edge1" class="edge">
+<title>B&#45;&gt;S₁</title>
+<path fill="none" stroke="black" d="M94.75,-82.92C92.33,-75.07 89.43,-65.66 86.85,-57.26" />
+<polygon fill="black" stroke="black" points="88.43,-56.45 85.29,-52.19 85.09,-57.48 88.43,-56.45" />
+<text text-anchor="middle" x="110.5" y="-63.8" font-family="Overlock" font-size="14.00">B.true</text>
+</g>
+<!-- Snext -->
+<g id="node3" class="node">
+<title>Snext</title>
+<text text-anchor="middle" x="183" y="-30.3" font-family="Overlock" font-size="14.00">S.next:</text>
+</g>
+<!-- B&#45;&gt;Snext -->
+<g id="edge3" class="edge">
+<title>B&#45;&gt;Snext</title>
+<path fill="none" stroke="black" d="M122.78,-82.86C126.22,-80.24 129.71,-77.56 133,-75 140.99,-68.78 149.63,-61.92 157.44,-55.66" />
+<polygon fill="black" stroke="black" points="158.88,-56.75 161.69,-52.25 156.69,-54.02 158.88,-56.75" />
+<text text-anchor="middle" x="172" y="-63.8" font-family="Overlock" font-size="14.00">B.false</text>
+</g>
+<!-- S₁&#45;&gt;B -->
+<g id="edge2" class="edge">
+<title>S₁:w&#45;&gt;B:w</title>
+<path fill="none" stroke="black" d="M52,-34C22.62,-34 38.89,-93.87 67.01,-100.42" />
+<polygon fill="black" stroke="black" points="66.83,-102.16 72,-101 67.24,-98.69 66.83,-102.16" />
+<text text-anchor="middle" x="62.5" y="-63.8" font-family="Overlock" font-size="14.00">S₁.next</text>
+</g>
+</g>
+</svg>
+
+    </div>
+
+    <div class="jekyll-diagrams diagrams graphviz">
+      <p><!-- Generated by graphviz version 5.0.1 (20220820.1526)
+ -->
+<!-- Pages: 1 --></p>
+      <svg width="163pt" height="225pt" viewBox="0.00 0.00 163.00 225.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 221)">
+<g id="clust1" class="cluster">
+<title>cluster_S</title>
+<path fill="none" stroke="black" d="M20,-67C20,-67 135,-67 135,-67 141,-67 147,-73 147,-79 147,-79 147,-197 147,-197 147,-203 141,-209 135,-209 135,-209 20,-209 20,-209 14,-209 8,-203 8,-197 8,-197 8,-79 8,-79 8,-73 14,-67 20,-67" />
+<text text-anchor="middle" x="77.5" y="-193.8" font-family="Overlock" font-size="14.00">S → do S₁ while (B);</text>
+</g>
+<!-- S₁ -->
+<g id="node1" class="node">
+<title>S₁</title>
+<path fill="none" stroke="black" d="M93,-178C93,-178 63,-178 63,-178 57,-178 51,-172 51,-166 51,-166 51,-154 51,-154 51,-148 57,-142 63,-142 63,-142 93,-142 93,-142 99,-142 105,-148 105,-154 105,-154 105,-166 105,-166 105,-172 99,-178 93,-178" />
+<text text-anchor="middle" x="78" y="-156.3" font-family="Overlock" font-size="14.00">S₁</text>
+</g>
+<!-- B -->
+<g id="node2" class="node">
+<title>B</title>
+<path fill="none" stroke="black" d="M93,-111C93,-111 63,-111 63,-111 57,-111 51,-105 51,-99 51,-99 51,-87 51,-87 51,-81 57,-75 63,-75 63,-75 93,-75 93,-75 99,-75 105,-81 105,-87 105,-87 105,-99 105,-99 105,-105 99,-111 93,-111" />
+<text text-anchor="middle" x="78" y="-89.3" font-family="Overlock" font-size="14.00">B</text>
+</g>
+<!-- S₁&#45;&gt;B -->
+<g id="edge1" class="edge">
+<title>S₁&#45;&gt;B</title>
+<path fill="none" stroke="black" d="M78,-141.92C78,-134.07 78,-124.66 78,-116.26" />
+<polygon fill="black" stroke="black" points="79.75,-116.19 78,-111.19 76.25,-116.19 79.75,-116.19" />
+<text text-anchor="middle" x="99.5" y="-122.8" font-family="Overlock" font-size="14.00">S₁.next</text>
+</g>
+<!-- B&#45;&gt;S₁ -->
+<g id="edge2" class="edge">
+<title>B:w&#45;&gt;S₁:w</title>
+<path fill="none" stroke="black" d="M50,-93C22.08,-93 20.34,-151.89 44.77,-159.25" />
+<polygon fill="black" stroke="black" points="44.8,-161.02 50,-160 45.3,-157.56 44.8,-161.02" />
+<text text-anchor="middle" x="46.5" y="-122.8" font-family="Overlock" font-size="14.00">B.true</text>
+</g>
+<!-- Snext -->
+<g id="node3" class="node">
+<title>Snext</title>
+<text text-anchor="middle" x="78" y="-14.3" font-family="Overlock" font-size="14.00">S.next:</text>
+</g>
+<!-- B&#45;&gt;Snext -->
+<g id="edge3" class="edge">
+<title>B&#45;&gt;Snext</title>
+<path fill="none" stroke="black" d="M78,-74.7C78,-64.7 78,-52.01 78,-41.27" />
+<polygon fill="black" stroke="black" points="79.75,-41.18 78,-36.18 76.25,-41.18 79.75,-41.18" />
+<text text-anchor="middle" x="99" y="-47.8" font-family="Overlock" font-size="14.00">B.false</text>
+</g>
+</g>
+</svg>
+
+    </div>
+
+  </div>
+</div>
+
+<h1 id="composizione-sequenziale">Composizione sequenziale</h1>
+
+<div class="columns ">
+  <div class="">
+
+    <table class="sdd smaller">
+      <thead>
+        <tr>
+          <th style="text-align: left">Produzioni</th>
+          <th style="text-align: left">Regole semantiche</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left">$S → \tbraces\Slist$</td>
+          <td style="text-align: left">$\Slist.\next = S.\next$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left">$S.\code = \Slist.\code$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left"> </td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$\Slist → \es$</td>
+          <td style="text-align: left">$\Slist.\code = \IJUMP~\Slist.\next$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left"> </td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$\Slist → S\Slist₁$</td>
+          <td style="text-align: left">$S.\next = \newlabel()$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left">$\Slist₁.\next = \Slist.\next$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left">$\Slist.\code = S.\code$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left">${} \ap S.\next: \Slist₁.\code$</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="attributi">Attributi</h2>
+
+    <ul>
+      <li>$\Slist.\next$ = etichetta a cui saltare dopo che <em>tutti</em> i
+comandi in $\Slist$ sono stati eseguiti (<em>ereditato</em>)</li>
+      <li>$\Slist.\code$ = codice che esegue <em>tutti</em> i comandi in $\Slist$</li>
+    </ul>
+
+  </div>
+  <div class="">
+    <div class="jekyll-diagrams diagrams graphviz">
+      <p><!-- Generated by graphviz version 5.0.1 (20220820.1526)
+ -->
+<!-- Pages: 1 --></p>
+      <svg width="142pt" height="99pt" viewBox="0.00 0.00 142.00 99.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 95)">
+<g id="clust1" class="cluster">
+<title>cluster_S</title>
+<path fill="none" stroke="black" d="M20,-8C20,-8 114,-8 114,-8 120,-8 126,-14 126,-20 126,-20 126,-71 126,-71 126,-77 120,-83 114,-83 114,-83 20,-83 20,-83 14,-83 8,-77 8,-71 8,-71 8,-20 8,-20 8,-14 14,-8 20,-8" />
+<text text-anchor="middle" x="67" y="-67.8" font-family="Overlock" font-size="14.00">Slist → ε</text>
+</g>
+<!-- goto -->
+<g id="node1" class="node">
+<title>goto</title>
+<polygon fill="#cccccc" stroke="black" points="117.5,-52 16.5,-52 16.5,-16 117.5,-16 117.5,-52" />
+<text text-anchor="middle" x="67" y="-30.3" font-family="Overlock" font-size="14.00">goto Slist.next</text>
+</g>
+</g>
+</svg>
+
+    </div>
+
+    <div class="jekyll-diagrams diagrams graphviz">
+      <p><!-- Generated by graphviz version 5.0.1 (20220820.1526)
+ -->
+<!-- Pages: 1 --></p>
+      <svg width="130pt" height="225pt" viewBox="0.00 0.00 130.00 225.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 221)">
+<g id="clust1" class="cluster">
+<title>cluster_S</title>
+<path fill="none" stroke="black" d="M20,-67C20,-67 102,-67 102,-67 108,-67 114,-73 114,-79 114,-79 114,-197 114,-197 114,-203 108,-209 102,-209 102,-209 20,-209 20,-209 14,-209 8,-203 8,-197 8,-197 8,-79 8,-79 8,-73 14,-67 20,-67" />
+<text text-anchor="middle" x="61" y="-193.8" font-family="Overlock" font-size="14.00">Slist → S Slist₁</text>
+</g>
+<!-- S -->
+<g id="node1" class="node">
+<title>S</title>
+<path fill="none" stroke="black" d="M70,-178C70,-178 40,-178 40,-178 34,-178 28,-172 28,-166 28,-166 28,-154 28,-154 28,-148 34,-142 40,-142 40,-142 70,-142 70,-142 76,-142 82,-148 82,-154 82,-154 82,-166 82,-166 82,-172 76,-178 70,-178" />
+<text text-anchor="middle" x="55" y="-156.3" font-family="Overlock" font-size="14.00">S</text>
+</g>
+<!-- Slist₁ -->
+<g id="node2" class="node">
+<title>Slist₁</title>
+<path fill="none" stroke="black" d="M70,-111C70,-111 40,-111 40,-111 34,-111 28,-105 28,-99 28,-99 28,-87 28,-87 28,-81 34,-75 40,-75 40,-75 70,-75 70,-75 76,-75 82,-81 82,-87 82,-87 82,-99 82,-99 82,-105 76,-111 70,-111" />
+<text text-anchor="middle" x="55" y="-89.3" font-family="Overlock" font-size="14.00">Slist₁</text>
+</g>
+<!-- S&#45;&gt;Slist₁ -->
+<g id="edge1" class="edge">
+<title>S&#45;&gt;Slist₁</title>
+<path fill="none" stroke="black" d="M55,-141.92C55,-134.07 55,-124.66 55,-116.26" />
+<polygon fill="black" stroke="black" points="56.75,-116.19 55,-111.19 53.25,-116.19 56.75,-116.19" />
+<text text-anchor="middle" x="74.5" y="-122.8" font-family="Overlock" font-size="14.00">S.next</text>
+</g>
+<!-- Snext -->
+<g id="node3" class="node">
+<title>Snext</title>
+<text text-anchor="middle" x="55" y="-14.3" font-family="Overlock" font-size="14.00">Slist.next:</text>
+</g>
+<!-- Slist₁&#45;&gt;Snext -->
+<g id="edge2" class="edge">
+<title>Slist₁&#45;&gt;Snext</title>
+<path fill="none" stroke="black" d="M55,-74.7C55,-64.7 55,-52.01 55,-41.27" />
+<polygon fill="black" stroke="black" points="56.75,-41.18 55,-36.18 53.25,-41.18 56.75,-41.18" />
+<text text-anchor="middle" x="84.5" y="-47.8" font-family="Overlock" font-size="14.00">Slist₁.next</text>
+</g>
+</g>
+</svg>
+
+    </div>
+
+  </div>
+</div>
+
+<h1 id="esempio-somma-dei-primi-10-numeri-naturali">Esempio: somma dei primi 10 numeri naturali</h1>
+
+<div class="row ">
+
+  <div class="column ">
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">{</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="k">while</span> <span class="o">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">;</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>    </div>
+
+    <div class="">
+      <h2 id="note">Note</h2>
+
+      <ul>
+        <li><code class="language-plaintext highlighter-rouge">L0</code> è l’etichetta presente nell’attributo ereditato $S.\next$
+della variabile $S$ da cui è stato generato il comando.</li>
+        <li>Nel codice generato ci sono diversi <code class="language-plaintext highlighter-rouge">goto</code> ridondanti che possono
+essere eliminati nella fase di <em>ottimizzazione del codice</em>.</li>
+      </ul>
+
+    </div>
+
+  </div>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    ldc 10
+    istore &amp;x
+    goto L1
+L1: ldc 0
+    istore &amp;y
+    goto L2
+L2:
+L3: iload &amp;x
+    ldc 0
+    if_icmpgt L4
+    goto L0
+L4: iload &amp;x
+    iload &amp;y
+    iadd
+    istore &amp;y
+    goto L5
+L5: iload &amp;x
+    ldc 1
+    isub
+    istore &amp;x
+    goto L3
+L0:
+</code></pre></div>  </div>
+
+</div>
+
+<h1 id="esercizi">Esercizi</h1>
+
+<ol>
+  <li>Scrivere le regole semantiche per la traduzione del <em>doppio
+assegnamento simultaneo</em> $S → x\tcomma y \teq E₁\tcomma E₂\tsemi$, che può essere
+utile per <em>scambiare</em> il contenuto di due variabili senza usare
+una variabile di appoggio (es. <code class="language-plaintext highlighter-rouge">x,y = y,x;</code>). Cosa contiene la
+variabile <code class="language-plaintext highlighter-rouge">m</code> al termine dell’esecuzione del seguente programma?
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">{</span> <span class="n">m</span><span class="o">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="n">k</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+  <span class="k">while</span> <span class="o">(</span><span class="n">k</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">m</span><span class="o">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">n</span><span class="o">,</span> <span class="n">m</span> <span class="o">+</span> <span class="n">n</span><span class="o">;</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Scrivere le regole semantiche per tradurre il <em>ciclo <code class="language-plaintext highlighter-rouge">for</code></em> $S →
+\tfor~\tparens{S₁\tsemi B\tsemi S₂}~S₃$</li>
+</ol>
+
+      </div>
+    </div>
+    <script type="text/javascript" src="../js/slider.js"></script>
+    <script type="text/javascript" src="../assets/reveal/reveal.js"></script>
+    <script>
+      initialize_slider();
+      Reveal.initialize({
+	  controls:    false,  // No control arrows
+	  slideNumber: 'c/t',  // Print slide number
+	  center:      false,  // Do not align slide vertically
+	  progress:    false,  // Do not display progress bar
+	  hash:        true,   // Store slide number in URL
+	  touch:       true,   // Enables touch navigation
+	  transition:  'none', // Transition mode
+	  transitionSpeed: 'fast',
+	  pdfSeparateFragments: true,
+	  pdfMaxPagesPerSlide: 1,
+	  pdfPageHeightOffset: -1,
+	  width: 846,
+	  height: 600,
+	  margin: 0.05,
+      });
+    </script>
+    <script type="text/javascript" src="../js/mathjax.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  </body>
+</html>

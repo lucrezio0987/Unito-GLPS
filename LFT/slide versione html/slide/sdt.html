@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Schemi di traduzione</title>
+    <link rel="stylesheet" type="text/css" href="../assets/reveal/reveal.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/vs.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/main.css">
+  </head>
+  <body>
+    <div class="reveal">
+      <div id="root" class="slides">
+	<h1 class="no_toc" id="linguaggi-formali-e-traduttori">Linguaggi Formali e Traduttori</h1>
+
+<h2 class="sezione" id="52-schemi-di-traduzione">5.2 Schemi di traduzione</h2>
+
+<ul class="smaller" id="markdown-toc">
+  <li><a href="#sommario" id="markdown-toc-sommario">Sommario</a></li>
+  <li><a href="#schemi-di-traduzione" id="markdown-toc-schemi-di-traduzione">Schemi di traduzione</a></li>
+  <li><a href="#differenze-tra-regole-e-azioni-semantiche" id="markdown-toc-differenze-tra-regole-e-azioni-semantiche">Differenze tra regole e azioni semantiche</a></li>
+  <li><a href="#conversione-da-sdd-l-attribuite-a-sdt" id="markdown-toc-conversione-da-sdd-l-attribuite-a-sdt">Conversione da SDD L-attribuite a SDT</a></li>
+  <li><a href="#esempio" id="markdown-toc-esempio">Esempio</a></li>
+  <li><a href="#sdt-e-parsing-ricorsivo-discendente" id="markdown-toc-sdt-e-parsing-ricorsivo-discendente">SDT e parsing ricorsivo discendente</a></li>
+  <li><a href="#esempio-stringhe-della-forma-aⁿbⁿ" id="markdown-toc-esempio-stringhe-della-forma-aⁿbⁿ">Esempio: stringhe della forma aⁿbⁿ</a></li>
+  <li><a href="#esempio-espressioni-in-forma-infissa" id="markdown-toc-esempio-espressioni-in-forma-infissa">Esempio: espressioni in forma infissa</a></li>
+  <li><a href="#prefix-infix" id="markdown-toc-prefix-infix">Esempio: da forma prefissa a forma infissa</a></li>
+  <li><a href="#traduzione-on-the-fly" id="markdown-toc-traduzione-on-the-fly">Traduzione “on-the-fly”</a></li>
+  <li><a href="#infix-postfix" id="markdown-toc-infix-postfix">Esempio: da forma infissa a forma postfissa</a></li>
+  <li><a href="#esercizi" id="markdown-toc-esercizi">Esercizi</a></li>
+</ul>
+
+<div class="license">
+
+  <p>È proibito condividere e divulgare in qualsiasi forma i materiali
+didattici caricati sulla piattaforma e le lezioni svolte in
+videoconferenza: ogni azione che viola questa norma sarà denunciata
+agli organi di Ateneo e perseguita a termini di legge.</p>
+
+</div>
+
+<h1 id="sommario">Sommario</h1>
+
+<h2 id="problema">Problema</h2>
+
+<ul>
+  <li>Le SDD forniscono una specifica ad alto livello del processo di
+traduzione in cui l’ordine di valutazione degli attributi è
+implicito.</li>
+  <li>Una SDD richiede l’albero sintattico per la memorizzazione degli
+attributi.</li>
+</ul>
+
+<h2 id="in-questa-lezione">In questa lezione</h2>
+
+<ol>
+  <li>Introduciamo gli <strong>schemi di traduzione</strong> (SDT), una variante
+delle SDD in cui si rende esplicito l’<em>ordine di valutazione</em>
+degli attributi.</li>
+  <li>Vediamo come convertire una SDD L-attribuita in uno SDT.</li>
+  <li>Vediamo come integrare uno SDT in un <em>parser ricorsivo
+discendente</em> sfruttando la pila del linguaggio di programmazione
+per la memorizzazione degli attributi ed evitando la costruzione
+esplicita dell’albero sintattico.</li>
+</ol>
+
+<h1 id="schemi-di-traduzione">Schemi di traduzione</h1>
+
+<h2 id="definizione">Definizione</h2>
+
+<p>Uno <strong>schema di traduzione</strong> (o <strong>SDT</strong>, da <strong>S</strong>yntax-<strong>D</strong>irected
+<strong>T</strong>ranslation scheme) è una grammatica in cui le produzioni sono
+arricchite da <em>frammenti di codice</em> detti <strong>azioni semantiche</strong> che
+sono <em>eseguite</em> nel momento in cui tutti i simboli alla loro
+sinistra sono stati riconosciuti.</p>
+
+<h2 id="esempi">Esempi</h2>
+
+<div class="skip" style="margin-top: 1em"></div>
+
+<table width="85%" class="smaller">
+	<thead>
+		<th>Produzione</th>
+		<th>Produzione + Azioni</th>
+		<th>Descrizione</th>
+	</thead>
+	<tbody>
+		<tr>
+			<td>$A → BC$</td>
+			<td>$A → BC\set\code$</td>
+			<td>$\code$ eseguito dopo il riconoscimento di $B$ e $C$
+			</td>
+		</tr>
+		<tr>
+			<td>$A → BC$</td>
+			<td>$A → B\set\code C$</td>
+			<td>$\code$ eseguito dopo il riconoscimento di $B$ ma prima del riconoscimento di $C$
+			</td>
+		</tr>
+		<tr>
+			<td>$A → BC$</td>
+			<td>$A → \set{\code₁}BC\set{\code₂}$</td>
+			<td>$\code₁$ eseguito subito dopo la riscrittura di $A$ e prima del riconoscimento di $B$, $\code₂$ eseguito dopo il riconoscimento di $B$ e $C$
+			</td>
+		</tr>
+		<tr>
+			<td>$A → \es$</td>
+			<td>$A → \set\code$</td>
+			<td>$\code$ eseguito subito dopo la riscrittura di $A$
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<h1 id="differenze-tra-regole-e-azioni-semantiche">Differenze tra regole e azioni semantiche</h1>
+
+<div class="skip" style="margin-top: 3rem"></div>
+
+<div class="columns ">
+  <div class="half ">
+
+    <h2 class="centered" id="regole-semantiche-sdd">Regole semantiche (SDD)</h2>
+
+    <ul>
+      <li>Specificano come determinare il valore degli attributi.</li>
+    </ul>
+
+  </div>
+  <div class="half ">
+
+    <h2 class="centered" id="azioni-semantiche-sdt">Azioni semantiche (SDT)</h2>
+
+    <ul>
+      <li><em class="hl">Solitamente</em> specificano come determinare il valore degli
+attributi, <em class="hl">ma possono contenere codice arbitrario</em>
+(es. stampe, invocazione di metodi, ecc.).</li>
+    </ul>
+
+  </div>
+</div>
+
+<div class="columns ">
+  <div class="half ">
+
+    <ul>
+      <li>Sono valutate in un <em class="hl">ordine implicito</em> determinato dal grafo
+delle dipendenze.</li>
+    </ul>
+
+  </div>
+  <div class="half ">
+
+    <ul>
+      <li>Sono eseguite in un <em class="hl">ordine esplicito</em> determinato dalla
+loro posizione nel corpo delle produzioni.</li>
+    </ul>
+
+  </div>
+</div>
+
+<div class="columns ">
+  <div class="half ">
+
+    <ul>
+      <li>Poiché valutate in un <em class="hl">ordine arbitrario</em>, in generale
+richiedono la <em class="hl">costruzione dell’albero sintattico annotato</em>.</li>
+    </ul>
+
+  </div>
+  <div class="half ">
+
+    <ul>
+      <li>Poiché eseguite <em class="hl">da sinistra verso destra</em>, possono essere
+integrate al parsing ricorsivo discendente <em class="hl">senza richiedere la
+costruzione dell’albero sintattico annotato</em>.</li>
+    </ul>
+
+  </div>
+</div>
+
+<h1 id="conversione-da-sdd-l-attribuite-a-sdt">Conversione da SDD L-attribuite a SDT</h1>
+
+<h2 id="algoritmo">Algoritmo</h2>
+
+<p>Data una SDD L-attribuita, si può ottenere uno SDT corrispondente
+nel modo seguente. Per ogni produzione $A → X_1X_2⋯X_n$ della
+grammatica:</p>
+
+<ol>
+  <li>
+    <p><em class="hl">Subito prima di $X_i$</em>, aggiungere un’azione semantica che
+calcola il valore degli <em>attributi ereditati</em> di $X_i$.
+<strong>Nota</strong>: in una SDD L-attribuita, questi attributi possono
+dipendere solo da attributi ereditati di $A$ ed attributi di
+$X_1$, … , $X_{i-1}$.</p>
+  </li>
+  <li>
+    <p><em class="hl">In fondo alla produzione</em>, aggiungere un’azione semantica
+che calcola il valore degli <em>attributi sintetizzati</em> di $A$.</p>
+  </li>
+</ol>
+
+<p>All’interno di ogni azione semantica <em>ordinare il codice</em>
+rispettando le dipendenze tra diversi attributi. <strong>Nota</strong>: in una
+SDD L-attribuita, tali dipendenze sono necessariamente <em>acicliche</em> e
+dunque esiste un ordinamento che le rispetta.</p>
+
+<h1 id="esempio">Esempio</h1>
+
+<div class="skip" style="margin-top: 4em"></div>
+<div class="columns ">
+  <div class="half ">
+
+    <h2 class="centered" id="sdd">SDD</h2>
+
+    <table class="sdd">
+      <thead>
+        <tr>
+          <th style="text-align: left">Produzioni</th>
+          <th style="text-align: left"><strong class="hl">Regole</strong> semantiche</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left">$T → FT’$</td>
+          <td style="text-align: left">$\mathstrut T’.e = F.s$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left">$\mathstrut T.s = T’.s$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$T’ → {\ttimes}FT_1’$</td>
+          <td style="text-align: left">$\mathstrut T_1’.e = T’.e × F.s$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"> </td>
+          <td style="text-align: left">$\mathstrut T’.s = T_1’.s$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$T’ → \es$</td>
+          <td style="text-align: left">$\mathstrut T’.s = T’.e$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$F → \tnum$</td>
+          <td style="text-align: left">$\mathstrut F.s = \tnum.v$</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+  <div class="half ">
+    <h2 class="centered" id="sdt">SDT</h2>
+
+    <table class="sdd">
+      <thead>
+        <tr>
+          <th style="text-align: left">Produzioni</th>
+          <th style="text-align: left"><strong class="hl">Azioni</strong> semantiche</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left">$T → F$</td>
+          <td style="text-align: left">$\set{ T’.e = F.s }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$\phantom{T → {}}T’$</td>
+          <td style="text-align: left">$\set{ T.s = T’.s }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$T’ → {\ttimes}F$</td>
+          <td style="text-align: left">$\set{ T_1’.e = T’.e × F.s }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$\phantom{T’ → {}}T_1’$</td>
+          <td style="text-align: left">$\set{ T’.s = T_1’.s }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$T’ → \es$</td>
+          <td style="text-align: left">$\set{ T’.s = T’.e }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$F → \tnum$</td>
+          <td style="text-align: left">$\set{ F.s = \tnum.v }$</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+<h1 id="sdt-e-parsing-ricorsivo-discendente">SDT e parsing ricorsivo discendente</h1>
+
+<ul>
+  <li>
+    <p>Il parser ha <em>una procedura per ogni variabile</em> della grammatica
+che <em>riconosce</em> le stringhe <em>generate</em> da $A$ nella grammatica.</p>
+  </li>
+  <li>
+    <p class="fragment" data-fragment-index="2"><span class="hl">La procedura $A$ ha tanti <em>argomenti</em>
+quanti sono gli <em>attributi ereditati</em> di $A$ e restituisce tanti
+<em>valori</em> quanti sono gli <em>attributi sintetizzati</em> di $A$.</span></p>
+  </li>
+  <li>
+    <p>La procedura $A$ usa il <em>simbolo corrente</em> e gli <em>insiemi guida</em>,
+per scegliere la produzione $A → \alpha_1 \mid \alpha_2 \mid ⋯
+\mid \alpha_n$ da usare per riscrivere $A$.</p>
+  </li>
+  <li>
+    <p>Per ogni simbolo <em class="hl fragment" data-fragment-index="2">o azione semantica</em> $X$ nel corpo della produzione scelta:</p>
+
+    <ul>
+      <li>
+        <p>Se $X$ è un <em>simbolo terminale</em>, il metodo controlla che il
+simbolo corrente sia proprio $X$. In tal caso, fa <em>avanzare</em> il
+lexer al simbolo successivo. In caso contrario, il metodo
+segnala un <em>errore di sintassi</em>.</p>
+      </li>
+      <li>
+        <p>Se $X$ è una <em>variabile</em>, il metodo <em>invoca</em> la procedura $X$
+<span class="hl fragment" data-fragment-index="2">passando a $X$ come argomenti i suoi
+<em>attributi ereditati</em> e raccogliendo in variabili locali gli
+<em>attributi sintetizzati</em> restituiti da $X$</span>.</p>
+      </li>
+      <li>
+        <p class="fragment" data-fragment-index="2"><span class="hl">Se $X$ è una <em>azione semantica</em>, il
+metodo la <em>esegue</em>.</span></p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="esempio-stringhe-della-forma-aⁿbⁿ">Esempio: stringhe della forma aⁿbⁿ</h1>
+
+<div class="columns ">
+  <div class="">
+
+    <h2 id="schema-di-traduzione">Schema di traduzione</h2>
+
+    <table class="sdd">
+      <thead>
+        <tr>
+          <th style="text-align: left">Produzioni</th>
+          <th style="text-align: left">Azioni semantiche</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left">$S → \es$</td>
+          <td style="text-align: left">$\set{ S.n = 0 }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$S → aS₁b$</td>
+          <td style="text-align: left">$\set{ S.n = S₁.n + 1 }$</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="esempi">Esempi</h2>
+
+    <ul>
+      <li>$\es \Longrightarrow 0$</li>
+      <li>$ab \Longrightarrow 1$</li>
+      <li>$aabb \Longrightarrow 2$</li>
+      <li>$aaabbb \Longrightarrow 3$</li>
+      <li>…</li>
+      <li>$a^nb^n \Longrightarrow n$</li>
+    </ul>
+
+  </div>
+  <div class="fragment ">
+
+    <h2 id="codice-java">Codice Java</h2>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">private</span> <span class="kt">int</span> <span class="nf">S</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">switch</span> <span class="o">(</span><span class="n">peek</span><span class="o">())</span> <span class="o">{</span>
+
+    <span class="k">case</span> <span class="sc">'a'</span><span class="o">:</span> <span class="c1">// S → aSb</span>
+    <span class="o">{</span> <span class="n">check</span><span class="o">(</span><span class="sc">'a'</span><span class="o">);</span>
+      <span class="kt">int</span> <span class="n">S_n</span> <span class="o">=</span> <span class="no">S</span><span class="o">();</span>
+      <span class="n">check</span><span class="o">(</span><span class="sc">'b'</span><span class="o">);</span>
+      <span class="k">return</span> <span class="n">S_n</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span> <span class="o">}</span>
+
+    <span class="k">case</span> <span class="sc">'b'</span><span class="o">:</span> <span class="c1">// S → ε</span>
+    <span class="k">case</span> <span class="sc">'$'</span><span class="o">:</span>
+      <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+
+    <span class="k">default</span><span class="o">:</span>
+      <span class="k">throw</span> <span class="nf">error</span><span class="o">(</span><span class="s">"S"</span><span class="o">);</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+
+  </div>
+</div>
+
+<h1 id="esempio-espressioni-in-forma-infissa">Esempio: espressioni in forma infissa</h1>
+
+<div class="columns ">
+  <div class="half ">
+
+    <table class="smaller sdd">
+      <thead>
+        <tr>
+          <th style="text-align: left">Produzioni</th>
+          <th style="text-align: left">Azioni semantiche</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left">$T → F$</td>
+          <td style="text-align: left">$\set{ T’.e = F.s }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$\phantom{T → {}}T’$</td>
+          <td style="text-align: left">$\set{ T.s = T’.s }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$T’ → {\ttimes}F$</td>
+          <td style="text-align: left">$\set{ T_1’.e = T’.e × F.s }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$\phantom{T’ → {}}T_1’$</td>
+          <td style="text-align: left">$\set{ T’.s = T_1’.s }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$T’ → \es$</td>
+          <td style="text-align: left">$\set{ T’.s = T’.e }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$F → \tnum$</td>
+          <td style="text-align: left">$\set{ F.s = \tnum.v }$</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="language-java fragment highlighter-rouge" data-fragment-index="1"><div class="highlight"><pre class="highlight"><code>  <span class="kd">private</span> <span class="kt">int</span> <span class="nf">T</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">switch</span> <span class="o">(</span><span class="n">peek</span><span class="o">())</span> <span class="o">{</span>
+    <span class="k">case</span> <span class="sc">'n'</span><span class="o">:</span> <span class="o">{</span> <span class="c1">// T → FT'</span>
+      <span class="kt">int</span> <span class="n">F_s</span>  <span class="o">=</span> <span class="no">F</span><span class="o">();</span>
+      <span class="kt">int</span> <span class="n">TT_s</span> <span class="o">=</span> <span class="no">TT</span><span class="o">(</span><span class="n">F_s</span><span class="o">);</span>
+      <span class="k">return</span> <span class="n">TT_s</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="k">default</span><span class="o">:</span>
+      <span class="k">throw</span> <span class="nf">error</span><span class="o">(</span><span class="s">"T"</span><span class="o">);</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+</code></pre></div>    </div>
+
+  </div>
+  <div class="half ">
+
+    <div class="language-java fragment highlighter-rouge" data-fragment-index="1"><div class="highlight"><pre class="highlight"><code>  <span class="kd">private</span> <span class="kt">int</span> <span class="nf">TT</span><span class="o">(</span><span class="kt">int</span> <span class="n">TT_e</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">switch</span> <span class="o">(</span><span class="n">peek</span><span class="o">())</span> <span class="o">{</span>
+    <span class="k">case</span> <span class="sc">'*'</span><span class="o">:</span> <span class="c1">// T' → *FT'</span>
+    <span class="o">{</span> <span class="n">check</span><span class="o">(</span><span class="sc">'*'</span><span class="o">);</span>
+      <span class="kt">int</span> <span class="n">F_s</span>  <span class="o">=</span> <span class="no">F</span><span class="o">();</span>
+      <span class="kt">int</span> <span class="n">TT_s</span> <span class="o">=</span> <span class="no">TT</span><span class="o">(</span><span class="n">TT_e</span> <span class="o">*</span> <span class="n">F_s</span><span class="o">);</span>
+      <span class="k">return</span> <span class="n">TT_s</span><span class="o">;</span> <span class="o">}</span>
+    <span class="k">case</span> <span class="sc">'+'</span><span class="o">:</span>
+    <span class="k">case</span> <span class="sc">'$'</span><span class="o">:</span> <span class="c1">// T' → ε</span>
+      <span class="k">return</span> <span class="n">TT_e</span><span class="o">;</span>
+    <span class="k">default</span><span class="o">:</span>
+        <span class="k">throw</span> <span class="nf">error</span><span class="o">(</span><span class="s">"T'"</span><span class="o">);</span>
+  <span class="o">}</span> <span class="o">}</span>
+
+  <span class="kd">private</span> <span class="kt">int</span> <span class="nf">F</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">switch</span> <span class="o">(</span><span class="n">peek</span><span class="o">())</span> <span class="o">{</span>
+    <span class="k">case</span> <span class="sc">'n'</span><span class="o">:</span> <span class="c1">// F → n</span>
+    <span class="o">{</span> <span class="kt">int</span> <span class="n">F_s</span> <span class="o">=</span> <span class="n">peek</span><span class="o">()</span> <span class="o">-</span> <span class="sc">'0'</span><span class="o">;</span>
+      <span class="n">check</span><span class="o">(</span><span class="sc">'n'</span><span class="o">);</span>
+      <span class="k">return</span> <span class="n">F_s</span><span class="o">;</span> <span class="o">}</span>
+    <span class="k">default</span><span class="o">:</span>
+      <span class="k">throw</span> <span class="nf">error</span><span class="o">(</span><span class="s">"F"</span><span class="o">);</span>
+  <span class="o">}</span> <span class="o">}</span>
+</code></pre></div>    </div>
+
+  </div>
+</div>
+
+<h1 id="prefix-infix">Esempio: da forma prefissa a forma infissa</h1>
+
+<div class="columns ">
+  <div class="">
+
+    <h2 class="centered" id="sdt-1">SDT</h2>
+
+    <table class="smaller sdd">
+      <thead>
+        <tr>
+          <th style="text-align: left">Produzioni</th>
+          <th style="text-align: left">Azioni semantiche</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left">$S → {}$</td>
+          <td style="text-align: left">$\set{ E.c = \emptyset }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$\phantom{S → {}}E$</td>
+          <td style="text-align: left">$\set{ S.i = E.i }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$E → {\tplus}$</td>
+          <td style="text-align: left">$\set{ E₁.c = \emptyset }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$\phantom{E → {}}E₁$</td>
+          <td style="text-align: left">$\set{ E₂.c = \set\tplus }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$\phantom{E → {}}E₂$</td>
+          <td style="text-align: left">$\set{ E.i = \maybep(\tplus, E₁.i \append \tstring{+} \append E₂.i) }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$E → {\ttimes}$</td>
+          <td style="text-align: left">$\set{ E₁.c = \set\tplus }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$\phantom{E → {}}E₁$</td>
+          <td style="text-align: left">$\set{ E₂.c = \set{\tplus, \ttimes} }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$\phantom{E → {}}E₂$</td>
+          <td style="text-align: left">$\set{ E.i = \maybep(\ttimes, E₁.i \append \tstring{*} \append E₂.i) }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$E → \tnum$</td>
+          <td style="text-align: left">$\set{ E.i = \tnum.v }$</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="smaller">\[
+	\maybep(o, s)
+	\eqdef
+	\begin{cases}
+		\tstring{(} \append s \append \tstring{)} &amp; \text{se $o \in E.c$}
+		<br />
+		s &amp; \text{altrimenti}
+	\end{cases}
+\]</p>
+
+  </div>
+  <div class="fragment ">
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">String</span> <span class="nf">E</span><span class="o">(</span><span class="nc">String</span> <span class="n">E_c</span><span class="o">)</span> <span class="o">{</span>
+  <span class="k">switch</span> <span class="o">(</span><span class="n">peek</span><span class="o">())</span> <span class="o">{</span>
+  <span class="k">case</span> <span class="sc">'+'</span><span class="o">:</span> <span class="c1">// E → +E₁E₂</span>
+  <span class="o">{</span> <span class="n">check</span><span class="o">(</span><span class="sc">'+'</span><span class="o">);</span>
+    <span class="nc">String</span> <span class="no">E</span><span class="err">₁</span><span class="n">_i</span> <span class="o">=</span> <span class="no">E</span><span class="o">(</span><span class="s">""</span><span class="o">);</span>
+    <span class="nc">String</span> <span class="no">E</span><span class="err">₂</span><span class="n">_i</span> <span class="o">=</span> <span class="no">E</span><span class="o">(</span><span class="s">"+"</span><span class="o">);</span>
+    <span class="k">return</span> <span class="nf">par</span><span class="o">(</span><span class="n">E_c</span><span class="o">.</span><span class="na">indexOf</span><span class="o">(</span><span class="sc">'+'</span><span class="o">),</span>
+               <span class="no">E</span><span class="err">₁</span><span class="n">_i</span><span class="o">+</span><span class="s">"+"</span><span class="o">+</span><span class="no">E</span><span class="err">₂</span><span class="n">_i</span><span class="o">);</span> <span class="o">}</span>
+  <span class="k">case</span> <span class="sc">'*'</span><span class="o">:</span> <span class="c1">// E → *E₁E₂</span>
+  <span class="o">{</span> <span class="n">check</span><span class="o">(</span><span class="sc">'*'</span><span class="o">);</span>
+    <span class="nc">String</span> <span class="no">E</span><span class="err">₁</span><span class="n">_i</span> <span class="o">=</span> <span class="no">E</span><span class="o">(</span><span class="s">"+"</span><span class="o">);</span>
+    <span class="nc">String</span> <span class="no">E</span><span class="err">₂</span><span class="n">_i</span> <span class="o">=</span> <span class="no">E</span><span class="o">(</span><span class="s">"+*"</span><span class="o">);</span>
+    <span class="k">return</span> <span class="nf">par</span><span class="o">(</span><span class="n">E_c</span><span class="o">.</span><span class="na">indexOf</span><span class="o">(</span><span class="sc">'*'</span><span class="o">),</span>
+               <span class="no">E</span><span class="err">₁</span><span class="n">_i</span><span class="o">+</span><span class="s">"*"</span><span class="o">+</span><span class="no">E</span><span class="err">₂</span><span class="n">_i</span><span class="o">);</span> <span class="o">}</span>
+  <span class="k">case</span> <span class="sc">'n'</span><span class="o">:</span> <span class="c1">// E → n</span>
+  <span class="o">{</span> <span class="kt">char</span> <span class="n">d</span> <span class="o">=</span> <span class="n">peek</span><span class="o">();</span>
+    <span class="n">check</span><span class="o">(</span><span class="n">d</span><span class="o">);</span>
+    <span class="k">return</span> <span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">d</span><span class="o">);</span> <span class="o">}</span>
+  <span class="k">default</span><span class="o">:</span>
+    <span class="k">throw</span> <span class="nf">error</span><span class="o">(</span><span class="s">"E"</span><span class="o">);</span>
+<span class="o">}</span> <span class="o">}</span>
+</code></pre></div>    </div>
+
+  </div>
+</div>
+
+<h1 id="traduzione-on-the-fly">Traduzione “on-the-fly”</h1>
+
+<h2 id="definizione-1">Definizione</h2>
+
+<p>Un attributo sintetizzato si dice <strong>principale</strong> se:</p>
+
+<ol>
+  <li>Il suo valore <strong>include sempre</strong> la <strong>concatenazione</strong> dei valori
+dello stesso attributo per <strong>tutte</strong> le variabili nel corpo di
+ogni produzione, <strong>oltre ad eventuali elementi ausiliari</strong>.</li>
+  <li>La concatenazione <strong>rispetta sempre l’ordine delle variabili</strong>
+nel corpo delle produzioni.</li>
+</ol>
+
+<h2 id="esempio-di-attributo-principale">Esempio di attributo principale</h2>
+
+<p>\[
+	E → E₁ \tplus T~\set{ E.\post = E₁.\post \append T.\post \append \tstring{+} }
+\]</p>
+
+<h2 id="osservazione">Osservazione</h2>
+
+<p>Gli <em>attributi principali</em> possono essere <em>eliminati</em> “emettendo al
+volo” solo gli elementi ausiliari nel punto in cui devono comparire.</p>
+
+<h2 id="nota">Nota</h2>
+
+<p>Il tipo degli attributi principali deve supportare l’operazione di
+<em>concatenazione</em>.  Esempi tipici sono <em>stringhe</em>, <em>liste</em>, <em>sequenze
+di istruzioni</em>, <em>file</em>, ecc.</p>
+
+<h1 id="infix-postfix">Esempio: da forma infissa a forma postfissa</h1>
+
+<div class="skip" style="margin-top: 1em"></div>
+
+<div class="columns ">
+  <div class="">
+
+    <h2 id="sdt-con-accumulo-della-traduzione">SDT con accumulo della traduzione</h2>
+
+    <table class="sdd smaller">
+      <thead>
+        <tr>
+          <th style="text-align: left">Produzioni</th>
+          <th style="text-align: left">Azioni semantiche</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left">$S → E$</td>
+          <td style="text-align: left">$\set{ \print(E.\post) }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$E → E₁ \tplus T$</td>
+          <td style="text-align: left">$\set{ E.\post = E₁.\post \append T.\post \append \tstring{+} }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$E → T$</td>
+          <td style="text-align: left">$\set{ E.\post = T.\post }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$T → T₁ \ttimes F$</td>
+          <td style="text-align: left">$\set{ T.\post = T₁.\post \append F.\post \append \tstring{*} }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$T → F$</td>
+          <td style="text-align: left">$\set{ T.\post = F.\post }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$F → \tparens{E}$</td>
+          <td style="text-align: left">$\set{ F.\post = E.\post }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$F → \tnum$</td>
+          <td style="text-align: left">$\set{ F.\post = \tnum.v }$</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ul>
+      <li>$E.\post$ = $E$ in forma postfissa</li>
+      <li>$E.\post$ è un <em>attributo principale</em></li>
+    </ul>
+
+  </div>
+  <div class="fragment fade-left ">
+
+    <h2 id="traduzione-on-the-fly">Traduzione “on-the-fly”</h2>
+
+    <table class="sdd smaller">
+      <thead>
+        <tr>
+          <th style="text-align: left">Produzioni</th>
+          <th style="text-align: left">Azioni semantiche</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left">$S → E$</td>
+          <td style="text-align: left">$\mathstrut$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$E → E₁ \tplus T$</td>
+          <td style="text-align: left">$\set{ \print(\tstring{+}) }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$E → T$</td>
+          <td style="text-align: left">$\mathstrut$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$T → T₁ \ttimes F$</td>
+          <td style="text-align: left">$\set{ \print(\tstring{*}) }$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$T → F$</td>
+          <td style="text-align: left">$\mathstrut$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$F → \tparens{E}$</td>
+          <td style="text-align: left">$\mathstrut$</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">$F → \tnum$</td>
+          <td style="text-align: left">$\set{ \print(\tnum.v) }$</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ul>
+      <li>nessun attributo!</li>
+    </ul>
+
+  </div>
+</div>
+
+<h1 id="esercizi">Esercizi</h1>
+
+<ol>
+  <li>
+    <p>Definire uno SDT corrispondente alla <a href="../slide/sdd.html#quadre">SDD delle parentesi quadre
+bilanciate</a> e implementarne
+il parser ricorsivo discendente.</p>
+  </li>
+  <li>
+    <p>Definire uno SDT corrispondente alla <a href="../slide/sdd.html#lista-differenze">SDD della lista delle
+differenze</a> e
+implementarne il parser ricorsivo discendente.</p>
+  </li>
+  <li>
+    <p>Definire SDT corrispondenti alle <a href="../slide/sdd.html#esercizi">SDD ottenute risolvendo gli
+esercizi 1 e 2 della sezione precedente</a> e implementarne il parser ricorsivo
+discendene.</p>
+  </li>
+  <li>
+    <p>Definire uno SDT per la traduzione “on-the-fly” di espressioni
+aritmetiche dalla <a href="#infix-postfix">forma infissa a quella
+postfissa</a> per la grammatica LL(1) in cui è stata
+eliminata la ricorsione sinistra. Implementarne poi il parser
+ricorsivo discendente.</p>
+  </li>
+</ol>
+
+      </div>
+    </div>
+    <script type="text/javascript" src="../js/slider.js"></script>
+    <script type="text/javascript" src="../assets/reveal/reveal.js"></script>
+    <script>
+      initialize_slider();
+      Reveal.initialize({
+	  controls:    false,  // No control arrows
+	  slideNumber: 'c/t',  // Print slide number
+	  center:      false,  // Do not align slide vertically
+	  progress:    false,  // Do not display progress bar
+	  hash:        true,   // Store slide number in URL
+	  touch:       true,   // Enables touch navigation
+	  transition:  'none', // Transition mode
+	  transitionSpeed: 'fast',
+	  pdfSeparateFragments: true,
+	  pdfMaxPagesPerSlide: 1,
+	  pdfPageHeightOffset: -1,
+	  width: 846,
+	  height: 600,
+	  margin: 0.05,
+      });
+    </script>
+    <script type="text/javascript" src="../js/mathjax.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  </body>
+</html>

@@ -1,0 +1,985 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+ Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="1.0.3" use-changelog="false" last-position="0,696" last-zoom="1" max-obj-count="40"
+	 default-schema="public" default-owner="postgres"
+	 layers="Default layer"
+	 active-layers="0"
+	 layer-name-colors="#000000"
+	 layer-rect-colors="#b4b4b4"
+	 show-layer-names="false" show-layer-rects="false">
+<role name="pg_database_owner"
+ inherit="true"
+ password="********"
+ sql-disabled="true">
+</role>
+
+<database name="TEST" encoding="UTF8" lc-collate="it_IT.UTF-8" lc-ctype="it_IT.UTF-8" is-template="false" allow-conns="true">
+	<role name="postgres"/>
+	<tablespace name="pg_default"/>
+</database>
+
+<schema name="public" layers="0" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<sequence name="utente_iduser_seq" cycle="false" start="1" increment="1" min-value="1" max-value="2147483647" cache="1">
+	<schema name="public"/>
+	<role name="postgres"/>
+</sequence>
+
+<table name="utente" layers="0" collapse-mode="1" max-obj-count="1" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="100" y="120"/>
+	<column name="iduser" not-null="true" sequence="public.utente_iduser_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="utente_pk" type="pk-constr" table="public.utente">
+		<columns names="iduser" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="canale" layers="0" collapse-mode="1" max-obj-count="10" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="760" y="1560"/>
+	<column name="url" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="url_trailer">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="descrizione">
+		<type name="text" length="0"/>
+	</column>
+	<column name="numero_di_live">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="numero_di_video">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="numero_di_clip">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="url_img_di_copertina">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="url_img_profilo">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="url_ultima_live">
+		<type name="character varying" length="255"/>
+	</column>
+	<constraint name="canale_pk" type="pk-constr" table="public.canale">
+		<columns names="url" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="categoria" layers="0" collapse-mode="1" max-obj-count="2" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="2000" y="1420"/>
+	<column name="nome" not-null="true">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="url_img">
+		<type name="character varying" length="255"/>
+	</column>
+	<constraint name="categoria_pk" type="pk-constr" table="public.categoria">
+		<columns names="nome" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="live_programmate" layers="0" collapse-mode="1" max-obj-count="7" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1580" y="1620"/>
+	<column name="canale" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="data" not-null="true">
+		<type name="date" length="0"/>
+	</column>
+	<column name="ora_inizio" not-null="true">
+		<type name="time" length="0"/>
+	</column>
+	<column name="ora_fine">
+		<type name="time" length="0"/>
+	</column>
+	<column name="titolo">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="categoria">
+		<type name="character varying" length="255"/>
+	</column>
+	<constraint name="live_programmate_canale_pk" type="pk-constr" table="public.live_programmate">
+		<columns names="canale,data,ora_inizio" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="social" layers="0" collapse-mode="1" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1320" y="1440"/>
+	<column name="url_account" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="nome">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="canale">
+		<type name="character varying" length="255"/>
+	</column>
+	<constraint name="social_canale_pk" type="pk-constr" table="public.social">
+		<columns names="url_account" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="multimedia" layers="0" collapse-mode="1" max-obj-count="4" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1400" y="1100"/>
+	<column name="url" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="url_img_copertina">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="canale">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="categoria">
+		<type name="character varying" length="20"/>
+	</column>
+	<constraint name="multimedia_canale_pk" type="pk-constr" table="public.multimedia">
+		<columns names="url" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tag" layers="0" collapse-mode="1" max-obj-count="1" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="2080" y="80"/>
+	<column name="nome" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<constraint name="tag_pk" type="pk-constr" table="public.tag">
+		<columns names="nome" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="live_passate" layers="0" collapse-mode="1" max-obj-count="9" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1760" y="780"/>
+	<column name="url" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="titolo">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="data">
+		<type name="date" length="0"/>
+	</column>
+	<column name="ora_inizio">
+		<type name="time" length="0"/>
+	</column>
+	<column name="ora_fine">
+		<type name="time" length="0"/>
+	</column>
+	<column name="durata">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="numero_spettatori">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="media_spettatori">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="live_passate_pk" type="pk-constr" table="public.live_passate">
+		<columns names="url" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="video" layers="0" collapse-mode="1" max-obj-count="7" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1400" y="380"/>
+	<column name="url" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="titolo">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="data">
+		<type name="date" length="0"/>
+	</column>
+	<column name="durata">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="numero_visualizzazioni">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="fonte">
+		<type name="character varying" length="255"/>
+	</column>
+	<constraint name="video_multimedia_pk" type="pk-constr" table="public.video">
+		<columns names="url" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="unique_video_fonte" type="uq-constr" table="public.video">
+		<columns names="fonte" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="clip" layers="0" collapse-mode="1" max-obj-count="6" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1960" y="1080"/>
+	<column name="url" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="titolo">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="data">
+		<type name="date" length="0"/>
+	</column>
+	<column name="durata">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="numero_visualizzazioni">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="clip_pk" type="pk-constr" table="public.clip">
+		<columns names="url" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tag_live_passate" layers="0" collapse-mode="1" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="2040" y="520"/>
+	<column name="url" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="tag">
+		<type name="character varying" length="255"/>
+	</column>
+	<constraint name="tag_live_passate_pk" type="pk-constr" table="public.tag_live_passate">
+		<columns names="url" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tag_video" layers="0" collapse-mode="1" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1840" y="320"/>
+	<column name="url" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="tag">
+		<type name="character varying" length="255"/>
+	</column>
+	<constraint name="tag_video_pk" type="pk-constr" table="public.tag_video">
+		<columns names="url" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="privilegi" layers="0" collapse-mode="1" max-obj-count="1" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1020" y="1240"/>
+	<column name="tipo" not-null="true">
+		<type name="character varying" length="20"/>
+	</column>
+	<constraint name="privilegi_pk" type="pk-constr" table="public.privilegi">
+		<columns names="tipo" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="registrato_iduser_seq" cycle="false" start="1" increment="1" min-value="1" max-value="2147483647" cache="1">
+	<schema name="public"/>
+	<role name="postgres"/>
+</sequence>
+
+<table name="registrato" layers="0" collapse-mode="1" max-obj-count="14" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="80" y="620"/>
+	<column name="username" not-null="true">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="password">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="nome">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="cognome">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="data_di_nascita">
+		<type name="date" length="0"/>
+	</column>
+	<column name="email">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="cellulare">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="minuti_trasmessi">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="media_spettatori_simultanei">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="portafoglio_di_bit">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="iduser" not-null="true" sequence="public.registrato_iduser_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="url_canale">
+		<type name="character varying" length="255"/>
+	</column>
+	<constraint name="registrato_utente_pk" type="pk-constr" table="public.registrato">
+		<columns names="username" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="unique_registrato_iduser" type="uq-constr" table="public.registrato">
+		<columns names="iduser" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="unique_registrato_url_canale" type="uq-constr" table="public.registrato">
+		<columns names="url_canale" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="affiliate" layers="0" collapse-mode="1" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="800" y="880"/>
+	<column name="username" not-null="true">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="sottoscrizioni">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="bit_ricevuti">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="affiliate_pk" type="pk-constr" table="public.affiliate">
+		<columns names="username" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="messaggio_privato" layers="0" collapse-mode="1" max-obj-count="6" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="40" y="1360"/>
+	<column name="mittente" not-null="true">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="data" not-null="true">
+		<type name="date" length="0"/>
+	</column>
+	<column name="ora" not-null="true">
+		<type name="time" length="0"/>
+	</column>
+	<column name="messaggio">
+		<type name="text" length="0"/>
+	</column>
+	<column name="destinatario">
+		<type name="character varying" length="20"/>
+	</column>
+	<constraint name="chat_privata_pk" type="pk-constr" table="public.messaggio_privato">
+		<columns names="mittente,data,ora" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="donazione" layers="0" collapse-mode="1" max-obj-count="6" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="780" y="520"/>
+	<column name="registrato" not-null="true">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="affiliate" not-null="true">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="data" not-null="true">
+		<type name="date" length="0"/>
+	</column>
+	<column name="ora" not-null="true">
+		<type name="time" length="0"/>
+	</column>
+	<column name="valore">
+		<type name="double precision" length="0"/>
+	</column>
+	<constraint name="donazione_pk" type="pk-constr" table="public.donazione">
+		<columns names="registrato,affiliate,data,ora" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="follow" layers="0" collapse-mode="1" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="340" y="1660"/>
+	<column name="registrato" not-null="true">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="canale" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<constraint name="follow_registrato_pk" type="pk-constr" table="public.follow">
+		<columns names="registrato,canale" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="live_in_diretta" layers="0" collapse-mode="1" max-obj-count="6" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1020" y="160"/>
+	<column name="url" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="numero_spettatori">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="ora_inizio">
+		<type name="time" length="0"/>
+	</column>
+	<column name="url_img_copertina">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="streamer">
+		<type name="character varying" length="20"/>
+	</column>
+	<constraint name="live_in_diretta_streamer_pk" type="pk-constr" table="public.live_in_diretta">
+		<columns names="url" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="unique_live_in_diretta_streamer" type="uq-constr" table="public.live_in_diretta">
+		<columns names="streamer" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="messaggio" layers="0" collapse-mode="1" max-obj-count="4" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="480" y="220"/>
+	<column name="live" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="username" not-null="true">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="orario" not-null="true">
+		<type name="time" length="0"/>
+	</column>
+	<column name="testo">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="messaggio_live_pk" type="pk-constr" table="public.messaggio">
+		<columns names="live,username,orario" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="offerta" layers="0" collapse-mode="1" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1160" y="880"/>
+	<column name="affiliate" not-null="true">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="tipo" not-null="true">
+		<type name="character varying" length="20"/>
+	</column>
+	<constraint name="offerta_affiliate_pk" type="pk-constr" table="public.offerta">
+		<columns names="affiliate,tipo" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="subscription" layers="0" collapse-mode="1" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="780" y="1240"/>
+	<column name="registrato" not-null="true">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="affiliate" not-null="true">
+		<type name="character varying" length="20"/>
+	</column>
+	<constraint name="subscription_registrato_pk" type="pk-constr" table="public.subscription">
+		<columns names="registrato,affiliate" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tag_liveindiretta" layers="0" collapse-mode="1" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1580" y="60"/>
+	<column name="url" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="tag">
+		<type name="character varying" length="255"/>
+	</column>
+	<constraint name="tag_live_in_diretta_pk" type="pk-constr" table="public.tag_liveindiretta">
+		<columns names="url" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="spettatore_utente_seq" cycle="false" start="1" increment="1" min-value="1" max-value="2147483647" cache="1">
+	<schema name="public"/>
+	<role name="postgres"/>
+</sequence>
+
+<table name="spettatore" layers="0" collapse-mode="1" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="600" y="40"/>
+	<column name="utente" not-null="true" sequence="public.spettatore_utente_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="live_in_diretta">
+		<type name="character varying" length="255"/>
+	</column>
+	<constraint name="spettatore_pk" type="pk-constr" table="public.spettatore">
+		<columns names="utente" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<constraint name="live_programmate_canale_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.canale" table="public.live_programmate">
+	<columns names="canale" ref-type="src-columns"/>
+	<columns names="url" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="live_programmate_categoria_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.categoria" table="public.live_programmate">
+	<columns names="categoria" ref-type="src-columns"/>
+	<columns names="nome" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="social_canale_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.canale" table="public.social">
+	<columns names="canale" ref-type="src-columns"/>
+	<columns names="url" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="multimedia_canale_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.canale" table="public.multimedia">
+	<columns names="canale" ref-type="src-columns"/>
+	<columns names="url" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="multimedia_categoria_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.categoria" table="public.multimedia">
+	<columns names="categoria" ref-type="src-columns"/>
+	<columns names="nome" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="live_passate_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.multimedia" table="public.live_passate">
+	<columns names="url" ref-type="src-columns"/>
+	<columns names="url" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="video_multimedia_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.live_passate" table="public.video">
+	<columns names="fonte" ref-type="src-columns"/>
+	<columns names="url" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="video_url_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.multimedia" table="public.video">
+	<columns names="url" ref-type="src-columns"/>
+	<columns names="url" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="clip_multimedia_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.multimedia" table="public.clip">
+	<columns names="url" ref-type="src-columns"/>
+	<columns names="url" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="tag_live_passate_url_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.live_passate" table="public.tag_live_passate">
+	<columns names="url" ref-type="src-columns"/>
+	<columns names="url" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="tag_nome_fk2" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.tag" table="public.tag_live_passate">
+	<columns names="tag" ref-type="src-columns"/>
+	<columns names="nome" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="tag_video_url_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.video" table="public.tag_video">
+	<columns names="url" ref-type="src-columns"/>
+	<columns names="url" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="tag_nome_fk3" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.tag" table="public.tag_video">
+	<columns names="tag" ref-type="src-columns"/>
+	<columns names="nome" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="registrato_idutente_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.utente" table="public.registrato">
+	<columns names="iduser" ref-type="src-columns"/>
+	<columns names="iduser" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="registrato_url_canale_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.canale" table="public.registrato">
+	<columns names="url_canale" ref-type="src-columns"/>
+	<columns names="url" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="affiliate_username_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.registrato" table="public.affiliate">
+	<columns names="username" ref-type="src-columns"/>
+	<columns names="username" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="messaggio_privato_mittente_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.registrato" table="public.messaggio_privato">
+	<columns names="mittente" ref-type="src-columns"/>
+	<columns names="username" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="messaggio_privato_destinatario_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.registrato" table="public.messaggio_privato">
+	<columns names="destinatario" ref-type="src-columns"/>
+	<columns names="username" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="donazione_registrato_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.registrato" table="public.donazione">
+	<columns names="registrato" ref-type="src-columns"/>
+	<columns names="username" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="donazione_affiliate_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.affiliate" table="public.donazione">
+	<columns names="affiliate" ref-type="src-columns"/>
+	<columns names="username" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="follow_registrato_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.registrato" table="public.follow">
+	<columns names="registrato" ref-type="src-columns"/>
+	<columns names="username" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="follow_canale_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.canale" table="public.follow">
+	<columns names="canale" ref-type="src-columns"/>
+	<columns names="url" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="live_in_diretta_url_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.multimedia" table="public.live_in_diretta">
+	<columns names="url" ref-type="src-columns"/>
+	<columns names="url" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="live_in_diretta_streamer_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.registrato" table="public.live_in_diretta">
+	<columns names="streamer" ref-type="src-columns"/>
+	<columns names="username" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="messaggio_live_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.live_in_diretta" table="public.messaggio">
+	<columns names="live" ref-type="src-columns"/>
+	<columns names="url" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="messaggio_username_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.registrato" table="public.messaggio">
+	<columns names="username" ref-type="src-columns"/>
+	<columns names="username" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="offerta_affiliate_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.affiliate" table="public.offerta">
+	<columns names="affiliate" ref-type="src-columns"/>
+	<columns names="username" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="offerta_tipo_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.privilegi" table="public.offerta">
+	<columns names="tipo" ref-type="src-columns"/>
+	<columns names="tipo" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="subscription_registrato_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.registrato" table="public.subscription">
+	<columns names="registrato" ref-type="src-columns"/>
+	<columns names="username" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="subscription_affiliate_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.affiliate" table="public.subscription">
+	<columns names="affiliate" ref-type="src-columns"/>
+	<columns names="username" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="tag_live_in_diretta_url_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.live_in_diretta" table="public.tag_liveindiretta">
+	<columns names="url" ref-type="src-columns"/>
+	<columns names="url" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="tag_live_in_diretta_tag_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.tag" table="public.tag_liveindiretta">
+	<columns names="tag" ref-type="src-columns"/>
+	<columns names="nome" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="spettatore_utente_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.utente" table="public.spettatore">
+	<columns names="utente" ref-type="src-columns"/>
+	<columns names="iduser" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_live_in_diretta_utente" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.live_in_diretta" table="public.spettatore">
+	<columns names="live_in_diretta" ref-type="src-columns"/>
+	<columns names="url" ref-type="dst-columns"/>
+</constraint>
+
+<relationship name="rel_live_programmate_canale" type="relfk" layers="0"
+	 custom-color="#3455dc"
+	 src-table="public.live_programmate"
+	 dst-table="public.canale" reference-fk="live_programmate_canale_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_live_programmate_categoria" type="relfk" layers="0"
+	 custom-color="#6db7ee"
+	 src-table="public.live_programmate"
+	 dst-table="public.categoria" reference-fk="live_programmate_categoria_fk"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_social_canale" type="relfk" layers="0"
+	 custom-color="#749f0a"
+	 src-table="public.social"
+	 dst-table="public.canale" reference-fk="social_canale_fk"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_multimedia_canale" type="relfk" layers="0"
+	 custom-color="#b3970f"
+	 src-table="public.multimedia"
+	 dst-table="public.canale" reference-fk="multimedia_canale_fk"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_multimedia_categoria" type="relfk" layers="0"
+	 custom-color="#34dd0b"
+	 src-table="public.multimedia"
+	 dst-table="public.categoria" reference-fk="multimedia_categoria_fk"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_live_passate_multimedia" type="relfk" layers="0"
+	 custom-color="#7d0a75"
+	 src-table="public.live_passate"
+	 dst-table="public.multimedia" reference-fk="live_passate_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_video_live_passate" type="relfk" layers="0"
+	 custom-color="#d0e60c"
+	 src-table="public.video"
+	 dst-table="public.live_passate" reference-fk="video_multimedia_fk"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_video_multimedia" type="relfk" layers="0"
+	 custom-color="#6ce4c9"
+	 src-table="public.video"
+	 dst-table="public.multimedia" reference-fk="video_url_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_clip_multimedia" type="relfk" layers="0"
+	 custom-color="#53769d"
+	 src-table="public.clip"
+	 dst-table="public.multimedia" reference-fk="clip_multimedia_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_tag_live_passate_live_passate" type="relfk" layers="0"
+	 custom-color="#e5e6db"
+	 src-table="public.tag_live_passate"
+	 dst-table="public.live_passate" reference-fk="tag_live_passate_url_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_tag_live_passate_tag" type="relfk" layers="0"
+	 custom-color="#b5192f"
+	 src-table="public.tag_live_passate"
+	 dst-table="public.tag" reference-fk="tag_nome_fk2"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tag_video_video" type="relfk" layers="0"
+	 custom-color="#dc79c0"
+	 src-table="public.tag_video"
+	 dst-table="public.video" reference-fk="tag_video_url_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_tag_video_tag" type="relfk" layers="0"
+	 custom-color="#18a9f8"
+	 src-table="public.tag_video"
+	 dst-table="public.tag" reference-fk="tag_nome_fk3"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_registrato_utente" type="relfk" layers="0"
+	 custom-color="#bf0854"
+	 src-table="public.registrato"
+	 dst-table="public.utente" reference-fk="registrato_idutente_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_registrato_canale" type="relfk" layers="0"
+	 custom-color="#c1ac2c"
+	 src-table="public.registrato"
+	 dst-table="public.canale" reference-fk="registrato_url_canale_fk"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_affiliate_registrato" type="relfk" layers="0"
+	 custom-color="#1fdc53"
+	 src-table="public.affiliate"
+	 dst-table="public.registrato" reference-fk="affiliate_username_fk"
+	 src-required="false" dst-required="true">
+	<label ref-type="src-label">
+		<position x="0" y="0"/>
+	</label>
+</relationship>
+
+<relationship name="rel_messaggio_privato_registrato" type="relfk" layers="0"
+	 custom-color="#f842db"
+	 src-table="public.messaggio_privato"
+	 dst-table="public.registrato" reference-fk="messaggio_privato_mittente_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_messaggio_privato_registrato1" type="relfk" layers="0"
+	 custom-color="#133267"
+	 src-table="public.messaggio_privato"
+	 dst-table="public.registrato" reference-fk="messaggio_privato_destinatario_fk"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_donazione_registrato" type="relfk" layers="0"
+	 custom-color="#ce4679"
+	 src-table="public.donazione"
+	 dst-table="public.registrato" reference-fk="donazione_registrato_fk"
+	 src-required="false" dst-required="true">
+	<label ref-type="src-label">
+		<position x="0" y="0"/>
+	</label>
+</relationship>
+
+<relationship name="rel_donazione_affiliate" type="relfk" layers="0"
+	 custom-color="#2fcd19"
+	 src-table="public.donazione"
+	 dst-table="public.affiliate" reference-fk="donazione_affiliate_fk"
+	 src-required="false" dst-required="true">
+	<label ref-type="name-label">
+		<position x="-39.3285" y="-41.853"/>
+	</label>
+</relationship>
+
+<relationship name="rel_follow_registrato" type="relfk" layers="0"
+	 custom-color="#c2b8a0"
+	 src-table="public.follow"
+	 dst-table="public.registrato" reference-fk="follow_registrato_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_follow_canale" type="relfk" layers="0"
+	 custom-color="#39ac03"
+	 src-table="public.follow"
+	 dst-table="public.canale" reference-fk="follow_canale_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_live_in_diretta_multimedia" type="relfk" layers="0"
+	 custom-color="#989b4d"
+	 src-table="public.live_in_diretta"
+	 dst-table="public.multimedia" reference-fk="live_in_diretta_url_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_live_in_diretta_registrato" type="relfk" layers="0"
+	 custom-color="#c70e9d"
+	 src-table="public.live_in_diretta"
+	 dst-table="public.registrato" reference-fk="live_in_diretta_streamer_fk"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_messaggio_live_in_diretta" type="relfk" layers="0"
+	 custom-color="#34df06"
+	 src-table="public.messaggio"
+	 dst-table="public.live_in_diretta" reference-fk="messaggio_live_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_messaggio_registrato" type="relfk" layers="0"
+	 custom-color="#f7c1ed"
+	 src-table="public.messaggio"
+	 dst-table="public.registrato" reference-fk="messaggio_username_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_offerta_affiliate" type="relfk" layers="0"
+	 custom-color="#8875d5"
+	 src-table="public.offerta"
+	 dst-table="public.affiliate" reference-fk="offerta_affiliate_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_offerta_privilegi" type="relfk" layers="0"
+	 custom-color="#299a54"
+	 src-table="public.offerta"
+	 dst-table="public.privilegi" reference-fk="offerta_tipo_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_subscription_registrato" type="relfk" layers="0"
+	 custom-color="#347c82"
+	 src-table="public.subscription"
+	 dst-table="public.registrato" reference-fk="subscription_registrato_fk"
+	 src-required="false" dst-required="true">
+	<label ref-type="dst-label">
+		<position x="0" y="0"/>
+	</label>
+</relationship>
+
+<relationship name="rel_subscription_affiliate" type="relfk" layers="0"
+	 custom-color="#241d68"
+	 src-table="public.subscription"
+	 dst-table="public.affiliate" reference-fk="subscription_affiliate_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_tag_liveindiretta_live_in_diretta" type="relfk" layers="0"
+	 custom-color="#36f16a"
+	 src-table="public.tag_liveindiretta"
+	 dst-table="public.live_in_diretta" reference-fk="tag_live_in_diretta_url_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_tag_liveindiretta_tag" type="relfk" layers="0"
+	 custom-color="#aec748"
+	 src-table="public.tag_liveindiretta"
+	 dst-table="public.tag" reference-fk="tag_live_in_diretta_tag_fk"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_spettatore_utente" type="relfk" layers="0"
+	 custom-color="#7c1070"
+	 src-table="public.spettatore"
+	 dst-table="public.utente" reference-fk="spettatore_utente_fk"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_spettatore_live_in_diretta" type="relfk" layers="0"
+	 custom-color="#4518ee"
+	 src-table="public.spettatore"
+	 dst-table="public.live_in_diretta" reference-fk="fk_live_in_diretta_utente"
+	 src-required="false" dst-required="false"/>
+
+<permission>
+	<object name="public" type="schema"/>
+	<roles names="pg_database_owner"/>
+	<privileges create="true" usage="true"/>
+</permission>
+<permission>
+	<object name="public" type="schema"/>
+	<privileges usage="true"/>
+</permission>
+</dbmodel>
