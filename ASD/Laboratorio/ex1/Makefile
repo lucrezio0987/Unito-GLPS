@@ -13,9 +13,10 @@ $(ESEGUIBILE): $(MAIN) $(LIBRERIE)
 
 TEST = test/Test.c
 ESEGUIBILE_TEST = build/test_ex1
+TEST_LIBRERIE = test/unity.c src/Lib-test.c
 
 test: $(TEST) $(LIBRERIE) 
-	$(CC) $(FLAG) -o $(ESEGUIBILE_TEST) $(TEST) $(LIBRERIE)
+	$(CC) $(FLAG) -o $(ESEGUIBILE_TEST) $(TEST) $(LIBRERIE) $(TEST_LIBRERIE)
 
 clean: 
 	rm -rf build/*
