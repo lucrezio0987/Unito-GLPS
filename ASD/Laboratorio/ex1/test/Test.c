@@ -9,9 +9,7 @@
 //#define INPUT_FILE "../records.csv"
 //#define OUTPUT_FILE "bin/outfile.csv"
 
-/*
- * Test suite for ordered array data structure and algorithms
- */
+
 struct _Record {
   long int pos; 
   long int item_int;
@@ -23,7 +21,6 @@ struct _Array {
     Records **base;
     unsigned int nitems;
 };
-
 
 int field, n_records;
 Records *rec;
