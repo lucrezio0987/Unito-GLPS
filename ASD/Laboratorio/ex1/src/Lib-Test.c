@@ -90,6 +90,9 @@ void test_create_array_add_not_empty(){
    PrintArray(OUTPUT_FILE,A);
 }
 
+void test_LoadArray() {
+  
+}
 
 //static void test_merge_sorte(){
 //  int i, j;
