@@ -14,17 +14,17 @@ int Array_is_empty(Array *array);
 void setUp(void);
 void tearDown(void);
 
-static void test_create_array_empty();
-static void test_create_array_add_not_empty();
-static void test_LoadArray();
+void test_create_array_empty();
+void test_create_array_add_not_empty();
+void test_LoadArray();
 
-static void test_merge_sorte();
-static void test_binary_insertion_sort();
-static void test_merge_binary_insertion_sort();
+void test_merge_sorte();
+void test_binary_insertion_sort();
+void test_merge_binary_insertion_sort();
 
-static void test_ComparePos();
-static void test_CompareInt();
-static void test_CompareFloat();
+void test_ComparePos();
+void test_CompareInt();
+void test_CompareFloat();
 
 //--------- STRUTTURE ---------//
 
@@ -72,11 +72,11 @@ void tearDown(void){
 //  //TEST_ASSERT_EQUAL(0,sort_records("../../records.csv", "outfile.csv", field, n_records));
 //}
 
-static void test_create_array_empty(){
+void test_create_array_empty(){
   TEST_ASSERT_NOT_NULL(CreateArray());
 }
 
-static void test_create_array_add_not_empty(){
+void test_create_array_add_not_empty(){
    Array *A = CreateArray();
    rec = (Records*) malloc(sizeof(Records));
    rec -> item_int = 10;
