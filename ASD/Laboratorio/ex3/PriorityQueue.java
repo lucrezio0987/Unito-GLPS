@@ -1,19 +1,35 @@
-public class PriorityQueue<T> implements AbstractQueue<T>{
-    private Queue_obj<T>[] arr;
-    private int count;
-    private int capacity;
-    private int rear;
-    private int front;
+import java.util.Comparator;
 
-    public Queue(int size) {
-        arr = new Queue_obj[size];
-        capacity = size;
-        front = 0;
-        count = 0;
-        rear = -1;
+public class PriorityQueue<E> implements AbstractQueue<E> {
+    private PriorityQueue<E> queue;
+    public int count = 0;
+
+    public PriorityQueue(Comparator<E> comparator) {
+        queue = new PriorityQueue<>(comparator);
     }
-    public static void main (String[] args) {
-        // creare una queue
-        Queue<Integer> q = new Queue<>(5);
+    @Override
+    public boolean empty() {
+        return queue.count == 0;
     }
-}
+    @Override
+    public boolean push(E e) {
+      // todo
+    }
+    @Override
+    public E top() {
+      // todo
+    }
+    @Override
+    public void pop() {
+      // todo
+    }
+    @Override
+    public boolean contains(E e) {
+      // may be removed
+    }
+    @Override
+    public boolean remove(E e) {
+      // may be removed
+    }
+};
+ 

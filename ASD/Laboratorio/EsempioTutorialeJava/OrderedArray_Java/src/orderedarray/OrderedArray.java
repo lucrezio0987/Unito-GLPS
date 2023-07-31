@@ -29,7 +29,7 @@ public class OrderedArray<T> {
   /**
   * @return true iff this ordered array is empty
   */
-   public boolean isEmpty(){
+  public boolean isEmpty(){
     return (this.array).isEmpty();
   }
  
