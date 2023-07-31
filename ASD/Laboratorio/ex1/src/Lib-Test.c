@@ -1,4 +1,4 @@
-#include "../test/unity.h"
+#include "unity.h"
 #include "Interfaccia.h"
 
 #define OUTPUT_FILE "outfile.csv"

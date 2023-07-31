@@ -1,5 +1,5 @@
 #include "unity.h"
-#include "../src/Interfaccia.h"
+#include "Interfaccia.h"
 
 
 //---[  Tutti i Metodi di Test nel file Lib-Test.C  ]---//

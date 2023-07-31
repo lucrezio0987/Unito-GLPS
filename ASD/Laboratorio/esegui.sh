@@ -37,7 +37,7 @@ Menu_1() {
             echo -e ""
             echo -e "\033[1;32m::\033[0;91m ESECUZIONE:"
             echo -e "\033[0;37m...Eseguito"
-            ./build/main_ex1
+            ./bin/main_ex1
             echo -e ""
             echo -e "\033[1;32m::\033[0;91m OUTPUT:"
             echo -e "\033[0;37m"
@@ -49,10 +49,10 @@ Menu_1() {
             echo -e "\033[1;32m::\033[0;91m TODO: \033[0;37mTEST da implementare"
             echo -e "\033[1;32m::\033[0;91m MAKE:"
             echo -e "\033[0;33m"
-            make test
+            make
             echo -e "\033[1;32m::\033[0;91m ESECUZIONE:"
             echo -e "\033[0;36m"
-            ./build/test_ex1
+            ./bin/test_ex1
             echo -e ""
             echo -e "\033[1;32m::\033[0;91m USCITA..."
             ;;
