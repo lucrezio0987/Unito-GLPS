@@ -2,9 +2,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class PriorityQueue<E> implements AbstractQueue<E> {
-    ArrayList<E> queue;
     Comparator<E> comparator = null;
-    ArrayList<Queue_obj<E> heap = new ArrayList<>();
+    ArrayList<E> heap = new ArrayList<>();
 
     int front;      // front punta all'elemento front nella queue
     int rear;       // back punta all'ultimo elemento nella queue
@@ -12,6 +11,7 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
 
     public PriorityQueue(Comparator<E> comparator) {
         this.queue = new ArrayList<>();
+        this.comparator = comparator;
     }
 
     @Override
@@ -21,12 +21,11 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
 
     @Override
     public boolean push(E e) {
-        Queue_obj<E> newElement = new Queue_obj<>(e, 0);
-        heap.add(newElement);
+        heap.add(e);
         int i = heap.size() - 1;
         while (i > 0) {
             int p = (i - 1) / 2; //parent
-            if (heap.get(p).getPriorita() <= heap.get(i).getPriorita()) {
+            if (comparator(heap.get(p), heap.get(i)) <= 0) {
                 break;
             }
             swap(i, p);
@@ -36,14 +35,14 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
     }
 
     private void swap(int i, int j) {
-      Queue_obj<E> temp = heap.get(i);
+      E temp = heap.get(i);
       heap.set(i, heap.get(j));
       heap.set(j, temp);
     }
 
     @Override
     public E top() {
-      return this.heap.get(rear).getElemento();
+      return this.heap.get(rear);
     }
 
     @Override
