@@ -19,13 +19,11 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
     public boolean push(E e) {
       heap.add(e);
       int i = heap.size() - 1;
-      while (i >= 0) {
-        int p = (i - 1) / 2;
-        if (comparator.compare(heap.get(p), heap.get(i)) <= 0) {
-            break;
-        }
+      int p = i - 1;
+      while (i > 0 && comparator.compare(heap.get(i), heap.get(p)) < 0) {
         swap(i, p);
         i = p;
+        p = p - 1;
       }
       return true;
     }
@@ -82,6 +80,7 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
         priorityQueue.push(2);
         priorityQueue.push(10);
         priorityQueue.push(1);
+        priorityQueue.push(3);
 
         System.out.println(priorityQueue); // Stampa: [1, 2, 10, 5]
     }
