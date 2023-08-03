@@ -5,35 +5,31 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
     Comparator<E> comparator = null;
     ArrayList<E> heap = new ArrayList<>();
 
-    int front;      // front punta all'elemento front nella queue
-    int rear;       // back punta all'ultimo elemento nella queue
-    int count;      // dimensione attuale della queue
-
     public PriorityQueue(Comparator<E> comparator) {
-        this.queue = new ArrayList<>();
+        this.heap = new ArrayList<>();
         this.comparator = comparator;
     }
 
     @Override
     public boolean empty() {
-        return (this.count) == 0;
+        return this.heap.isEmpty();
     }
 
     @Override
     public boolean push(E e) {
-        heap.add(e);
-        int i = heap.size() - 1;
-        while (i > 0) {
-            int p = (i - 1) / 2; //parent
-            if (comparator(heap.get(p), heap.get(i)) <= 0) {
-                break;
-            }
-            swap(i, p);
-            i = p;
+      heap.add(e);
+      int i = heap.size() - 1;
+      while (i >= 0) {
+        int p = (i - 1) / 2;
+        if (comparator.compare(heap.get(p), heap.get(i)) <= 0) {
+            break;
         }
-        return true;
+        swap(i, p);
+        i = p;
+      }
+      return true;
     }
-
+    
     private void swap(int i, int j) {
       E temp = heap.get(i);
       heap.set(i, heap.get(j));
@@ -42,17 +38,14 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
 
     @Override
     public E top() {
-      return this.heap.get(rear);
+      if (this.heap.isEmpty()) return null;
+      return this.heap.get(0);
     }
 
     @Override
     public void pop() {
-      if(rear > -1) {
-        this.heap.remove(rear);
-        this.rear--;
-        this.count--;
-      }
-      // todo
+        if (this.heap.isEmpty()) return;
+        (this.heap).remove(0);
     }
 
     @Override
@@ -66,5 +59,30 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
       return true;
 
       // may be removed (PER EX4)
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (int i = 0; i < heap.size(); i++) {
+            sb.append(heap.get(i));
+            if (i < heap.size() - 1) {
+                sb.append(", ");
+            }
+        }
+        sb.append("]");
+        return sb.toString();
+    }
+
+    public static void main(String[] args) {
+        // Esempio di utilizzo
+        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>(Integer::compare);
+        priorityQueue.push(5);
+        priorityQueue.push(2);
+        priorityQueue.push(10);
+        priorityQueue.push(1);
+
+        System.out.println(priorityQueue); // Stampa: [1, 2, 10, 5]
     }
 };

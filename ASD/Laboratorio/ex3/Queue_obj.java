@@ -1,5 +1,5 @@
-public class Queue_obj<E>{
-    E elemento;
+public class Queue_obj{
+    int elemento;
     int priorita;
 
     public Queue_obj(E elemento, int priorita) {
