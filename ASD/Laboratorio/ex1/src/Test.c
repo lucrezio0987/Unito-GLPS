@@ -10,16 +10,22 @@ void main() {
   RUN_TEST(test_create_array_empty);
   RUN_TEST(test_create_array_add_not_empty);
   
-  //TODO: RUN_TEST(test_LoadArray);
+  RUN_TEST(test_LoadArray);
+  RUN_TEST(test_LoadArrayMAX);
 
-  //TODO: RUN_TEST(test_merge_sorte);
+  RUN_TEST(test_ComparePos);
+  RUN_TEST(test_CompareInt);
+  RUN_TEST(test_CompareFloat); 
+  RUN_TEST(test_CompareString); 
+
+  RUN_TEST(test_sort_records_Pos);
+  RUN_TEST(test_sort_records_String);
+  RUN_TEST(test_sort_records_Int);
+  RUN_TEST(test_sort_records_Float);
+
   //TODO: RUN_TEST(test_binary_insertion_sort);
-
+  //TODO: RUN_TEST(test_merge_sorte);
   //TODO: RUN_TEST(test_merge_binary_insertion_sort);
-
-  //TODO: RUN_TEST(test_ComparePos);
-  //TODO: RUN_TEST(test_CompareInt);
-  //TODO: RUN_TEST(test_CompareFloat); 
   
   return UNITY_END();
 }

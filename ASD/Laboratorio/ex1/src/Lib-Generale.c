@@ -13,10 +13,12 @@ int CompareString(Records* i, Records* j);
 Records** CreateArray();
 void arrayAdd(Array* A, Records *rec);
 void LoadArray(Array *A, const char *infile);
+void LoadArrayMAX(Array *A, const char *infile, unsigned int max_records);
 void PrintArray(const char *outfile, Array *A);
 
 void merge_binary_insertion_sort(void **base, size_t nitems, size_t k, int (*compar)(const void *, const void*));
 void sort_records(const char *infile, const char *outfile, size_t k, size_t field);
+void sort_recordsMAX(const char *infile, const char *outfile, size_t k, size_t field);
 
 //--------- STRUTTURE ---------//
 
@@ -123,14 +125,31 @@ void PrintArray(const char *outfile, Array *A){
     unsigned int i;
     FILE *fp = fopen(outfile, "w+");
     for (i=0; i<A->nitems; ++i)
-        fprintf(fp,"%d\t%s,%d,%f\n", A->base[i]->pos, A->base[i]->item_string, A->base[i]->item_int, A->base[i]->item_float);
+        fprintf(fp,"%d,%s,%d,%f\n", A->base[i]->pos, A->base[i]->item_string, A->base[i]->item_int, A->base[i]->item_float);
     fclose(fp);
 
 }
 
-void sort_records(const char *infile, const char *outfile, size_t k, size_t field){
+void sort_recordsMAX(const char *infile, const char *outfile, size_t k, size_t field){
     Array *A = CreateArray();
     LoadArrayMAX(A, infile,MAX_REC);
+    
+    switch(field){
+        case 1: merge_binary_insertion_sort(A->base, A->nitems, k, CompareString); break;
+        case 2: merge_binary_insertion_sort(A->base, A->nitems, k, CompareInt); break;
+        case 3: merge_binary_insertion_sort(A->base, A->nitems, k, CompareFloat); break;
+        default: merge_binary_insertion_sort(A->base, A->nitems, k, ComparePos); break;
+    }
+
+    PrintArray(outfile, A);
+    
+    free(A);
+    return;
+}
+
+void sort_records(const char *infile, const char *outfile, size_t k, size_t field){
+    Array *A = CreateArray();
+    LoadArray(A, infile);
     
     switch(field){
         case 1: merge_binary_insertion_sort(A->base, A->nitems, k, CompareString); break;

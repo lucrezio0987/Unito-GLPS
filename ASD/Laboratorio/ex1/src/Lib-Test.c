@@ -1,10 +1,12 @@
 #include "unity.h"
 #include "Interfaccia.h"
 
-#define OUTPUT_FILE "outfile.csv"
-
+#define OUTPUT_FILE "test_outfile.csv"
+#define INPUT_FILE "test_records.csv"
 //#define INPUT_FILE "../records.csv"
 //#define OUTPUT_FILE "bin/outfile.csv"
+
+#define K 50
 
 
 //--------- PROTOTIPI ---------//
@@ -17,14 +19,21 @@ void tearDown(void);
 void test_create_array_empty();
 void test_create_array_add_not_empty();
 void test_LoadArray();
-
-void test_merge_sorte();
-void test_binary_insertion_sort();
-void test_merge_binary_insertion_sort();
+void test_LoadArrayMAX();
 
 void test_ComparePos();
 void test_CompareInt();
 void test_CompareFloat();
+void test_CompareString();
+
+void test_sort_records_Pos();
+void test_sort_records_String();
+void test_sort_records_Int();
+void test_sort_records_Float();
+
+//void test_merge_sorte();
+//void test_binary_insertion_sort();
+//void test_merge_binary_insertion_sort();
 
 //--------- STRUTTURE ---------//
 
@@ -42,9 +51,34 @@ struct _Array {
 
 //------ VARIABILI GLOBALI ------//
 
-int field, n_records;
-Records *rec;
-Array *A;
+int n_records;
+
+//--- AMBIENTE ---//
+
+void setUp(void){
+  n_records = 5;
+
+  FILE *fin = fopen(INPUT_FILE, "w");
+  if (fin != NULL) {
+      fprintf(fin, "1,FruttoE,10,6.5\n");
+      fprintf(fin, "2,FruttoD,20,5.8\n");
+      fprintf(fin, "3,FruttoC,15,4.2\n");
+      fprintf(fin, "4,FruttoA,45,1.5\n");
+      fprintf(fin, "5,FruttoB,40,7.0\n");
+      fclose(fin);
+  }
+
+  FILE *fout = fopen(OUTPUT_FILE, "w");
+  if (fout != NULL) {
+    fclose(fout);
+  }
+}
+
+void tearDown(void){
+  remove(INPUT_FILE);
+  remove(OUTPUT_FILE);
+  return;
+}
 
 //------ IMPLEMENTAZIONI ------//
 
@@ -57,224 +91,157 @@ int Array_is_empty(Array *array) {
 }
 
 
-//--- TEST ---//
-
-void setUp(void){
-  field = 0;
-  n_records = 10;
-}
-
-void tearDown(void){
-    return;
-}
-
-//static void test_sort_records(){
-//  //TEST_ASSERT_EQUAL(0,sort_records("../../records.csv", "outfile.csv", field, n_records));
-//}
-
 void test_create_array_empty(){
   TEST_ASSERT_NOT_NULL(CreateArray());
 }
 
 void test_create_array_add_not_empty(){
-   Array *A = CreateArray();
-   rec = (Records*) malloc(sizeof(Records));
-   rec -> item_int = 10;
-   rec -> item_float = 10.10;
-   rec -> pos = 0;
-   rec -> item_string = (char*) malloc(sizeof(char)*100);
-   strcpy(rec->item_string , "pippo");
-   printf("%s",rec->item_string);
-   arrayAdd(A,rec);
-   TEST_ASSERT_FALSE(Array_is_empty(A));
-   PrintArray(OUTPUT_FILE,A);
-}
-
-void test_LoadArray() {
+  Array *A = CreateArray();
+  Records *rec = (Records*) malloc(sizeof(Records));
   
-}
-
-//static void test_merge_sorte(){
-//  int i, j;
-//  Array *A = ArrayCreate(0);
-//  Array *B = ArrayCreate(0);
-//  
-//  FILE *fp = fopen("../../records.csv", "r");
-//  if(fp == NULL) return 1;
-//  
-//  for(i=0; i<n_records; ++i, j=0) {
-//      fscanf(fp, "%ld,%[^,],%ld,%lf\n", &rec->pos, rec->item_string, &rec->item_int, &rec->item_float);
-//      arrayAdd(A, rec);
-//  }  
-//
-//  fclose(fp);
-//  
-//  MergeSort(A, 0, A->nitems-1, A->nitems);
-//
-//  // TEST_ASSERT_NOT_EQUAL(-1,);
-//  // A e B devono essere uguali essendo ordinato per field = 0
-//}
-
-//static void test_binary_insertion_sort(){
-//  int i, j;
-//  Array *A = ArrayCreate(0);
-//  Array *B = ArrayCreate(0);
-//  
-//  FILE *fp = fopen("../../records.csv", "r");
-//  if(fp == NULL) return 1;
-//  
-//  for(i=0; i<n_records; ++i, j=0) {
-//      fscanf(fp, "%ld,%[^,],%ld,%lf\n", &rec->pos, rec->item_string, &rec->item_int, &rec->item_float);
-//      arrayAdd(A, rec);
-//      arrayAdd(B, rec);
-//  }  
-//
-//  fclose(fp);
-//  
-//  BineryInsertionSort(A, A->nitems);
-//
-//  // TEST_ASSERT_NOT_EQUAL(-1,);
-//  // A e B devono essere uguali essendo ordinato per field = 0
-//}
-
-
-//!--- ANNO SCORSO ---//
-
-/*static void test_ComparePos() {
-  Records *rec1 = (Records*)malloc(sizeof(Records));
-  Records *rec2 = (Records*)malloc(sizeof(Records));
-  rec1->pos = 10;
-  rec2->pos = 20;
-  TEST_ASSERT_EQUAL(-1, ComparePos(rec1, rec2));
-  TEST_ASSERT_EQUAL(1, ComparePos(rec2, rec1));
-  TEST_ASSERT_EQUAL(0, ComparePos(rec1, rec1));
-  free(rec1);
-  free(rec2);
-}
-
-static void test_CompareInt() {
-  Records *rec1 = (Records*)malloc(sizeof(Records));
-  Records *rec2 = (Records*)malloc(sizeof(Records));
-  rec1->item_int = 10;
-  rec2->item_int = 20;
-  TEST_ASSERT_EQUAL(-1, CompareInt(rec1, rec2));
-  TEST_ASSERT_EQUAL(1, CompareInt(rec2, rec1));
-  TEST_ASSERT_EQUAL(0, CompareInt(rec1, rec1));
-  free(rec1);
-  free(rec2);
-}
-
-static void test_CompareFloat() {
-  Records *rec1 = (Records*)malloc(sizeof(Records));
-  Records *rec2 = (Records*)malloc(sizeof(Records));
-  rec1->item_float = 10.5;
-  rec2->item_float = 20.5;
-  TEST_ASSERT_EQUAL(-1, CompareFloat(rec1, rec2));
-  TEST_ASSERT_EQUAL(1, CompareFloat(rec2, rec1));
-  TEST_ASSERT_EQUAL(0, CompareFloat(rec1, rec1));
-  free(rec1);
-  free(rec2);
-}
-
-static void test_CompareString() {
-  Records *rec1 = (Records*)malloc(sizeof(Records));
-  Records *rec2 = (Records*)malloc(sizeof(Records));
-  rec1->item_string = strdup("hello");
-  rec2->item_string = strdup("world");
-  TEST_ASSERT_EQUAL(-1, CompareString(rec1, rec2));
-  TEST_ASSERT_EQUAL(1, CompareString(rec2, rec1));
-  TEST_ASSERT_EQUAL(0, CompareString(rec1, rec1));
-  free(rec1->item_string);
-  free(rec2->item_string);
-  free(rec1);
-  free(rec2);
-}
-
-static void test_CreateArray() {
-  A = CreateArray();
-  TEST_ASSERT_NOT_NULL(A);
-  TEST_ASSERT_TRUE(Array_is_empty(A));
-}
-
-static void test_arrayAdd() {
-  A = CreateArray();
-  rec = (Records*)malloc(sizeof(Records));
-  rec->item_int = 10;
-  rec->item_float = 10.10;
-  rec->pos = 0;
-  rec->item_string = strdup("pippo");
-  arrayAdd(A, rec);
+  rec -> item_int = 10;
+  rec -> item_float = 10.10;
+  rec -> pos = 0;
+  rec -> item_string = (char*) malloc(sizeof(char)*100);
+  strcpy(rec->item_string , "Frutto");
+  
+  printf("%s",rec->item_string);
+  
+  arrayAdd(A,rec);
+  
   TEST_ASSERT_FALSE(Array_is_empty(A));
-  free(rec->item_string);
+
+  free(A);
   free(rec);
 }
 
-static void test_LoadArray() {
-  A = CreateArray();
+void test_LoadArray() {
+  Array *A = CreateArray();
   LoadArray(A, INPUT_FILE);
   TEST_ASSERT_FALSE(Array_is_empty(A));
-}*/
-
-
-/*#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "../src/Interfaccia.h"
-#include "unity.h"
-
-#define INPUT_FILE "inputfile.csv"
-#define OUTPUT_FILE "outputfile.csv"
-
-// Test suite setup
-void setUp(void) {
-    // Crea un file di input con dati di test non ordinati
-    FILE *fp = fopen(INPUT_FILE, "w");
-    if (fp != NULL) {
-        fprintf(fp, "3,Apple,50,2.5\n");
-        fprintf(fp, "1,Orange,30,1.8\n");
-        fprintf(fp, "2,Banana,40,2.2\n");
-        fprintf(fp, "4,Grape,20,1.5\n");
-        fprintf(fp, "5,Strawberry,60,3.0\n");
-        fclose(fp);
-    }
+  free(A);
 }
 
-// Test suite cleanup
-void tearDown(void) {
-    // Elimina il file di input
-    remove(INPUT_FILE);
-
-    // Elimina il file di output
-    remove(OUTPUT_FILE);
+void test_LoadArrayMAX() {
+  Array *A = CreateArray();
+  LoadArrayMAX(A, INPUT_FILE,n_records);
+  TEST_ASSERT_FALSE(Array_is_empty(A));
+  free(A);
 }
 
-void test_sort_records() {
-    // Esegui la funzione sort_records
-    sort_records(INPUT_FILE, OUTPUT_FILE, 1, 0);  // Ordina in base al campo 1 (item_string)
+void test_ComparePos() {
+  Records *a = (Records*)malloc(sizeof(Records));
+  Records *b = (Records*)malloc(sizeof(Records));
+  
+  a->pos = 1;
+  b->pos = 2;
 
-    // Carica il file di output generato dalla funzione
-    Array *sortedArray = CreateArray();
-    LoadArray(sortedArray, OUTPUT_FILE);
+  TEST_ASSERT_EQUAL(-1, ComparePos(a, b));
+  TEST_ASSERT_EQUAL(0, ComparePos(a, a));
+  TEST_ASSERT_EQUAL(1, ComparePos(b, a));
 
-    // Verifica se l'output è ordinato correttamente
-    // Verifica che i record siano ordinati in base al campo 1 (item_string)
-    TEST_ASSERT_TRUE(CompareString(sortedArray->base[0], sortedArray->base[1]) <= 0);
-    TEST_ASSERT_TRUE(CompareString(sortedArray->base[1], sortedArray->base[2]) <= 0);
-    TEST_ASSERT_TRUE(CompareString(sortedArray->base[2], sortedArray->base[3]) <= 0);
-    TEST_ASSERT_TRUE(CompareString(sortedArray->base[3], sortedArray->base[4]) <= 0);
-
-    // Pulisci i dati di test
-    free(sortedArray);
-
-    // Elimina il file di output generato
-    remove(OUTPUT_FILE);
+  free(a);
+  free(b);
 }
 
-int main(void) {
-    UNITY_BEGIN();
+void test_CompareInt() {
+  Records *a = (Records*)malloc(sizeof(Records));
+  Records *b = (Records*)malloc(sizeof(Records));
 
-    // Run the test cases
-    RUN_TEST(test_sort_records);
+  a->item_int = 1;
+  b->item_int = 2;
 
-    return UNITY_END();
-}*/
+  TEST_ASSERT_EQUAL(-1, CompareInt(a, b));
+  TEST_ASSERT_EQUAL(0, CompareInt(a, a));
+  TEST_ASSERT_EQUAL(1, CompareInt(b, a));
+
+  free(a);
+  free(b);
+}
+
+void test_CompareFloat() {
+  Records *a = (Records*)malloc(sizeof(Records));
+  Records *b = (Records*)malloc(sizeof(Records));
+
+  a->item_float = 1.5;
+  b->item_float = 2.5;
+
+  TEST_ASSERT_EQUAL(-1, CompareFloat(a, b));
+  TEST_ASSERT_EQUAL(0, CompareFloat(a, a));
+  TEST_ASSERT_EQUAL(1, CompareFloat(b, a));
+
+  free(a);
+  free(b);
+}
+
+void test_CompareString() {
+  Records *a = (Records*)malloc(sizeof(Records));
+  Records *b = (Records*)malloc(sizeof(Records));
+
+  a->item_string = strdup("fruttoA");
+  b->item_string = strdup("fruttoB");
+  
+  TEST_ASSERT_EQUAL(-1, CompareString(a, b));
+  TEST_ASSERT_EQUAL(0, CompareString(a, a));
+  TEST_ASSERT_EQUAL(1, CompareString(b, a));
+
+  free(a->item_string);
+  free(b->item_string);
+  
+  free(a);
+  free(b);
+}
+
+
+void test_sort_records_Pos(){
+    sort_records(INPUT_FILE, OUTPUT_FILE, K, 0);
+
+    Array *A = CreateArray();
+    LoadArray(A, OUTPUT_FILE);
+
+    TEST_ASSERT_TRUE(ComparePos(A->base[0], A->base[1]) <= 0);
+    TEST_ASSERT_TRUE(ComparePos(A->base[1], A->base[2]) <= 0);
+    TEST_ASSERT_TRUE(ComparePos(A->base[2], A->base[3]) <= 0);
+    TEST_ASSERT_TRUE(ComparePos(A->base[3], A->base[4]) <= 0);
+
+    free(A);
+}
+void test_sort_records_String(){
+    sort_records(INPUT_FILE, OUTPUT_FILE, K, 1);
+
+    Array *A = CreateArray();
+    LoadArray(A, OUTPUT_FILE);
+
+    TEST_ASSERT_TRUE(CompareString(A->base[0], A->base[1]) <= 0);
+    TEST_ASSERT_TRUE(CompareString(A->base[1], A->base[2]) <= 0);
+    TEST_ASSERT_TRUE(CompareString(A->base[2], A->base[3]) <= 0);
+    TEST_ASSERT_TRUE(CompareString(A->base[3], A->base[4]) <= 0);
+
+    free(A);
+}
+void test_sort_records_Int(){
+    sort_records(INPUT_FILE, OUTPUT_FILE, K, 2);
+
+    Array *A = CreateArray();
+    LoadArray(A, OUTPUT_FILE);
+
+    TEST_ASSERT_TRUE(CompareInt(A->base[0], A->base[1]) <= 0);
+    TEST_ASSERT_TRUE(CompareInt(A->base[1], A->base[2]) <= 0);
+    TEST_ASSERT_TRUE(CompareInt(A->base[2], A->base[3]) <= 0);
+    TEST_ASSERT_TRUE(CompareInt(A->base[3], A->base[4]) <= 0);
+
+    free(A);
+}
+void test_sort_records_Float(){
+    sort_records(INPUT_FILE, OUTPUT_FILE, K, 3);
+
+    Array *A = CreateArray();
+    LoadArray(A, OUTPUT_FILE);
+
+    TEST_ASSERT_TRUE(CompareFloat(A->base[0], A->base[1]) <= 0);
+    TEST_ASSERT_TRUE(CompareFloat(A->base[1], A->base[2]) <= 0);
+    TEST_ASSERT_TRUE(CompareFloat(A->base[2], A->base[3]) <= 0);
+    TEST_ASSERT_TRUE(CompareFloat(A->base[3], A->base[4]) <= 0);
+
+    free(A);
+}

@@ -60,6 +60,3 @@ void BinaryInsertionSort(void** base,  unsigned int nitems, int (*compar)(const 
     }
     return;
 }
-
-
-//[i.......m........j..x..............]
