@@ -1,11 +1,20 @@
 import java.util.ArrayList;
 import java.util.Comparator;
 
+//public interface  AbstractQueue<E> {
+//    public boolean empty(); // controlla se la coda è vuota
+//    public boolean push(E e); // aggiunge un elemento alla coda
+//    public boolean contains(E e); // controlla se un elemento è in coda
+//    public E top(); // accede all'elemento in cima alla coda
+//    public void pop(); // rimuove l'elemento in cima alla coda
+//    public boolean remove (E e); // rimuove un elemento se presente in coda
+//}
+
 public class PriorityQueue<E> implements AbstractQueue<E> {
-    Comparator<E> comparator = null;
+    Comparator<? super E> comparator = null;
     ArrayList<E> heap = new ArrayList<>();
 
-    public PriorityQueue(Comparator<E> comparator) {
+    public PriorityQueue(Comparator<? super E> comparator) {
         this.heap = new ArrayList<>();
         this.comparator = comparator;
     }
@@ -53,8 +62,7 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
     }
 
     private void fixHeap(int index) {
-      E e = heap.get(index);
-      if (index == 0 || comparator.compare(e, heap.get(parentIndex(index))) >= 0) 
+      if (index == 0 || comparator.compare(heap.get(index), heap.get(parentIndex(index))) >= 0) 
         heapifyDown(index);
       else 
         heapifyUp(index);
@@ -103,7 +111,7 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
     public void pop() {
         if (this.heap.isEmpty()) return;
         (this.heap).remove(0);
-        heapifyDown(0);
+        fixHeap(0);
     }
 
     @Override
@@ -131,21 +139,5 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
         }
         sb.append("]");
         return sb.toString();
-    }
-
-    public static void main(String[] args) {
-        // Esempio di utilizzo
-        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>(Integer::compare);
-        priorityQueue.push(5);
-        priorityQueue.push(2);
-        priorityQueue.push(10);
-        priorityQueue.push(1);
-        priorityQueue.push(3);
-
-        System.out.println(priorityQueue); // Stampa: [1, 2, 10, 5]
-        priorityQueue.pop();
-        System.out.println(priorityQueue); // Stampa: [1, 2, 10, 5]
-        priorityQueue.pop();
-        System.out.println(priorityQueue); // Stampa: [1, 2, 10, 5]
     }
 };
