@@ -22,4 +22,8 @@ const void* search_skiplist(struct SkipList *list, void *item);
 
 void find_errors(const char *dictfile, const char *textfile, size_t max_height);
 
+//Test
+void setUp(void);
+void tearDown(void);
+
 #endif /* DIZIONARIO_H_laokjsdnbudjllvfidkfmqm */

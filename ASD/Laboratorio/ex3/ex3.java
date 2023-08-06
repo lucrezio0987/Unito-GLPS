@@ -11,7 +11,8 @@ public class ex3 {
         priorityQueue.push(3);
 
         while(!priorityQueue.empty()){
-          System.out.println("Top: " + priorityQueue.top() + "  "  + priorityQueue);
+          System.out.println("Top: " + priorityQueue.top() + "   Coda: "  + priorityQueue);
+          System.out.println("Pop Eseguita...");
           priorityQueue.pop();
         }
     }

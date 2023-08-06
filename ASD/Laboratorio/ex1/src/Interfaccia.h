@@ -1,13 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <string.h>
 
-#ifndef ORDERED_ARRAY_H_laokjsdnbudjllvfidkfmqm
-#define ORDERED_ARRAY_H_laokjsdnbudjllvfidkfmqm
+#ifndef BINARY_INSERTION_SORT_H_laokjsdnbudjllvfidkfmqm
+#define BINARY_INSERTION_SORT_H_laokjsdnbudjllvfidkfmqm
+
+//--------- STRUTTURE ---------//
 
 typedef struct _Array Array;
 typedef struct _Record Records;
+
+//--------- PROTOTIPI ---------//
 
 // Funzioni di comparazione
 int ComparePos(Records* i, Records* j);
@@ -61,4 +64,4 @@ void test_sort_records_Float();
 //void test_binary_insertion_sort();
 //void test_merge_binary_insertion_sort();
 
-#endif /* ORDERED_ARRAY_H_laokjsdnbudjllvfidkfmqm */
+#endif /* BINARY_INSERTION_SORT_H_laokjsdnbudjllvfidkfmqm */

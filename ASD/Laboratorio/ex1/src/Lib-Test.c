@@ -90,7 +90,6 @@ int Array_is_empty(Array *array) {
   return array->nitems == 0;
 }
 
-
 void test_create_array_empty(){
   TEST_ASSERT_NOT_NULL(CreateArray());
 }

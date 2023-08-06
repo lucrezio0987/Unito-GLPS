@@ -1,11 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "Interfaccia.h"
 
 #define DICTIONARY "dictionary.txt"
-#define TEXT_FILE  "text.txt"
-#define MAX_HEIGHT 10
+#define TEXT_FILE  "correctme.txt"
+#define MAX_HEIGHT 5
 
 
 void main(int argc, const char* argv[]) {

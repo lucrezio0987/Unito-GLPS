@@ -14,6 +14,13 @@ void insert_skiplist(struct SkipList *list, void *item);
 const void* search_skiplist(struct SkipList *list, void *item);
 void find_errors(const char *dictfile, const char *textfile, size_t max_height);
 
+Node* create_node(size_t size, void *item);
+void clear_skiplist_ric(Node* Attuale);
+int CompareString(char* i, char* j);
+int list_is_empty(struct SkipList *list);
+void print_list(struct SkipList *list);
+void LoadData(struct SkipList *list, const char *file);
+
 //--------- STRUTTURE ---------//
 
 typedef enum {FALSE, TRUE};
@@ -158,13 +165,13 @@ void print_list(struct SkipList *list) {
 void LoadData(struct SkipList *list, const char *file){
   FILE *fp = fopen(file, "r");
   char string[MAX_STRING];
+  int i = 0;
 
   while(fscanf(fp, "%s\n", string) != EOF){
-    printf("\033[0;33m  - Inserito: %s \033[0;31m\n", string);
+    printf("\033[0;33m  [\033[0;30m%6d\033[0;33m] Inserito: \033[1;33m%s \033[0;31m\n", i++, string);
     insert_skiplist(list, string);
-    print_list(list);
   }
-
+  print_list(list);
   fclose(fp);
 
   return;

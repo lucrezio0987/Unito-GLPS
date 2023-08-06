@@ -24,18 +24,7 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
         return this.heap.isEmpty();
     }
 
-    @Override
-    public boolean push(E e) {
-      heap.add(e);
-      heapifyUp(heap.size() - 1);
-      return true;
-      /*
-      int i = (heap.size()) / 2;
-      heap.add(i, e);
-      
-      minHeap(i);
-      return true;*/
-    }
+
     /*
     private void minHeap(int i) {
       while (i > 0 && i <= heap.size() - 2) {
@@ -45,7 +34,7 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
         } else if (comparator.compare(heap.get(i), heap.get(i + 1)) > 0) {
           swap(i, i + 1);
           i = i + 1;
-        } else break;
+        } else break;Ì
       }
     }*/
 
@@ -81,13 +70,10 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
       int right = rightChildIndex(index);
       while (left < heap.size()) {
         int smallestChildIndex = left;
-
-        if (right < heap.size() && comparator.compare(heap.get(right), heap.get(left)) < 0)
+        if (right < heap.size() && comparator.compare(heap.get(right), heap.get(left)) <= 0)
           smallestChildIndex = right;
-        
-        if (comparator.compare(heap.get(index), heap.get(smallestChildIndex)) <= 0)
+        if (comparator.compare(heap.get(index), heap.get(smallestChildIndex)) <= 0) 
           break;
-
         swap(index, smallestChildIndex);
         index = smallestChildIndex;
         left = leftChildIndex(index);
@@ -95,10 +81,11 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
       }
     }
 
-    private void swap(int i, int j) {
-      E temp = heap.get(i);
-      heap.set(i, heap.get(j));
-      heap.set(j, temp);
+    @Override
+    public boolean push(E e) {
+      heap.add(e);
+      fixHeap(heap.size() - 1);
+      return true;
     }
 
     @Override
@@ -113,6 +100,13 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
         (this.heap).remove(0);
         fixHeap(0);
     }
+
+    private void swap(int i, int j) {
+      E temp = heap.get(i);
+      heap.set(i, heap.get(j));
+      heap.set(j, temp);
+    }
+
 
     @Override
     public boolean contains(E e) {
