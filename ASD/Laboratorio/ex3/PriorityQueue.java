@@ -36,6 +36,9 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
 
     @Override
     public boolean push(E e) {
+      if (contains(e) == true)
+        return false; 
+
       heap.add(e);
       int i = heap.size() - 1;
       int p_i = parent(i); 
@@ -56,15 +59,13 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
       return this.heap.get(0);
     }
 
-    @Override
-    public void pop() {
-        int i = 0;
+    public void remove_i(int i) {
         int c_l = child_l(i);
         int c_r = child_r(i);
         int min_c;
 
         if (heap.isEmpty()) return;
-        swap(0, heap.size() - 1);
+        swap(i, heap.size() - 1);
         heap.remove(heap.size() - 1);
 
         while (c_l <= heap.size() - 1) {
@@ -73,7 +74,7 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
           if (c_r <= heap.size() - 1 && comparator.compare(heap.get(c_r), heap.get(c_l)) < 0) {
               min_c = c_r;
           }
-          
+
           if (comparator.compare(heap.get(i), heap.get(min_c)) > 0) {
             swap(i, min_c);
             i = min_c;
@@ -83,24 +84,47 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
         }
     }
 
+    @Override
+    public void pop() {
+        remove_i(0);
+    }
+
     private void swap(int i, int j) {
       E temp = heap.get(i);
       heap.set(i, heap.get(j));
       heap.set(j, temp);
     }
 
-
     @Override
     public boolean contains(E e) {
-      return true;
-      // may be removed (PER EX4)
+      int i = 0;
+      while (i <= heap.size() - 1) {
+        if (comparator.compare(heap.get(i), e) == 0)
+          return true;
+        i++;
+      }
+      return false;
+    }
+
+    public int contains_i(E e) {
+      int i = 0;
+      while (i <= heap.size() - 1) {
+        if (comparator.compare(heap.get(i), e) == 0)
+          return i;
+        i++;
+      }
+      return -1;
     }
 
     @Override
     public boolean remove(E e) {
+      int i = contains_i(e);
+      if (i == -1)
+        return false;
+      else {
+        remove_i(i);
+      }
       return true;
-
-      // may be removed (PER EX4)
     }
 
     @Override

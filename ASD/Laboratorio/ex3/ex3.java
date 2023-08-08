@@ -17,6 +17,12 @@ public class ex3 {
         priorityQueue.push(1);
         priorityQueue.push(3);
 
+        System.out.println("Coda: "  + priorityQueue);
+        System.out.println("contains 3: " + priorityQueue.contains(3));
+        System.out.println("contains 17: " + priorityQueue.contains(17));
+        System.out.println("remove 3: " + priorityQueue.remove(3));
+        System.out.println("remove 17: " + priorityQueue.remove(17));
+        
         while(!priorityQueue.empty()){
           System.out.println("Top: " + priorityQueue.top() + "   Coda: "  + priorityQueue);
           System.out.println("Pop Eseguita...");
