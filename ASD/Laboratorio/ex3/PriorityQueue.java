@@ -24,67 +24,29 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
         return this.heap.isEmpty();
     }
 
-
-    /*
-    private void minHeap(int i) {
-      while (i > 0 && i <= heap.size() - 2) {
-        if (comparator.compare(heap.get(i), heap.get(i - 1)) < 0) {
-          swap(i, i - 1);
-          i = i - 1;
-        } else if (comparator.compare(heap.get(i), heap.get(i + 1)) > 0) {
-          swap(i, i + 1);
-          i = i + 1;
-        } else break;Ì
-      }
-    }*/
-
-    private int parentIndex(int index) {
-      return (index - 1) / 2;
+    public int parent(int i) {
+      return (i / 2);
     }
-  
-    private int leftChildIndex(int index) {
-        return 2 * index + 1;
+    public int child_l(int i) {
+      return (2 * i);
     }
-  
-    private int rightChildIndex(int index) {
-        return 2 * index + 2;
-    }
-
-    private void fixHeap(int index) {
-      if (index == 0 || comparator.compare(heap.get(index), heap.get(parentIndex(index))) >= 0) 
-        heapifyDown(index);
-      else 
-        heapifyUp(index);
-    }
-
-    private void heapifyUp(int index) {
-      while (index > 0) {
-        if (comparator.compare(heap.get(parentIndex(index)), heap.get(index)) <= 0) break;
-        swap(parentIndex(index), index);
-        index = parentIndex(index);
-      }
-    }
-
-    private void heapifyDown(int index) {
-      int left = leftChildIndex(index);
-      int right = rightChildIndex(index);
-      while (left < heap.size()) {
-        int smallestChildIndex = left;
-        if (right < heap.size() && comparator.compare(heap.get(right), heap.get(left)) <= 0)
-          smallestChildIndex = right;
-        if (comparator.compare(heap.get(index), heap.get(smallestChildIndex)) <= 0) 
-          break;
-        swap(index, smallestChildIndex);
-        index = smallestChildIndex;
-        left = leftChildIndex(index);
-        right = rightChildIndex(index);
-      }
+    public int child_r(int i) {
+      return (2 * i) + 1;
     }
 
     @Override
     public boolean push(E e) {
       heap.add(e);
-      fixHeap(heap.size() - 1);
+      int i = heap.size() - 1;
+      int p_i = parent(i); 
+      
+
+      while (i > 0 && comparator.compare(heap.get(i), heap.get(p_i)) < 0) {
+        swap(i, p_i);
+        i = p_i;
+        p_i = parent(p_i);
+      }
+
       return true;
     }
 
@@ -96,9 +58,31 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
 
     @Override
     public void pop() {
+        int i = 0;
+        int c_l = child_l(i);
+        int c_r = child_r(i);
+
         if (this.heap.isEmpty()) return;
-        (this.heap).remove(0);
-        fixHeap(0);
+        swap(heap.size() - 1, 0);
+        heap.remove(heap.size() - 1);
+
+        while (c_l <= heap.size() - 1 && ((comparator.compare(heap.get(i), heap.get(c_l)) > 0) || (comparator.compare(heap.get(i), heap.get(c_r)) > 0))) {
+          System.out.println("i " + i + " c_l " + c_l + " c_r " + c_r);
+          if (comparator.compare(heap.get(i), heap.get(c_l)) > 0) {
+            swap(i, c_l);
+           
+            i = c_l;
+            c_l = child_l(c_l);
+            c_r = child_r(i);
+          }
+          if (comparator.compare(heap.get(i), heap.get(c_r)) > 0) {
+            swap(i, c_r);
+            i = c_r;
+            c_r = child_r(c_r);
+            c_l = child_l(i);
+          }
+           
+        }
     }
 
     private void swap(int i, int j) {
