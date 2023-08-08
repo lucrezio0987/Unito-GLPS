@@ -61,37 +61,26 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
         int i = 0;
         int c_l = child_l(i);
         int c_r = child_r(i);
+        int min_c;
 
-        if (this.heap.isEmpty()) return;
-        swap(heap.size() - 1, 0);
+        if (heap.isEmpty()) return;
+        swap(0, heap.size() - 1);
         heap.remove(heap.size() - 1);
-        
-        while ((heap.size() - 1 > 1) && (c_l <= (heap.size() - 1)) && ((comparator.compare(heap.get(i), heap.get(c_l)) > 0) || (comparator.compare(heap.get(i), heap.get(c_r)) > 0))) {
-          if (comparator.compare(heap.get(i), heap.get(c_l)) > 0) {
-            swap(i, c_l);
-            i = c_l;
-            c_l = child_l(c_l);
-            c_r = child_r(i);
-            System.out.println("i " + i + " c_l " + c_l + " c_r " + c_r);
-            if (c_r > heap.size() - 1 && c_l <= heap.size() - 1) {
-              if (comparator.compare(heap.get(i), heap.get(c_l)) > 0)
-                swap(i, c_l);
-                break;
-            } 
-          } else if (comparator.compare(heap.get(i), heap.get(c_r)) > 0) {
-            swap(i, c_r);
-            i = c_r;
-            c_r = child_r(c_r);
-            c_l = child_l(i);
-            System.out.println("i " + i + " c_l " + c_l + " c_r " + c_r);
-            if (c_r > heap.size() - 1 && c_l <= heap.size() - 1) {
-              if (comparator.compare(heap.get(i), heap.get(c_l)) > 0)
-                swap(i, c_l);
-                break;
-            } 
+
+        while (c_l <= heap.size() - 1) {
+          min_c = c_l;
+  
+          if (c_r <= heap.size() - 1 && comparator.compare(heap.get(c_r), heap.get(c_l)) < 0) {
+              min_c = c_r;
           }
+          
+          if (comparator.compare(heap.get(i), heap.get(min_c)) > 0) {
+            swap(i, min_c);
+            i = min_c;
+            c_l = child_l(i);
+            c_r = child_r(i);
+          } else break;
         }
-        
     }
 
     private void swap(int i, int j) {
