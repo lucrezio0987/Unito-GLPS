@@ -7,19 +7,23 @@
 
 //--------- PROTOTIPI ---------//
 
-int random_level(int max);
 void new_skiplist(struct SkipList **list, size_t max_height, int (*compar)(const void *, const void*));
 void clear_skiplist(struct SkipList **list);
+void clear_skiplist_ric(Node* Attuale);
+
+Node* create_node(size_t size, void *item);
 void insert_skiplist(struct SkipList *list, void *item);
+
+void LoadData(struct SkipList *list, const char *file);
+void LoadData_no_print(struct SkipList *list, const char *file);
+
 const void* search_skiplist(struct SkipList *list, void *item);
 void find_errors(const char *dictfile, const char *textfile, size_t max_height);
 
-Node* create_node(size_t size, void *item);
-void clear_skiplist_ric(Node* Attuale);
+int random_level(int max);
 int CompareString(char* i, char* j);
 int list_is_empty(struct SkipList *list);
 void print_list(struct SkipList *list);
-void LoadData(struct SkipList *list, const char *file);
 
 //--------- STRUTTURE ---------//
 
@@ -171,9 +175,21 @@ void LoadData(struct SkipList *list, const char *file){
     printf("\033[0;33m  [\033[0;30m%6d\033[0;33m] Inserito: \033[1;33m%s \033[0;31m\n", i++, string);
     insert_skiplist(list, string);
   }
-  print_list(list);
+  //print_list(list);
   fclose(fp);
 
+  return;
+}
+
+void LoadData_no_print(struct SkipList *list, const char *file){
+  FILE *fp = fopen(file, "r");
+  char string[MAX_STRING];
+  int i = 0;
+
+  while(fscanf(fp, "%s\n", string) != EOF)
+    insert_skiplist(list, string);
+  
+  fclose(fp);
   return;
 }
 

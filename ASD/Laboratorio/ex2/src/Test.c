@@ -6,7 +6,11 @@
 void main() {
   UNITY_BEGIN();
 
-  //TODO:  RUN_TEST();
+  RUN_TEST(test_create_skiplist_empty);
+  RUN_TEST(test_create_node);
+  RUN_TEST(test_insert_skiplist);
+  RUN_TEST(test_load_skiplist);
+  RUN_TEST(test_search_skiplist);
   
   return UNITY_END();
 }
