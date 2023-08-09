@@ -196,7 +196,7 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
         sb.append("]");
         
         sb.append("  [ ");
-        for (Queue_obj obj : sortered_Array) {
+        for (Queue_obj<E> obj : sortered_Array) {
             sb.append(obj.getE());
             sb.append(" ");
         }
