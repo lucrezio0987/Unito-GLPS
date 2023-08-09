@@ -13,7 +13,7 @@ public class Queue_obj<E>{
         return e;
     }
 
-    public int getPriorita() {
+    public int getI() {
         return heap_i;
     }
 }

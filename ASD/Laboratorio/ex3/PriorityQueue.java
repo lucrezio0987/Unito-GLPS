@@ -36,7 +36,7 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
     public int child_r(int i) {
       return (2 * i) + 1;
     }
-
+    
     @Override
     public boolean push(E e) {
       if (contains(e) == true)
@@ -45,7 +45,6 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
       heap.add(e);
       int i = heap.size() - 1;
       int p_i = parent(i); 
-      
 
       while (i > 0 && comparator.compare(heap.get(i), heap.get(p_i)) < 0) {
         swap(i, p_i);
@@ -53,8 +52,7 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
         p_i = parent(p_i);
       }
 
-      Queue_obj<E> obj = new Queue_obj<>(e, i);
-      sortered_Array.add(obj);
+      sortered_Array.add(new Queue_obj<>(e, i));
 
       return true;
     }
@@ -103,13 +101,7 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
 
     @Override
     public boolean contains(E e) {
-      int i = 0;
-      while (i <= heap.size() - 1) {
-        if (comparator.compare(heap.get(i), e) == 0)
-          return true;
-        i++;
-      }
-      return false;
+      return (contains_element(e) != -1);
     }
 
     public int contains_i(E e) {
@@ -122,9 +114,16 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
       return -1;
     }
 
+    public int contains_element(E e) {
+      for (Queue_obj<E> obj : sortered_Array) 
+        if (comparator.compare(obj.getElemento(), e) == 0) 
+          return obj.getI();
+      return -1;
+    }
+
     @Override
     public boolean remove(E e) {
-      int i = contains_i(e);
+      int i = contains_element(e);
       if (i == -1)
         return false;
       else {
