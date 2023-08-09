@@ -1,17 +1,19 @@
-public class Queue_obj{
-    int elemento;
-    int priorita;
+import java.util.Comparator;
+
+public class Queue_obj<E>{
+    E e;
+    int heap_i;
 
     public Queue_obj(E elemento, int priorita) {
-        this.elemento = elemento;
-        this.priorita = priorita;
+        this.e = elemento;
+        this.heap_i = priorita;
     }
 
     public E getElemento() {
-        return elemento;
+        return e;
     }
 
     public int getPriorita() {
-        return priorita;
+        return heap_i;
     }
 }

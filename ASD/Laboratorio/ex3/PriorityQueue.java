@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.TreeSet;
 import java.util.Comparator;
 
 //public interface  AbstractQueue<E> {
@@ -12,10 +13,12 @@ import java.util.Comparator;
 
 public class PriorityQueue<E> implements AbstractQueue<E> {
     Comparator<? super E> comparator = null;
-    ArrayList<E> heap = new ArrayList<>();
+    ArrayList<E> heap;
+    TreeSet<Queue_obj> sortered_Array;
 
     public PriorityQueue(Comparator<? super E> comparator) {
         this.heap = new ArrayList<>();
+        this.sortered_Array = new TreeSet<>();
         this.comparator = comparator;
     }
 
@@ -49,6 +52,9 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
         i = p_i;
         p_i = parent(p_i);
       }
+
+      Queue_obj<E> obj = new Queue_obj<>(e, i);
+      sortered_Array.add(obj);
 
       return true;
     }
@@ -136,6 +142,13 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
             if (i < heap.size() - 1) {
                 sb.append(", ");
             }
+        }
+        sb.append("]");
+        
+        sb.append("  [ ");
+        for (Queue_obj obj : sortered_Array) {
+            sb.append(obj.getElemento());
+            sb.append(" ");
         }
         sb.append("]");
         return sb.toString();
