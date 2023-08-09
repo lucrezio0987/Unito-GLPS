@@ -5,7 +5,7 @@ public class ex3 {
         Random random = new Random();
         PriorityQueue<Integer> priorityQueue = new PriorityQueue<>(Integer::compare);
         
-        int i, tot = 10;
+        int i, tot = 10 ;
 
         for(i = 0; i< tot; ++i)
         priorityQueue.push(random.nextInt(tot*2) + 1);
