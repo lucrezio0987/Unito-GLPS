@@ -52,7 +52,7 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
         p_i = parent(p_i);
       }
 
-      sortered_Array.add(new Queue_obj<>(e, i));
+      sortered_Array.add(new Queue_obj<>(e, i, comparator));
 
       return true;
     }
@@ -116,7 +116,7 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
 
     public int contains_element(E e) {
       for (Queue_obj<E> obj : sortered_Array) 
-        if (comparator.compare(obj.getElemento(), e) == 0) 
+        if (compareElement(e) == 0) 
           return obj.getI();
       return -1;
     }
@@ -128,6 +128,7 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
         return false;
       else {
         remove_i(i);
+        sortered_Array.remove(new Queue_obj<>(e, i, comparator) );
       }
       return true;
     }
