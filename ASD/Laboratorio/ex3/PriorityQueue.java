@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.TreeSet;
 import java.util.Comparator;
 
 //public interface  AbstractQueue<E> {
@@ -14,11 +13,11 @@ import java.util.Comparator;
 public class PriorityQueue<E> implements AbstractQueue<E> {
     Comparator<? super E> comparator = null;
     ArrayList<E> heap;
-    TreeSet<Queue_obj> sortered_Array;
+    ArrayList<Queue_obj> sortered_Array;
 
     public PriorityQueue(Comparator<? super E> comparator) {
         this.heap = new ArrayList<>();
-        this.sortered_Array = new TreeSet<>();
+        this.sortered_Array = new ArrayList<>();
         this.comparator = comparator;
     }
 
@@ -52,9 +51,27 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
         p_i = parent(p_i);
       }
 
-      sortered_Array.add(new Queue_obj<>(e, i, comparator));
+      add_sorted(new Queue_obj<>(e, i));
 
       return true;
+    }
+
+    public void swap_sortered_Array(int i, int j){
+      Queue_obj temp = sortered_Array.get(i);
+      sortered_Array.set(i, sortered_Array.get(j));
+      sortered_Array.set(j, temp);
+    }
+
+    public void add_sorted(Queue_obj<E> obj){
+      sortered_Array.add(obj);
+      
+      for(int i = sortered_Array.size()-1; i > 1; --i){
+        if(comparator.compare(sortered_Array.get(i).getE(), sortered_Array.get(i-1).getE()) < 0)
+          swap_sortered_Array(i, i-1);
+        else 
+          break;
+      }
+      
     }
 
     @Override
@@ -115,10 +132,21 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
     }
 
     public int contains_element(E e) {
-      for (Queue_obj<E> obj : sortered_Array) 
-        if (compareElement(e) == 0) 
-          return obj.getI();
-      return -1;
+      int left = 0;
+      int right = sortered_Array.size() - 1;
+
+      while (left <= right) {
+          int mid = left + (right - left) / 2;
+          if (comparator.compare(sortered_Array.get(mid).getE(), e) == 0)
+            return sortered_Array.get(mid).getI();
+          else if (comparator.compare(sortered_Array.get(mid).getE(), e) < 0)
+            left = mid + 1;
+          else 
+              right = mid - 1;
+      }
+
+      return -1; 
+
     }
 
     @Override
