@@ -13,7 +13,7 @@ import java.util.Comparator;
 public class PriorityQueue<E> implements AbstractQueue<E> {
     Comparator<? super E> comparator = null;
     ArrayList<E> heap;
-    ArrayList<Queue_obj> sortered_Array;
+    ArrayList<Queue_obj<E>> sortered_Array;
 
     public PriorityQueue(Comparator<? super E> comparator) {
         this.heap = new ArrayList<>();
@@ -65,7 +65,7 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
     public void add_sorted(Queue_obj<E> obj){
       sortered_Array.add(obj);
       
-      for(int i = sortered_Array.size()-1; i > 1; --i){
+      for(int i = sortered_Array.size()-1; i > 0; --i){
         if(comparator.compare(sortered_Array.get(i).getE(), sortered_Array.get(i-1).getE()) < 0)
           swap_sortered_Array(i, i-1);
         else 
@@ -89,6 +89,7 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
         swap(i, heap.size() - 1);
         heap.remove(heap.size() - 1);
 
+
         while (c_l <= heap.size() - 1) {
           min_c = c_l;
   
@@ -107,7 +108,8 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
 
     @Override
     public void pop() {
-        remove_i(0);
+      sortered_Array.remove(0);
+      remove_i(0);
     }
 
     private void swap(int i, int j) {
@@ -149,14 +151,34 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
 
     }
 
+    public int contains_element_and_remove(E e) {
+      int left = 0;
+      int right = sortered_Array.size() - 1;
+
+      while (left <= right) {
+          int mid = left + (right - left) / 2;
+          if (comparator.compare(sortered_Array.get(mid).getE(), e) == 0){
+            int i = sortered_Array.get(mid).getI();
+            sortered_Array.remove(mid);
+            return i;
+          }
+          else if (comparator.compare(sortered_Array.get(mid).getE(), e) < 0)
+            left = mid + 1;
+          else 
+              right = mid - 1;
+      }
+
+      return -1; 
+
+    }
+
     @Override
     public boolean remove(E e) {
-      int i = contains_element(e);
+      int i = contains_element_and_remove(e);
       if (i == -1)
         return false;
       else {
         remove_i(i);
-        sortered_Array.remove(new Queue_obj<>(e, i, comparator) );
       }
       return true;
     }
@@ -175,7 +197,7 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
         
         sb.append("  [ ");
         for (Queue_obj obj : sortered_Array) {
-            sb.append(obj.getElemento());
+            sb.append(obj.getE());
             sb.append(" ");
         }
         sb.append("]");
