@@ -57,7 +57,7 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
     }
 
     public void swap_sortered_Array(int i, int j){
-      Queue_obj temp = sortered_Array.get(i);
+      Queue_obj<E> temp = sortered_Array.get(i);
       sortered_Array.set(i, sortered_Array.get(j));
       sortered_Array.set(j, temp);
     }
@@ -108,6 +108,7 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
 
     @Override
     public void pop() {
+      if (this.heap.isEmpty()) return;
       sortered_Array.remove(0);
       remove_i(0);
     }
@@ -120,18 +121,19 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
 
     @Override
     public boolean contains(E e) {
+      if (this.heap.isEmpty()) return false;
       return (contains_element(e) != -1);
     }
 
-    public int contains_i(E e) {
-      int i = 0;
-      while (i <= heap.size() - 1) {
-        if (comparator.compare(heap.get(i), e) == 0)
-          return i;
-        i++;
-      }
-      return -1;
-    }
+//    public int contains_i(E e) {
+//      int i = 0;
+//      while (i <= heap.size() - 1) {
+//        if (comparator.compare(heap.get(i), e) == 0)
+//          return i;
+//        i++;
+//      }
+//      return -1;
+//    }
 
     public int contains_element(E e) {
       int left = 0;
