@@ -12,12 +12,11 @@ import java.util.Comparator;
 
 public class PriorityQueue<E> implements AbstractQueue<E> {
     Comparator<? super E> comparator = null;
-    ArrayList<E> heap;
-    ArrayList<Queue_obj<E>> sortered_Array;
+    ArrayList<E> heap; ArrayList<E> sort;
 
     public PriorityQueue(Comparator<? super E> comparator) {
+        this.sort = new ArrayList<>();
         this.heap = new ArrayList<>();
-        this.sortered_Array = new ArrayList<>();
         this.comparator = comparator;
     }
 
@@ -35,44 +34,42 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
     public int child_r(int i) {
       return (2 * i) + 1;
     }
-    
+
     @Override
     public boolean push(E e) {
-      if (contains(e) == true)
-        return false; 
+      if (!sort.contains(e)) {
+          sort.add(e);
+          heap.add(e);
+          int i = heap.size() - 1;
 
-      heap.add(e);
-      int i = heap.size() - 1;
-      int p_i = parent(i); 
+          while (i > 0 && comparator.compare(heap.get(i), heap.get(parent(i))) < 0) {
+              swap(i, parent(i));
+              i = parent(i);
+          }
 
-      while (i > 0 && comparator.compare(heap.get(i), heap.get(p_i)) < 0) {
-        swap(i, p_i);
-        i = p_i;
-        p_i = parent(p_i);
+          return true;
       }
+      return false;
+  }
+  /*
+    public boolean push_sort(E e) {
+        int posizione = 0;
 
-      add_sorted(new Queue_obj<>(e, i));
-
-      return true;
+        while (posizione < sort.size()) {
+          if (comparator.compare(sort.get(posizione), e) > 0) {
+            sort.add(posizione, e); 
+            return true;
+          } else if (comparator.compare(sort.get(posizione), e) < 0)
+            posizione++;
+          else 
+            return false;
+          }
+          sort.add(e);
+        
+        // Inserisci l'elemento nella posizione corretta
+        return true;
     }
-
-    public void swap_sortered_Array(int i, int j){
-      Queue_obj<E> temp = sortered_Array.get(i);
-      sortered_Array.set(i, sortered_Array.get(j));
-      sortered_Array.set(j, temp);
-    }
-
-    public void add_sorted(Queue_obj<E> obj){
-      sortered_Array.add(obj);
-      
-      for(int i = sortered_Array.size()-1; i > 0; --i){
-        if(comparator.compare(sortered_Array.get(i).getE(), sortered_Array.get(i-1).getE()) < 0)
-          swap_sortered_Array(i, i-1);
-        else 
-          break;
-      }
-      
-    }
+    */
 
     @Override
     public E top() {
@@ -80,37 +77,14 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
       return this.heap.get(0);
     }
 
-    public void remove_i(int i) {
-        int c_l = child_l(i);
-        int c_r = child_r(i);
-        int min_c;
-
-        if (heap.isEmpty()) return;
-        swap(i, heap.size() - 1);
-        heap.remove(heap.size() - 1);
-
-
-        while (c_l <= heap.size() - 1) {
-          min_c = c_l;
-  
-          if (c_r <= heap.size() - 1 && comparator.compare(heap.get(c_r), heap.get(c_l)) < 0) {
-              min_c = c_r;
-          }
-
-          if (comparator.compare(heap.get(i), heap.get(min_c)) > 0) {
-            swap(i, min_c);
-            i = min_c;
-            c_l = child_l(i);
-            c_r = child_r(i);
-          } else break;
-        }
-    }
-
     @Override
     public void pop() {
-      if (this.heap.isEmpty()) return;
-      sortered_Array.remove(0);
-      remove_i(0);
+      if (!heap.isEmpty()) {
+        sort.remove(heap.get(0));
+        heap.set(0, heap.get(heap.size() - 1));
+        heap.remove(heap.size() - 1);
+        heapify(0);
+      }
     }
 
     private void swap(int i, int j) {
@@ -119,71 +93,65 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
       heap.set(j, temp);
     }
 
+    public boolean ordered_array() {
+      sort.sort(comparator);
+      return true;
+    }
+
     @Override
     public boolean contains(E e) {
-      if (this.heap.isEmpty()) return false;
-      return (contains_element(e) != -1);
-    }
-
-//    public int contains_i(E e) {
-//      int i = 0;
-//      while (i <= heap.size() - 1) {
-//        if (comparator.compare(heap.get(i), e) == 0)
-//          return i;
-//        i++;
-//      }
-//      return -1;
-//    }
-
-    public int contains_element(E e) {
       int left = 0;
-      int right = sortered_Array.size() - 1;
+      int right = sort.size() - 1;
 
+      if(!sort.isEmpty())
+        ordered_array();
+    
       while (left <= right) {
-          int mid = left + (right - left) / 2;
-          if (comparator.compare(sortered_Array.get(mid).getE(), e) == 0)
-            return sortered_Array.get(mid).getI();
-          else if (comparator.compare(sortered_Array.get(mid).getE(), e) < 0)
-            left = mid + 1;
-          else 
-              right = mid - 1;
-      }
-
-      return -1; 
-
-    }
-
-    public int contains_element_and_remove(E e) {
-      int left = 0;
-      int right = sortered_Array.size() - 1;
-
-      while (left <= right) {
-          int mid = left + (right - left) / 2;
-          if (comparator.compare(sortered_Array.get(mid).getE(), e) == 0){
-            int i = sortered_Array.get(mid).getI();
-            sortered_Array.remove(mid);
-            return i;
+          int m = left + (right - left) / 2;
+          if(comparator.compare(sort.get(m), e) == 0)
+            return true;
+          else if (comparator.compare(sort.get(m), e) < 0)
+            left = m + 1;
+          else {
+            right = m - 1; // L'elemento è nella metà sinistra
           }
-          else if (comparator.compare(sortered_Array.get(mid).getE(), e) < 0)
-            left = mid + 1;
-          else 
-              right = mid - 1;
       }
-
-      return -1; 
-
+      return false;
     }
 
     @Override
     public boolean remove(E e) {
-      int i = contains_element_and_remove(e);
-      if (i == -1)
-        return false;
-      else {
-        remove_i(i);
+      if (sort.remove(e)) {
+          heap.remove(e);
+          buildHeap();
+          return true;
       }
-      return true;
+      return false;
     }
+
+  private void buildHeap() {
+      int n = heap.size();
+      for (int i = n / 2 - 1; i >= 0; i--) {
+          heapify(i);
+      }
+  }
+
+  private void heapify(int i) {
+    int left = child_l(i);
+    int right = child_r(i);
+    int smallest = i;
+
+    if (left < heap.size() && comparator.compare(heap.get(left), heap.get(smallest)) < 0) {
+        smallest = left;
+    }
+    if (right < heap.size() && comparator.compare(heap.get(right), heap.get(smallest)) < 0) {
+        smallest = right;
+    }
+    if (smallest != i) {
+        swap(i, smallest);
+        heapify(smallest);
+    }
+}
 
     @Override
     public String toString() {
@@ -194,13 +162,6 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
             if (i < heap.size() - 1) {
                 sb.append(", ");
             }
-        }
-        sb.append("]");
-        
-        sb.append("  [ ");
-        for (Queue_obj<E> obj : sortered_Array) {
-            sb.append(obj.getE());
-            sb.append(" ");
         }
         sb.append("]");
         return sb.toString();
