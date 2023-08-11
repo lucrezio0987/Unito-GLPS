@@ -1,3 +1,5 @@
+package ex3;
+
 public interface  AbstractQueue<E> {
     public boolean empty(); // controlla se la coda è vuota
     public boolean push(E e); // aggiunge un elemento alla coda
