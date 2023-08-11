@@ -1,14 +1,15 @@
 import java.util.ArrayList;
 import java.util.Comparator;
 
-//public interface  AbstractQueue<E> {
-//    public boolean empty(); // controlla se la coda è vuota
-//    public boolean push(E e); // aggiunge un elemento alla coda
-//    public boolean contains(E e); // controlla se un elemento è in coda
-//    public E top(); // accede all'elemento in cima alla coda
-//    public void pop(); // rimuove l'elemento in cima alla coda
-//    public boolean remove (E e); // rimuove un elemento se presente in coda
-//}
+/*
+public interface  AbstractQueue<E> {
+    public boolean empty(); // controlla se la coda è vuota
+    public boolean push(E e); // aggiunge un elemento alla coda
+    public boolean contains(E e); // controlla se un elemento è in coda
+    public E top(); // accede all'elemento in cima alla coda
+    public void pop(); // rimuove l'elemento in cima alla coda
+    public boolean remove (E e); // rimuove un elemento se presente in coda
+}*/
 
 public class PriorityQueue<E> implements AbstractQueue<E> {
     Comparator<? super E> comparator = null;
@@ -61,7 +62,7 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
         heap.set(0, heap.get(heap.size() - 1));
         heap.remove(heap.size() - 1);
         if (heap.size() > 1)
-          heapify(0);
+          sink(0);
       }
     }
 
@@ -93,21 +94,51 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
 
     @Override
     public boolean remove(E e) {
+      int index = heap.indexOf(e);
+    if (index != -1) {
+        heap.set(index, heap.get(heap.size() - 1));
+        heap.remove(heap.size() - 1);
+        
+        if (index < heap.size()) {
+            sink(index);
+        }
+        
+        return true;
+    }
+    return false;
+      /*
       if (heap.remove(e)) {
           buildHeap();
           return true;
       }
-      return false;
+      return false;*/
     }
-
-  private void buildHeap() {
-      int n = heap.size();
-      for (int i = n / 2 - 1; i >= 0; i--) {
-          heapify(i);
+    private void sink(int i) {
+      int left = child_l(i);
+      int right = child_r(i);
+      int smallest = i;
+  
+      if (left < heap.size() && comparator.compare(heap.get(left), heap.get(smallest)) < 0) {
+          smallest = left;
+      }
+      if (right < heap.size() && comparator.compare(heap.get(right), heap.get(smallest)) < 0) {
+          smallest = right;
+      }
+      if (smallest != i) {
+          swap(i, smallest);
+          sink(smallest);
       }
   }
 
+  private void buildHeap() {
+      /*int n = heap.size();
+      for (int i = n / 2 - 1; i >= 0; i--) {
+          heapify(i);
+      } */
+  }
+
   private void heapify(int i) {
+    /*
     int left = child_l(i);
     int right = child_r(i);
     int smallest = i;
@@ -121,7 +152,7 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
     if (smallest != i) {
         swap(i, smallest);
         heapify(smallest);
-    }
+    }*/
 }
 
     @Override
