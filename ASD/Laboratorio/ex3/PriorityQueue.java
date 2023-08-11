@@ -16,13 +16,13 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
     ArrayList<E> heap; 
 
     public PriorityQueue(Comparator<? super E> comparator) {
-        this.heap = new ArrayList<>();
-        this.comparator = comparator;
+      this.heap = new ArrayList<>();
+      this.comparator = comparator;
     }
 
     @Override
     public boolean empty() {
-        return heap.isEmpty();
+      return heap.isEmpty();
     }
 
     public int parent(int i) {
@@ -38,17 +38,17 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
     @Override
     public boolean push(E e) {
       if (!contains(e)) {
-          heap.add(e);
-          int i = heap.size() - 1;
+        heap.add(e);
+        int i = heap.size() - 1;
 
-          while (i > 0 && comparator.compare(heap.get(i), heap.get(parent(i))) < 0) {
-              swap(i, parent(i));
-              i = parent(i);
-          }
-          return true;
+        while (i > 0 && comparator.compare(heap.get(i), heap.get(parent(i))) < 0) {
+          swap(i, parent(i));
+          i = parent(i);
+        }
+        return true;
       }
       return false;
-  }
+    }
 
     @Override
     public E top() {
@@ -60,7 +60,7 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
     public void pop() {
       heap.set(0, heap.get(heap.size() - 1));
       heap.remove(heap.size() - 1);
-      if (heap.size() > 1)
+      //if (heap.size() > 1)
         heapify(0);
     }
 
@@ -94,11 +94,11 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
     public boolean remove(E e) {
     int i;
     if ((i = heap.indexOf(e)) != -1) {
-        heap.set(i, heap.get(heap.size() - 1));
-        heap.remove(heap.size() - 1);
-        if (i < heap.size()) 
-          heapify(i);
-        return true;
+      heap.set(i, heap.get(heap.size() - 1));
+      heap.remove(heap.size() - 1);
+      //if (i < heap.size()) 
+        heapify(i);
+      return true;
     }
     return false;
       /*
@@ -114,36 +114,37 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
       int right = child_r(i);
       int smallest = i;
   
-      if (left < heap.size() && comparator.compare(heap.get(left), heap.get(smallest)) < 0) {
-          smallest = left;
-      }
-      if (right < heap.size() && comparator.compare(heap.get(right), heap.get(smallest)) < 0) {
-          smallest = right;
-      }
+      if (left < heap.size() && comparator.compare(heap.get(left), heap.get(smallest)) < 0)
+        smallest = left;
+      
+      if (right < heap.size() && comparator.compare(heap.get(right), heap.get(smallest)) < 0) 
+        smallest = right;
+      
       if (smallest != i) {
-          swap(i, smallest);
-          heapify(smallest);
+        swap(i, smallest);
+        heapify(smallest);
       }
   }
 
+/*
   private void buildHeap() {
-      /*int n = heap.size();
+      int n = heap.size();
       for (int i = n / 2 - 1; i >= 0; i--) {
           heapify(i);
-      } */
+      } 
   }
+*/
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("[");
-        for (int i = 0; i < heap.size(); i++) {
-            sb.append(heap.get(i));
-            if (i < heap.size() - 1) {
-                sb.append(", ");
-            }
-        }
-        sb.append("]");
-        return sb.toString();
+      StringBuilder sb = new StringBuilder();
+      sb.append("[");
+      for (int i = 0; i < heap.size(); i++) {
+        sb.append(heap.get(i));
+        if (i < heap.size() - 1) 
+          sb.append(", ");
+      }
+      sb.append("]");
+      return sb.toString();
     }
 };
