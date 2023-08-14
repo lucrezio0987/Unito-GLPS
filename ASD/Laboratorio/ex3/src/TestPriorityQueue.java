@@ -1,6 +1,4 @@
-package ex3;
 
-import java.util.AbstractQueue;
 import java.util.Comparator;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -9,15 +7,15 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-public class test {
+public class TestPriorityQueue {
 	
-	PriorityQueue<Integer> priorityQueue;
+	AbstractQueue<Integer> priorityQueue;
 
 	@Before
 	public void createPriorityQueue() {
 		priorityQueue = new PriorityQueue<>(Integer::compare);
 	}	
-
+  
 	@Test
   public void testIsEmptyZeroEl(){
     assertTrue(priorityQueue.empty());
@@ -31,7 +29,7 @@ public class test {
 
 	@Test
   public void testTopIfIsEmpty() throws Exception{
-		assertEquals(priorityQueue.top(), null);
+		assertEquals((Integer) priorityQueue.top(), null);
 	}
 
 	@Test
@@ -41,7 +39,7 @@ public class test {
 		priorityQueue.push(6);
 		priorityQueue.push(4);
 
-    assertEquals(priorityQueue.top(), 2);
+    assertEquals(priorityQueue.top(), Integer.valueOf(2));
   }
 
 	@Test
@@ -52,11 +50,11 @@ public class test {
 		priorityQueue.push(4);
 
 		priorityQueue.pop();
-		assertEquals(priorityQueue.top(), 4);
+		assertEquals(priorityQueue.top(), Integer.valueOf(4));
 		priorityQueue.pop();
-		assertEquals(priorityQueue.top(), 5);
+		assertEquals(priorityQueue.top(), Integer.valueOf(5));
 		priorityQueue.pop();
-		assertEquals(priorityQueue.top(), 6);
+		assertEquals(priorityQueue.top(), Integer.valueOf(6));
 	}
 
 }
