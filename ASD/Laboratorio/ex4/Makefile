@@ -9,7 +9,6 @@ Compilazione:
 	mkdir -p $(CLASS_DIR)
 	javac -cp $(JUNIT_JAR) -d $(CLASS_DIR) $(SRC_DIR)/*.java
 	javac -cp $(JUNIT_JAR) -d ../ex3-4 $(SRC_DIR)/*.java
-	javac -cp $(JUNIT_JAR) -d ../ex4/$(CLASS_DIR) $(SRC_DIR)/*.java
 
 Test: Compilazione
 	java -cp $(JUNIT_JAR):$(CLASS_DIR) org.junit.runner.JUnitCore $(TEST_CLASS)
