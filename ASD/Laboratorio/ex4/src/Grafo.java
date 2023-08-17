@@ -23,68 +23,83 @@ public class Grafo {
    *  - Recupero etichetta associata a una coppia di nodi – O(1) (*)
    *  - Determinazione del peso del grafo (se il grafo non è pesato, il metodo può terminare con un errore)– O(n) 
    * 
-   * (*) quando il grafo è veramente sparso, assumendo che l'operazione venga 
+   * (*) Quando il grafo è veramente sparso, assumendo che l'operazione venga 
    * effettuata su un nodo la cui lista di adiacenza ha una lunghezza in O(1). 
    */
 
   public Grafo() {
-
+    //Creazione di un grafo vuoto – O(1)
   }
 
   public void addNode() {
-
+    // Aggiunta di un nodo – O(1)
   }
   
   public void addArch() {
-
+    // Aggiunta di un arco – O(1)
   }
 
   public boolean isDirected() {
+    // Verifica se il grafo è diretto – O(1)
     return true;
   }
 
   public boolean containsNode(Node node) {
+    // Verifica se il grafo contiene un dato nodo – O(1)
     return true;
   }
 
   public boolean containsArch(Arch arch) {
+    // Verifica se il grafo contiene un dato arco – O(1)
+    // Quando il grafo è veramente sparso, assumendo che l'operazione venga 
+    // effettuata su un nodo la cui lista di adiacenza ha una lunghezza in O(1).
     return true;
   }
 
   public void removeNode(Node node) {
-
+    // Cancellazione di un nodo – O(n)
   }
 
   public void removeEdge(Arch arch) {
-
+    // Cancellazione di un arco – O(1)
+    // Quando il grafo è veramente sparso, assumendo che l'operazione venga 
+    // effettuata su un nodo la cui lista di adiacenza ha una lunghezza in O(1).
   }
 
   public int getNodesNumber() {
+    // Determinazione del numero di nodi – O(1)
     return 0;
   }
 
   public int getArchNumber() {
+    // Determinazione del numero di archi – O(n)
     return 0;
   }
 
   public Set<Node> getNodes() {
+    // Recupero dei nodi del grafo – O(n)
 
   }
 
   public Set<Arch> getArch() {
-
+    // Recupero degli archi del grafo – O(n)
   }
 
   public Set<Node> getNodesAdjacent(Node node) {
-
+    // Recupero nodi adiacenti di un dato nodo – O(1)
+    // Quando il grafo è veramente sparso, assumendo che l'operazione venga 
+    // effettuata su un nodo la cui lista di adiacenza ha una lunghezza in O(1).
   }
 
-  public String getArchLable(Arch arch) {
-
+  public String getNodesLable(Node node1, Node node2) {
+    // Recupero etichetta associata a una coppia di nodi – O(1)
+    // Quando il grafo è veramente sparso, assumendo che l'operazione venga 
+    // effettuata su un nodo la cui lista di adiacenza ha una lunghezza in O(1).
   }
 
-  public String getGraphLable() {
-
+  public int getGraphWeight() {
+    // Determinazione del peso del grafo (se il grafo non è pesato, il metodo può terminare con un errore)– O(n)
+    return -1;
   }
 
 }
