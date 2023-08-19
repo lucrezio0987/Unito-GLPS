@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Set;
 
 public class Grafo<E extends Comparable<E>>  {
 
@@ -48,8 +49,10 @@ public class Grafo<E extends Comparable<E>>  {
     //Creazione di un grafo vuoto – O(1)
   }
 
-  public void addNode() {
+  public void addNode(Node<E> newNode) {
     // Aggiunta di un nodo – O(1)
+    if (!hashMap.containsKey(newNode)) 
+      hashMap.put(newNode, new ArrayList<>());
   }
  
   public void addArch(Arch<E> arch) {
@@ -61,11 +64,11 @@ public class Grafo<E extends Comparable<E>>  {
     hashMap.put(sourceNode, archList);
 
     if (!diretto) {
-        ArrayList<Arch<E>> reverseArchList = hashMap.getOrDefault(destinationNode, new ArrayList<>());
-        reverseArchList.add(new Arch<>(destinationNode.getVal(), sourceNode.getVal(), arch.getDistance()));
-        hashMap.put(destinationNode, reverseArchList);
+      ArrayList<Arch<E>> reverseArchList = hashMap.getOrDefault(destinationNode, new ArrayList<>());
+      reverseArchList.add(new Arch<>(destinationNode.getVal(), sourceNode.getVal(), arch.getDistance()));
+      hashMap.put(destinationNode, reverseArchList);
     }
-}
+  }
 
 
   public boolean isDirected() {
@@ -107,6 +110,8 @@ public class Grafo<E extends Comparable<E>>  {
 
   public int getNodesNumber() {
     // Determinazione del numero di nodi – O(1)
+    Set<Node<E>> nodi = hashMap.keySet();
+    NodesNumber = nodi.size();
     return NodesNumber;
   }
 

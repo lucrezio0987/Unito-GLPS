@@ -1,6 +1,7 @@
 import java.util.Comparator;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 /*
  * Si implementi una libreria che realizza la struttura dati Grafo in modo che sia 
  * ottimale per dati sparsi (attenzione: le scelte implementative che farete dovranno
@@ -48,43 +49,61 @@ import java.io.FileReader;
       */
 
 public class Prim {
-//  public static void main(String[] args) {
-//
-//    Grafo grafo = new Grafo(new TypesCompar(), false); // false perchè è richiesto che il grafo possa essere diretto (true) o non diretto (false)
-//    
-//    //TODO: leggi i dati CSV del grafo dal percorso in args[1] 
-//
-//      BufferedReader inputFile;
-//      String[] lnBufferSplitted;
-//      String lnBuffer, sorgente, destinazione;
-//      float distance;
-//      Arch arch;
-//
-//      inputFile = new BufferedReader(new FileReader(args[1]));
-//
-//      while ((lnBuffer = inputFile.readLine()) != null) {
-//        lnBufferSplitted = lnBuffer.split(",");
-//        sorgente = lnBufferSplitted[0];
-//        destinazione = lnBufferSplitted[1];
-//        distance = Float.parseFloat(lnBufferSplitted[2]);
-//        
-//        arch = new Arch(sorgente, destinazione, distance);
-//        grafo.addArch(arch);
-//      }
-//      inputFile.close();
-//
-//    //TODO: calcola la minima foresta ricoprente con l'algoritmo di Prim
-//    
-//    grafo.MinForestPrim();
-//
-//    //TODO: scrivi su standard output una descrizione della foresta calcolata come CSV 
-//
-//    System.out.println("Numero Archi:  " + grafo.getArchNumber());
-//    System.out.println("Numero di Nodi(Erticigrafo): " + grafo.getNodesNumber());
-//    System.out.println("Peso Grafo: " + grafo.getGraphWeight());
-//  }
+/*
+  public static void main(String[] args) {
+
+    Grafo<String> grafo = new Grafo<>(String::compareTo, false); // false perchè è richiesto che il grafo possa essere diretto (true) o non diretto (false)
+    
+    //TODO: leggi i dati CSV del grafo dal percorso in args[1] 
+
+      //BufferedReader inputFile;
+      String[] lnBufferSplitted;
+      String lnBuffer, sorgente, destinazione;
+      float distance;
+      Arch arch;
+      
+      try ( BufferedReader inputFile = new BufferedReader(new FileReader(args[0]))) {
+
+        while ((lnBuffer = inputFile.readLine()) != null) {
+          lnBufferSplitted = lnBuffer.split(",");
+          sorgente = lnBufferSplitted[0];
+          destinazione = lnBufferSplitted[1];
+          distance = Float.parseFloat(lnBufferSplitted[2]);
+
+          arch = new Arch(sorgente, destinazione, distance);
+          grafo.addArch(arch);
+        }
+        inputFile.close();
+      } catch (IOException e) {
+        System.err.println("An error occurred while reading the file: " + e.getMessage());
+      }
+    //TODO: calcola la minima foresta ricoprente con l'algoritmo di Prim
+    
+    grafo.MinForestPrim();
+
+    //TODO: scrivi su standard output una descrizione della foresta calcolata come CSV 
+    
+    System.out.println("\n" + grafo.toString() + "\n");
+
+    System.out.println("Numero Archi:  " + grafo.getArchNumber());
+    System.out.println("Numero di Nodi(Erticigrafo): " + grafo.getNodesNumber());
+    System.out.println("Peso Grafo: " + grafo.getGraphWeight());
+  }
+ */
+
+/* */
   public static void main(String[] args) {
     Grafo<String> grafo = new Grafo<>(String::compareTo, false);
+  
+    // Aggiungi alcuni nodi al grafo
+
+    grafo.addNode(new Node<>("A"));
+    grafo.addNode(new Node<>("B"));
+    grafo.addNode(new Node<>("C"));
+    grafo.addNode(new Node<>("D"));
+    grafo.addNode(new Node<>("E"));
+    grafo.addNode(new Node<>("F"));
+    grafo.addNode(new Node<>("G"));
   
     // Aggiungi alcuni archi al grafo
     grafo.addArch(new Arch<>("A", "B", 2.5f));
@@ -94,25 +113,19 @@ public class Prim {
     grafo.addArch(new Arch<>("C", "D", 1.5f));
   
     // Verifica se il grafo contiene un nodo specifico
-    Node<String> nodeA = new Node<>("A");
-    System.out.println("Il grafo contiene il nodo A: " + grafo.containsNode(nodeA));
-
-    Node<String> nodeE = new Node<>("E");
-    System.out.println("Il grafo contiene il nodo E: " + grafo.containsNode(nodeE));
+    System.out.println("Il grafo contiene il nodo A: " + grafo.containsNode(new Node<>("A"))+ "/true");
+    System.out.println("Il grafo contiene il nodo Z: " + grafo.containsNode(new Node<>("Z"))+ "/false");
   
+    System.out.println("\n");
+
     // Verifica se il grafo contiene un arco specifico
-    Arch<String> archAB = new Arch<>("A", "B", 2.5f);
-    System.out.println("Il grafo contiene l'arco A -> B: " + grafo.containsArch(archAB));
-  
-    Arch<String> archBC = new Arch<>("B", "C", 3.0f);
-    System.out.println("Il grafo contiene l'arco B -> C: " + grafo.containsArch(archBC));
-  
-    Arch<String> archCD = new Arch<>("C", "D", 1.5f);
-    System.out.println("Il grafo contiene l'arco C -> D: " + grafo.containsArch(archCD));
-  
-    Arch<String> archAD = new Arch<>("A", "D", 4.0f);
-    System.out.println("Il grafo contiene l'arco A -> D: " + grafo.containsArch(archAD));
+    System.out.println("Il grafo contiene l'arco A -> B: " + grafo.containsArch(new Arch<>("A", "B", 2.5f)) + "/true");
+    System.out.println("Il grafo contiene l'arco A -> D: " + grafo.containsArch(new Arch<>("A", "D", 4.0f)) + "/false");
+    
+    System.out.println("\n");
 
-    System.out.println("\n" + grafo.toString());
+    // Stampa Gli ari per ogni Nodo
+    System.out.println(grafo.toString());
   }
+/* */
 }
