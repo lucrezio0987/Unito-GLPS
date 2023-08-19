@@ -102,4 +102,8 @@ public class Grafo {
     return -1;
   }
 
+  public void MinForestPrim(){
+    // IMPLEMENTAZIONE ALGORITMO di PRIM per calcolare la "minima foresta ricoprente"
+  }
+
 }

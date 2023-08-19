@@ -55,24 +55,33 @@ public class Prim {
 
       BufferedReader inputFile;
       String[] lnBufferSplitted;
-      String lnBuffer, place1, place2;
+      String lnBuffer, sorgente, destinazione;
       float distance;
+      Arch arch;
 
       inputFile = new BufferedReader(new FileReader(args[1]));
 
       while ((lnBuffer = inputFile.readLine()) != null) {
         lnBufferSplitted = line.split(",");
-        place1 = lnBufferSplitted[0];
-        place2 = lnBufferSplitted[1];
+        sorgente = lnBufferSplitted[0];
+        destinazione = lnBufferSplitted[1];
         distance = Float.parseFloat(lnBufferSplitted[2]);
-
-        // IMPLEMENTAZIONE INSERIMENTO DATI
+        
+        arch = new Arch(sorgente, destinazione, distance);
+        grafo.addArch(arch);
       }
       inputFile.close();
 
     //TODO: calcola la minima foresta ricoprente con l'algoritmo di Prim
+    
+    grafo.MinForestPrim();
 
     //TODO: scrivi su standard output una descrizione della foresta calcolata come CSV 
+
+    System.out.println("Numero Archi:  " + grafo.getArchNumber());
+    System.out.println("Numero di Nodi(Erticigrafo): " + grafo.getNodesNumber());
+    System.out.println("Peso Grafo: " + grafo.getGraphWeight());
+
 
   }
 }
