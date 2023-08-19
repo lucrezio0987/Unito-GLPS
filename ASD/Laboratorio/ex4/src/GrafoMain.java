@@ -54,5 +54,7 @@ public class GrafoMain {
     System.out.println("Numero Nodi  :  " + grafo.getNodesNumber());
     System.out.println("Peso Grafo   :  " + grafo.getGraphWeight() + " [NON IMPLEMENTATO]");
 
+    System.out.println("\n");
+
   }
 }

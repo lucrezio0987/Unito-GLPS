@@ -83,12 +83,13 @@ public class Prim {
       } catch (IOException e) {
         System.err.println("An error occurred while reading the file: " + e.getMessage());
       }
-
+    System.out.println("");
+    
     System.out.println("Numero Archi:  " + grafo.getArchNumber());
     System.out.println("Numero di Nodi(Erticigrafo): " + grafo.getNodesNumber());
     System.out.println("Peso Grafo: " + grafo.getGraphWeight());
     
-    System.out.println("\n");
+    System.out.println("");
 
     //TODO: calcola la minima foresta ricoprente con l'algoritmo di Prim
     
@@ -101,5 +102,7 @@ public class Prim {
     System.out.println("Numero Archi:  " + grafo.getArchNumber());
     System.out.println("Numero di Nodi(Erticigrafo): " + grafo.getNodesNumber());
     System.out.println("Peso Grafo: " + grafo.getGraphWeight());
+
+    System.out.println("\n");
   }
 }

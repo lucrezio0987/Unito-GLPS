@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Arch<E> {
   E sorgente;
   E destinazione;
@@ -31,5 +33,24 @@ public class Arch<E> {
 
   public void setDistance(float distance) {
     this.distance = distance;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null || getClass() != obj.getClass()) {
+      return false;
+    }
+    Arch<?> arch = (Arch<?>) obj;
+    return Objects.equals(sorgente, arch.sorgente) &&
+           Objects.equals(destinazione, arch.destinazione) &&
+           Objects.equals(distance, arch.distance);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(sorgente, destinazione, distance);
   }
 }
