@@ -1,7 +1,7 @@
 JUNIT_JAR = junit-4.10.jar
 SRC_DIR = src
 CLASS_DIR = classes
-TEST_CLASS = TestPriorityQueue
+TEST_CLASS = TestPrim
 
 all: Test
 

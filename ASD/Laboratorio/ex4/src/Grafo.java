@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Grafo<E extends Comparable<E>>  {
@@ -47,6 +48,10 @@ public class Grafo<E extends Comparable<E>>  {
     this.diretto = diretto;
 
     //Creazione di un grafo vuoto – O(1)
+  }
+
+  public boolean isEmpty() {
+    return hashMap.isEmpty();
   }
 
   public void addNode(Node<E> newNode) {
@@ -115,10 +120,24 @@ public class Grafo<E extends Comparable<E>>  {
     return NodesNumber;
   }
 
+//  public int getArchNumber() {
+//    // Determinazione del numero di archi – O(n)
+//    return ArchNumber;
+//  }
+
   public int getArchNumber() {
-    // Determinazione del numero di archi – O(n)
+    ArchNumber = 0;
+
+    for (ArrayList<Arch<E>> archList : hashMap.values()) {
+        ArchNumber += archList.size();
+    }
+
+    if (!diretto) {
+        // Se il grafo non è diretto, contiamo solo un lato dell'arco (non entrambi)
+        ArchNumber /= 2;
+    }
     return ArchNumber;
-  }
+}
 
 //  public Set<Node> getNodes() {
 //    // Recupero dei nodi del grafo – O(n)
@@ -141,14 +160,68 @@ public class Grafo<E extends Comparable<E>>  {
 //    // effettuata su un nodo la cui lista di adiacenza ha una lunghezza in O(1).
 //  }
 //
-  public int getGraphWeight() {
-    // Determinazione del peso del grafo (se il grafo non è pesato, il metodo può terminare con un errore)– O(n)
-    return 0;
-  }
+//  public int getGraphWeight() {
+//    // Determinazione del peso del grafo (se il grafo non è pesato, il metodo può terminare con un errore)– O(n)
+//    return 0;
+//  }
 
-  public void MinForestPrim(){
-    // IMPLEMENTAZIONE ALGORITMO di PRIM per calcolare la "minima foresta ricoprente"
-  }
+public double getGraphWeight() {
+  GraphWeight = 0.0;
+
+  if (hashMap.isEmpty()) return GraphWeight;
+  
+  for (ArrayList<Arch<E>> archList : hashMap.values()) 
+    for (Arch<E> arch : archList) 
+      GraphWeight += arch.getDistance();
+
+  return GraphWeight;
+}
+
+//  public void MinForestPrim(){
+//    // IMPLEMENTAZIONE ALGORITMO di PRIM per calcolare la "minima foresta ricoprente"
+//  }
+
+  public void MinForestPrim() {
+    // Inizializzazione
+    HashSet<Node<E>> visitedNodes = new HashSet<>();
+    HashSet<Node<E>> nonVisitedNodes = new HashSet<>(hashMap.keySet());
+
+    // Scegli un nodo iniziale (qui prendiamo il primo nodo)
+    Node<E> initialNode = nonVisitedNodes.iterator().next();
+    visitedNodes.add(initialNode);
+    nonVisitedNodes.remove(initialNode);
+
+    // Continua finché ci sono nodi da visitare
+    while (!nonVisitedNodes.isEmpty()) {
+        Arch<E> minArch = null;
+        Node<E> selectedNode = null;
+
+        // Trova l'arco più corto che collega un nodo visitato a uno non visitato
+        for (Node<E> visitedNode : visitedNodes) {
+            ArrayList<Arch<E>> archList = hashMap.get(visitedNode);
+            for (Arch<E> arch : archList) {
+                Node<E> destinationNode = new Node<>(arch.getDestinazione());
+                if (nonVisitedNodes.contains(destinationNode) &&
+                    (minArch == null || arch.getDistance() < minArch.getDistance())) {
+                    minArch = arch;
+                    selectedNode = destinationNode;
+                }
+            }
+        }
+
+        if (minArch != null && selectedNode != null) {
+            // Aggiungi l'arco e il nodo alla foresta ricoprente
+            visitedNodes.add(selectedNode);
+            nonVisitedNodes.remove(selectedNode);
+            // Puoi fare qualcosa con l'arco minimo "minArch" qui se necessario
+        } else {
+            // Non ci sono archi validi per collegare i nodi visitati ai nodi non visitati
+            break;
+        }
+    }
+
+    // La foresta ricoprente è costruita, puoi fare qualcosa con i nodi e gli archi inclusi
+}
 
 
   @Override
