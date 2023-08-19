@@ -143,7 +143,7 @@ public class Grafo<E extends Comparable<E>>  {
 //
   public int getGraphWeight() {
     // Determinazione del peso del grafo (se il grafo non è pesato, il metodo può terminare con un errore)– O(n)
-    return -1;
+    return 0;
   }
 
   public void MinForestPrim(){

@@ -126,6 +126,21 @@ public class Prim {
 
     // Stampa Gli ari per ogni Nodo
     System.out.println(grafo.toString());
+
+    System.out.println("\n");
+
+    // Stampa Grafo Minimizzato
+    System.out.println("GRAFO MINIMIZZATO NON IMPLEMENTATO\n");
+    grafo.MinForestPrim();
+    System.out.println(grafo.toString());
+    
+    System.out.println("\n");
+
+    // Cose
+    System.out.println("Numero Archi :  " + grafo.getArchNumber() + " [NON IMPLEMENTATO]");
+    System.out.println("Numero Nodi  :  " + grafo.getNodesNumber());
+    System.out.println("Peso Grafo   :  " + grafo.getGraphWeight() + " [NON IMPLEMENTATO]");
+
   }
 /* */
 }
