@@ -16,13 +16,7 @@ import java.io.FileReader;
  * un grafo diretto o non diretto). 
  */
 
-public class Prim {
-  public static void main(String[] args) {
-
-    Grafo grafo = new Grafo(new TypesCompar(), false); // false perchè è richiesto che il grafo possa essere diretto (true) o non diretto (false)
-    
-    //TODO: leggi i dati CSV del grafo dal percorso in args[1] 
-     /*
+      /*
       * FORMATO:
       *  [ villa bentivoglio,villa san silvestro,39479.23647356985 ]
       *  
@@ -53,35 +47,72 @@ public class Prim {
       *    di circa 89.939,913 Km. 
       */
 
-      BufferedReader inputFile;
-      String[] lnBufferSplitted;
-      String lnBuffer, sorgente, destinazione;
-      float distance;
-      Arch arch;
+public class Prim {
+//  public static void main(String[] args) {
+//
+//    Grafo grafo = new Grafo(new TypesCompar(), false); // false perchè è richiesto che il grafo possa essere diretto (true) o non diretto (false)
+//    
+//    //TODO: leggi i dati CSV del grafo dal percorso in args[1] 
+//
+//      BufferedReader inputFile;
+//      String[] lnBufferSplitted;
+//      String lnBuffer, sorgente, destinazione;
+//      float distance;
+//      Arch arch;
+//
+//      inputFile = new BufferedReader(new FileReader(args[1]));
+//
+//      while ((lnBuffer = inputFile.readLine()) != null) {
+//        lnBufferSplitted = lnBuffer.split(",");
+//        sorgente = lnBufferSplitted[0];
+//        destinazione = lnBufferSplitted[1];
+//        distance = Float.parseFloat(lnBufferSplitted[2]);
+//        
+//        arch = new Arch(sorgente, destinazione, distance);
+//        grafo.addArch(arch);
+//      }
+//      inputFile.close();
+//
+//    //TODO: calcola la minima foresta ricoprente con l'algoritmo di Prim
+//    
+//    grafo.MinForestPrim();
+//
+//    //TODO: scrivi su standard output una descrizione della foresta calcolata come CSV 
+//
+//    System.out.println("Numero Archi:  " + grafo.getArchNumber());
+//    System.out.println("Numero di Nodi(Erticigrafo): " + grafo.getNodesNumber());
+//    System.out.println("Peso Grafo: " + grafo.getGraphWeight());
+//  }
+  public static void main(String[] args) {
+    Grafo<String> grafo = new Grafo<>(String::compareTo, false);
+  
+    // Aggiungi alcuni archi al grafo
+    grafo.addArch(new Arch<>("A", "B", 2.5f));
+    grafo.addArch(new Arch<>("A", "C", 1.0f));
+    grafo.addArch(new Arch<>("B", "C", 3.0f));
+    grafo.addArch(new Arch<>("B", "D", 2.0f));
+    grafo.addArch(new Arch<>("C", "D", 1.5f));
+  
+    // Verifica se il grafo contiene un nodo specifico
+    Node<String> nodeA = new Node<>("A");
+    System.out.println("Il grafo contiene il nodo A: " + grafo.containsNode(nodeA));
 
-      inputFile = new BufferedReader(new FileReader(args[1]));
+    Node<String> nodeB = new Node<>("B");
+    System.out.println("Il grafo contiene il nodo B: " + grafo.containsNode(nodeB));
+  
+    // Verifica se il grafo contiene un arco specifico
+    Arch<String> archAB = new Arch<>("A", "B", 2.5f);
+    System.out.println("Il grafo contiene l'arco A -> B: " + grafo.containsArch(archAB));
+  
+    Arch<String> archBC = new Arch<>("B", "C", 3.0f);
+    System.out.println("Il grafo contiene l'arco B -> C: " + grafo.containsArch(archBC));
+  
+    Arch<String> archCD = new Arch<>("C", "D", 1.5f);
+    System.out.println("Il grafo contiene l'arco C -> D: " + grafo.containsArch(archCD));
+  
+    Arch<String> archAD = new Arch<>("A", "D", 4.0f);
+    System.out.println("Il grafo contiene l'arco A -> D: " + grafo.containsArch(archAD));
 
-      while ((lnBuffer = inputFile.readLine()) != null) {
-        lnBufferSplitted = line.split(",");
-        sorgente = lnBufferSplitted[0];
-        destinazione = lnBufferSplitted[1];
-        distance = Float.parseFloat(lnBufferSplitted[2]);
-        
-        arch = new Arch(sorgente, destinazione, distance);
-        grafo.addArch(arch);
-      }
-      inputFile.close();
-
-    //TODO: calcola la minima foresta ricoprente con l'algoritmo di Prim
-    
-    grafo.MinForestPrim();
-
-    //TODO: scrivi su standard output una descrizione della foresta calcolata come CSV 
-
-    System.out.println("Numero Archi:  " + grafo.getArchNumber());
-    System.out.println("Numero di Nodi(Erticigrafo): " + grafo.getNodesNumber());
-    System.out.println("Peso Grafo: " + grafo.getGraphWeight());
-
-
+    System.out.println("\n" + grafo.toString());
   }
 }

@@ -8,8 +8,8 @@ public class Grafo<E extends Comparable<E>>  {
   int ArchNumber;
   int NodesNumber;
   Double GraphWeight;
-  HashMap<Node, ArrayList<Arco>> hashMap;
-  Comparator comparator;
+  HashMap<Node<E>, ArrayList<Arch<E>>> hashMap;
+  Comparator<E> comparator;
 
   /*
    * L'implementazione deve essere generica sia per quanto riguarda il tipo dei 
@@ -40,7 +40,7 @@ public class Grafo<E extends Comparable<E>>  {
    */
 
 
-  public Grafo(Comparator comparator, boolean diretto) {
+  public Grafo(Comparator<E> comparator, boolean diretto) {
     this.hashMap = new HashMap<>();
     this.comparator = comparator;
     this.diretto = diretto;
@@ -51,26 +51,48 @@ public class Grafo<E extends Comparable<E>>  {
   public void addNode() {
     // Aggiunta di un nodo – O(1)
   }
-  
-  public void addArch() {
-    // Aggiunta di un arco – O(1)
-  }
+ 
+  public void addArch(Arch<E> arch) {
+    Node<E> sourceNode = new Node<>(arch.getSorgente());
+    Node<E> destinationNode = new Node<>(arch.getDestinazione());
+
+    ArrayList<Arch<E>> archList = hashMap.getOrDefault(sourceNode, new ArrayList<>());
+    archList.add(arch);
+    hashMap.put(sourceNode, archList);
+
+    if (!diretto) {
+        ArrayList<Arch<E>> reverseArchList = hashMap.getOrDefault(destinationNode, new ArrayList<>());
+        reverseArchList.add(new Arch<>(destinationNode.getVal(), sourceNode.getVal(), arch.getDistance()));
+        hashMap.put(destinationNode, reverseArchList);
+    }
+}
+
 
   public boolean isDirected() {
     // Verifica se il grafo è diretto – O(1)
-    return true;
+    return diretto;
   }
 
-  public boolean containsNode(Node node) {
+  public boolean containsNode(Node<E> node) {
     // Verifica se il grafo contiene un dato nodo – O(1)
-    return true;
+    return hashMap.containsKey(node);
   }
 
-  public boolean containsArch(Arch arch) {
-    // Verifica se il grafo contiene un dato arco – O(1)
-    // Quando il grafo è veramente sparso, assumendo che l'operazione venga 
-    // effettuata su un nodo la cui lista di adiacenza ha una lunghezza in O(1).
-    return true;
+  public boolean containsArch(Arch<E> arch) {
+    ArrayList<Arch<E>> archList = hashMap.get(new Node<>(arch.getSorgente()));
+    if (archList == null) {
+        return false; // The source node does not have any arches
+    }
+
+    for (Arch<E> existingArch : archList) {
+        if (comparator.compare(existingArch.getSorgente(), arch.getSorgente()) == 0 &&
+            comparator.compare(existingArch.getDestinazione(), arch.getDestinazione()) == 0 &&
+            existingArch.getDistance() == arch.getDistance()) {
+            return true; // Found the corresponding arch
+        }
+    }
+
+    return false; // The arch is not present
   }
 
   public void removeNode(Node node) {
@@ -93,27 +115,27 @@ public class Grafo<E extends Comparable<E>>  {
     return ArchNumber;
   }
 
-  public Set<Node> getNodes() {
-    // Recupero dei nodi del grafo – O(n)
-
-  }
-
-  public Set<Arch> getArch() {
-    // Recupero degli archi del grafo – O(n)
-  }
-
-  public Set<Node> getNodesAdjacent(Node node) {
-    // Recupero nodi adiacenti di un dato nodo – O(1)
-    // Quando il grafo è veramente sparso, assumendo che l'operazione venga 
-    // effettuata su un nodo la cui lista di adiacenza ha una lunghezza in O(1).
-  }
-
-  public String getNodesLable(Node node1, Node node2) {
-    // Recupero etichetta associata a una coppia di nodi – O(1)
-    // Quando il grafo è veramente sparso, assumendo che l'operazione venga 
-    // effettuata su un nodo la cui lista di adiacenza ha una lunghezza in O(1).
-  }
-
+//  public Set<Node> getNodes() {
+//    // Recupero dei nodi del grafo – O(n)
+//
+//  }
+//
+//  public Set<Arch> getArch() {
+//    // Recupero degli archi del grafo – O(n)
+//  }
+//
+//  public Set<Node> getNodesAdjacent(Node node) {
+//    // Recupero nodi adiacenti di un dato nodo – O(1)
+//    // Quando il grafo è veramente sparso, assumendo che l'operazione venga 
+//    // effettuata su un nodo la cui lista di adiacenza ha una lunghezza in O(1).
+//  }
+//
+//  public String getNodesLable(Node node1, Node node2) {
+//    // Recupero etichetta associata a una coppia di nodi – O(1)
+//    // Quando il grafo è veramente sparso, assumendo che l'operazione venga 
+//    // effettuata su un nodo la cui lista di adiacenza ha una lunghezza in O(1).
+//  }
+//
   public int getGraphWeight() {
     // Determinazione del peso del grafo (se il grafo non è pesato, il metodo può terminare con un errore)– O(n)
     return -1;
@@ -123,4 +145,23 @@ public class Grafo<E extends Comparable<E>>  {
     // IMPLEMENTAZIONE ALGORITMO di PRIM per calcolare la "minima foresta ricoprente"
   }
 
+
+  @Override
+  public String toString() {
+      StringBuilder result = new StringBuilder();
+
+      // Iterate over nodes and their corresponding arches
+      for (Node<E> node : hashMap.keySet()) {
+          result.append("Node: ").append(node.getVal()).append("\n");
+
+          ArrayList<Arch<E>> archList = hashMap.get(node);
+          for (Arch<E> arch : archList) {
+              result.append("  Arch: ").append(arch.getSorgente()).append(" -> ")
+                    .append(arch.getDestinazione()).append(", Distance: ").append(arch.getDistance())
+                    .append("\n");
+          }
+      }
+
+      return result.toString();
+  }
 }
