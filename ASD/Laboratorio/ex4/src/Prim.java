@@ -97,8 +97,8 @@ public class Prim {
     Node<String> nodeA = new Node<>("A");
     System.out.println("Il grafo contiene il nodo A: " + grafo.containsNode(nodeA));
 
-    Node<String> nodeB = new Node<>("B");
-    System.out.println("Il grafo contiene il nodo B: " + grafo.containsNode(nodeB));
+    Node<String> nodeE = new Node<>("E");
+    System.out.println("Il grafo contiene il nodo E: " + grafo.containsNode(nodeE));
   
     // Verifica se il grafo contiene un arco specifico
     Arch<String> archAB = new Arch<>("A", "B", 2.5f);
