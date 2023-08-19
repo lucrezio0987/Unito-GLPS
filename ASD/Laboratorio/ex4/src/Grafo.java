@@ -178,8 +178,7 @@ public class Grafo<E extends Comparable<E>> {
   }
 
   // public void MinForestPrim(){
-  // // IMPLEMENTAZIONE ALGORITMO di PRIM per calcolare la "minima foresta
-  // ricoprente"
+  // // IMPLEMENTAZIONE ALGORITMO di PRIM per calcolare la "minima foresta ricoprente"
   // }
 
   public void MinForestPrim() {
@@ -194,36 +193,35 @@ public class Grafo<E extends Comparable<E>> {
 
     // Continua finché ci sono nodi da visitare
     while (!nonVisitedNodes.isEmpty()) {
-      Arch<E> minArch = null;
-      Node<E> selectedNode = null;
+        Arch<E> minArch = null;
+        Node<E> selectedNode = null;
 
-      // Trova l'arco più corto che collega un nodo visitato a uno non visitato
-      for (Node<E> visitedNode : visitedNodes) {
-        ArrayList<Arch<E>> archList = hashMap.get(visitedNode);
-        for (Arch<E> arch : archList) {
-          Node<E> destinationNode = new Node<>(arch.getDestinazione());
-          if (nonVisitedNodes.contains(destinationNode) &&
-              (minArch == null || arch.getDistance() < minArch.getDistance())) {
-            minArch = arch;
-            selectedNode = destinationNode;
-          }
+        // Trova l'arco più corto che collega un nodo visitato a uno non visitato
+        for (Node<E> visitedNode : visitedNodes) {
+            ArrayList<Arch<E>> archList = hashMap.get(visitedNode);
+            for (Arch<E> arch : archList) {
+                Node<E> destinationNode = new Node<>(arch.getDestinazione());
+                if (nonVisitedNodes.contains(destinationNode) &&
+                    (minArch == null || arch.getDistance() < minArch.getDistance())) {
+                    minArch = arch;
+                    selectedNode = destinationNode;
+                }
+            }
         }
-      }
 
-      if (minArch != null && selectedNode != null) {
-        // Aggiungi l'arco e il nodo alla foresta ricoprente
-        visitedNodes.add(selectedNode);
-        nonVisitedNodes.remove(selectedNode);
-        // Puoi fare qualcosa con l'arco minimo "minArch" qui se necessario
-      } else {
-        // Non ci sono archi validi per collegare i nodi visitati ai nodi non visitati
-        break;
-      }
+        if (minArch != null && selectedNode != null) {
+            // Aggiungi l'arco e il nodo alla foresta ricoprente
+            visitedNodes.add(selectedNode);
+            nonVisitedNodes.remove(selectedNode);
+            // Puoi fare qualcosa con l'arco minimo "minArch" qui se necessario
+        } else {
+            // Non ci sono archi validi per collegare i nodi visitati ai nodi non visitati
+            break;
+        }
     }
 
-    // La foresta ricoprente è costruita, puoi fare qualcosa con i nodi e gli archi
-    // inclusi
-  }
+    // La foresta ricoprente è costruita, puoi fare qualcosa con i nodi e gli archi inclusi
+}
 
   @Override
   public String toString() {
