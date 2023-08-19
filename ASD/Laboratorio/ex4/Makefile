@@ -3,7 +3,7 @@ SRC_DIR = src
 CLASS_DIR = classes
 TEST_CLASS = TestPrim
 
-all: Test
+all: Test Eseguzione
 
 Compilazione: 
 	mkdir -p $(CLASS_DIR)
@@ -12,6 +12,9 @@ Compilazione:
 
 Test: Compilazione
 	java -cp $(JUNIT_JAR):$(CLASS_DIR) org.junit.runner.JUnitCore $(TEST_CLASS)
+
+Eseguzione:
+	java -cp classes Prim italian_dist_graph.csv
 
 clean:
 	rm -rf $(CLASS_DIR)
