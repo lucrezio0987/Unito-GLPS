@@ -146,25 +146,50 @@ public class Grafo<E extends Comparable<E>> {
     return archSet;
   }
 
-  // public Set<Node> getNodesAdjacent(Node node) {
-  // // Recupero nodi adiacenti di un dato nodo – O(1)
-  // // Quando il grafo è veramente sparso, assumendo che l'operazione venga
-  // // effettuata su un nodo la cui lista di adiacenza ha una lunghezza in O(1).
-  // }
-  //
-  // public String getNodesLable(Node node1, Node node2) {
-  // // Recupero etichetta associata a una coppia di nodi – O(1)
-  // // Quando il grafo è veramente sparso, assumendo che l'operazione venga
-  // // effettuata su un nodo la cui lista di adiacenza ha una lunghezza in O(1).
-  // }
-  //
-  // public int getGraphWeight() {
-  // // Determinazione del peso del grafo (se il grafo non è pesato, il metodo può
-  // terminare con un errore)– O(n)
-  // return 0;
-  // }
+  public Set<Node<E>> getNodesAdjacent(Node<E> node) {
+    // Recupero nodi adiacenti di un dato nodo – O(1)
+    // Quando il grafo è veramente sparso, assumendo che l'operazione venga
+    // effettuata su un nodo la cui lista di adiacenza ha una lunghezza in O(1).
+
+    if (!hashMap.containsKey(node)) {
+        throw new IllegalArgumentException("Il nodo specificato non esiste nel grafo.");
+    }
+
+    ArrayList<Arch<E>> archList = hashMap.get(node);
+    HashSet<Node<E>> adjacentNodes = new HashSet<>();
+
+    for (Arch<E> arch : archList) {
+        Node<E> destinationNode = new Node<>(arch.getDestinazione());
+        adjacentNodes.add(destinationNode);
+    }
+
+    return adjacentNodes;
+}
+
+public float getNodesLabel(Node<E> node1, Node<E> node2) {
+    // Recupero etichetta associata a una coppia di nodi – O(1)
+    // Quando il grafo è veramente sparso, assumendo che l'operazione venga
+    // effettuata su un nodo la cui lista di adiacenza ha una lunghezza in O(1).
+
+    if (!hashMap.containsKey(node1) || !hashMap.containsKey(node2)) {
+        throw new IllegalArgumentException("Uno o entrambi i nodi specificati non esistono nel grafo.");
+    }
+
+    ArrayList<Arch<E>> archList = hashMap.get(node1);
+
+    for (Arch<E> arch : archList) {
+        Node<E> destinationNode = new Node<>(arch.getDestinazione());
+        if (destinationNode.equals(node2)) {
+            return arch.getDistance();
+        }
+    }
+
+    return -1;
+}
 
   public double getGraphWeight() {
+    // Determinazione del peso del grafo (se il grafo non è pesato, il metodo può
+    // terminare con un errore)– O(n)
     GraphWeight = 0.0;
 
     if (hashMap.isEmpty())
@@ -177,11 +202,10 @@ public class Grafo<E extends Comparable<E>> {
     return GraphWeight;
   }
 
-  // public void MinForestPrim(){
-  // // IMPLEMENTAZIONE ALGORITMO di PRIM per calcolare la "minima foresta ricoprente"
-  // }
-
   public void MinForestPrim() {
+    // IMPLEMENTAZIONE ALGORITMO di PRIM per calcolare la "minima foresta
+    // ricoprente"
+
     // Inizializzazione
     HashSet<Node<E>> visitedNodes = new HashSet<>();
     HashSet<Node<E>> nonVisitedNodes = new HashSet<>(hashMap.keySet());
@@ -193,35 +217,36 @@ public class Grafo<E extends Comparable<E>> {
 
     // Continua finché ci sono nodi da visitare
     while (!nonVisitedNodes.isEmpty()) {
-        Arch<E> minArch = null;
-        Node<E> selectedNode = null;
+      Arch<E> minArch = null;
+      Node<E> selectedNode = null;
 
-        // Trova l'arco più corto che collega un nodo visitato a uno non visitato
-        for (Node<E> visitedNode : visitedNodes) {
-            ArrayList<Arch<E>> archList = hashMap.get(visitedNode);
-            for (Arch<E> arch : archList) {
-                Node<E> destinationNode = new Node<>(arch.getDestinazione());
-                if (nonVisitedNodes.contains(destinationNode) &&
-                    (minArch == null || arch.getDistance() < minArch.getDistance())) {
-                    minArch = arch;
-                    selectedNode = destinationNode;
-                }
-            }
+      // Trova l'arco più corto che collega un nodo visitato a uno non visitato
+      for (Node<E> visitedNode : visitedNodes) {
+        ArrayList<Arch<E>> archList = hashMap.get(visitedNode);
+        for (Arch<E> arch : archList) {
+          Node<E> destinationNode = new Node<>(arch.getDestinazione());
+          if (nonVisitedNodes.contains(destinationNode) &&
+              (minArch == null || arch.getDistance() < minArch.getDistance())) {
+            minArch = arch;
+            selectedNode = destinationNode;
+          }
         }
+      }
 
-        if (minArch != null && selectedNode != null) {
-            // Aggiungi l'arco e il nodo alla foresta ricoprente
-            visitedNodes.add(selectedNode);
-            nonVisitedNodes.remove(selectedNode);
-            // Puoi fare qualcosa con l'arco minimo "minArch" qui se necessario
-        } else {
-            // Non ci sono archi validi per collegare i nodi visitati ai nodi non visitati
-            break;
-        }
+      if (minArch != null && selectedNode != null) {
+        // Aggiungi l'arco e il nodo alla foresta ricoprente
+        visitedNodes.add(selectedNode);
+        nonVisitedNodes.remove(selectedNode);
+        // Puoi fare qualcosa con l'arco minimo "minArch" qui se necessario
+      } else {
+        // Non ci sono archi validi per collegare i nodi visitati ai nodi non visitati
+        break;
+      }
     }
 
-    // La foresta ricoprente è costruita, puoi fare qualcosa con i nodi e gli archi inclusi
-}
+    // La foresta ricoprente è costruita, puoi fare qualcosa con i nodi e gli archi
+    // inclusi
+  }
 
   @Override
   public String toString() {
