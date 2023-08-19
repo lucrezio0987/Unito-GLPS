@@ -70,7 +70,7 @@ public class Prim {
       try ( BufferedReader inputFile = new BufferedReader(new FileReader(args[0]))) {
 
         while ((lnBuffer = inputFile.readLine()) != null) {
-          if(++Limit > 1000) break;
+          if(++Limit > 1000) break; // <--- LIMITATORE
           lnBufferSplitted = lnBuffer.split(",");
           sorgente = lnBufferSplitted[0];
           destinazione = lnBufferSplitted[1];
