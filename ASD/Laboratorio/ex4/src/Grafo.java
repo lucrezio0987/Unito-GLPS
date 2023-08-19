@@ -1,4 +1,16 @@
-public class Grafo {
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+
+public class Grafo<E extends Comparable<E>>  {
+
+  boolean diretto;
+  int ArchNumber;
+  int NodesNumber;
+  Double GraphWeight;
+  HashMap<Node, ArrayList<Arco>> hashMap;
+  Comparator comparator;
+
   /*
    * L'implementazione deve essere generica sia per quanto riguarda il tipo dei 
    * nodi, sia per quanto riguarda le etichette degli archi. 
@@ -27,7 +39,12 @@ public class Grafo {
    * effettuata su un nodo la cui lista di adiacenza ha una lunghezza in O(1). 
    */
 
-  public Grafo() {
+
+  public Grafo(Comparator comparator, boolean diretto) {
+    this.hashMap = new HashMap<>();
+    this.comparator = comparator;
+    this.diretto = diretto;
+
     //Creazione di un grafo vuoto – O(1)
   }
 
@@ -68,12 +85,12 @@ public class Grafo {
 
   public int getNodesNumber() {
     // Determinazione del numero di nodi – O(1)
-    return 0;
+    return NodesNumber;
   }
 
   public int getArchNumber() {
     // Determinazione del numero di archi – O(n)
-    return 0;
+    return ArchNumber;
   }
 
   public Set<Node> getNodes() {

@@ -18,8 +18,8 @@ import java.io.FileReader;
 
 public class Prim {
   public static void main(String[] args) {
-    
-    Grago grafo = new Grafo();
+
+    Grafo grafo = new Grafo(new TypesCompar(), false); // false perchè è richiesto che il grafo possa essere diretto (true) o non diretto (false)
     
     //TODO: leggi i dati CSV del grafo dal percorso in args[1] 
      /*

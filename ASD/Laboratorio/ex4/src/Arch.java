@@ -1,19 +1,19 @@
-public class Arch {
-  String sorgente;
-  String destinazione;
+public class Arch<E> {
+  E sorgente;
+  E destinazione;
   float distance;
 
-  public Arch(String sorgente, String destinazione, float distance) {
+  public Arch(E sorgente, E destinazione, float distance) {
     this.sorgente = sorgente;
     this.destinazione = destinazione;
     this.distance = distance;
   }
 
-  public String getSorgente() {
+  public E getSorgente() {
     return sorgente;
   }
 
-  public String getDestinazione() {
+  public E getDestinazione() {
     return destinazione;
   }
 
@@ -21,11 +21,11 @@ public class Arch {
     return distance;
   }
 
-  public void setSorgente(String sorgente) {
+  public void setSorgente(E sorgente) {
     this.sorgente = sorgente;
   }
 
-  public void setDestinazione(String destinazione) {
+  public void setDestinazione(E destinazione) {
     this.destinazione = destinazione;
   }
 
