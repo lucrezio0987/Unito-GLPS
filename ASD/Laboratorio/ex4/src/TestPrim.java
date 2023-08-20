@@ -227,17 +227,17 @@ public class TestPrim {
       grafo.addArch(new Arch<>("B", "C", 3.0f));
 
       float labelAB = grafo.getNodesLabel(new Node<>("A"), new Node<>("B"));
-      assertEquals(2.5, labelAB);
-
+      assertEquals(2.5f, labelAB, 0.001f);
+  
       float labelAC = grafo.getNodesLabel(new Node<>("A"), new Node<>("C"));
-      assertEquals(1.0, labelAC);
-
+      assertEquals(1.0f, labelAC, 0.001f);
+  
       float labelBC = grafo.getNodesLabel(new Node<>("B"), new Node<>("C"));
-      assertEquals(3.0, labelBC);
-
+      assertEquals(3.0f, labelBC, 0.001f);
+  
       // Test for non-existing edge
       float nonExistentLabel = grafo.getNodesLabel(new Node<>("A"), new Node<>("D"));
-      assertEquals((float) -1, nonExistentLabel);
+      assertEquals(-1.0f, nonExistentLabel, 0.001f);
 
     } catch (AssertionError e) {
       System.err.println("# NOT PASS: testGetNodesLabel");
