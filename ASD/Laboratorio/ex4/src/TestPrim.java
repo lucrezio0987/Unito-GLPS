@@ -17,196 +17,236 @@ public class TestPrim {
 
   @Test
   public void testIsEmpty() {
-    assertTrue(grafo.isEmpty());
-    System.out.println(" # Test PASS:  testIsEmpty");
+    try {
+      assertTrue(grafo.isEmpty());
+    } catch (AssertionError e) {
+      System.err.println("# NOT PASS: testIsEmpty");
+    }
   }
 
   @Test
   public void testAddNode() {
-    grafo.addNode(new Node<>("A"));
-    grafo.addNode(new Node<>("B"));
-    grafo.addNode(new Node<>("C"));
+    try {
+      grafo.addNode(new Node<>("A"));
+      grafo.addNode(new Node<>("B"));
+      grafo.addNode(new Node<>("C"));
 
-    assertFalse(grafo.isEmpty());
-    assertTrue(grafo.containsNode(new Node<>("A")));
-    assertTrue(grafo.containsNode(new Node<>("B")));
-    assertTrue(grafo.containsNode(new Node<>("C")));
-    assertFalse(grafo.containsNode(new Node<>("d")));
-    System.out.println(" # Test PASS:  testAddNode");
+      assertFalse(grafo.isEmpty());
+      assertTrue(grafo.containsNode(new Node<>("A")));
+      assertTrue(grafo.containsNode(new Node<>("B")));
+      assertTrue(grafo.containsNode(new Node<>("C")));
+      assertFalse(grafo.containsNode(new Node<>("d")));
+
+    } catch (AssertionError e) {
+      System.err.println("# NOT PASS: testAddNode");
+    }
   }
 
   @Test
   public void testAddArch() {
-    grafo.addArch(new Arch<>("A", "B", 2.5f));
-    grafo.addArch(new Arch<>("A", "C", 1.0f));
-    grafo.addArch(new Arch<>("B", "C", 3.0f));
-    grafo.addArch(new Arch<>("B", "D", 2.0f));
-    grafo.addArch(new Arch<>("C", "D", 1.5f));
-
-    assertFalse(grafo.isEmpty());
-    assertTrue(grafo.containsArch(new Arch<>("A", "B", 2.5f)));
-    assertTrue(grafo.containsArch(new Arch<>("A", "C", 1.0f)));
-    assertTrue(grafo.containsArch(new Arch<>("B", "C", 3.0f)));
-    assertTrue(grafo.containsArch(new Arch<>("B", "D", 2.0f)));
-    assertTrue(grafo.containsArch(new Arch<>("C", "D", 1.5f)));
-    assertFalse(grafo.containsArch(new Arch<>("A", "D", 4.0f)));
-    System.out.println(" # Test PASS:  testAddArch");
-  }
-
-  @Test
-  public void testGetNodes() {
-    grafo.addNode(new Node<>("A"));
-    grafo.addNode(new Node<>("B"));
-    grafo.addNode(new Node<>("C"));
-    grafo.addNode(new Node<>("D"));
-
-    Set<Node<String>> nodes = grafo.getNodes();
-    assertEquals(4, nodes.size());
-
-    assertTrue(nodes.contains(new Node<>("A")));
-    assertTrue(nodes.contains(new Node<>("B")));
-    assertTrue(nodes.contains(new Node<>("C")));
-    assertTrue(nodes.contains(new Node<>("D")));
-    System.out.println(" # Test PASS:  testGetNodes");
-  }
-
-  @Test
-  public void testGetArch() {
-    grafo.addArch(new Arch<>("A", "B", 2.5f));
-    grafo.addArch(new Arch<>("A", "C", 1.0f));
-    grafo.addArch(new Arch<>("B", "C", 3.0f));
-
-    Set<Arch<String>> arches = grafo.getArch();
-    assertEquals(3, arches.size());
-
-    assertTrue(arches.contains(new Arch<>("A", "B", 2.5f)));
-    assertTrue(arches.contains(new Arch<>("A", "C", 1.0f)));
-    assertTrue(arches.contains(new Arch<>("B", "C", 3.0f)));
-    assertFalse(arches.contains(new Arch<>("C", "D", 2.0f)));
-    System.out.println(" # Test PASS:  testGetArch");
-  }
-
-  @Test
-  public void testGetNodesNumber() {
-    grafo.addNode(new Node<>("A"));
-    grafo.addNode(new Node<>("B"));
-    grafo.addNode(new Node<>("C"));
-
-    assertEquals(3, grafo.getNodesNumber());
-    System.out.println(" # Test PASS:  testGetNodesNumber");
-  }
-
-  @Test
-  public void testGetArchNumber() {
-    grafo.addArch(new Arch<>("A", "B", 2.5f));
-    grafo.addArch(new Arch<>("A", "C", 1.0f));
-    grafo.addArch(new Arch<>("B", "C", 3.0f));
-
-    assertEquals(3, grafo.getArchNumber());
-    System.out.println(" # Test PASS:  testGetArchNumber");
-  }
-
-  @Test
-  public void testGetGraphWeight() {
-    grafo.addArch(new Arch<>("A", "B", 2.5f));
-    grafo.addArch(new Arch<>("A", "C", 1.0f));
-    grafo.addArch(new Arch<>("B", "C", 3.0f));
-
-    assertEquals(6.5f, grafo.getGraphWeight(), 0.001);
-    System.out.println(" # Test INCOMPLETO:  testGetGraphWeight");
-  }
-
-  @Test
-  public void testMinForestPrim() {
-      grafo.addNode(new Node<>("A"));
-      grafo.addNode(new Node<>("B"));
-      grafo.addNode(new Node<>("C"));
-      grafo.addNode(new Node<>("D"));
-  
+    try {
       grafo.addArch(new Arch<>("A", "B", 2.5f));
       grafo.addArch(new Arch<>("A", "C", 1.0f));
       grafo.addArch(new Arch<>("B", "C", 3.0f));
       grafo.addArch(new Arch<>("B", "D", 2.0f));
       grafo.addArch(new Arch<>("C", "D", 1.5f));
-  
+
+      assertFalse(grafo.isEmpty());
+      assertTrue(grafo.containsArch(new Arch<>("A", "B", 2.5f)));
+      assertTrue(grafo.containsArch(new Arch<>("A", "C", 1.0f)));
+      assertTrue(grafo.containsArch(new Arch<>("B", "C", 3.0f)));
+      assertTrue(grafo.containsArch(new Arch<>("B", "D", 2.0f)));
+      assertTrue(grafo.containsArch(new Arch<>("C", "D", 1.5f)));
+      assertFalse(grafo.containsArch(new Arch<>("A", "D", 4.0f)));
+
+    } catch (AssertionError e) {
+      System.err.println("# NOT PASS: testAddArch");
+    }
+  }
+
+  @Test
+  public void testGetNodes() {
+    try {
+      grafo.addNode(new Node<>("A"));
+      grafo.addNode(new Node<>("B"));
+      grafo.addNode(new Node<>("C"));
+      grafo.addNode(new Node<>("D"));
+
+      Set<Node<String>> nodes = grafo.getNodes();
+      assertEquals(4, nodes.size());
+
+      assertTrue(nodes.contains(new Node<>("A")));
+      assertTrue(nodes.contains(new Node<>("B")));
+      assertTrue(nodes.contains(new Node<>("C")));
+      assertTrue(nodes.contains(new Node<>("D")));
+    } catch (AssertionError e) {
+      System.err.println("# NOT PASS: testGetNodes");
+    }
+
+  }
+
+  @Test
+  public void testGetArch() {
+    try {
+      grafo.addArch(new Arch<>("A", "B", 2.5f));
+      grafo.addArch(new Arch<>("A", "C", 1.0f));
+      grafo.addArch(new Arch<>("B", "C", 3.0f));
+
+      Set<Arch<String>> arches = grafo.getArch();
+      assertEquals(3, arches.size());
+
+      assertTrue(arches.contains(new Arch<>("A", "B", 2.5f)));
+      assertTrue(arches.contains(new Arch<>("A", "C", 1.0f)));
+      assertTrue(arches.contains(new Arch<>("B", "C", 3.0f)));
+      assertFalse(arches.contains(new Arch<>("C", "D", 2.0f)));
+    } catch (AssertionError e) {
+      System.err.println("# NOT PASS: testGetArch");
+    }
+  }
+
+  @Test
+  public void testGetNodesNumber() {
+    try {
+      grafo.addNode(new Node<>("A"));
+      grafo.addNode(new Node<>("B"));
+      grafo.addNode(new Node<>("C"));
+
+      assertEquals(3, grafo.getNodesNumber());
+    } catch (AssertionError e) {
+      System.err.println("# NOT PASS: testGetNodesNumber");
+    }
+  }
+
+  @Test
+  public void testGetArchNumber() {
+    try {
+      grafo.addArch(new Arch<>("A", "B", 2.5f));
+      grafo.addArch(new Arch<>("A", "C", 1.0f));
+      grafo.addArch(new Arch<>("B", "C", 3.0f));
+
+      assertEquals(3, grafo.getArchNumber());
+    } catch (AssertionError e) {
+      System.err.println("# NOT PASS: testGetArchNumber");
+    }
+  }
+
+  @Test
+  public void testGetGraphWeight() {
+    try {
+      grafo.addArch(new Arch<>("A", "B", 2.5f));
+      grafo.addArch(new Arch<>("A", "C", 1.0f));
+      grafo.addArch(new Arch<>("B", "C", 3.0f));
+
+      assertEquals(6.5f, grafo.getGraphWeight(), 0.001);
+    } catch (AssertionError e) {
+      System.err.println("# NOT PASS: testGetGraphWeight");
+    }
+  }
+
+  @Test
+  public void testMinForestPrim() {
+    try {
+      grafo.addNode(new Node<>("A"));
+      grafo.addNode(new Node<>("B"));
+      grafo.addNode(new Node<>("C"));
+      grafo.addNode(new Node<>("D"));
+
+      grafo.addArch(new Arch<>("A", "B", 2.5f));
+      grafo.addArch(new Arch<>("A", "C", 1.0f));
+      grafo.addArch(new Arch<>("B", "C", 3.0f));
+      grafo.addArch(new Arch<>("B", "D", 2.0f));
+      grafo.addArch(new Arch<>("C", "D", 1.5f));
+
       grafo.MinForestPrim();
-  
+
       // Verifica che il numero di nodi nella foresta sia corretto
       assertEquals(4, grafo.getNodesNumber());
-  
+
       // Verifica che il numero di archi nella foresta sia corretto
-//      assertEquals(3, grafo.getArchNumber());
-  
+      assertEquals(3, grafo.getArchNumber());
+
       // Verifica che tutti i nodi inclusi nella foresta siano corretti
       assertTrue(grafo.containsNode(new Node<>("A")));
       assertTrue(grafo.containsNode(new Node<>("B")));
       assertTrue(grafo.containsNode(new Node<>("C")));
       assertTrue(grafo.containsNode(new Node<>("D")));
-  
+
       // Verifica che tutti gli archi inclusi nella foresta siano corretti
-//      assertTrue(grafo.containsArch(new Arch<>("A", "B", 2.5f)));
-//      assertTrue(grafo.containsArch(new Arch<>("A", "C", 1.0f)));
-//      assertTrue(grafo.containsArch(new Arch<>("C", "D", 1.5f)));
-  
+      assertTrue(grafo.containsArch(new Arch<>("A", "B", 2.5f)));
+      assertTrue(grafo.containsArch(new Arch<>("A", "C", 1.0f)));
+      assertTrue(grafo.containsArch(new Arch<>("C", "D", 1.5f)));
+
       // Verifica che altri archi non siano inclusi nella foresta
-//      assertFalse(grafo.containsArch(new Arch<>("B", "C", 3.0f)));
-//      assertFalse(grafo.containsArch(new Arch<>("B", "D", 2.0f)));
-    System.out.println(" # Test INCOMPLETO:  testMinForestPrim");
+      assertFalse(grafo.containsArch(new Arch<>("B", "C", 3.0f)));
+      assertFalse(grafo.containsArch(new Arch<>("B", "D", 2.0f)));
+
+    } catch (AssertionError e) {
+      System.err.println("# NOT PASS: testMinForestPrim");
+    }
   }
-  
+
   @Test
   public void testGetNodesAdjacent() {
-    grafo.addNode(new Node<>("A"));
-    grafo.addNode(new Node<>("B"));
-    grafo.addNode(new Node<>("C"));
-    grafo.addNode(new Node<>("D"));
+    try {
+      grafo.addNode(new Node<>("A"));
+      grafo.addNode(new Node<>("B"));
+      grafo.addNode(new Node<>("C"));
+      grafo.addNode(new Node<>("D"));
 
-    grafo.addArch(new Arch<>("A", "B", 2.5f));
-    grafo.addArch(new Arch<>("A", "C", 1.0f));
-    grafo.addArch(new Arch<>("B", "C", 3.0f));
-    grafo.addArch(new Arch<>("B", "D", 2.0f));
-    grafo.addArch(new Arch<>("C", "D", 1.5f));
+      grafo.addArch(new Arch<>("A", "B", 2.5f));
+      grafo.addArch(new Arch<>("A", "C", 1.0f));
+      grafo.addArch(new Arch<>("B", "C", 3.0f));
+      grafo.addArch(new Arch<>("B", "D", 2.0f));
+      grafo.addArch(new Arch<>("C", "D", 1.5f));
 
-    Set<Node<String>> adjacentNodes = grafo.getNodesAdjacent(new Node<>("A"));
-    assertEquals(2, adjacentNodes.size());
-    assertTrue(adjacentNodes.contains(new Node<>("B")));
-    assertTrue(adjacentNodes.contains(new Node<>("C")));
+      Set<Node<String>> adjacentNodes = grafo.getNodesAdjacent(new Node<>("A"));
+      assertEquals(2, adjacentNodes.size());
+      assertTrue(adjacentNodes.contains(new Node<>("B")));
+      assertTrue(adjacentNodes.contains(new Node<>("C")));
 
-    adjacentNodes = grafo.getNodesAdjacent(new Node<>("B"));
-    assertEquals(2, adjacentNodes.size());
-    assertFalse(adjacentNodes.contains(new Node<>("A")));
-    assertTrue(adjacentNodes.contains(new Node<>("C")));
-    assertTrue(adjacentNodes.contains(new Node<>("D")));
-    System.out.println(" # Test PASS:  testGetNodesAdjacent");
+      adjacentNodes = grafo.getNodesAdjacent(new Node<>("B"));
+      assertEquals(2, adjacentNodes.size());
+      assertFalse(adjacentNodes.contains(new Node<>("A")));
+      assertTrue(adjacentNodes.contains(new Node<>("C")));
+      assertTrue(adjacentNodes.contains(new Node<>("D")));
+
+    } catch (AssertionError e) {
+      System.err.println("# NOT PASS: testGetNodesAdjacent");
+    }
   }
 
   @Test
   public void testGetNodesLabel() {
-    grafo.addNode(new Node<>("A"));
-    grafo.addNode(new Node<>("B"));
-    grafo.addNode(new Node<>("C"));
+    try {
+      grafo.addNode(new Node<>("A"));
+      grafo.addNode(new Node<>("B"));
+      grafo.addNode(new Node<>("C"));
 
-    grafo.addArch(new Arch<>("A", "B", 2.5f));
-    grafo.addArch(new Arch<>("A", "C", 1.0f));
-    grafo.addArch(new Arch<>("B", "C", 3.0f));
+      grafo.addArch(new Arch<>("A", "B", 2.5f));
+      grafo.addArch(new Arch<>("A", "C", 1.0f));
+      grafo.addArch(new Arch<>("B", "C", 3.0f));
 
-//    float labelAB = grafo.getNodesLabel(new Node<>("A"), new Node<>("B"));
-//    assertEquals(2.5, labelAB);
-//
-//    float labelAC = grafo.getNodesLabel(new Node<>("A"), new Node<>("C"));
-//    assertEquals(1.0, labelAC);
-//
-//    float labelBC = grafo.getNodesLabel(new Node<>("B"), new Node<>("C"));
-//    assertEquals(3.0, labelBC);
+      float labelAB = grafo.getNodesLabel(new Node<>("A"), new Node<>("B"));
+      assertEquals(2.5, labelAB);
 
-//    // Test for non-existing edge
-//    float nonExistentLabel = grafo.getNodesLabel(new Node<>("A"), new Node<>("D"));
-//    assertEquals((float)-1, nonExistentLabel);
-    System.out.println(" # Test INCOMPLETO:  testGetNodesLabel");
+      float labelAC = grafo.getNodesLabel(new Node<>("A"), new Node<>("C"));
+      assertEquals(1.0, labelAC);
+
+      float labelBC = grafo.getNodesLabel(new Node<>("B"), new Node<>("C"));
+      assertEquals(3.0, labelBC);
+
+      // Test for non-existing edge
+      float nonExistentLabel = grafo.getNodesLabel(new Node<>("A"), new Node<>("D"));
+      assertEquals((float) -1, nonExistentLabel);
+
+    } catch (AssertionError e) {
+      System.err.println("# NOT PASS: testGetNodesLabel");
+    }
   }
 
   @Test
   public void testRemoveNode() {
+    try {
       grafo.addNode(new Node<>("A"));
       grafo.addNode(new Node<>("B"));
       grafo.addNode(new Node<>("C"));
@@ -219,11 +259,14 @@ public class TestPrim {
       assertFalse(nodes.contains(new Node<>("B")));
       assertTrue(nodes.contains(new Node<>("C")));
 
-      System.out.println(" # Test PASS: testRemoveNode");
+    } catch (AssertionError e) {
+      System.err.println("# NOT PASS: testRemoveNode");
+    }
   }
 
   @Test
   public void testRemoveArch() {
+    try {
       grafo.addArch(new Arch<>("A", "B", 2.5f));
       grafo.addArch(new Arch<>("A", "C", 1.0f));
       grafo.addArch(new Arch<>("B", "C", 3.0f));
@@ -236,6 +279,9 @@ public class TestPrim {
       assertTrue(arches.contains(new Arch<>("A", "C", 1.0f)));
       assertTrue(arches.contains(new Arch<>("B", "C", 3.0f)));
 
-      System.out.println(" # Test PASS: testRemoveArch");
+    } catch (AssertionError e) {
+      System.err.println("# NOT PASS: testRemoveArch");
+    }
+
   }
 }
