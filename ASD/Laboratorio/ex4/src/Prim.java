@@ -94,6 +94,7 @@ public class Prim {
     //TODO: calcola la minima foresta ricoprente con l'algoritmo di Prim
     
     grafo.MinForestPrim();
+    
 
     //TODO: scrivi su standard output una descrizione della foresta calcolata come CSV 
     
