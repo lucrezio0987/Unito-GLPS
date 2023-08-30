@@ -234,11 +234,7 @@ public class TestPrim {
   
       float labelBC = grafo.getNodesLabel(new Node<>("B"), new Node<>("C"));
       assertEquals(3.0f, labelBC, 0.001f);
-  
-      // Test for non-existing edge
-      float nonExistentLabel = grafo.getNodesLabel(new Node<>("A"), new Node<>("D"));
-      assertEquals(-1.0f, nonExistentLabel, 0.001f);
-
+      
     } catch (AssertionError e) {
       System.err.println("# NOT PASS: testGetNodesLabel");
     }

@@ -1,3 +1,4 @@
+import java.util.AbstractQueue;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -179,14 +180,13 @@ public class Grafo<E extends Comparable<E>> {
     return archSet;
   }
 
-  public Set<Node<E>> getNodesAdjacent(Node<E> node) { // TODO non funziona
+  public Set<Node<E>> getNodesAdjacent(Node<E> node) { // ! DA RIVEDERE
     // Recupero nodi adiacenti di un dato nodo – O(1)
     // Quando il grafo è veramente sparso, assumendo che l'operazione venga
     // effettuata su un nodo la cui lista di adiacenza ha una lunghezza in O(1).
 
-    if (!hashMap.containsKey(node)) {
+    if (!hashMap.containsKey(node))
       throw new IllegalArgumentException("Il nodo specificato non esiste nel grafo.");
-    }
 
     ArrayList<Arch<E>> archList = hashMap.get(node);
     HashSet<Node<E>> adjacentNodes = new HashSet<>();
@@ -199,10 +199,13 @@ public class Grafo<E extends Comparable<E>> {
     return adjacentNodes;
   }
 
-  public float getNodesLabel(Node<E> sorgente, Node<E> destinazione) { //? COMPLETATO
+  public float getNodesLabel(Node<E> sorgente, Node<E> destinazione) { // ? COMPLETATO
     // Recupero etichetta associata a una coppia di nodi – O(1)
     // Quando il grafo è veramente sparso, assumendo che l'operazione venga
     // effettuata su un nodo la cui lista di adiacenza ha una lunghezza in O(1).
+
+    if (!hashMap.containsKey(sorgente) || !hashMap.containsKey(destinazione))
+      throw new IllegalArgumentException("Uno o entrambi i nodi specificati non esistono nel grafo.");
 
     ArrayList<Arch<E>> archList = hashMap.get(sorgente);
 
@@ -213,7 +216,7 @@ public class Grafo<E extends Comparable<E>> {
       }
     }
 
-    return (float)-1;
+    return (float) -1;
   }
 
   public double getGraphWeight() { // ! DA RIVEDERE
@@ -231,50 +234,39 @@ public class Grafo<E extends Comparable<E>> {
     return GraphWeight;
   }
 
-  public void MinForestPrim() { // TODO non funziona
+  public void MinForestPrim() { // TODO
     // IMPLEMENTAZIONE ALGORITMO di PRIM per calcolare la "minima foresta
     // ricoprente"
+    if (!diretto) {
+      throw new UnsupportedOperationException("L'algoritmo di Prim è applicabile solo a grafi non diretti.");
+    }
 
-    // Inizializzazione
-    HashSet<Node<E>> visitedNodes = new HashSet<>();
-    HashSet<Node<E>> nonVisitedNodes = new HashSet<>(hashMap.keySet());
+    Set<Node<E>> visitedNodes = new HashSet<>();
+    PriorityQueue<Arch<E>> minHeap = new PriorityQueue<>(new ArchComparator<>());
+    Node<E> startNode = hashMap.keySet().iterator().next();
 
-    // Scegli un nodo iniziale (qui prendiamo il primo nodo)
-    Node<E> initialNode = nonVisitedNodes.iterator().next();
-    visitedNodes.add(initialNode);
-    nonVisitedNodes.remove(initialNode);
+    visitedNodes.add(startNode);
+    minHeap.addAll(hashMap.get(startNode));
 
-    // Continua finché ci sono nodi da visitare
-    while (!nonVisitedNodes.isEmpty()) {
-      Arch<E> minArch = null;
-      Node<E> selectedNode = null;
+    while (!minHeap.isEmpty() && visitedNodes.size() < NodesNumber) {
+      Arch<E> minArch = minHeap.poll();
+      Node<E> sourceNode = new Node<>(minArch.getSorgente());
+      Node<E> destNode = new Node<>(minArch.getDestinazione());
 
-      // Trova l'arco più corto che collega un nodo visitato a uno non visitato
-      for (Node<E> visitedNode : visitedNodes) {
-        ArrayList<Arch<E>> archList = hashMap.get(visitedNode);
-        for (Arch<E> arch : archList) {
-          Node<E> destNode = new Node<>(arch.getDestinazione());
-          if (nonVisitedNodes.contains(destNode) &&
-              (minArch == null || arch.getDistance() < minArch.getDistance())) {
-            minArch = arch;
-            selectedNode = destNode;
+      if (!visitedNodes.contains(destNode)) {
+        visitedNodes.add(destNode);
+        System.out.println("Added edge: " + sourceNode.getVal() + " -> " + destNode.getVal() +
+            " (Distance: " + minArch.getDistance() + ")");
+
+        // Add only the adjacent edges of the newly added node to the min heap
+        ArrayList<Arch<E>> adjacentEdges = hashMap.get(destNode);
+        for (Arch<E> adjacentArch : adjacentEdges) {
+          if (!visitedNodes.contains(new Node<>(adjacentArch.getDestinazione()))) {
+            minHeap.add(adjacentArch);
           }
         }
       }
-
-      if (minArch != null && selectedNode != null) {
-        // Aggiungi l'arco e il nodo alla foresta ricoprente
-        visitedNodes.add(selectedNode);
-        nonVisitedNodes.remove(selectedNode);
-        // Puoi fare qualcosa con l'arco minimo "minArch" qui se necessario
-      } else {
-        // Non ci sono archi validi per collegare i nodi visitati ai nodi non visitati
-        break;
-      }
     }
-
-    // La foresta ricoprente è costruita, puoi fare qualcosa con i nodi e gli archi
-    // inclusi
   }
 
   @Override
