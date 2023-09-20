@@ -1,0 +1,106 @@
+
+Exercise 1:
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My First Webpage</title>
+</head>
+<body>
+  <h1>My First Webpage</h1>
+  <img src="image.jpg" alt="Image Description">
+  <p>This is an image of something interesting.</p>
+</body>
+</html>
+```
+
+Exercise 2:
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Form Example</title>
+</head>
+<body>
+  <form>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name"><br><br>
+    
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email"><br><br>
+    
+    <label for="gender">Gender:</label>
+    <input type="radio" id="male" name="gender" value="male">
+    <label for="male">Male</label>
+    <input type="radio" id="female" name="gender" value="female">
+    <label for="female">Female</label><br><br>
+    
+    <label for="languages">Programming Languages:</label>
+    <input type="checkbox" id="html" name="languages" value="html">
+    <label for="html">HTML</label>
+    <input type="checkbox" id="css" name="languages" value="css">
+    <label for="css">CSS</label>
+    <input type="checkbox" id="javascript" name="languages" value="javascript">
+    <label for="javascript">JavaScript</label>
+    <input type="checkbox" id="python" name="languages" value="python">
+    <label for="python">Python</label><br><br>
+    
+    <input type="submit" value="Submit">
+  </form>
+</body>
+</html>
+```
+
+Exercise 3:
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Recipe Steps</title>
+</head>
+<body>
+  <ol>
+    <li>Preheat the oven to 350°F.</li>
+    <li>In a large mixing bowl, combine the dry ingredients.</li>
+    <li>Add the wet ingredients to the bowl and mix well.</li>
+    <li>Pour the batter into a greased baking pan.</li>
+    <li>Bake for 30 minutes or until golden brown.</li>
+  </ol>
+</body>
+</html>
+```
+
+Exercise 4:
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Grades</title>
+</head>
+<body>
+  <table>
+    <tr>
+      <th>Subject</th>
+      <th>Midterm Grade</th>
+      <th>Final Grade</th>
+    </tr>
+    <tr>
+      <td>Math</td>
+      <td>85</td>
+      <td>90</td>
+    </tr>
+    <tr>
+      <td>Science</td>
+      <td>92</td>
+      <td>88</td>
+    </tr>
+    <tr>
+      <td>English</td>
+      <td>80</td>
+      <td>95</td>
+    </tr>
+  </table>
+</body>
+</html>
+```
+
