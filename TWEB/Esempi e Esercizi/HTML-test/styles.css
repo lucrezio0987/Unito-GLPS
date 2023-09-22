@@ -89,7 +89,6 @@ h3 {
     padding: 10px;
     margin: 10px;
     border-radius: 10px;
-
 }
 
 
@@ -135,4 +134,11 @@ h1 {
 .membri div {
     background-color: #a6fad1;
     padding: 5px;
+}
+
+html {
+    height: 100%;
+}
+body {
+    min-height: 100%;
 }
