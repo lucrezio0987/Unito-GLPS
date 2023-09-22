@@ -1,0 +1,42 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+.header {
+    background-color: #6cbeed;
+    height:40px;
+    padding: 10px;
+}
+h1 {
+    color: #ffffff;
+    float: left;
+    margin: 0px 10px;
+}
+button {
+    float: right;
+    margin: 5px
+}
+.block_1{
+    border: solid 2px gray;
+    border-radius: 20px;
+    width: 28%;
+    height: 200px;
+    float: left;
+    margin: 20px 10px;
+    margin-bottom: 0;
+}
+.block_2{
+    border: solid 2px gray;
+    width:67%;
+    height: 620px;
+    float: right;
+    margin: 20px 10px;
+}
+.block_3{
+    border: solid 2px gray;
+    border-radius: 20px;
+    width: 28%;
+    height: 400px;
+    float: left;
+    margin: 20px 10px;
+}
