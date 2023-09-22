@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="it-IT">
+  <head>
+    <title>HTML-test</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Siti di prova HTML">
+    <meta name="keywords" content="Prova-HTML, Lucrezio0987">
+    <meta name="author" content="Lucrezio0987">
+		<link rel="stylesheet" href="styles.css">
+		<script src="scripts.js"></script>
+  </head>
+
+	<body>
+		
+	  <h1>RPG Party Creator</h1>
+
+    <table> 
+      <tr>
+        <td> 
+          <div class="Block-1">
+            <h3> Your parties</h3>
+            <p onmouseover="showParty(1)" class="p-party"> Lotr</p>
+            <p onmouseover="showParty(2)" class="p-party"> Harrry Potter</p>
+            <p onmouseover="showParty(3)" class="p-party"> Altro</p>
+            <input class="btn" type="button" value="Add...">
+          </div> 
+        </td>
+        <td class="allign" rowspan="2"> 
+          <div id="party-1" class="Block-3">
+            <div class="title_Block-3"><h2> Lotr</h2></div>
+            <table>
+              <tr class="allign">
+                <td class="allign membri">
+                  <h3>Party Members</h3>
+                  <div>
+                    <p onmouseover="showPartyCharacters(1,1)"> Aragorn</p>
+                    <p onmouseover="showPartyCharacters(1,2)"> Frodo</p>
+                    <p onmouseover="showPartyCharacters(1,3)"> Gandalf</p>
+                  </div>
+                </td>
+                <td class="allign, personaggio">
+                  <div id="p-1-party-1" style="display: block;">
+                    <h4> Aragorn </h4>
+                    <p> Descrizione di Aragorn</p>
+                  </div>
+                  <div id="p-2-party-1" style="display: none;">
+                    <h4> Frodo </h4>
+                    <p> Descrizione di Frodo</p>
+                  </div>
+                  <div id="p-3-party-1" style="display: none;">
+                    <h4> Gandalf </h4>
+                    <p> Descrizione di Gandalf</p>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div> 
+          <div id="party-2" class="Block-3">
+            <div class="title_Block-3"><h2> Harrry Potter</h2></div>
+            <table>
+              <tr class="allign">
+                <td class="allign membri">
+                  <h3>Party Members</h3>
+                  <div>
+                    <p onmouseover="showPartyCharacters(2,1)"> Harry</p>
+                    <p onmouseover="showPartyCharacters(2,2)"> Ron</p>
+                    <p onmouseover="showPartyCharacters(2,3)"> Ermione</p>
+                  </div>
+                </td>
+                <td class="allign, personaggio">
+                  <div id="p-1-party-2" style="display: block;">
+                    <h4> Harry </h4>
+                    <p> Descrizione di Harry</p>
+                  </div>
+                  <div id="p-2-party-2" style="display: none;">
+                    <h4> Ron </h4>
+                    <p> Descrizione di Ron</p>
+                  </div>
+                  <div id="p-3-party-2" style="display: none;">
+                    <h4> Ermione </h4>
+                    <p> Descrizione di Ermione</p>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div> 
+          <div id="party-3" class="Block-3">
+            <div class="title_Block-3"><h2> Altro</h2></div>
+            <table>
+              <tr class="allign">
+                <td class="allign membri">
+                  <h3>Party Members</h3>
+                  <div>
+                    <p onmouseover="showPartyCharacters(3,1)"> Tizio</p>
+                    <p onmouseover="showPartyCharacters(3,2)"> Caio</p>
+                    <p onmouseover="showPartyCharacters(3,3)"> Sempronio</p>
+                  </div>
+                </td>
+                <td class="allign, personaggio">
+                  <div id="p-1-party-3" style="display: block;">
+                    <h4> Tizio </h4>
+                    <p> Descrizione di Tizio</p>
+                  </div>
+                  <div id="p-2-party-3" style="display: none;">
+                    <h4> Caio </h4>
+                    <p> Descrizione di Caio</p>
+                  </div>
+                  <div id="p-3-party-3" style="display: none;">
+                    <h4> Sempronio </h4>
+                    <p> Descrizione di Sempronio</p>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div> 
+          </td>
+      </tr>
+      <tr >
+        <td>
+          <div class="Block-2"> 
+            <h3> Your Characters</h3>
+            <table class="tabella">
+              <tr><th>Name</th>       <th>Class</th>     <th>Level</th></tr>
+              <tr><td>Aragorn</td>    <td>classe</td>    <td>100</td></tr>
+              <tr><td>Frodo</td>      <td>classe</td>    <td>100</td></tr>
+              <tr><td>Gandalf</td>    <td>classe</td>    <td>100</td></tr>
+              <tr><td>Harry</td>      <td>classe</td>    <td>100</td></tr>
+              <tr><td>Ron</td>        <td>classe</td>    <td>100</td></tr>
+              <tr><td>Ermione</td>    <td>classe</td>    <td>100</td></tr>              
+              <tr><td>Tizio</td>      <td>classe</td>    <td>100</td></tr>
+              <tr><td>Caio</td>       <td>classe</td>    <td>100</td></tr>
+              <tr><td>Sempronio</td>  <td>classe</td>    <td>100</td></tr>
+            </table>
+            <input class="btn" type="button" value="Edit characters...">
+          </div>
+        </td>
+      </tr>
+    </table>
+
+	</body>
+	<footer>
+    <p class="copyright">© Lucrezio0987 2023</p>
+	</footer>
+</html>
