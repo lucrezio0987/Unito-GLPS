@@ -1,0 +1,37 @@
+/* Styles for centering images */
+td {
+    text-align: center;
+}
+
+img {
+    border: 2px solid #333;
+    height: 400px;
+    display: block; /* Make the images block-level elements for centering */
+    margin: 0 auto; /* Center-align the images horizontally */
+}
+
+/* Style for the header */
+h1 {
+    background-color: #333;
+    color: #fff; /* Text color for contrast */
+    padding: 10px;
+}
+
+/* Style for the paragraphs */
+.title {
+    background-color: #000000;
+    color: white;
+    padding: 10px;
+}
+
+/* Style for the main content */
+.container {
+    width: 45%; /* Set the width for each container to create two columns */
+    float: left; /* Float the containers to create a two-column layout */
+    margin-right: 5%; /* Add a little margin between the columns */
+}
+
+/* Clear the float after the container elements */
+.container:nth-child(2n+1) {
+    clear: both;
+}

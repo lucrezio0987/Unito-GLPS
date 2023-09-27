@@ -1,0 +1,62 @@
+ 
+Creare i seguenti package e classi seguendo le istruzioni:
+
+
+    Package org.TURNO.model
+
+        Creare una class Item con i seguenti attributi:
+
+            name
+
+            value
+
+        Far generare automaticamente all'IDE:
+
+            i metodi di get e set per gli attributi
+
+            un costruttore appropriato
+
+SEMPRE NEL PACKAGE org.TURNO.model
+
+        Creare una classe Person con i seguenti attributi:
+
+            name
+
+            age
+
+            ownedItems (array list che conterrà gli item che la persona possiede)
+
+        Far generare automaticamente all'IDE:
+
+            i metodi di get e set per gli attributi
+
+            un costruttore appropriato
+
+        Scrivere i metodi:
+
+            addItem: aggiunge un item alla collezione
+
+            removeItem: rimuove un item se esiste
+
+        Scrivere il metodo:
+
+            totalValue: restituisce la somma del valore degli oggetti posseduti dalla persona
+
+
+    Package org.TURNO.io
+
+        Creare una classe PrettyPrinter
+
+        Aggiungere il seguente metodo statico:
+
+            printPeople:
+
+                input: array list di persone
+
+                output: stampa a video quanto segue per ogni persona nell'arrayList:
+
+                    riga di separazione (80 caratteri "-")
+
+                    Name: <NOME> Age: <AGE> Owned Value: <SOMMA VALORE OGGETTI POSSEDUTI>
+
+                    riga di separazione (80 caratteri "-")
