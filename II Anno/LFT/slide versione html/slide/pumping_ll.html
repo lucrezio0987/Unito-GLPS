@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Pumping lemma per i linguaggi liberi</title>
+    <link rel="stylesheet" type="text/css" href="../assets/reveal/reveal.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/vs.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/main.css">
+  </head>
+  <body>
+    <div class="reveal">
+      <div id="root" class="slides">
+	<h1 class="no_toc" id="linguaggi-formali-e-traduttori">Linguaggi Formali e Traduttori</h1>
+
+<h2 class="sezione" id="36-pumping-lemma-per-i-linguaggi-liberi">3.6 Pumping lemma per i linguaggi liberi</h2>
+
+<ul class="smaller" id="markdown-toc">
+  <li><a href="#sommario" id="markdown-toc-sommario">Sommario</a></li>
+  <li><a href="#linguaggi-non-liberi" id="markdown-toc-linguaggi-non-liberi">Linguaggi <strong>non</strong> liberi</a></li>
+  <li><a href="#pumping" id="markdown-toc-pumping">Pumping lemma per linguaggi liberi</a></li>
+  <li><a href="#anbncn" id="markdown-toc-anbncn">Il linguaggio aᵏbᵏcᵏ non è libero</a></li>
+  <li><a href="#programma-per-dimostrare-il-pumping-lemma" id="markdown-toc-programma-per-dimostrare-il-pumping-lemma">Programma per dimostrare il pumping lemma</a></li>
+  <li><a href="#forma-normale-di-chomsky" id="markdown-toc-forma-normale-di-chomsky">Forma normale di Chomsky</a></li>
+  <li><a href="#alberi" id="markdown-toc-alberi">Alberi sintattici di grammatiche CNF</a></li>
+  <li><a href="#pumping-lemma-dimostrazione-15" id="markdown-toc-pumping-lemma-dimostrazione-15">Pumping lemma: dimostrazione (1/5)</a></li>
+  <li><a href="#pumping-lemma-dimostrazione-25" id="markdown-toc-pumping-lemma-dimostrazione-25">Pumping lemma: dimostrazione (2/5)</a></li>
+  <li><a href="#pumping-lemma-dimostrazione-35" id="markdown-toc-pumping-lemma-dimostrazione-35">Pumping lemma: dimostrazione (3/5)</a></li>
+  <li><a href="#pumping-lemma-dimostrazione-45" id="markdown-toc-pumping-lemma-dimostrazione-45">Pumping lemma: dimostrazione (4/5)</a></li>
+  <li><a href="#pumping-lemma-dimostrazione-55" id="markdown-toc-pumping-lemma-dimostrazione-55">Pumping lemma: dimostrazione (5/5)</a></li>
+  <li><a href="#esercizi" id="markdown-toc-esercizi">Esercizi</a></li>
+</ul>
+
+<div class="license">
+
+  <p>È proibito condividere e divulgare in qualsiasi forma i materiali
+didattici caricati sulla piattaforma e le lezioni svolte in
+videoconferenza: ogni azione che viola questa norma sarà denunciata
+agli organi di Ateneo e perseguita a termini di legge.</p>
+
+</div>
+
+<h1 id="sommario">Sommario</h1>
+
+<p>Per dimostrare che un linguaggio <strong>è libero</strong>, basta esibire un
+automa a pila (PDA) che lo riconosce, oppure una grammatica libera
+che lo genera.  L’incapacità di trovare siffatto automa o siffatta
+grammatica non è una dimostrazione del fatto che il linguaggio non è
+libero.</p>
+
+<p>In questa lezione rispondiamo alle seguenti domande:</p>
+
+<ol>
+  <li>Esistono linguaggi <strong>non</strong> liberi?</li>
+  <li>Se sì, come dimostro che un linguaggio <strong>non</strong> è libero?</li>
+</ol>
+
+<h1 id="linguaggi-non-liberi">Linguaggi <strong>non</strong> liberi</h1>
+
+<ul>
+  <li>
+    <p>Cerchiamo una proprietà $P$ soddisfatta da tutti i linguaggi
+liberi:</p>
+
+    <p>\[
+    \text{$L$ libero} ⇒ \text{$L$ soddisfa $P$}
+\]</p>
+  </li>
+  <li>
+    <p>Se troviamo un linguaggio $L$ che <strong>non soddisfa</strong> $P$, allora per
+<strong>contrapposizione</strong> possiamo concludere che $L$ <strong>non è
+libero</strong>:</p>
+
+    <p>\[
+    \text{$L$ non soddisfa $P$} ⇒ \text{$L$ non è libero}
+\]</p>
+  </li>
+</ul>
+
+<h1 id="pumping">Pumping lemma per linguaggi liberi</h1>
+
+<h2 id="teorema">Teorema</h2>
+
+<p>Per ogni linguaggio libero $L$ esiste $n ∈ \bN$ tale che, per ogni
+$z ∈ L$ con $\len{z} ≥ n$, esistono $u$, $v$, $w$, $x$ e $y$ tali
+che $z = uvwxy$ e inoltre:</p>
+
+<ol class="bracketed">
+  <li>$vx ≠ \es$</li>
+  <li>$\len{vwx} ≤ n$</li>
+  <li>$uv^kwx^ky ∈ L$ per ogni $k ≥ 0$.</li>
+</ol>
+
+<h2 id="in-prosa">In prosa</h2>
+
+<ul>
+  <li>Ogni stringa $z$ “sufficientemente lunga” ($\len{z} ≥ n$) di un
+linguaggio libero $L$ …</li>
+  <li>… contiene due sottostringhe <em>non entrambe vuote</em> (1) …</li>
+  <li>… e “non troppo distanti” una dall’altra (2) …</li>
+  <li>… che possono essere <em>entrambe eliminate</em> ($k = 0$) …</li>
+  <li>… o <em>replicate</em> a piacere <em>lo stesso numero di volte</em> ($k &gt; 0$) …</li>
+  <li>… consentendoci di trovare altre stringhe di $L$ (3).</li>
+</ul>
+
+<h1 id="anbncn">Il linguaggio aᵏbᵏcᵏ non è libero</h1>
+
+<p>Dimostriamo che $L = \set{ a^kb^kc^k ∣ k ≥ 0 }$ non è libero facendo
+vedere che per $L$ il pumping lemma non vale.</p>
+
+<p class="fragment">Supponiamo, per assurdo, che esista $n$ con le proprietà enunciate
+nella <a href="#pumping">slide</a>.</p>
+
+<p class="fragment">Consideriamo la stringa $z = a^nb^nc^n$, che è in $L$ e ha la
+proprietà $\len{z} = 3n ≥ n$.</p>
+
+<p class="fragment">Devono esistere $u$, $v$, $w$, $x$ e $y$ tali che $z = uvwxy$ e che
+soddisfano le condizioni 1–3 della <a href="#pumping">slide</a>.</p>
+
+<p class="fragment">Dalla condizione 1 sappiamo che $vx ≠ \es$.</p>
+
+<p class="fragment">Dalla condizione 2 sappiamo che $vwx$ non può contenere sia $a$ che
+$c$, in quanto in $z$ la $a$ più a destra è separata dalla $c$ più a
+sinistra da $n$ $b$. Dunque i casi (non esclusivi, ma che coprono
+tutte le possibilità) sono due: o $vx$ non contiene $a$ oppure $vx$
+non contiene $c$.</p>
+
+<p class="fragment">Dalla condizione 3 sappiamo che $uwy ∈ L$.</p>
+
+<p class="fragment">Ora, se $vx$ non contiene $a$, in $uwy$ il numero di $a$ è rimasto
+$n$, mentre il numero di $b$ e/o $c$ è diminuito. Se $vx$ non
+contiene $c$, in $uwy$ il numero di $c$ è rimasto $n$, mentre il
+numero di $a$ e/o di $b$ è diminuito. In entrambi i casi abbiamo
+raggiunto una contraddizione.</p>
+
+<h1 id="programma-per-dimostrare-il-pumping-lemma">Programma per dimostrare il pumping lemma</h1>
+
+<ol>
+  <li>
+    <p>Argomentiamo che ogni grammatica libera $G$ può essere
+trasformata in una forma – detta in <strong>forma normale di Chomsky</strong>
+– che è “quasi equivalente” a $G$ e in cui le produzioni sono
+<em>particolarmente semplici</em>.</p>
+  </li>
+  <li>
+    <p>L’esistenza della forma normale di Chomsky di una grammatica è
+conseguenza di una serie di <em>trasformazioni</em> (non difficili, ma
+complessivamente tediose) della grammatica dettagliate nel libro
+di testo (Sezioni 7.1.1 – 7.1.4, lettura facoltativa <em>con
+caffè</em>).</p>
+  </li>
+  <li>
+    <p>Per ogni grammatica in forma normale di Chomsky, dimostriamo una
+relazione forte tra la <em>profondità di un albero sintattico</em> della
+grammatica e la <em>lunghezza del suo prodotto</em>.</p>
+  </li>
+  <li>
+    <p>Dimostriamo il pumping lemma per i linguaggi liberi.</p>
+  </li>
+</ol>
+
+<h1 id="forma-normale-di-chomsky">Forma normale di Chomsky</h1>
+
+<h2 id="definizione">Definizione</h2>
+
+<p>Diciamo che una grammatica è in <strong>forma normale di Chomsky</strong>
+(<strong>CNF</strong>, da <strong>C</strong>homsky <strong>N</strong>ormal <strong>F</strong>orm) se ogni sua produzione
+è della forma</p>
+
+<ul>
+  <li>$A → BC$ dove $A$, $B$ e $C$ sono variabili, oppure</li>
+  <li>$A → a$ dove $A$ è una variabile e $a$ un terminale.</li>
+</ul>
+
+<h2 id="osservazione">Osservazione</h2>
+
+<p>È evidente che <em>nessuna variabile (inclusa quella iniziale) è
+annullabile</em> in una grammatica CNF. Infatti, ogni derivazione $A
+\der ⋯$ aumenta o lascia invariata la lunghezza della stringa
+derivata da $A$, la quale è una stringa lunga 1.</p>
+
+<h2 id="teorema-1">Teorema</h2>
+
+<p>Se $G$ è una grammatica che genera almeno una stringa non vuota,
+allora esiste una grammatica $G’$ in forma normale di Chomsky tale
+che $L(G’) = L(G) - \set\es$.</p>
+
+<h2 id="dimostrazione-facoltativa">Dimostrazione (facoltativa)</h2>
+
+<p>Si veda la Sezione 7.1 del libro.</p>
+
+<h1 id="alberi">Alberi sintattici di grammatiche CNF</h1>
+
+<h2 id="teorema-2">Teorema</h2>
+
+<p>Sia $G$ una grammatica in forma normale di Chomsky e $w$ il prodotto
+di un albero sintattico di $G$ avente profondità $n ≥ 1$. Allora
+$\len{w} \leq {2^{n-1}}$.</p>
+
+<h2 id="dimostrazione">Dimostrazione</h2>
+
+<p>Si procede per induzione sulla profondità $n$ dell’albero,
+ricordando che ogni foglia dell’albero deve essere etichettata con
+un terminale.</p>
+
+<p>(Caso base $n = 1$) Allora l’albero ha una radice $A$ e un’unica
+foglia $a$ che coincide con $w$. Concludiamo $1 = \len{w} \leq
+{2^{n-1}} = 1$.</p>
+
+<p>(Caso induttivo $n &gt; 1$) Allora l’albero ha una radice $A$ con
+esattamente due figli etichettati $B$ e $C$ alla radice di due
+sottoalberi la cui profondità è <em>non superiore</em> a $n - 1$.</p>
+
+<p>Detti $w_1$ e $w_2$ i prodotti di questi due sottoalberi, abbiamo
+che $w = w_1w_2$.</p>
+
+<p>Usando l’ipotesi induttiva, deduciamo che $\len{w_1} ≤ {2^{n-2}}$ e
+$\len{w_2} ≤ {2^{n - 2}}$.</p>
+
+<p>Concludiamo $\len{w} = \len{w_1} + \len{w_2} ≤ {2^{n-2} + 2^{n-2}} =
+{2^{n-1}}$.</p>
+
+<h1 id="pumping-lemma-dimostrazione-15">Pumping lemma: dimostrazione (1/5)</h1>
+
+<p>Sia $L$ un linguaggio libero.</p>
+
+<p>Se $L = ∅$ oppure $L = \set\es$, allora è sufficiente prendere $n =
+1$ e l’enunciato del pumping lemma vale banalmente, dal momento che
+non ci sono stringhe di $L$ di lunghezza maggiore o uguale a 1.</p>
+
+<p>Se $L$ contiene almeno una stringa diversa da $\es$, sia $G = (V, T,
+P, S)$ una grammatica in forma normale di Chomsky che genera $L -
+\set\es$.</p>
+
+<p>Poniamo $n = {2^m}$ dove $m = \len{V}$.</p>
+
+<p>Prendiamo $z \in L$ tale che $\len{z} ≥ n$.</p>
+
+<p>Per il <a href="#alberi">teorema della slide precedente</a>, ogni albero
+sintattico di $G$ di profondità $m$ ha come prodotto stringhe lunghe
+al massimo ${2^{m-1}} = n/2$. Deduciamo che ogni albero sintattico
+che ha come radice $S$ e come prodotto $z$ deve avere una profondità
+maggiore o uguale a $m + 1$, in quando $z$ è lunga almeno il doppio
+di $2^{m-1}$.</p>
+
+<h1 id="pumping-lemma-dimostrazione-25">Pumping lemma: dimostrazione (2/5)</h1>
+
+<p>Deduciamo che questo albero sintattico avrà la forma</p>
+
+<p style="text-align: center;"><img src="../assets/images/prop_ll/albero.jpg" alt="" width="50%" /></p>
+
+<p>in cui è presente un cammino lungo $k \geq m + 1$ che tocca almeno
+$m + 2$ nodi, dei quali almeno $m + 1$ sono <em>nodi interni</em> e dunque
+etichettati con variabili $A_i$, mentre uno (l’ultimo) è una foglia
+etichettata con un terminale $a$.</p>
+
+<p>In particolare, le almeno $m + 1$ variabili toccate dal cammino non
+possono essere tutte distinte, poiché la grammatica ne ha solo $m$.</p>
+
+<h1 id="pumping-lemma-dimostrazione-35">Pumping lemma: dimostrazione (3/5)</h1>
+
+<p>Deduciamo che almeno due delle ultime $m + 1$ variabili del cammino
+(da $A_{k-m}$ a $A_k$ incluse) devono essere uguali.</p>
+
+<p><img src="../assets/images/prop_ll/path.jpg" alt="" width="50%" align="right" /> Supponiamo dunque $A_i = A_j = A$ con $k - m ≤ i &lt; j
+≤ k$.  Il cammino fatto da $A_0 = S$ ad $a$ può essere rappresentato
+come nella figura a destra, in cui il prodotto dell’albero è stato
+così scomposto:</p>
+
+<ul>
+  <li>$w$ è il prodotto del sottoalbero radicato in $A_j$;</li>
+  <li>$v$ e $x$ sono le stringhe rispettivamente a sinistra e a destra
+di $w$ nel prodotto del sottoalbero radicato in $A_i$;</li>
+  <li>$u$ e $y$ sono le stringhe rispettivamente a sinistra e a destra
+del prodotto del sottoalbero radicato in $A_i$.</li>
+</ul>
+
+<p>Evidentemente $z = uvwxy$.</p>
+
+<h1 id="pumping-lemma-dimostrazione-45">Pumping lemma: dimostrazione (4/5)</h1>
+
+<p style="text-align: center;"><img src="../assets/images/prop_ll/pumping.png" alt="" width="100%" /></p>
+
+<p>Dall’albero sintattico iniziale (riprodotto a sinistra) è ora
+possibile costruirne altri:</p>
+
+<ul>
+  <li>rimpiazzando il sottoalbero radicato in $A_i$ con quello radicato
+in $A_j$ si ottiene un albero sintattico con prodotto $uwy$;</li>
+  <li>rimpiazzando il sottoalbero radicato in $A_j$ con (una copia di)
+quello radicato in $A_i$ si ottiene un albero sintattico con
+prodotto $uvvwxxyy = uv^2wx^2y$;</li>
+  <li>in generale, iterando il rimpiazzamento del punto precedente, è
+possibile ottenere alberi sintattici con prodotto $uv^kwx^ky$ per
+ogni $k ≥ 1$.</li>
+</ul>
+
+<h1 id="pumping-lemma-dimostrazione-55">Pumping lemma: dimostrazione (5/5)</h1>
+
+<p>Per concludere la dimostrazione osserviamo che:</p>
+
+<ul>
+  <li>
+    <p>$vx ≠ \es$</p>
+
+    <p>Infatti, il cammino da $A_i$ ad $A_j$ deve contenere almeno una
+diramazione che produce almeno un simbolo in quanto la grammatica
+è in forma normale di Chomsky e non contiene produzioni $\es$;</p>
+  </li>
+  <li>
+    <p>$\len{vwx} ≤ n$</p>
+
+    <p>Infatti il sottoalbero radicato in $A_i$ ha profondità non
+superiore a $m + 1$ (vi è una sola variabile che si ripete nel suo
+cammino più lungo), dunque per il teorema in <a href="#alberi">slide</a> il
+suo prodotto $vwx$ ha una lunghezza non superiore a ${2^m} = n$.</p>
+  </li>
+</ul>
+
+<h1 id="esercizi">Esercizi</h1>
+
+<p>Dimostrare che i seguenti linguaggi non sono liberi:</p>
+
+<ol>
+  <li>$\set{ ww \mid w\in{\set{0,1}^\ast} }$</li>
+  <li>$\set{ {0^i1^j2^i3^j} \mid i, j \geq 1 }$</li>
+  <li>$\set{ {0^i1^j2^k} ∣ i &lt; j &lt; k }$</li>
+</ol>
+
+      </div>
+    </div>
+    <script type="text/javascript" src="../js/slider.js"></script>
+    <script type="text/javascript" src="../assets/reveal/reveal.js"></script>
+    <script>
+      initialize_slider();
+      Reveal.initialize({
+	  controls:    false,  // No control arrows
+	  slideNumber: 'c/t',  // Print slide number
+	  center:      false,  // Do not align slide vertically
+	  progress:    false,  // Do not display progress bar
+	  hash:        true,   // Store slide number in URL
+	  touch:       true,   // Enables touch navigation
+	  transition:  'none', // Transition mode
+	  transitionSpeed: 'fast',
+	  pdfSeparateFragments: true,
+	  pdfMaxPagesPerSlide: 1,
+	  pdfPageHeightOffset: -1,
+	  width: 846,
+	  height: 600,
+	  margin: 0.05,
+      });
+    </script>
+    <script type="text/javascript" src="../js/mathjax.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  </body>
+</html>

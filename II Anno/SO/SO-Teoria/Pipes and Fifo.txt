@@ -1,0 +1,99 @@
+i vari strumenti che UNIX offre per la comunicazione e la sincronizzazione possono 
+essere suddivisi in tre ampie categorie
+- COMUNICAZIONE: facilities utilizzate per lo scambio di dati fra processi
+- SINCRONIZZAZIONE: facilities utilizzate per sincronizzare le azioni dei processi
+- SEGNALI: in alcune circostanze possono essere utilizzati come strumenti di sincronizzazione
+--------------------------------------------------------------------------------------------
+COMMUNICATON FACILITIES
+    Data transfer facilities: l'elemento fondamentale che distingue questi strumenti 
+    è la nozione di scrittura e lettura
+    - per comunicare, un processo scrive i dati alla facility per  l'IPC e un altro processo legge questi dati
+    - questi strumenti richiedono due trasferimenti dati fra la memoria utente e quella del kernel:
+    un trasferimento durante la scrittura e un trasferimento durante la lettura
+
+MEMORIA CONDIVISA
+La memoria condivisa permette ai processi di scambiarsi le informazioni mettendole in una regione 
+della memoria condivisa fra i processi
+    - un processo può rendere i dati disponibili per gli altri processi collocandoli in una regione di memoria condivisa
+    - poichè la comunicazione non richiede system call o trasferimento di dati fra la memoria utente e quella
+      del kernel, la memoria condivisa è uno strumento di comunicazione molto veloce
+
+BYTE STREAMS: i dati scambiati per mezzo di pipe, FIFOs, e datagram sockets sono uno stream di byte
+    - ogni operazione di lettura può leggere un numero arbitrario di byte, senza considerarela dimensione dei
+    blocchi scritti dallo scrivente
+
+Le data-tranfer facilities sono distinte dalla memoria condivisa per alcune caratteristiche generali:
+    - Le operazioni di lettura sono distruttive. Una operazione read consuma i dati, 
+    e i dati non sono più disponibili per altri processi
+    - La sincronizzazione fra processo lettore e scrittore è automatica. 
+
+Sebbene la memoria condivisa fornisca una comunicazione veloce, questo vantaggio è bilanciato 
+dalla necessità di sincronizzare le operazioni sulla memoria condivisa
+Il SEMAFORO è lo strumento di sincronizzazione abitualmente utilizzato con la memoria condivisa.
+--------------------------------------------------------------------------------------------
+SYNCHRONIZATION FACILITIES
+SEMAFORI
+    Un semaforo è un intero mantenuto dal kernel, il cui valore non può divenire minore di 0
+    - Un processo può decrementare o incrementare il valore di un semaforo. 
+    Se viene fatto un tentativo di decrementare il valore di un semaforo sotto lo 0, il kernel blocca l'operazione
+    - Il processo può richiedere una nonblocking operation, in questo caso viene restituito un errore
+--------------------------------------------------------------------------------------------
+PIPE
+    La shell crea due processi, che sono collegati al pipe:
+    il processo scrittore ha il proprio standard out collegato con il write end del pipe, 
+    mentre il processo lettore ha il proprio standard input collegato al read end del pipe
+
+    Un pipe è uno stream di byte: usando un pipe non facciamo riferimento ad alcun concetto di messaggio o delimitazione.
+    I dari passano attraverso il pipe in sequenza: i byte sono letti nello stesso ordine in cui sono scritti
+
+    I tentativi di leggere da un pipe vuoto restano bloccati finchè almeno un byte non è stato scritto sul pipe
+    Se il write end di un pipe viene chiuso, un processo che legge dal pipe riceverà EOF
+    I pipe sono unidirezionali, i dati possono viaggiare in una sola direzione
+
+    Un pipe è semplicemente un buffer mantenuto in memoria
+    Questo buffer ha una capacità massima, una volta pieno ulteriori tentativi di scrittura si bloccano
+
+    I pipe possono essere utilizzati per la comunicazione fra processi parenti,
+    supponendo che il pipe sia creato da un antenato comune e prima della serie di fork() con cui sono stati creati i figli
+
+    Il processo scrittore chiude l'estremità aperta in lettura del pipe per una ragione diversa. 
+    Quando un processo tenta di scrivere su un pipe per il quale nessun processo ha un descrittore aperto in lettura, 
+    il kernel invia il segnale SIGPIPE al processo scrittore.
+    Un processo può organizzarsi per intercettare o ignorare tale segnale.
+
+#include <stdio.h>
+FILE *popen(const char *command, const char *mode);     returns file stream, or NULL on error
+
+    La popen() crea un pipe, quindi esegue una fork(); il figlio generato esegue una shell, che a sua volta crea un processo 
+    figlio che esegue l'istruzione presente in command
+    L'argomento mode è una stringa che determina se il processo chiamante leggerà dall'estremità read del pipe o vi scriverà
+
+#include <stdio.h>
+int pclose(FILE *stream);
+
+    completate le operazioni di I/O, si utilizza la funzione pclose() per chiudere il pipe ed attendere 
+    che la shell figlia termini. In caso di successo, la pclose() ottiene lo status di terminazione della shell figlia.
+--------------------------------------------------------------------------------------------
+FIFO
+    Un FIFO è simile a un pipe. La principale differenza è che un FIFO ha un nome all'interno del file system
+    ed è aperto nello stesso modo di un file.
+    Questo permette a un FIFO di essere utilizzato per comunicazioni fra processi non imparentati
+    Una volta che un FIFO è stato aperto possiamo usare le stesse system call dell'I/O utilizzate con i pipe e gli altri file
+
+    Anche i fifo come i pipe hanno un'estremità aperta in scrittura e una aperta in lettura e i dati
+    sono letti nello stesso ordine in cui sono stati scritti
+
+    Possiamo creare un FIFO dalla shell con il comando:
+$ mkfifo [ -m mode ] pathname
+
+    Il pathname è il nome del FIFO che si intende creare, e l'opzione -m specifica i permessi
+
+    Una delle caratteristiche delle pipeline di shell è che esse sono sequenziali.
+    Utilizzando i FIFO è possibile creare una fork nella pipeline così che un duplucato dell'output
+    di un processo viene inviato ad un altro processo oltre che al proprio successore nella pipeline
+    Per fare questo si usa il comando 'tee' che scrive due copie di cio che legge dal proprio standard input
+    
+
+
+
+

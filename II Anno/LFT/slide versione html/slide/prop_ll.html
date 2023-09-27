@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Proprietà di chiusura dei linguaggi liberi</title>
+    <link rel="stylesheet" type="text/css" href="../assets/reveal/reveal.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/vs.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/main.css">
+  </head>
+  <body>
+    <div class="reveal">
+      <div id="root" class="slides">
+	<h1 class="no_toc" id="linguaggi-formali-e-traduttori">Linguaggi Formali e Traduttori</h1>
+
+<h2 class="sezione" id="37-proprietà-di-chiusura-dei-linguaggi-liberi">3.7 Proprietà di chiusura dei linguaggi liberi</h2>
+
+<ul class="smaller" id="markdown-toc">
+  <li><a href="#sommario" id="markdown-toc-sommario">Sommario</a></li>
+  <li><a href="#unione-e-concatenazione" id="markdown-toc-unione-e-concatenazione">Unione e concatenazione</a></li>
+  <li><a href="#intersezione" id="markdown-toc-intersezione">Intersezione</a></li>
+  <li><a href="#intersezione-con-un-linguaggio-regolare" id="markdown-toc-intersezione-con-un-linguaggio-regolare">Intersezione con un linguaggio regolare</a></li>
+  <li><a href="#complemento-e-differenza" id="markdown-toc-complemento-e-differenza">Complemento e differenza</a></li>
+  <li><a href="#inversione" id="markdown-toc-inversione">Inversione</a></li>
+  <li><a href="#esercizi-e-quesiti" id="markdown-toc-esercizi-e-quesiti">Esercizi e quesiti</a></li>
+</ul>
+
+<div class="license">
+
+  <p>È proibito condividere e divulgare in qualsiasi forma i materiali
+didattici caricati sulla piattaforma e le lezioni svolte in
+videoconferenza: ogni azione che viola questa norma sarà denunciata
+agli organi di Ateneo e perseguita a termini di legge.</p>
+
+</div>
+
+<h1 id="sommario">Sommario</h1>
+
+<h2 id="proprietà-di-chiusura">Proprietà di chiusura</h2>
+
+<p>Dati due linguaggi liberi $L$ ed $L’$, i seguenti linguaggi sono
+liberi?</p>
+
+<ul>
+  <li>$L ∪ L’$</li>
+  <li>$L ∩ L’$</li>
+  <li>$LL’$</li>
+  <li>$\overline{L}$</li>
+  <li>$L - L’$</li>
+  <li>$L^R$</li>
+</ul>
+
+<h1 id="unione-e-concatenazione">Unione e concatenazione</h1>
+
+<h2 id="teorema">Teorema</h2>
+
+<p>I linguaggi liberi sono chiusi per unione e concatenazione.</p>
+
+<h2 id="dimostrazione">Dimostrazione</h2>
+
+<p>Siano $L_1$ ed $L_2$ linguaggi liberi. Dunque esistono due
+grammatiche libere $G_1 = (V_1, T_1, P_1, S_1)$ e $G_2 = (V_2, T_2,
+P_2, S_2)$ tali che $L_1 = L(G_1)$ e $L_2 = L(G_2)$.</p>
+
+<p>Senza perdere in generalità, possiamo assumere che $V_1 ∩ V_2 = ∅$ e
+che $S \not\in V_1 \cup V_2$. Infatti, è sempre possibile scegliere
+nuovi nomi e rinominare (in maniera consistente) le variabili di una
+grammatica senza modificarne il linguaggio generato.</p>
+
+<p>Ora, la grammatica</p>
+
+<p>\[
+	(V_1 \cup V_2, T_1 \cup T_2, P_1 \cup P_2 \cup \set{ S \to S_1 \mid S_2 }, S)
+\]</p>
+
+<p>genera $L_1 \cup L_2$ mentre la grammatica</p>
+
+<p>\[
+	(V_1 \cup V_2, T_1 \cup T_2, P_1 \cup P_2 \cup \set{ S \to S_1S_2 }, S)
+\]</p>
+
+<p>genera $L_1L_2$. Concludiamo che $L_1 ∪ L_2$ e $L_1L_2$ sono liberi.</p>
+
+<h1 id="intersezione">Intersezione</h1>
+
+<h2 id="osservazione">Osservazione</h2>
+
+<p>I linguaggi liberi <strong>non</strong> sono chiusi per intersezione.</p>
+
+<h2 id="dimostrazione-1">Dimostrazione</h2>
+
+<p>I linguaggi</p>
+
+<ul>
+  <li>$L_1 \eqdef \set{ a^nb^nc^m \mid m, n \geq 0 }$</li>
+  <li>$L_2 \eqdef \set{ a^mb^nc^n \mid m, n \geq 0 }$</li>
+</ul>
+
+<p>sono liberi. Se i linguaggi liberi fossero chiusi per intersezione,
+allora anche il linguaggio</p>
+
+<p>\[
+	L_1 \cap L_2 = \set{ a^nb^nc^n \mid n \geq 0 }
+\]</p>
+
+<p>sarebbe libero, mentre <a href="#anbncn">abbiamo dimostrato che non lo è</a>.</p>
+
+<h1 id="intersezione-con-un-linguaggio-regolare">Intersezione con un linguaggio regolare</h1>
+
+<h2 id="teorema-1">Teorema</h2>
+
+<p>Se $L$ è un linguaggio libero ed $R$ è un linguaggio regolare,
+allora $L ∩ R$ è un linguaggio libero.</p>
+
+<h2 id="dimostrazione-intuizione">Dimostrazione (intuizione)</h2>
+
+<p>Se $L$ è un linguaggio libero allora esiste un PDA $P$ che accetta
+$L$ per stato finale.</p>
+
+<p>Se $R$ è un linguaggio regolare allora esiste un DFA $M$ che accetta
+$R$.</p>
+
+<p>Si può costruire un PDA che accetta $L \cap R$ per stato finale
+costruendo il “prodotto” di $P$ ed $M$, in maniera analoga a quanto
+già visto nella <a href="../slide/prop_lr.html#intersezione-diretta">costruzione diretta del DFA che riconosce
+l’intersezione di due linguaggi regolari</a>.</p>
+
+<p>Dettagli nella Sezione 7.3.4 del libro (facoltativa).</p>
+
+<h2 id="osservazione-1">Osservazione</h2>
+
+<p>L’intersezione di un linguaggio libero e uno regolare non è un
+linguaggio regolare in generale. Si prendano ad esempio $L = \set{
+a^nb^n \mid n \geq 0 }$ ed $R = L(a^\ast b^\ast)$. Siccome $L
+\subseteq R$ abbiamo $L \cap R = L$, il quale <a href="../slide/pumping_lr.html#akbk">non è regolare</a>.</p>
+
+<h1 id="complemento-e-differenza">Complemento e differenza</h1>
+
+<h2 id="osservazione-2">Osservazione</h2>
+
+<p>I linguaggi liberi <strong>non</strong> sono chiusi per complemento e differenza.</p>
+
+<h2 id="dimostrazione-2">Dimostrazione</h2>
+
+<p>Sappiamo che i linguaggi liberi <a href="#unione">sono chiusi per
+unione</a>. Se fossero chiusi anche per complemento, allora
+avremmo che</p>
+
+<p>\[
+	L_1 \cap L_2 = {\overline{\overline{L_1 \cap L_2}}} = {\overline{ {\overline{L_1} } \cup {\overline{L_2} } } }
+\]</p>
+
+<p>sarebbe sempre un linguaggio libero, contrariamente a quanto
+<a href="#intersezione">dimostrato in precedenza</a>.</p>
+
+<p>Dato un linguaggio libero $L$ su un alfabeto $\Sigma$, il linguaggio
+$\Sigma^\ast$ è a sua volta libero (dimostrare per esercizio). Se i
+linguaggi liberi fossero chiusi per differenza, allora
+$\Sigma^\ast - L$ sarebbe sempre libero, ma questo è il complemento
+di $L$ che, come visto sopra, non è libero in generale.</p>
+
+<h1 id="inversione">Inversione</h1>
+
+<h2 id="teorema-2">Teorema</h2>
+
+<p>Se $L$ è un linguaggio libero, allora anche $L^R$ è un linguaggio
+libero.</p>
+
+<h2 id="dimostrazione-parziale">Dimostrazione (parziale)</h2>
+
+<p>Sia $G = (V, T, P, S)$ una CFG che genera $L$.</p>
+
+<p>Definiamo $G^R = (V, T, P^R, S)$ dove</p>
+
+<p>\[
+	P^R = \set{ A \to \alpha^R \mid A \to \alpha \in P }
+\]</p>
+
+<p>Si può dimostrare che $L(G^R) = L(G)^R$ (Sezione 7.3.3 del libro).</p>
+
+<h1 id="esercizi-e-quesiti">Esercizi e quesiti</h1>
+
+<ol>
+  <li>Se $L$ è un linguaggio libero, cosa si può dire di $L^\ast$ e di
+$L^+$? Sono liberi?</li>
+  <li>Se $L_i$ con $i∈\bN$ è una famiglia <strong>infinita</strong> di linguaggi
+liberi, cosa si può dire di $⋃_{i∈\bN} L_i$? È sempre un
+linguaggio libero?</li>
+  <li>Se $L$ è un linguaggio libero ed $R$ è un linguaggio regolare,
+cosa si può dire di $L - R$? È libero?</li>
+</ol>
+
+      </div>
+    </div>
+    <script type="text/javascript" src="../js/slider.js"></script>
+    <script type="text/javascript" src="../assets/reveal/reveal.js"></script>
+    <script>
+      initialize_slider();
+      Reveal.initialize({
+	  controls:    false,  // No control arrows
+	  slideNumber: 'c/t',  // Print slide number
+	  center:      false,  // Do not align slide vertically
+	  progress:    false,  // Do not display progress bar
+	  hash:        true,   // Store slide number in URL
+	  touch:       true,   // Enables touch navigation
+	  transition:  'none', // Transition mode
+	  transitionSpeed: 'fast',
+	  pdfSeparateFragments: true,
+	  pdfMaxPagesPerSlide: 1,
+	  pdfPageHeightOffset: -1,
+	  width: 846,
+	  height: 600,
+	  margin: 0.05,
+      });
+    </script>
+    <script type="text/javascript" src="../js/mathjax.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  </body>
+</html>

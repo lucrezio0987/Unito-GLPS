@@ -1,0 +1,116 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+.header {
+    background-color: #6cbeed;
+    height:40px;
+    padding: 10px;
+}
+h1 {
+    color: #ffffff;
+    float: left;
+    margin: 0px 10px;
+}
+button {
+    float: right;
+    margin: 5px
+}
+
+.btn {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 19px;
+    border:0px;
+}
+
+.block_1{
+    border: solid 2px gray;
+    border-radius: 20px;
+    width: 28%;
+    height: 240px;
+    float: left;
+    margin: 20px 10px;
+    margin-bottom: 0;
+}
+.block_2{
+    display: none;
+    border: solid 2px gray;
+    width:67%;
+    height: 660px;
+    float: right;
+    margin: 20px 10px;
+    background-color: #bee6fd;
+}
+#party-1 { display: block;}
+
+.block_3{
+    border: solid 2px gray;
+    border-radius: 20px;
+    width: 28%;
+    height: 400px;
+    float: left;
+    margin: 20px 10px;
+}
+
+option {
+    margin: 5px 20px;
+    border: 1px solid gray;
+    padding: 8px;
+    background-color:#ffffff;
+    font-size: 14;
+}
+
+.block_1 option:hover{ background-color:#6cbeed; }
+.block_2 option:hover{ background-color:#daed6c; }
+
+.block_1 h2, .block_2 h3, .block_3 h2 {
+    margin: 10px 20px;
+    font-size: 18px;
+    text-align: left;
+}
+
+.party-title {
+    background-color: #6cbeed;
+    width: auto;
+    margin: 1% 20px;
+    height: 10%;
+    border: 1px solid gray;
+}
+
+.block_2 h2 {
+    font-size: 22px;
+    text-align: center;
+}
+
+.party-members {
+    width: 47%;
+    height: 80%;
+    margin: 1%;
+    margin-left: 2%;
+    background-color: #a5d7f4;
+    border: 1px solid gray;
+    float: left;
+}
+
+.party-description {
+    display: none;
+    width: 47%;
+    height: 80%;
+    margin: 1%;
+    background-color: #6cc8fd;
+    border: 1px solid gray;
+    float: left;
+}
+#p-1-party-1,#p-1-party-2,#p-1-party-3 {display: block;}
+
+.block_2 h4 {
+    text-align: center;
+    color:#00304c;
+}
+
+p {
+    padding:3%;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #242424;
+}

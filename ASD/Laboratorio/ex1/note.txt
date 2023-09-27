@@ -1,2 +1,0 @@
-il codice sembra funzionare correttametne
-andrebbe completato la parte degli Unit Test

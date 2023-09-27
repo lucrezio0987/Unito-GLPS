@@ -1,0 +1,7 @@
+/*calcolare la velocità*/
+assign 300 to d; // distanza
+assign 10 to d_2; /**/ 
+print(* d t) print 12 
+_______
+12
+*+

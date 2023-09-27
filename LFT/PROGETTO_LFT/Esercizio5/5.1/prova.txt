@@ -1,5 +1,0 @@
-assign 0 to x;
-conditional [
-    option (> x 0) do print[x, y]
-    option (<= x 0) do print[y]
-] else print[10] end

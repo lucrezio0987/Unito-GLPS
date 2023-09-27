@@ -1,0 +1,173 @@
+.........................................
+::: COMPILAZIONE INIZIALE             :::
+:::...................................:::
+ 
+>>>   MASTER COMPILATO          <<<
+>>>   GIORNALIERA COMPILATO     <<<
+>>>   MOVIMENTO_NAVI COMPILATO  <<<
+>>>   MOVIMENTO_NAVI COMPILATO  <<<
+ 
+.........................................
+::: INIZIO ESECUZIONE                 :::
+:::...................................:::
+ 
+:::::::::::::::::::::::::::::::::
+:::  PROCESSO Master - Start  :::
+:::::::::::::::::::::::::::::::::
+::
+:::::::::::::::::::::::::::
+:::  CREAZIONE MONDO    :::
+:::::::::::::::::::::::::::
+:: >>> Porti creati (9)
+:: >>> Navi  create (63)
+:: >>> Merci create (10)
+::::::::::::::::::::::::::::::::::::
+:::  PROCESSO Movimento - Start  :::
+::::::::::::::::::::::::::::::::::::
+::
+::::::::::::::::::::::::::::::::::::
+:::  PROCESSO Maelstrom - Start  :::
+::::::::::::::::::::::::::::::::::::
+::
+::::::::::::::::::::::::::::::::::::::
+:::  PROCESSO Giornaliera - Start  :::
+::::::::::::::::::::::::::::::::::::::
+::
+::::::::::: GIORNO 1
+:: >>> (ATT)
+:: >>> decremento
+:: >>> creazione_off    :10000 (di 10000)
+:: >>> creazione_dom    :10000 (di 10000)
+:: >>> nave tempesta    :   52 (0 = nessuna)
+:: >>> porto mareggiata :    9 (0 = nessuno)
+:: >>> (DET)
+::::::::::: GIORNO 2
+:: >>> (ATT)
+:: >>> decremento
+:: >>> creazione_off    :10000 (di 10000)
+:: >>> creazione_dom    :10000 (di 10000)
+:: >>> nave tempesta    :   52 (0 = nessuna)
+:: >>> porto mareggiata :    4 (0 = nessuno)
+:: >>> (DET)
+::::::::::: GIORNO 3
+:: >>> (ATT)
+:: >>> decremento
+:: >>> creazione_off    :10000 (di 10000)
+:: >>> creazione_dom    :10000 (di 10000)
+:: >>> nave tempesta    :   52 (0 = nessuna)
+:: >>> porto mareggiata :    5 (0 = nessuno)
+:: >>> (DET)
+::::::::::: GIORNO 4
+:: >>> (ATT)
+:: >>> decremento
+:: >>> creazione_off    :10000 (di 10000)
+:: >>> creazione_dom    :10000 (di 10000)
+:: >>> nave tempesta    :   54 (0 = nessuna)
+:: >>> porto mareggiata :    6 (0 = nessuno)
+:: >>> (DET)
+::::::::::: GIORNO 5
+:: >>> (ATT)
+:: >>> decremento
+:: >>> creazione_off    :10000 (di 10000)
+:: >>> creazione_dom    :10000 (di 10000)
+:: >>> nave tempesta    :   56 (0 = nessuna)
+:: >>> porto mareggiata :    4 (0 = nessuno)
+:: >>> (DET)
+::::::::::: GIORNO 6
+:: >>> (ATT)
+:: >>> decremento
+:: >>> creazione_off    :10000 (di 10000)
+:: >>> creazione_dom    :10000 (di 10000)
+:: >>> nave tempesta    :   23 (0 = nessuna)
+:: >>> porto mareggiata :    7 (0 = nessuno)
+:: >>> (DET)
+::::::::::: GIORNO 7
+:: >>> (ATT)
+:: >>> decremento
+:: >>> creazione_off    :10000 (di 10000)
+:: >>> creazione_dom    :10000 (di 10000)
+:: >>> nave tempesta    :   51 (0 = nessuna)
+:: >>> porto mareggiata :    8 (0 = nessuno)
+:: >>> (DET)
+::::::::::: GIORNO 8
+:: >>> (ATT)
+:: >>> decremento
+:: >>> creazione_off    :10000 (di 10000)
+:: >>> creazione_dom    :10000 (di 10000)
+:: >>> nave tempesta    :   52 (0 = nessuna)
+:: >>> porto mareggiata :    1 (0 = nessuno)
+:: >>> (DET)
+::::::::::: GIORNO 9
+:: >>> (ATT)
+:: >>> decremento
+:: >>> creazione_off    :10000 (di 10000)
+:: >>> creazione_dom    :10000 (di 10000)
+:: >>> nave tempesta    :   37 (0 = nessuna)
+:: >>> porto mareggiata :    3 (0 = nessuno)
+:: >>> (DET)
+::::::::::: GIORNO 10
+:: >>> (ATT)
+:: >>> decremento
+:: >>> creazione_off    :10000 (di 10000)
+:: >>> creazione_dom    :10000 (di 10000)
+:: >>> nave tempesta    :   17 (0 = nessuna)
+:: >>> porto mareggiata :    6 (0 = nessuno)
+:: >>> (DET)
+::::::::::::::::::::::::::::::::::::::::::
+:::  PROCESSO Giornaliera - Terminato  :::
+::::::::::::::::::::::::::::::::::::::::::
+::
+::::::::::::::::::::::::::::::::::::::::
+:::  PROCESSO Movimento - Terminato  :::
+::::::::::::::::::::::::::::::::::::::::
+::
+:: PROCESSI - ancora attivi: 0
+::::::::::::::::::::::::::::::::::::::
+:::  shmVar        :   deallocati  :::
+:::  shmPorti      :   deallocati  :::
+:::  shmNavi       :   deallocati  :::
+:::  shmMerci      :   deallocati  :::
+:::  shmPila       :   deallocati  :::
+:::  semShm        :   deallocati  :::
+:::  semPidNavi    :   deallocati  :::
+:::  semPila       :   deallocati  :::
+:::  banchine      :   deallocati  :::
+:::  msgPila       :   deallocati  :::
+:::  semMareggiata :   deallocati  :::
+:::  semProcessi   :   deallocati  :::
+::::::::::::::::::::::::::::::::::::::
+::
+:::::::::::::::::::::::::::::::::::::
+:::  PROCESSO Master - Terminato  :::
+:::::::::::::::::::::::::::::::::::::
+ 
+.........................................
+::: TERMINE ESECUZIONE                :::
+:::...................................:::
+ 
+.........................................
+::: controllo IPCs attivi             :::
+:::...................................:::
+
+------ Code messaggi  --------
+chiave     msqid      proprietario perms      byte utilizzati messaggi    
+
+------ Segm. Memoria Condivisa --------
+chiave     shmid      proprietario perms      byte       nattch     stato       
+
+------ Matrici semafori --------
+chiave     semid      proprietario perms      nsems     
+
+.........................................
+::: tentativo rimozione IPCs          :::
+:::...................................:::
+
+------ Code messaggi  --------
+chiave     msqid      proprietario perms      byte utilizzati messaggi    
+
+------ Segm. Memoria Condivisa --------
+chiave     shmid      proprietario perms      byte       nattch     stato       
+
+------ Matrici semafori --------
+chiave     semid      proprietario perms      nsems     
+

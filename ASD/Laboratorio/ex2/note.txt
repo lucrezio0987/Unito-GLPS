@@ -1,4 +1,0 @@
-il codice sembra funzionare correttametne con un dizionario e un file di input di prova.
-non abbimo i file di prova che ha dato il professore, quindi non sappiamo in che formato sono scritti.
-
-andrebbe completato la parte degli Unit Test Ovviamente

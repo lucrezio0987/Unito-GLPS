@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Espressioni regolari</title>
+    <link rel="stylesheet" type="text/css" href="../assets/reveal/reveal.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/vs.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/main.css">
+  </head>
+  <body>
+    <div class="reveal">
+      <div id="root" class="slides">
+	<h1 class="no_toc" id="linguaggi-formali-e-traduttori">Linguaggi Formali e Traduttori</h1>
+
+<h2 class="sezione" id="24-espressioni-regolari">2.4 Espressioni regolari</h2>
+
+<ul class="smaller" id="markdown-toc">
+  <li><a href="#sommario" id="markdown-toc-sommario">Sommario</a></li>
+  <li><a href="#sintassi-delle-espressioni-regolari" id="markdown-toc-sintassi-delle-espressioni-regolari">Sintassi delle espressioni regolari</a></li>
+  <li><a href="#significato-di-unespressione-regolare" id="markdown-toc-significato-di-unespressione-regolare">Significato di un’espressione regolare</a></li>
+  <li><a href="#proprietà-delle-espressioni-regolari" id="markdown-toc-proprietà-delle-espressioni-regolari">Proprietà delle espressioni regolari</a></li>
+  <li><a href="#espressioni-e-linguaggi-regolari" id="markdown-toc-espressioni-e-linguaggi-regolari">Espressioni e linguaggi regolari</a></li>
+  <li><a href="#espressione-regolare--ε-nfa-14" id="markdown-toc-espressione-regolare--ε-nfa-14">Espressione regolare → ε-NFA (1/4)</a></li>
+  <li><a href="#espressione-regolare--ε-nfa-24" id="markdown-toc-espressione-regolare--ε-nfa-24">Espressione regolare → ε-NFA (2/4)</a></li>
+  <li><a href="#espressione-regolare--ε-nfa-34" id="markdown-toc-espressione-regolare--ε-nfa-34">Espressione regolare → ε-NFA (3/4)</a></li>
+  <li><a href="#espressione-regolare--ε-nfa-44" id="markdown-toc-espressione-regolare--ε-nfa-44">Espressione regolare → ε-NFA (4/4)</a></li>
+  <li><a href="#esempio-sequenze-di-a-seguite-da-sequenze-di-b" id="markdown-toc-esempio-sequenze-di-a-seguite-da-sequenze-di-b">Esempio: sequenze di <code class="language-plaintext highlighter-rouge">a</code> seguite da sequenze di <code class="language-plaintext highlighter-rouge">b</code></a></li>
+  <li><a href="#esempio-0-oppure-sequenze-non-vuote-di-1" id="markdown-toc-esempio-0-oppure-sequenze-non-vuote-di-1">Esempio: <code class="language-plaintext highlighter-rouge">0</code> oppure sequenze non vuote di <code class="language-plaintext highlighter-rouge">1</code></a></li>
+  <li><a href="#esempio-ogni-a-è-seguita-da-bb" id="markdown-toc-esempio-ogni-a-è-seguita-da-bb">Esempio: ogni <code class="language-plaintext highlighter-rouge">a</code> è seguita da <code class="language-plaintext highlighter-rouge">bb</code></a></li>
+  <li><a href="#esempio-esiste-a-seguita-da-bb" id="markdown-toc-esempio-esiste-a-seguita-da-bb">Esempio: esiste <code class="language-plaintext highlighter-rouge">a</code> seguita da <code class="language-plaintext highlighter-rouge">bb</code></a></li>
+  <li><a href="#esercizi-sulla-definizione-di-espressioni-regolari" id="markdown-toc-esercizi-sulla-definizione-di-espressioni-regolari">Esercizi sulla definizione di espressioni regolari</a></li>
+  <li><a href="#esercizi-sulla-conversione-di-espressione-regolari" id="markdown-toc-esercizi-sulla-conversione-di-espressione-regolari">Esercizi sulla conversione di espressione regolari</a></li>
+</ul>
+
+<div class="license">
+
+  <p>È proibito condividere e divulgare in qualsiasi forma i materiali
+didattici caricati sulla piattaforma e le lezioni svolte in
+videoconferenza: ogni azione che viola questa norma sarà denunciata
+agli organi di Ateneo e perseguita a termini di legge.</p>
+
+</div>
+
+<h1 id="sommario">Sommario</h1>
+
+<h2 id="automi">Automi</h2>
+
+<ul>
+  <li>approcci riconoscitivi per descrivere linguaggi regolari</li>
+  <li>3 varianti equivalenti: deterministici, non deterministici, con ε-transizioni</li>
+</ul>
+
+<h2 id="espressioni-regolari">Espressioni regolari</h2>
+
+<ul>
+  <li>approccio generativo per descrivere linguaggi regolari</li>
+</ul>
+
+<h2 id="in-questa-lezione">In questa lezione</h2>
+
+<ol>
+  <li>Definiamo la sintassi ed il significato delle espressioni regolari</li>
+  <li>Enunciamo alcune leggi fondamentali delle espressioni regolari</li>
+  <li>Mostriamo che le espressioni regolari generano tutti e soli i
+linguaggi regolari</li>
+</ol>
+
+<h1 id="sintassi-delle-espressioni-regolari">Sintassi delle espressioni regolari</h1>
+
+<h2 id="definizione">Definizione</h2>
+
+<p>Le <strong>espressioni regolari</strong> su un alfabeto $Σ$ (abbreviate <strong>RE</strong>,
+da <strong>R</strong>egular <strong>E</strong>xpressions) sono definite induttivamente come
+segue:</p>
+
+<ul>
+  <li>$∅$ ed $\varepsilon$ sono espressioni regolari;</li>
+  <li>se $a∈Σ$, allora $a$ è un’espressione regolare;</li>
+  <li>se $E$ ed $F$ sono espressioni regolari, allora $E + F$ ed $EF$
+sono espressioni regolari;</li>
+  <li>se $E$ è un’espressione regolare, allora $E^*$ è un’espressione
+regolare.</li>
+</ul>
+
+<h2 id="convenzioni">Convenzioni</h2>
+
+<ul>
+  <li>assumiamo la <strong>precedenza</strong> degli operatori $+$ &lt; concatenazione &lt;
+${}^*$</li>
+  <li>usiamo le <strong>parentesi</strong> per disambiguare la struttura di
+un’espressione regolare</li>
+</ul>
+
+<h2 id="esempi">Esempi</h2>
+
+<ul>
+  <li>$ab + c = (ab) + c ≠ a(b + c)$</li>
+  <li>$01^\ast = 0(1^\ast) ≠ (01)^\ast$</li>
+  <li>$0 + 11^* = 0 + (1(1^*))$</li>
+</ul>
+
+<h1 id="significato-di-unespressione-regolare">Significato di un’espressione regolare</h1>
+
+<p>Se $E$ è un’espressione regolare, il <strong>linguaggio generato</strong> da $E$,
+denotato da $L(E)$, è definito per induzione sulla struttura di $E$
+come segue:</p>
+
+<p>\[
+	\begin{array}{rcll}
+		L(∅) &amp; = &amp; ∅ &amp; \text{linguaggio vuoto}
+		\newline
+		L(\varepsilon) &amp; = &amp; \set{ \varepsilon } &amp; \text{stringa vuota}
+		\newline
+		L(a) &amp; = &amp; \set{ a } &amp; \text{simbolo dell’alfabeto}
+		\newline
+		L(E + F) &amp; = &amp; L(E) ∪ L(F) &amp; \text{unione}
+		\newline
+		L(EF) &amp; = &amp; L(E)L(F) &amp; \text{concatenazione}
+		\newline
+		L(E^\ast) &amp; = &amp; L(E)^\ast &amp; \text{chiusura di Kleene}
+	\end{array}
+\]</p>
+
+<p>Diciamo che $E$ ed $F$ sono <strong>equivalenti</strong>, notazione $E = F$, se
+$L(E) = L(F)$.</p>
+
+<h2 id="esercizio">Esercizio</h2>
+
+<p>Calcolare il linguaggio generato dalle espressioni regolari $(\tA +
+\tB)^\ast$ e $(\tA\tB)^\ast$.</p>
+
+<h1 id="proprietà-delle-espressioni-regolari">Proprietà delle espressioni regolari</h1>
+
+<h2 id="unione">Unione</h2>
+
+<ul>
+  <li>commutatività: $E + F = F + E$</li>
+  <li>associatività: $E + (F + G) = (E + F) + G$</li>
+  <li>idempotenza: $E + E = E$</li>
+  <li>identità: $E + ∅ = ∅ + E = E$</li>
+</ul>
+
+<h2 id="concatenazione">Concatenazione</h2>
+
+<ul>
+  <li>associatività: $E(FG) = (EF)G$</li>
+  <li>identità: $E\varepsilon = \varepsilon E = E$</li>
+  <li>assorbimento: $E∅ = ∅E = ∅$</li>
+  <li>distributività sinistra della concatenazione sull’unione: $E(F + G) = EF + EG$</li>
+  <li>distributività destra della concatenazione sull’unione: $(E + F)G = EG + FG$</li>
+</ul>
+
+<h2 id="chiusura-di-kleene">Chiusura di Kleene</h2>
+
+<ul>
+  <li>idempotenza: $(E^\ast)^\ast = E^\ast$</li>
+  <li>casi banali: $\varepsilon^\ast = ∅^\ast = \varepsilon$</li>
+</ul>
+
+<h1 id="espressioni-e-linguaggi-regolari">Espressioni e linguaggi regolari</h1>
+
+<div class="jekyll-diagrams diagrams graphviz">
+  <p><!-- Generated by graphviz version 5.0.1 (20220820.1526)
+ -->
+<!-- Pages: 1 --></p>
+  <svg width="488pt" height="164pt" viewBox="0.00 0.00 488.00 164.34" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 160.34)">
+<!-- dfa -->
+<g id="node1" class="node">
+<title>dfa</title>
+<path fill="none" stroke="black" d="M42,-89.34C42,-89.34 12,-89.34 12,-89.34 6,-89.34 0,-83.34 0,-77.34 0,-77.34 0,-65.34 0,-65.34 0,-59.34 6,-53.34 12,-53.34 12,-53.34 42,-53.34 42,-53.34 48,-53.34 54,-59.34 54,-65.34 54,-65.34 54,-77.34 54,-77.34 54,-83.34 48,-89.34 42,-89.34" />
+<text text-anchor="middle" x="27" y="-67.64" font-family="Overlock" font-size="14.00">DFA</text>
+</g>
+<!-- nfa -->
+<g id="node2" class="node">
+<title>nfa</title>
+<path fill="none" stroke="black" d="M255,-146.34C255,-146.34 225,-146.34 225,-146.34 219,-146.34 213,-140.34 213,-134.34 213,-134.34 213,-122.34 213,-122.34 213,-116.34 219,-110.34 225,-110.34 225,-110.34 255,-110.34 255,-110.34 261,-110.34 267,-116.34 267,-122.34 267,-122.34 267,-134.34 267,-134.34 267,-140.34 261,-146.34 255,-146.34" />
+<text text-anchor="middle" x="240" y="-124.64" font-family="Overlock" font-size="14.00">NFA</text>
+</g>
+<!-- dfa&#45;&gt;nfa -->
+<g id="edge1" class="edge">
+<title>dfa&#45;&gt;nfa</title>
+<path fill="none" stroke="black" d="M36.09,-89.44C43.32,-103.18 55.36,-121.08 72,-129.34 115.19,-150.79 172.75,-143.95 207.78,-136.52" />
+<polygon fill="black" stroke="black" points="208.27,-138.2 212.78,-135.42 207.52,-134.78 208.27,-138.2" />
+<text text-anchor="middle" x="122" y="-146.74" font-family="Overlock" font-size="12.00">caso particolare di</text>
+</g>
+<!-- re -->
+<g id="node4" class="node">
+<title>re</title>
+<path fill="lightgray" stroke="black" d="M255,-92.34C255,-92.34 225,-92.34 225,-92.34 219,-92.34 213,-86.34 213,-80.34 213,-80.34 213,-68.34 213,-68.34 213,-62.34 219,-56.34 225,-56.34 225,-56.34 255,-56.34 255,-56.34 261,-56.34 267,-62.34 267,-68.34 267,-68.34 267,-80.34 267,-80.34 267,-86.34 261,-92.34 255,-92.34" />
+<text text-anchor="middle" x="240" y="-70.64" font-family="Overlock" font-size="14.00">RE</text>
+</g>
+<!-- dfa&#45;&gt;re -->
+<g id="edge6" class="edge">
+<title>dfa&#45;&gt;re</title>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M54.06,-59.47C59.85,-57.34 66.04,-55.45 72,-54.34 115.69,-46.19 128.02,-47.92 172,-54.34 183.98,-56.09 196.79,-59.51 207.97,-63.04" />
+<polygon fill="black" stroke="black" points="207.69,-64.79 212.99,-64.66 208.77,-61.46 207.69,-64.79" />
+<text text-anchor="middle" x="122" y="-57.74" font-family="Overlock" font-size="12.00">Sez. 3.2.1 del libro</text>
+</g>
+<!-- nfa&#45;&gt;dfa -->
+<g id="edge2" class="edge">
+<title>nfa&#45;&gt;dfa</title>
+<path fill="none" stroke="black" d="M212.76,-115.09C205.24,-110.97 197.14,-106.22 190,-101.34 181.4,-95.47 181.59,-90.39 172,-86.34 135.44,-70.92 89.21,-68.81 59.14,-69.46" />
+<polygon fill="black" stroke="black" points="59.04,-67.72 54.09,-69.6 59.14,-71.21 59.04,-67.72" />
+<text text-anchor="middle" x="122" y="-115.74" font-family="Overlock" font-size="12.00">costruzione per</text>
+<text text-anchor="middle" x="122" y="-102.74" font-family="Overlock" font-size="12.00">sottoinsiemi</text>
+<text text-anchor="middle" x="122" y="-89.74" font-family="Overlock" font-size="12.00">Sez. 2.3.5 del libro</text>
+</g>
+<!-- enfa -->
+<g id="node3" class="node">
+<title>enfa</title>
+<path fill="none" stroke="black" d="M468,-92.34C468,-92.34 438,-92.34 438,-92.34 432,-92.34 426,-86.34 426,-80.34 426,-80.34 426,-68.34 426,-68.34 426,-62.34 432,-56.34 438,-56.34 438,-56.34 468,-56.34 468,-56.34 474,-56.34 480,-62.34 480,-68.34 480,-68.34 480,-80.34 480,-80.34 480,-86.34 474,-92.34 468,-92.34" />
+<text text-anchor="middle" x="453" y="-70.64" font-family="Overlock" font-size="14.00">ε&#45;NFA</text>
+</g>
+<!-- nfa&#45;&gt;enfa -->
+<g id="edge4" class="edge">
+<title>nfa&#45;&gt;enfa</title>
+<path fill="none" stroke="black" d="M267.05,-127.89C300.68,-126.55 360.5,-121.53 408,-103.34 413.47,-101.25 418.96,-98.38 424.12,-95.27" />
+<polygon fill="black" stroke="black" points="425.06,-96.74 428.36,-92.6 423.2,-93.78 425.06,-96.74" />
+<text text-anchor="middle" x="358" y="-127.74" font-family="Overlock" font-size="12.00">caso particolare di</text>
+</g>
+<!-- enfa&#45;&gt;dfa -->
+<g id="edge3" class="edge">
+<title>enfa&#45;&gt;dfa</title>
+<path fill="none" stroke="black" d="M425.76,-59.93C394.51,-43.66 340.22,-18.18 290,-8.34 193.63,10.54 161.54,-4.01 72,-44.34 67.68,-46.29 63.27,-48.58 58.98,-51" />
+<polygon fill="black" stroke="black" points="57.85,-49.63 54.4,-53.65 59.6,-52.66 57.85,-49.63" />
+<text text-anchor="middle" x="240" y="-37.74" font-family="Overlock" font-size="12.00">costruzione per</text>
+<text text-anchor="middle" x="240" y="-24.74" font-family="Overlock" font-size="12.00">sottoinsiemi</text>
+<text text-anchor="middle" x="240" y="-11.74" font-family="Overlock" font-size="12.00">Sez. 2.5.5 del libro</text>
+</g>
+<!-- re&#45;&gt;enfa -->
+<g id="edge5" class="edge">
+<title>re&#45;&gt;enfa</title>
+<path fill="none" stroke="black" d="M267.3,-74.34C306.18,-74.34 378.88,-74.34 420.53,-74.34" />
+<polygon fill="black" stroke="black" points="420.7,-76.09 425.7,-74.34 420.7,-72.59 420.7,-76.09" />
+<text text-anchor="middle" x="358" y="-90.74" font-family="Overlock" font-size="12.00">slide successive</text>
+<text text-anchor="middle" x="358" y="-77.74" font-family="Overlock" font-size="12.00">Sez. 3.2.3 del libro</text>
+</g>
+</g>
+</svg>
+
+</div>
+
+<div class="skip" style="margin-top: -1rem"></div>
+
+<h2 id="conseguenza">Conseguenza</h2>
+
+<p>DFA, NFA, ε-NFA ed espressioni regolari sono approcci diversi ma
+<strong>equivalenti</strong> di definire (riconoscere, generare) linguaggi
+regolari</p>
+
+<div class="fragment ">
+  <h2 id="teorema">Teorema</h2>
+
+  <p>Per ogni DFA $A$, esiste un’espressione regolare $E$ tale che $L(A)
+= L(E)$.</p>
+
+  <h2 id="dimostrazione">Dimostrazione</h2>
+
+  <p>Si veda la Sez. 3.2.1 del libro (lettura facoltativa)</p>
+</div>
+
+<h1 id="espressione-regolare--ε-nfa-14">Espressione regolare → ε-NFA (1/4)</h1>
+
+<h2 id="teorema">Teorema</h2>
+
+<p>Data un’espressione regolare $E$, esiste un ε-NFA $A$ tale che $L(A)
+= L(E)$.</p>
+
+<h2 id="dimostrazione">Dimostrazione</h2>
+
+<p>Costruiamo $A$ per induzione sulla struttura di $E$ e per casi sulla
+sua forma, facendo in modo che l’ε-NFA ottenuto abbia sempre
+<strong>esattamente uno stato finale</strong> (quello più a destra nei diagrammi
+che seguono).</p>
+
+<h1 id="espressione-regolare--ε-nfa-24">Espressione regolare → ε-NFA (2/4)</h1>
+
+<div class="skip" style="margin-top: 1em"></div>
+
+<h2 id="caso--linguaggio-vuoto">Caso $∅$ (linguaggio vuoto)</h2>
+
+<div class="jekyll-diagrams diagrams graphviz">
+  <p><!-- Generated by graphviz version 5.0.1 (20220820.1526)
+ -->
+<!-- Pages: 1 --></p>
+  <svg width="161pt" height="52pt" viewBox="0.00 0.00 161.00 52.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 48)">
+<!-- qinit -->
+<g id="node1" class="node">
+<title>qinit</title>
+</g>
+<!-- q0 -->
+<g id="node2" class="node">
+<title>q0</title>
+<ellipse fill="none" stroke="black" cx="55" cy="-22" rx="18" ry="18" />
+</g>
+<!-- qinit&#45;&gt;q0 -->
+<g id="edge1" class="edge">
+<title>qinit&#45;&gt;q0</title>
+<path fill="none" stroke="black" d="M1.15,-22C2.82,-22 17.99,-22 31.65,-22" />
+<polygon fill="black" stroke="black" points="31.98,-23.75 36.98,-22 31.98,-20.25 31.98,-23.75" />
+</g>
+<!-- qf -->
+<g id="node3" class="node">
+<title>qf</title>
+<ellipse fill="none" stroke="black" cx="131" cy="-22" rx="18" ry="18" />
+<ellipse fill="none" stroke="black" cx="131" cy="-22" rx="22" ry="22" />
+</g>
+<!-- q0&#45;&gt;qf -->
+</g>
+</svg>
+
+</div>
+
+<div class="skip" style="margin-top: 1em"></div>
+
+<div class="fragment ">
+  <h2 id="caso-varepsilon-linguaggio-che-contiene-la-sola-stringa-vuota">Caso $\varepsilon$ (linguaggio che contiene la sola stringa vuota)</h2>
+
+  <div class="jekyll-diagrams diagrams graphviz">
+    <p><!-- Generated by graphviz version 5.0.1 (20220820.1526)
+ -->
+<!-- Pages: 1 --></p>
+    <svg width="170pt" height="52pt" viewBox="0.00 0.00 170.00 52.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 48)">
+<!-- qinit -->
+<g id="node1" class="node">
+<title>qinit</title>
+</g>
+<!-- q0 -->
+<g id="node2" class="node">
+<title>q0</title>
+<ellipse fill="none" stroke="black" cx="56" cy="-22" rx="18" ry="18" />
+</g>
+<!-- qinit&#45;&gt;q0 -->
+<g id="edge1" class="edge">
+<title>qinit&#45;&gt;q0</title>
+<path fill="none" stroke="black" d="M1.15,-22C2.88,-22 18.79,-22 32.87,-22" />
+<polygon fill="black" stroke="black" points="32.94,-23.75 37.94,-22 32.94,-20.25 32.94,-23.75" />
+</g>
+<!-- qf -->
+<g id="node3" class="node">
+<title>qf</title>
+<ellipse fill="none" stroke="black" cx="140" cy="-22" rx="18" ry="18" />
+<ellipse fill="none" stroke="black" cx="140" cy="-22" rx="22" ry="22" />
+</g>
+<!-- q0&#45;&gt;qf -->
+<g id="edge2" class="edge">
+<title>q0&#45;&gt;qf</title>
+<path fill="none" stroke="black" d="M74.39,-22C85.5,-22 100.11,-22 112.63,-22" />
+<polygon fill="black" stroke="black" points="112.85,-23.75 117.85,-22 112.85,-20.25 112.85,-23.75" />
+<text text-anchor="middle" x="96" y="-25.8" font-family="Overlock" font-size="14.00">ε</text>
+</g>
+</g>
+</svg>
+
+  </div>
+
+</div>
+
+<div class="skip" style="margin-top: 1em"></div>
+
+<div class="fragment ">
+  <h2 id="caso-a-linguaggio-che-contiene-solo-a">Caso $a$ (linguaggio che contiene solo $a$)</h2>
+
+  <div class="jekyll-diagrams diagrams graphviz">
+    <p><!-- Generated by graphviz version 5.0.1 (20220820.1526)
+ -->
+<!-- Pages: 1 --></p>
+    <svg width="170pt" height="52pt" viewBox="0.00 0.00 170.00 52.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 48)">
+<!-- qinit -->
+<g id="node1" class="node">
+<title>qinit</title>
+</g>
+<!-- q0 -->
+<g id="node2" class="node">
+<title>q0</title>
+<ellipse fill="none" stroke="black" cx="56" cy="-22" rx="18" ry="18" />
+</g>
+<!-- qinit&#45;&gt;q0 -->
+<g id="edge1" class="edge">
+<title>qinit&#45;&gt;q0</title>
+<path fill="none" stroke="black" d="M1.15,-22C2.88,-22 18.79,-22 32.87,-22" />
+<polygon fill="black" stroke="black" points="32.94,-23.75 37.94,-22 32.94,-20.25 32.94,-23.75" />
+</g>
+<!-- qf -->
+<g id="node3" class="node">
+<title>qf</title>
+<ellipse fill="none" stroke="black" cx="140" cy="-22" rx="18" ry="18" />
+<ellipse fill="none" stroke="black" cx="140" cy="-22" rx="22" ry="22" />
+</g>
+<!-- q0&#45;&gt;qf -->
+<g id="edge2" class="edge">
+<title>q0&#45;&gt;qf</title>
+<path fill="none" stroke="black" d="M74.39,-22C85.5,-22 100.11,-22 112.63,-22" />
+<polygon fill="black" stroke="black" points="112.85,-23.75 117.85,-22 112.85,-20.25 112.85,-23.75" />
+<text text-anchor="middle" x="96" y="-25.8" font-family="Overlock" font-size="14.00">a</text>
+</g>
+</g>
+</svg>
+
+  </div>
+
+</div>
+
+<h1 id="espressione-regolare--ε-nfa-34">Espressione regolare → ε-NFA (3/4)</h1>
+
+<h2 id="caso-e--f-unione">Caso $E + F$ (unione)</h2>
+
+<div class="jekyll-diagrams diagrams graphviz">
+  <p><!-- Generated by graphviz version 5.0.1 (20220820.1526)
+ -->
+<!-- Pages: 1 --></p>
+  <svg width="377pt" height="182pt" viewBox="0.00 0.00 377.00 182.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 178)">
+<g id="clust1" class="cluster">
+<title>cluster_e</title>
+<path fill="none" stroke="black" d="M122,-91C122,-91 277,-91 277,-91 283,-91 289,-97 289,-103 289,-103 289,-154 289,-154 289,-160 283,-166 277,-166 277,-166 122,-166 122,-166 116,-166 110,-160 110,-154 110,-154 110,-103 110,-103 110,-97 116,-91 122,-91" />
+<text text-anchor="middle" x="199.5" y="-150.8" font-family="Overlock" font-size="14.00">automa che riconosce L(E)</text>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_f</title>
+<path fill="none" stroke="black" d="M123,-8C123,-8 277,-8 277,-8 283,-8 289,-14 289,-20 289,-20 289,-71 289,-71 289,-77 283,-83 277,-83 277,-83 123,-83 123,-83 117,-83 111,-77 111,-71 111,-71 111,-20 111,-20 111,-14 117,-8 123,-8" />
+<text text-anchor="middle" x="200" y="-67.8" font-family="Overlock" font-size="14.00">automa che riconosce L(F)</text>
+</g>
+<!-- qinit -->
+<g id="node1" class="node">
+<title>qinit</title>
+</g>
+<!-- q0 -->
+<g id="node2" class="node">
+<title>q0</title>
+<ellipse fill="none" stroke="black" cx="56" cy="-75" rx="18" ry="18" />
+</g>
+<!-- qinit&#45;&gt;q0 -->
+<g id="edge3" class="edge">
+<title>qinit&#45;&gt;q0</title>
+<path fill="none" stroke="black" d="M1.15,-75C2.88,-75 18.79,-75 32.87,-75" />
+<polygon fill="black" stroke="black" points="32.94,-76.75 37.94,-75 32.94,-73.25 32.94,-76.75" />
+</g>
+<!-- q10 -->
+<g id="node4" class="node">
+<title>q10</title>
+<ellipse fill="none" stroke="black" cx="163" cy="-117" rx="18" ry="18" />
+</g>
+<!-- q0&#45;&gt;q10 -->
+<g id="edge4" class="edge">
+<title>q0&#45;&gt;q10</title>
+<path fill="none" stroke="black" d="M72.95,-81.38C91.14,-88.66 120.96,-100.58 141.02,-108.61" />
+<polygon fill="black" stroke="black" points="140.61,-110.33 145.9,-110.56 141.91,-107.08 140.61,-110.33" />
+<text text-anchor="middle" x="96" y="-94.8" font-family="Overlock" font-size="14.00">ε</text>
+</g>
+<!-- q20 -->
+<g id="node6" class="node">
+<title>q20</title>
+<ellipse fill="none" stroke="black" cx="163" cy="-34" rx="18" ry="18" />
+</g>
+<!-- q0&#45;&gt;q20 -->
+<g id="edge5" class="edge">
+<title>q0&#45;&gt;q20</title>
+<path fill="none" stroke="black" d="M72.95,-68.77C91.14,-61.67 120.96,-50.02 141.02,-42.19" />
+<polygon fill="black" stroke="black" points="141.88,-43.73 145.9,-40.29 140.61,-40.47 141.88,-43.73" />
+<text text-anchor="middle" x="96" y="-63.8" font-family="Overlock" font-size="14.00">ε</text>
+</g>
+<!-- qf -->
+<g id="node3" class="node">
+<title>qf</title>
+<ellipse fill="none" stroke="black" cx="347" cy="-80" rx="18" ry="18" />
+<ellipse fill="none" stroke="black" cx="347" cy="-80" rx="22" ry="22" />
+</g>
+<!-- q12 -->
+<g id="node5" class="node">
+<title>q12</title>
+<ellipse fill="none" stroke="black" cx="236" cy="-117" rx="18" ry="18" />
+</g>
+<!-- q10&#45;&gt;q12 -->
+<g id="edge1" class="edge">
+<title>q10&#45;&gt;q12</title>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M181.19,-117C190.69,-117 202.61,-117 212.81,-117" />
+<polygon fill="black" stroke="black" points="212.97,-118.75 217.97,-117 212.97,-115.25 212.97,-118.75" />
+</g>
+<!-- q12&#45;&gt;qf -->
+<g id="edge6" class="edge">
+<title>q12&#45;&gt;qf</title>
+<path fill="none" stroke="black" d="M253.55,-111.38C271.53,-105.28 300.43,-95.47 321.14,-88.44" />
+<polygon fill="black" stroke="black" points="321.78,-90.07 325.95,-86.81 320.65,-86.76 321.78,-90.07" />
+<text text-anchor="middle" x="303" y="-98.8" font-family="Overlock" font-size="14.00">ε</text>
+</g>
+<!-- q22 -->
+<g id="node7" class="node">
+<title>q22</title>
+<ellipse fill="none" stroke="black" cx="236" cy="-34" rx="18" ry="18" />
+</g>
+<!-- q20&#45;&gt;q22 -->
+<g id="edge2" class="edge">
+<title>q20&#45;&gt;q22</title>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M181.19,-34C190.69,-34 202.61,-34 212.81,-34" />
+<polygon fill="black" stroke="black" points="212.97,-35.75 217.97,-34 212.97,-32.25 212.97,-35.75" />
+</g>
+<!-- q22&#45;&gt;qf -->
+<g id="edge7" class="edge">
+<title>q22&#45;&gt;qf</title>
+<path fill="none" stroke="black" d="M253.08,-40.79C271.18,-48.42 300.76,-60.91 321.68,-69.74" />
+<polygon fill="black" stroke="black" points="321.25,-71.45 326.53,-71.78 322.61,-68.23 321.25,-71.45" />
+<text text-anchor="middle" x="303" y="-65.8" font-family="Overlock" font-size="14.00">ε</text>
+</g>
+</g>
+</svg>
+
+</div>
+
+<div class="fragment ">
+  <h2 id="caso-ef-concatenazione">Caso $EF$ (concatenazione)</h2>
+
+  <div class="jekyll-diagrams diagrams graphviz">
+    <p><!-- Generated by graphviz version 5.0.1 (20220820.1526)
+ -->
+<!-- Pages: 1 --></p>
+    <svg width="423pt" height="107pt" viewBox="0.00 0.00 423.00 107.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 103)">
+<g id="clust1" class="cluster">
+<title>cluster_e</title>
+<path fill="none" stroke="black" d="M42,-12C42,-12 197,-12 197,-12 203,-12 209,-18 209,-24 209,-24 209,-75 209,-75 209,-81 203,-87 197,-87 197,-87 42,-87 42,-87 36,-87 30,-81 30,-75 30,-75 30,-24 30,-24 30,-18 36,-12 42,-12" />
+<text text-anchor="middle" x="119.5" y="-71.8" font-family="Overlock" font-size="14.00">automa che riconosce L(E)</text>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_f</title>
+<path fill="none" stroke="black" d="M249,-8C249,-8 403,-8 403,-8 409,-8 415,-14 415,-20 415,-20 415,-79 415,-79 415,-85 409,-91 403,-91 403,-91 249,-91 249,-91 243,-91 237,-85 237,-79 237,-79 237,-20 237,-20 237,-14 243,-8 249,-8" />
+<text text-anchor="middle" x="326" y="-75.8" font-family="Overlock" font-size="14.00">automa che riconosce L(F)</text>
+</g>
+<!-- qinit -->
+<g id="node1" class="node">
+<title>qinit</title>
+</g>
+<!-- q10 -->
+<g id="node2" class="node">
+<title>q10</title>
+<ellipse fill="none" stroke="black" cx="83" cy="-38" rx="18" ry="18" />
+</g>
+<!-- qinit&#45;&gt;q10 -->
+<g id="edge3" class="edge">
+<title>qinit&#45;&gt;q10</title>
+<path fill="none" stroke="black" d="M1.06,-38C2.65,-38 36.38,-38 59.79,-38" />
+<polygon fill="black" stroke="black" points="59.9,-39.75 64.9,-38 59.9,-36.25 59.9,-39.75" />
+</g>
+<!-- q12 -->
+<g id="node3" class="node">
+<title>q12</title>
+<ellipse fill="none" stroke="black" cx="156" cy="-38" rx="18" ry="18" />
+</g>
+<!-- q10&#45;&gt;q12 -->
+<g id="edge1" class="edge">
+<title>q10&#45;&gt;q12</title>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M101.19,-38C110.69,-38 122.61,-38 132.81,-38" />
+<polygon fill="black" stroke="black" points="132.97,-39.75 137.97,-38 132.97,-36.25 132.97,-39.75" />
+</g>
+<!-- q20 -->
+<g id="node4" class="node">
+<title>q20</title>
+<ellipse fill="none" stroke="black" cx="285" cy="-38" rx="18" ry="18" />
+</g>
+<!-- q12&#45;&gt;q20 -->
+<g id="edge4" class="edge">
+<title>q12&#45;&gt;q20</title>
+<path fill="none" stroke="black" d="M174.13,-38C196.76,-38 236.66,-38 261.64,-38" />
+<polygon fill="black" stroke="black" points="261.74,-39.75 266.74,-38 261.74,-36.25 261.74,-39.75" />
+<text text-anchor="middle" x="223" y="-41.8" font-family="Overlock" font-size="14.00">ε</text>
+</g>
+<!-- q22 -->
+<g id="node5" class="node">
+<title>q22</title>
+<ellipse fill="none" stroke="black" cx="362" cy="-38" rx="18" ry="18" />
+<ellipse fill="none" stroke="black" cx="362" cy="-38" rx="22" ry="22" />
+</g>
+<!-- q20&#45;&gt;q22 -->
+<g id="edge2" class="edge">
+<title>q20&#45;&gt;q22</title>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M303.02,-38C312.38,-38 324.19,-38 334.71,-38" />
+<polygon fill="black" stroke="black" points="334.76,-39.75 339.76,-38 334.76,-36.25 334.76,-39.75" />
+</g>
+</g>
+</svg>
+
+  </div>
+
+</div>
+
+<h1 id="espressione-regolare--ε-nfa-44">Espressione regolare → ε-NFA (4/4)</h1>
+
+<h2 id="caso-east-chiusura-di-kleene">Caso $E^\ast$ (chiusura di Kleene)</h2>
+
+<div class="jekyll-diagrams diagrams graphviz">
+  <p><!-- Generated by graphviz version 5.0.1 (20220820.1526)
+ -->
+<!-- Pages: 1 --></p>
+  <svg width="377pt" height="124pt" viewBox="0.00 0.00 377.00 124.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 120)">
+<g id="clust1" class="cluster">
+<title>cluster_e</title>
+<path fill="none" stroke="black" d="M122,-29C122,-29 277,-29 277,-29 283,-29 289,-35 289,-41 289,-41 289,-96 289,-96 289,-102 283,-108 277,-108 277,-108 122,-108 122,-108 116,-108 110,-102 110,-96 110,-96 110,-41 110,-41 110,-35 116,-29 122,-29" />
+<text text-anchor="middle" x="199.5" y="-92.8" font-family="Overlock" font-size="14.00">automa che riconosce L(E)</text>
+</g>
+<!-- qinit -->
+<g id="node1" class="node">
+<title>qinit</title>
+</g>
+<!-- q0 -->
+<g id="node2" class="node">
+<title>q0</title>
+<ellipse fill="none" stroke="black" cx="56" cy="-22" rx="18" ry="18" />
+</g>
+<!-- qinit&#45;&gt;q0 -->
+<g id="edge2" class="edge">
+<title>qinit&#45;&gt;q0</title>
+<path fill="none" stroke="black" d="M1.15,-22C2.88,-22 18.79,-22 32.87,-22" />
+<polygon fill="black" stroke="black" points="32.94,-23.75 37.94,-22 32.94,-20.25 32.94,-23.75" />
+</g>
+<!-- qf -->
+<g id="node3" class="node">
+<title>qf</title>
+<ellipse fill="none" stroke="black" cx="347" cy="-22" rx="18" ry="18" />
+<ellipse fill="none" stroke="black" cx="347" cy="-22" rx="22" ry="22" />
+</g>
+<!-- q0&#45;&gt;qf -->
+<g id="edge6" class="edge">
+<title>q0&#45;&gt;qf</title>
+<path fill="none" stroke="black" d="M73.95,-19.56C99.93,-15.95 151.2,-9.37 195,-7 239.01,-4.61 290,-11.76 320.04,-16.99" />
+<polygon fill="black" stroke="black" points="319.81,-18.72 325.04,-17.88 320.42,-15.28 319.81,-18.72" />
+<text text-anchor="middle" x="199" y="-10.8" font-family="Overlock" font-size="14.00">ε</text>
+</g>
+<!-- q10 -->
+<g id="node4" class="node">
+<title>q10</title>
+<ellipse fill="none" stroke="black" cx="159" cy="-59" rx="18" ry="18" />
+</g>
+<!-- q0&#45;&gt;q10 -->
+<g id="edge3" class="edge">
+<title>q0&#45;&gt;q10</title>
+<path fill="none" stroke="black" d="M73.23,-27.94C90.46,-34.26 117.76,-44.26 136.71,-51.2" />
+<polygon fill="black" stroke="black" points="136.52,-52.99 141.81,-53.07 137.72,-49.71 136.52,-52.99" />
+<text text-anchor="middle" x="96" y="-40.8" font-family="Overlock" font-size="14.00">ε</text>
+</g>
+<!-- q12 -->
+<g id="node5" class="node">
+<title>q12</title>
+<ellipse fill="none" stroke="black" cx="239" cy="-59" rx="18" ry="18" />
+</g>
+<!-- q10&#45;&gt;q12 -->
+<g id="edge1" class="edge">
+<title>q10&#45;&gt;q12</title>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M175.34,-66.7C183.47,-69.9 193.67,-72.55 203,-71 207.75,-70.21 212.71,-68.85 217.36,-67.33" />
+<polygon fill="black" stroke="black" points="218.11,-68.93 222.26,-65.63 216.96,-65.62 218.11,-68.93" />
+</g>
+<!-- q12&#45;&gt;qf -->
+<g id="edge4" class="edge">
+<title>q12&#45;&gt;qf</title>
+<path fill="none" stroke="black" d="M256.56,-53.22C273.85,-47.19 301.15,-37.65 321.05,-30.71" />
+<polygon fill="black" stroke="black" points="321.79,-32.3 325.94,-29 320.64,-29 321.79,-32.3" />
+<text text-anchor="middle" x="303" y="-41.8" font-family="Overlock" font-size="14.00">ε</text>
+</g>
+<!-- q12&#45;&gt;q10 -->
+<g id="edge5" class="edge">
+<title>q12:s&#45;&gt;q10:s</title>
+<path fill="none" stroke="black" d="M239,-40C239,-24.03 174.42,-22.41 161.31,-35.13" />
+<polygon fill="black" stroke="black" points="159.56,-34.73 159,-40 162.72,-36.23 159.56,-34.73" />
+<text text-anchor="middle" x="199" y="-29.8" font-family="Overlock" font-size="14.00">ε</text>
+</g>
+</g>
+</svg>
+
+</div>
+
+<h1 id="esempio-sequenze-di-a-seguite-da-sequenze-di-b">Esempio: sequenze di <code class="language-plaintext highlighter-rouge">a</code> seguite da sequenze di <code class="language-plaintext highlighter-rouge">b</code></h1>
+
+<p>\[
+	\begin{array}{rcl}
+		L(\tA^\ast\tB^\ast) &amp; = &amp; L(\tA^\ast)L(\tB^\ast)
+		\newline
+		&amp; = &amp; L(\tA)^\ast L(\tB)^\ast
+		\newline
+		&amp; = &amp; \set\tA^\ast\set\tB^\ast
+		\newline
+		&amp; = &amp; \set{\varepsilon,\tA,\tA\tA,\tA\tA\tA,…}\set{\varepsilon,\tB,\tB\tB,\tB\tB\tB,…}
+		\newline
+		&amp; = &amp; \set{\varepsilon,\tA,\tB,\tA\tA,\tA\tB,\tB\tB,\tA\tA\tA,\tA\tA\tB,\tA\tB\tB,\tB\tB\tB,…}
+	\end{array}
+\]</p>
+
+<h1 id="esempio-0-oppure-sequenze-non-vuote-di-1">Esempio: <code class="language-plaintext highlighter-rouge">0</code> oppure sequenze non vuote di <code class="language-plaintext highlighter-rouge">1</code></h1>
+
+<p>\[
+	\begin{array}{rcl}
+		L(0 + 11^\ast) &amp; = &amp; L(0) \cup L(11^\ast)
+		\newline
+		&amp; = &amp; \set{0} \cup L(1)L(1^\ast)
+		\newline
+		&amp; = &amp; \set{0} \cup \set{1}L(1)^\ast
+		\newline
+		&amp; = &amp; \set{0} \cup \set{1}\set{1}^\ast
+		\newline
+		&amp; = &amp; \set{0} \cup \set{1}\set{\varepsilon, 1, 11, 111, …}
+		\newline
+		&amp; = &amp; \set{0} ∪ \set{1, 11, 111, 1111, …}
+	\end{array}
+\]</p>
+
+<h1 id="esempio-ogni-a-è-seguita-da-bb">Esempio: ogni <code class="language-plaintext highlighter-rouge">a</code> è seguita da <code class="language-plaintext highlighter-rouge">bb</code></h1>
+
+<p>\[
+	\begin{array}{rcl}
+		L((\tA\tB\tB + \tB)^\ast)
+		&amp; = &amp; L(\tA\tB\tB + \tB)^\ast
+		\newline
+		&amp; = &amp; (L(\tA\tB\tB) \cup L(\tB))^\ast
+		\newline
+		&amp; = &amp; (L(\tA)L(\tB)L(\tB) \cup L(\tB))^\ast
+		\newline
+		&amp; = &amp; (\set\tA\set\tB\set\tB \cup \set\tB)^\ast
+		\newline
+		&amp; = &amp; (\set{\tA\tB\tB} \cup \set\tB)^\ast
+		\newline
+		&amp; = &amp; \set{\tA\tB\tB, \tB}^\ast
+	\end{array}
+\]</p>
+
+<h1 id="esempio-esiste-a-seguita-da-bb">Esempio: esiste <code class="language-plaintext highlighter-rouge">a</code> seguita da <code class="language-plaintext highlighter-rouge">bb</code></h1>
+
+<p>\[
+	\begin{array}{rcl}
+		L((\tA + \tB)^\ast\tA\tB\tB(\tA + \tB)^\ast)
+		&amp; = &amp; L((\tA + \tB)^\ast)L(\tA\tB\tB)L((\tA + \tB)^\ast)
+		\newline
+		&amp; = &amp; L(\tA + \tB)^\ast L(\tA)L(\tB)L(\tB)L(\tA + \tB)^\ast
+		\newline
+		&amp; = &amp; (L(\tA) \cup L(\tB))^\ast L(\tA)L(\tB)(L(\tA) \cup L(\tB))^\ast
+		\newline
+		&amp; = &amp; (\set\tA \cup \set\tB)^\ast\set\tA\set\tB\set\tB(\set\tA \cup \set\tB)^\ast
+		\newline
+		&amp; = &amp; \set{\tA,\tB}^\ast\set{\tA\tB\tB}\set{\tA,\tB}^\ast
+		\newline
+		&amp; = &amp; \set{\varepsilon,\tA,\tB,\tA\tA,\tA\tB,\tB\tA,\tB\tB,…}\set{\tA\tB\tB}\set{\varepsilon,\tA,\tB,\tA\tA,\tA\tB,\tB\tA,\tB\tB,…}
+	\end{array}
+\]</p>
+
+<h1 id="esercizi-sulla-definizione-di-espressioni-regolari">Esercizi sulla definizione di espressioni regolari</h1>
+
+<p>Definire espressioni regolari che generino i seguenti linguaggi:</p>
+
+<ol>
+  <li>stringhe di <code class="language-plaintext highlighter-rouge">a</code>, <code class="language-plaintext highlighter-rouge">b</code> e <code class="language-plaintext highlighter-rouge">c</code> che iniziano con due <code class="language-plaintext highlighter-rouge">a</code> e finiscono
+con due <code class="language-plaintext highlighter-rouge">b</code></li>
+  <li>stringhe di <code class="language-plaintext highlighter-rouge">0</code> e <code class="language-plaintext highlighter-rouge">1</code> la cui lunghezza è un multiplo di 3</li>
+  <li>stringhe di <code class="language-plaintext highlighter-rouge">0</code> e <code class="language-plaintext highlighter-rouge">1</code> con un numero pari di <code class="language-plaintext highlighter-rouge">0</code></li>
+  <li>stringhe di <code class="language-plaintext highlighter-rouge">a</code>, <code class="language-plaintext highlighter-rouge">b</code> e <code class="language-plaintext highlighter-rouge">c</code> che <strong>non contengono</strong> la sottostringa
+<code class="language-plaintext highlighter-rouge">ab</code></li>
+  <li>costanti numeriche binarie pari senza <code class="language-plaintext highlighter-rouge">0</code> inutili a sinistra
+(es. <code class="language-plaintext highlighter-rouge">0</code>, <code class="language-plaintext highlighter-rouge">10</code>, ma non <code class="language-plaintext highlighter-rouge">010</code> o <code class="language-plaintext highlighter-rouge">11</code>)</li>
+  <li>costanti numeriche decimali con virgola facoltativa (es. <code class="language-plaintext highlighter-rouge">42</code>,
+<code class="language-plaintext highlighter-rouge">.5</code>, <code class="language-plaintext highlighter-rouge">12.3</code>, <code class="language-plaintext highlighter-rouge">12.</code> ma non <code class="language-plaintext highlighter-rouge">.</code>)</li>
+</ol>
+
+<h1 id="esercizi-sulla-conversione-di-espressione-regolari">Esercizi sulla conversione di espressione regolari</h1>
+
+<p>Convertire le seguenti espressioni regolari in ε-NFA e gli automi
+ottenuti in DFA:</p>
+
+<ol>
+  <li>$(a + b)^\ast$</li>
+  <li>$(ab)^\ast$</li>
+  <li>$a^\ast b^\ast$</li>
+  <li>$a^\ast + b^\ast$</li>
+</ol>
+
+      </div>
+    </div>
+    <script type="text/javascript" src="../js/slider.js"></script>
+    <script type="text/javascript" src="../assets/reveal/reveal.js"></script>
+    <script>
+      initialize_slider();
+      Reveal.initialize({
+	  controls:    false,  // No control arrows
+	  slideNumber: 'c/t',  // Print slide number
+	  center:      false,  // Do not align slide vertically
+	  progress:    false,  // Do not display progress bar
+	  hash:        true,   // Store slide number in URL
+	  touch:       true,   // Enables touch navigation
+	  transition:  'none', // Transition mode
+	  transitionSpeed: 'fast',
+	  pdfSeparateFragments: true,
+	  pdfMaxPagesPerSlide: 1,
+	  pdfPageHeightOffset: -1,
+	  width: 846,
+	  height: 600,
+	  margin: 0.05,
+      });
+    </script>
+    <script type="text/javascript" src="../js/mathjax.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  </body>
+</html>
