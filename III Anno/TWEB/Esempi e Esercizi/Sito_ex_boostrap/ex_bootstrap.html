@@ -8,56 +8,53 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-sm bg-dark">
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <div class="container-fluid">
+            <img class="rounded-pill navbar-branD" width="80" src="icona-lupo.jpg" alt="Logo">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link text-primary" href="#"> Nav-Button 1 </a></li>
+                    <li class="nav-item"><a class="nav-link text-primary" href="#"> Nav-Button 2 </a></li>
+                    <li class="nav-item"><a class="nav-link text-primary" href="#"> Nav-Button 3 </a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-    <div class="container-fluid">
-        <img class="rounded-pill navbar-brand" src="icona-lupo.jpg" alt="Logo">
-        <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link text-primary" href="#">Nav-Button 1</a></li>
-            <li class="nav-item"><a class="nav-link text-primary" href="#">Nav-Button 2</a></li>
-            <li class="nav-item"><a class="nav-link text-primary" href="#">Nav-Button 3</a></li>
-        </ul>
+    <hr class="container">
+
+    <div class="container p-1 my-2">
+        <div class="container text-center text-bg-primary"> Container Centrato </div>
     </div>
 
-</nav>
+    <hr class="container">
 
-    <div class="container text-center bg-primary">ee</div>
-
-    <div class="container my-3">
+    <div class="container my-2">
         <div class="row">
-            <div class="col-sm text-center bg-info">3333</div>
-            <div class="col-sm text-center bg-warning">3333</div>
-            <div class="col-sm text-center bg-danger">3333</div>
+            <div class="col-sm py-3 text-center text-bg-info">    Colonna 1 </div>
+            <div class="col-sm py-3 text-center text-bg-warning"> Colonna 2 </div>
+            <div class="col-sm py-3 text-center text-bg-danger">  Colonna 3 </div>
         </div>
     </div>
 
+    <hr class="container">
+
     <table class=" container table table-striped table-hover">
         <thead>
-            <tr>
-                <th> ciao </th>
-                <th> ciao </th>
-                <th> ciao </th>
-            </tr>
+            <tr><th> Intestazione </th> <th> Intestazione </th> <th> Intestazione </th></tr>
         </thead>
         <tbody>
-            <tr>
-                <td> dsdswdadasd</td>
-                <td> dsdswdadasd</td>
-                <td> dsdswdadasd</td>
-            </tr>
-            <tr>
-                <td> dsdswdadasd</td>
-                <td> dsdswdadasd</td>
-                <td> dsdswdadasd</td>
-            </tr>
-            <tr>
-                <td> dsdswdadasd</td>
-                <td> dsdswdadasd</td>
-                <td> dsdswdadasd</td>
-            </tr>
+            <tr><td> testo        </td> <td> testo        </td> <td> testo          </td></tr>
+            <tr><td> testo        </td> <td> testo        </td> <td> testo          </td></tr>
+            <tr><td> testo        </td> <td> testo        </td> <td> testo          </td></tr>
         </tbody>
 
     </table>
+
+    <hr class="container">
 
     <div class="container">
         <div class="row">
@@ -67,11 +64,13 @@
         </div>
     </div>
 
+    <hr class="container">
+
     <div class="container my-3">
-        <div class="alert alert-success"> we</div>
-        <div class="alert alert-success"> we</div>
-        <div class="alert alert-success"> we</div>
-        <div class="alert alert-success"> we</div>
+        <div class="alert alert-danger">   Allert Danger    </div>
+        <div class="alert alert-warning">  Allert Warning   </div>
+        <div class="alert alert-success">  Allert Success   </div>
+        <div class="alert alert-info">     Allert Info      </div>
     </div>
 
     <div class="container">
@@ -79,41 +78,46 @@
             Modal
         </button>
     </div>
-
     <div class="modal" id="myMdl">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Title</h4>
+                    <h4 class="modal-title"> Title </h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     Furto incondizionato di dati
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Accept</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal"> Accept </button>
                 </div>
             </div>
         </div>
     </div>
 
+    <hr class="container">
+
     <div class="container my-2">
-        <button type="button" class="btn btn-primary">Button-1</button>
-        <button type="button" class="btn btn-secondary">Button-2</button>
-        <button type="button" class="btn btn-success">Button-3</button>
+        <button type="button" class="btn btn-primary">   Button-1 </button>
+        <button type="button" class="btn btn-secondary"> Button-2 </button>
+        <button type="button" class="btn btn-success">   Button-3 </button>
 
         <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown"> Dropdown </button>
         <ul class="dropdown-menu">
-            <li><a class="dropdown-item active">Item</a></li>
-            <li><a class="dropdown-item">Item</a></li>
-            <li><a class="dropdown-item">Item</a></li>
+            <li><a class="dropdown-item active">  Item </a></li>
+            <li><a class="dropdown-item">         Item </a></li>
+            <li><a class="dropdown-item">         Item </a></li>
         </ul>
 
     </div>
 
+    <hr class="container">
+
     <div class="container my-2">
-        <button class="btn btn-danger" data-bs-toggle="collapse" data-bs-target="#demo">Collapsible</button>
-        <div id="demo" class="collapse">Lorem ipsum dolor text...</div>
+        <button class="btn btn-danger" data-bs-toggle="collapse" data-bs-target="#demo"> Collapsible </button>
+        <div id="demo" class="collapse">
+            Lorem ipsum dolor text...
+        </div>
     </div>
 
 
