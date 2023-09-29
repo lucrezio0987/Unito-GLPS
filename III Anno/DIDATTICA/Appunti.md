@@ -20,3 +20,35 @@ contiende delle "direttive" per
  - __Paradigma razionalista__
  - __Paradigma tecnocratico__
  - __Paradigma scientifico__
+
+## Panoramica: Istruzione a scuola (sembra non sia da studiare)
+
+ - Organizzazione sistema scolastico
+ - Accesso all'insegnamento:
+  1. Titolo di studio
+  2. Abilitazione
+
+ diviso in classi di concorso, a cui si può accedere in base a CFU (prima 24, ora 60).
+
+ CIFIS (Centro formazione insegnati piemonte): pagina di riferimento che orgnaizza i corsi per i CFU.
+
+### Indicazioni didattiche ministeriali ( cosa serve per insegnare )
+  [file:///home/lucrezio0987/Documenti/Unito-GLPS/III Anno/DIDATTICA/Slides/CINI_Proposta-Indicazioni-Nazionali-Informatica-Scuola.pdf]
+
+  - Obbiettivi di Apprendimento:
+
+    + Scuola Primaria:
+      1. Algoritmi
+      2. Programmazione
+      3. Dati e Informazione
+      4. Consapevolezza Digitale
+      5. Creatività Digitale
+
+    + Scuola Secondaria:
+
+
+    > 1° Consegna
+    ```
+      Sfogliando le indicazioni nazionali, ragionare su "quella che viene venduta come informatica ma non lo è" e "ciò che è informatica, ma non viene trattata come tale".
+      ```
+    [file:///home/lucrezio0987/Documenti/Unito-GLPS/III Anno/DIDATTICA/Slides/0. MTDI Intro-1.pdf]
