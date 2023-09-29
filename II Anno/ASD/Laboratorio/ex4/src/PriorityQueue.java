@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 
 /*public interface  AbstractQueue<E> {
@@ -47,6 +48,7 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
         return true;
       }
       return false;
+
     }
 
     @Override
@@ -133,6 +135,17 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
       } 
   }
 */
+
+public boolean addAll(Collection<? extends E> elements) {
+  boolean modified = false;
+  for (E e : elements) {
+      if (push(e)) {
+          modified = true;
+      }
+  }
+  return modified;
+}
+
 
     @Override
     public String toString() {

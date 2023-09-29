@@ -237,7 +237,7 @@ public class Grafo<E extends Comparable<E>> {
   public void MinForestPrim() { // TODO
     // IMPLEMENTAZIONE ALGORITMO di PRIM per calcolare la "minima foresta
     // ricoprente"
-    if (!diretto) {
+    if (diretto) {
       throw new UnsupportedOperationException("L'algoritmo di Prim è applicabile solo a grafi non diretti.");
     }
 
@@ -248,24 +248,26 @@ public class Grafo<E extends Comparable<E>> {
     visitedNodes.add(startNode);
     minHeap.addAll(hashMap.get(startNode));
 
-    while (!minHeap.isEmpty() && visitedNodes.size() < NodesNumber) {
-      Arch<E> minArch = minHeap.poll();
-      Node<E> sourceNode = new Node<>(minArch.getSorgente());
-      Node<E> destNode = new Node<>(minArch.getDestinazione());
+    while (!minHeap.empty() && visitedNodes.size() < NodesNumber) {
+      //System.out.println("arr");
+        Arch<E> minArch = minHeap.top();
+        Node<E> sourceNode = new Node<>(minArch.getSorgente());
+        Node<E> destNode = new Node<>(minArch.getDestinazione());
 
-      if (!visitedNodes.contains(destNode)) {
-        visitedNodes.add(destNode);
-        System.out.println("Added edge: " + sourceNode.getVal() + " -> " + destNode.getVal() +
-            " (Distance: " + minArch.getDistance() + ")");
+        if (!visitedNodes.contains(destNode)) {
+            visitedNodes.add(destNode);
+            System.out.println("Added edge: " + sourceNode.getVal() + " -> " + destNode.getVal() +
+                    " (Distance: " + minArch.getDistance() + ")");
 
-        // Add only the adjacent edges of the newly added node to the min heap
-        ArrayList<Arch<E>> adjacentEdges = hashMap.get(destNode);
-        for (Arch<E> adjacentArch : adjacentEdges) {
-          if (!visitedNodes.contains(new Node<>(adjacentArch.getDestinazione()))) {
-            minHeap.add(adjacentArch);
-          }
+            // Aggiungi solo gli archi adiacenti del nodo appena aggiunto alla coda a priorità
+            ArrayList<Arch<E>> adjacentEdges = hashMap.get(destNode);
+            for (Arch<E> adjacentArch : adjacentEdges) {
+                if (!visitedNodes.contains(new Node<>(adjacentArch.getDestinazione()))) {
+                    minHeap.push(adjacentArch);
+                }
+            }
+            
         }
-      }
     }
   }
 
@@ -273,7 +275,6 @@ public class Grafo<E extends Comparable<E>> {
   public String toString() { // ? COMPLETATO
     StringBuilder result = new StringBuilder();
 
-    // Iterate over nodes and their corresponding arches
     for (Node<E> node : hashMap.keySet()) {
       result.append("Node: ").append(node.getVal()).append("\n");
 
