@@ -64,3 +64,11 @@
     consiglio di usarlo con "| less"
     contiene tutte le connessioni TCP aperte in questo momento dal pc
 
+  [Aprire un socket]
+> sudo nc -l 127.0.0.1 9000
+    comando neltcat che apre in ascolto sulla porta indicata
+> sudo nc 127.0.0.1 9000
+    comando netcat che permette di aprire (non in ascolto) la connessione TCP
+
+
+## HTTP

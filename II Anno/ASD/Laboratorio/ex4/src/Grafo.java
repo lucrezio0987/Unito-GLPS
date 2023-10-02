@@ -249,6 +249,8 @@ public class Grafo<E extends Comparable<E>> {
 
     // Inizializza la foresta con un singolo nodo
     minimumForest.put(startNode, new ArrayList<>());
+      
+    for (Node<E> node : hashMap.keySet()) minimumForest.put(node, new ArrayList<>());
 
     // Aggiungi tutti gli archi uscenti dal nodo iniziale al minHeap
     minHeap.addAll(hashMap.get(startNode));
@@ -281,21 +283,27 @@ public class Grafo<E extends Comparable<E>> {
     hashMap = minimumForest;
   }
 
+
   @Override
-  public String toString() { // ? COMPLETATO
-    StringBuilder result = new StringBuilder();
-
-    for (Node<E> node : hashMap.keySet()) {
-      result.append("Node: ").append(node.getVal()).append("\n");
-
-      ArrayList<Arch<E>> archList = hashMap.get(node);
-      for (Arch<E> arch : archList) {
-        result.append("  Arch: ").append(arch.getSorgente()).append(" -> ")
-            .append(arch.getDestinazione()).append(", Distance: ").append(arch.getDistance())
-            .append("\n");
+  public String toString() {
+      StringBuilder result = new StringBuilder();
+  
+      for (Node<E> node : hashMap.keySet()) {
+          result.append("Node: ").append(node.getVal()).append("\n");
+  
+          ArrayList<Arch<E>> archList = hashMap.get(node);
+          if (archList.isEmpty()) {
+              result.append("  (No Archi in uscita)\n");
+          } else {
+              for (Arch<E> arch : archList) {
+                  result.append("  Arch: ").append(arch.getSorgente()).append(" -> ")
+                          .append(arch.getDestinazione()).append(", Distance: ").append(arch.getDistance())
+                          .append("\n");
+              }
+          }
       }
-    }
-
-    return result.toString();
+  
+      return result.toString();
   }
 }
+                      

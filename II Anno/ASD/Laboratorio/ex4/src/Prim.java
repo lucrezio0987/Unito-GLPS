@@ -85,15 +85,16 @@ public class Prim {
       }
     System.out.println("");
     
-    System.out.println("Numero Archi:  " + grafo.getArchNumber());
-    System.out.println("Numero di Nodi(Erticigrafo): " + grafo.getNodesNumber());
-    System.out.println("Peso Grafo: " + grafo.getGraphWeight());
+    System.out.println("Numero_Archi:  " + grafo.getArchNumber());
+    System.out.println("Numero_di_Nodi(Erticigrafo): " + grafo.getNodesNumber());
+    System.out.println("Peso_Grafo: " + grafo.getGraphWeight()/1000 + " Km");
     
     //TODO: calcola la minima foresta ricoprente con l'algoritmo di Prim
     
     System.out.println("");
 
     grafo.MinForestPrim();
+    System.out.println("APPLICATO: Algoritmo di Prim");
     
     System.out.println("");
 
@@ -101,10 +102,14 @@ public class Prim {
     
     //System.out.println("\n" + grafo.toString() + "\n");
     
-    System.out.println("Numero Archi:  " + grafo.getArchNumber());
-    System.out.println("Numero di Nodi(Erticigrafo): " + grafo.getNodesNumber());
-    System.out.println("Peso Grafo: " + grafo.getGraphWeight());
+    System.out.println("Numero_Archi:  " + grafo.getArchNumber());
+    System.out.println("Numero_di_Nodi(Erticigrafo): " + grafo.getNodesNumber());
+    System.out.println("Peso_Grafo: " + grafo.getGraphWeight()/1000 + " Km");
+    
+    System.out.println("    EXPECTED");
+    System.out.println("    | Numero Archi:  18637");
+    System.out.println("    | Numero di Nodi(Erticigrafo): 18640");
+    System.out.println("    | Peso Grafo: 89939.913 Km");
 
-    System.out.println("\n");
   }
 }

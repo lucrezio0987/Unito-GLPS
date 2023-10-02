@@ -14,9 +14,7 @@ public class GrafoMain {
     grafo.addNode(new Node<>("B"));
     grafo.addNode(new Node<>("C"));
     grafo.addNode(new Node<>("D"));
-    grafo.addNode(new Node<>("E"));
-    grafo.addNode(new Node<>("F"));
-    grafo.addNode(new Node<>("G"));
+
   
     // Aggiungi alcuni archi al grafo
     grafo.addArch(new Arch<>("A", "B", 2.5f));
@@ -51,11 +49,20 @@ public class GrafoMain {
     grafo.MinForestPrim();
     System.out.println("");
     System.out.println(grafo.toString());
-    
+
+    System.out.println("    EXPECTED                          ");
+    System.out.println("    |  Node: A                        ");
+    System.out.println("    |    Arch: A -> B, Distance: 2.5  ");
+    System.out.println("    |    Arch: A -> C, Distance: 1.0  ");
+    System.out.println("    |  Node: B                        ");
+    System.out.println("    |  Node: C                        ");
+    System.out.println("    |    Arch: C -> D, Distance: 1.5  ");
+    System.out.println("    |  Node: D                        \n");
+
     // Cose
-    System.out.println("Numero Archi :  " + grafo.getArchNumber());
-    System.out.println("Numero Nodi  :  " + grafo.getNodesNumber());
-    System.out.println("Peso Grafo   :  " + grafo.getGraphWeight());
+    System.out.println("Numero Archi :  " + grafo.getArchNumber()  + "    / 3   expected" );
+    System.out.println("Numero Nodi  :  " + grafo.getNodesNumber() + "    / 4   expected" );
+    System.out.println("Peso Grafo   :  " + grafo.getGraphWeight() + "  / 5.0 expected" );
 
     System.out.println("\n");
 
