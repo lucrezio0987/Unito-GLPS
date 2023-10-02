@@ -70,7 +70,7 @@ public class Prim {
       try ( BufferedReader inputFile = new BufferedReader(new FileReader(args[0]))) {
 
         while ((lnBuffer = inputFile.readLine()) != null) {
-          if(++Limit > 1000) break; // <--- LIMITATORE
+          //if(++Limit > 1000) break; // <--- LIMITATORE
           lnBufferSplitted = lnBuffer.split(",");
           sorgente = lnBufferSplitted[0];
           destinazione = lnBufferSplitted[1];
@@ -89,17 +89,18 @@ public class Prim {
     System.out.println("Numero di Nodi(Erticigrafo): " + grafo.getNodesNumber());
     System.out.println("Peso Grafo: " + grafo.getGraphWeight());
     
-    System.out.println("");
-
     //TODO: calcola la minima foresta ricoprente con l'algoritmo di Prim
     
+    System.out.println("");
+
     grafo.MinForestPrim();
     
+    System.out.println("");
 
     //TODO: scrivi su standard output una descrizione della foresta calcolata come CSV 
     
     //System.out.println("\n" + grafo.toString() + "\n");
-
+    
     System.out.println("Numero Archi:  " + grafo.getArchNumber());
     System.out.println("Numero di Nodi(Erticigrafo): " + grafo.getNodesNumber());
     System.out.println("Peso Grafo: " + grafo.getGraphWeight());

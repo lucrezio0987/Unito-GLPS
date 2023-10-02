@@ -53,3 +53,14 @@
     + Client-server
     + P2P
 
+## Sockets
+
+  Interfaccia tra il livello Applicativo e i livelli più bassi
+
+[Client]: chi ha aperto la comunicazione
+
+
+> netstat
+    consiglio di usarlo con "| less"
+    contiene tutte le connessioni TCP aperte in questo momento dal pc
+

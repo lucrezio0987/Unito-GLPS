@@ -24,12 +24,12 @@ public class GrafoMain {
     grafo.addArch(new Arch<>("B", "C", 3.0f));
     grafo.addArch(new Arch<>("B", "D", 2.0f));
     grafo.addArch(new Arch<>("C", "D", 1.5f));
-  
+
+    System.out.println("\n");
+
     // Verifica se il grafo contiene un nodo specifico
     System.out.println("Il grafo contiene il nodo A: " + grafo.containsNode(new Node<>("A"))+ "/true");
-    System.out.println("Il grafo contiene il nodo Z: " + grafo.containsNode(new Node<>("Z"))+ "/false");
-  
-    System.out.println("\n");
+    System.out.println("Il grafo contiene il nodo Z: " + grafo.containsNode(new Node<>("Z"))+ "/false");  
 
     // Verifica se il grafo contiene un arco specifico
     System.out.println("Il grafo contiene l'arco A -> B: " + grafo.containsArch(new Arch<>("A", "B", 2.5f)) + "/true");
@@ -39,20 +39,23 @@ public class GrafoMain {
 
     // Stampa Gli ari per ogni Nodo
     System.out.println(grafo.toString());
+    // Cose
+    System.out.println("Numero Archi :  " + grafo.getArchNumber());
+    System.out.println("Numero Nodi  :  " + grafo.getNodesNumber());
+    System.out.println("Peso Grafo   :  " + grafo.getGraphWeight());
 
     System.out.println("\n");
 
     // Stampa Grafo Minimizzato
-    System.out.println("GRAFO MINIMIZZATO NON IMPLEMENTATO\n");
+    System.out.println("GRAFO MINIMIZZATO\n");
     grafo.MinForestPrim();
+    System.out.println("");
     System.out.println(grafo.toString());
     
-    System.out.println("\n");
-
     // Cose
-    System.out.println("Numero Archi :  " + grafo.getArchNumber() + " [NON IMPLEMENTATO]");
+    System.out.println("Numero Archi :  " + grafo.getArchNumber());
     System.out.println("Numero Nodi  :  " + grafo.getNodesNumber());
-    System.out.println("Peso Grafo   :  " + grafo.getGraphWeight() + " [NON IMPLEMENTATO]");
+    System.out.println("Peso Grafo   :  " + grafo.getGraphWeight());
 
     System.out.println("\n");
 

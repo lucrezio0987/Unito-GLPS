@@ -237,38 +237,48 @@ public class Grafo<E extends Comparable<E>> {
   public void MinForestPrim() { // TODO
     // IMPLEMENTAZIONE ALGORITMO di PRIM per calcolare la "minima foresta
     // ricoprente"
-    if (diretto) {
-      throw new UnsupportedOperationException("L'algoritmo di Prim è applicabile solo a grafi non diretti.");
-    }
+    
+    if (diretto) throw new UnsupportedOperationException("L'algoritmo di Prim è applicabile solo a grafi non diretti.");
 
+    // HashMap<Node<E>, ArrayList<Arch<E>>> hashMap;
+    
     Set<Node<E>> visitedNodes = new HashSet<>();
     PriorityQueue<Arch<E>> minHeap = new PriorityQueue<>(new ArchComparator<>());
     Node<E> startNode = hashMap.keySet().iterator().next();
+    HashMap<Node<E>, ArrayList<Arch<E>>> minimumForest = new HashMap<>();
 
-    visitedNodes.add(startNode);
+    // Inizializza la foresta con un singolo nodo
+    minimumForest.put(startNode, new ArrayList<>());
+
+    // Aggiungi tutti gli archi uscenti dal nodo iniziale al minHeap
     minHeap.addAll(hashMap.get(startNode));
 
-    while (!minHeap.empty() && visitedNodes.size() < NodesNumber) {
-      //System.out.println("arr");
-        Arch<E> minArch = minHeap.top();
-        Node<E> sourceNode = new Node<>(minArch.getSorgente());
-        Node<E> destNode = new Node<>(minArch.getDestinazione());
+    while (!minHeap.empty() && visitedNodes.size() < hashMap.size()) {
+      Arch<E> minArch = minHeap.top(); minHeap.pop();
+      Node<E> sourceNode = new Node<>(minArch.getSorgente());
+      Node<E> destNode = new Node<>(minArch.getDestinazione());
 
-        if (!visitedNodes.contains(destNode)) {
-            visitedNodes.add(destNode);
-            System.out.println("Added edge: " + sourceNode.getVal() + " -> " + destNode.getVal() +
-                    " (Distance: " + minArch.getDistance() + ")");
+      // Verifica se l'arco collega due nodi già visitati, in tal caso scartalo
+      if (visitedNodes.contains(sourceNode) && visitedNodes.contains(destNode)) 
+       continue;
 
-            // Aggiungi solo gli archi adiacenti del nodo appena aggiunto alla coda a priorità
-            ArrayList<Arch<E>> adjacentEdges = hashMap.get(destNode);
-            for (Arch<E> adjacentArch : adjacentEdges) {
-                if (!visitedNodes.contains(new Node<>(adjacentArch.getDestinazione()))) {
-                    minHeap.push(adjacentArch);
-                }
-            }
-            
-        }
+      // Aggiungi il nodo di destinazione ai nodi visitati
+      visitedNodes.add(destNode);
+
+      // Aggiungi l'arco minimo alla foresta ricoprente
+      if (!minimumForest.containsKey(sourceNode)) 
+          minimumForest.put(sourceNode, new ArrayList<>());
+      minimumForest.get(sourceNode).add(minArch);
+
+      // Aggiungi tutti gli archi uscenti dal nodo di destinazione non visitato al minHeap
+      ArrayList<Arch<E>> adjacentArchs = hashMap.get(destNode);
+      if (adjacentArchs != null)
+        for (Arch<E> adjacentArch : adjacentArchs) 
+            if (!visitedNodes.contains(minArch.getDestinazione())) 
+                minHeap.push(adjacentArch);
     }
+
+    hashMap = minimumForest;
   }
 
   @Override
