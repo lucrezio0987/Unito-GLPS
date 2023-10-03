@@ -42,18 +42,22 @@
 ## Livelli di Protocolli e Modelli di riferimento
 
   - Livelli:
-    (7) 5. Applicativi
-        4. Trasporto
-        3. Rete
-        2. Collegamento
-        1. Fisici
+    (7) 5. **Applicativi**      HTTP, IMAP, SMTP, DNS, E-mail
+        4. **Trasporto**        TCP, UDP
+        3. **Rete**             IP, routing protocols
+        2. **Collegamento**     Ethernet, 802.11 (WiFi), PPP
+        1. **Fisici**
 
+  Router: 1,2,3
+  Switch: 1,2
 
   - Modelli di servizio:
     + Client-server
     + P2P
 
-## Sockets
+## Livello Applicativi
+
+### Sockets
 
   Interfaccia tra il livello Applicativo e i livelli più bassi
 
@@ -71,4 +75,4 @@
     comando netcat che permette di aprire (non in ascolto) la connessione TCP
 
 
-## HTTP
+### HTTP

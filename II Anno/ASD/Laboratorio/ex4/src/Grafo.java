@@ -89,17 +89,14 @@ public class Grafo<E extends Comparable<E>> {
 
   public boolean containsArch(Arch<E> arch) { // ! DA RIVEDERE
     ArrayList<Arch<E>> archList = hashMap.get(new Node<>(arch.getSorgente()));
-    if (archList == null) {
-      return false; // The source node does not have any arches
-    }
 
-    for (Arch<E> existingArch : archList) {
+    if (archList == null) return false; // The source node does not have any arches
+
+    for (Arch<E> existingArch : archList)
       if (comparator.compare(existingArch.getSorgente(), arch.getSorgente()) == 0 &&
           comparator.compare(existingArch.getDestinazione(), arch.getDestinazione()) == 0 &&
-          existingArch.getDistance() == arch.getDistance()) {
+          existingArch.getDistance() == arch.getDistance())
         return true; // Found the corresponding arch
-      }
-    }
 
     return false; // The arch is not present
   }
@@ -139,8 +136,7 @@ public class Grafo<E extends Comparable<E>> {
         ArrayList<Arch<E>> reverseArchList = hashMap.get(destNode);
         if (reverseArchList != null) {
           // Rimuovi gli archi inversi corrispondenti
-          reverseArchList
-              .removeIf(a -> a.getSorgente().equals(destNode) && a.getDestinazione().equals(sourceNode));
+          reverseArchList.removeIf(a -> a.getSorgente().equals(destNode) && a.getDestinazione().equals(sourceNode));
           hashMap.put(destNode, reverseArchList);
         }
       }
@@ -211,9 +207,8 @@ public class Grafo<E extends Comparable<E>> {
 
     for (Arch<E> arch : archList) {
       Node<E> destNode = new Node<>(arch.getDestinazione());
-      if (destNode.equals(destinazione)) {
+      if (destNode.equals(destinazione))
         return (float) arch.getDistance();
-      }
     }
 
     return (float) -1;
@@ -269,7 +264,7 @@ public class Grafo<E extends Comparable<E>> {
 
       // Aggiungi l'arco minimo alla foresta ricoprente
       if (!minimumForest.containsKey(sourceNode)) 
-          minimumForest.put(sourceNode, new ArrayList<>());
+        minimumForest.put(sourceNode, new ArrayList<>());
       minimumForest.get(sourceNode).add(minArch);
 
       // Aggiungi tutti gli archi uscenti dal nodo di destinazione non visitato al minHeap
@@ -286,24 +281,21 @@ public class Grafo<E extends Comparable<E>> {
 
   @Override
   public String toString() {
-      StringBuilder result = new StringBuilder();
-  
-      for (Node<E> node : hashMap.keySet()) {
-          result.append("Node: ").append(node.getVal()).append("\n");
-  
-          ArrayList<Arch<E>> archList = hashMap.get(node);
-          if (archList.isEmpty()) {
-              result.append("  (No Archi in uscita)\n");
-          } else {
-              for (Arch<E> arch : archList) {
-                  result.append("  Arch: ").append(arch.getSorgente()).append(" -> ")
-                          .append(arch.getDestinazione()).append(", Distance: ").append(arch.getDistance())
-                          .append("\n");
-              }
-          }
-      }
-  
-      return result.toString();
+    StringBuilder result = new StringBuilder();
+
+    for (Node<E> node : hashMap.keySet()) {
+      result.append("Node: ").append(node.getVal()).append("\n");
+      
+      ArrayList<Arch<E>> archList = hashMap.get(node);
+      
+      // if (archList.isEmpty()) result.append("  (No Archi in uscita)\n"); else 
+      for (Arch<E> arch : archList) 
+        result.append("  Arch: ").append(arch.getSorgente()).append(" -> ")
+              .append(arch.getDestinazione()).append(", Distance: ").append(arch.getDistance())
+              .append("\n");
+    }
+
+    return result.toString();
   }
 }
                       
