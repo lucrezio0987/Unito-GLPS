@@ -241,7 +241,7 @@ public class Grafo<E extends Comparable<E>> {
     PriorityQueue<Arch<E>> minHeap = new PriorityQueue<>(new ArchComparator<>());
     Node<E> startNode = hashMap.keySet().iterator().next();
     HashMap<Node<E>, ArrayList<Arch<E>>> minimumForest = new HashMap<>();
-
+    
     // Inizializza la foresta con un singolo nodo
     minimumForest.put(startNode, new ArrayList<>());
       
@@ -271,8 +271,8 @@ public class Grafo<E extends Comparable<E>> {
       ArrayList<Arch<E>> adjacentArchs = hashMap.get(destNode);
       if (adjacentArchs != null)
         for (Arch<E> adjacentArch : adjacentArchs) 
-            if (!visitedNodes.contains(minArch.getDestinazione())) 
-                minHeap.push(adjacentArch);
+          if (!visitedNodes.contains(minArch.getDestinazione())) 
+            minHeap.push(adjacentArch);
     }
 
     hashMap = minimumForest;

@@ -52,3 +52,21 @@ contiende delle "direttive" per
       Sfogliando le indicazioni nazionali, ragionare su "quella che viene venduta come informatica ma non lo è" e "ciò che è informatica, ma non viene trattata come tale".
       ```
     [file:///home/lucrezio0987/Documenti/Unito-GLPS/III Anno/DIDATTICA/Slides/0. MTDI Intro-1.pdf]
+
+  - **Perchè è importante pensare a cosa sia l'informatica?**
+    è importate pensarea he bisogni partire da un approccio culturale (l'informatica non è un insieme di esperienza tecniche ma "un modo di guardare il mondo").
+
+  - **Cos'è il Programma?**
+
+    [Matematica - Scienza - Ingegneria]
+
+ > 2° Consegna
+  ```
+    Pensare a come introdurre gli algoritmi di ordinamento in una scuola secondaria
+  ```
+    - Cubo di rubik
+    - animazioni
+    [Aiuto]:
+    - si procede per confronto (boccettine con più o meno liquido)
+    - il provare di trovare un modo per ordinare un mazzo di carte >>> ingegneristico
+    - cheidersi se va bene per tutti i tupi di dati >>> matematico
