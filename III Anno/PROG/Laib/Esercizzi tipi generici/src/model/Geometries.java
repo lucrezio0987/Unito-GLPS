@@ -1,2 +1,5 @@
-package model;public class Geometries {
+package model;
+
+public class Geometries {
+
 }
