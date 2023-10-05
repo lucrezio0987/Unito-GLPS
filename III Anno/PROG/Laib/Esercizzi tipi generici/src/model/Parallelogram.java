@@ -1,13 +1,52 @@
 package model;
+
+/**
+ * Implements a Parallelogram as a Polygon subclass.
+ */
 public class Parallelogram extends Polygon {
-    public double getArea() {
-        return super.base * super.altezza;
+    protected double base;
+    protected double height;
+
+    /**
+     * Builds a new parallelogram given its base and its height
+     * @param base of the parallelogram
+     * @param height of the parallelogram
+     */
+    public Parallelogram(double base, double height) { //costruttore
+        super(4);
+        this.base = base;
+        this.height = height;
     }
 
-    public boolean equals(Object pol_2) {
-        if(this.getClass() == pol_2.getClass())
-            return this.base == ((Parallelogram) pol_2).base && this.altezza == ((Parallelogram) pol_2).altezza;
+    /**
+     * Empty constructor. Base and height should be set using the setAttributes method.
+     */
+    public Parallelogram() {
+        super(4);
+    }
+
+    @Override
+    public double getArea() {
+        return base * height;
+    }
+
+    @Override
+    public String[] describeAttributes() {
+        return new String[]{"base","height"};
+    }
+
+    @Override
+    public void setAttributes(double[] attributes) {
+        this.base = attributes[0];
+        this.height = attributes[1];
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o != null && this.getClass() == o.getClass()) {
+            Parallelogram a = (Parallelogram) o;
+            return this.base == a.base && this.height == a.height;
+        }
         return false;
     }
-
 }

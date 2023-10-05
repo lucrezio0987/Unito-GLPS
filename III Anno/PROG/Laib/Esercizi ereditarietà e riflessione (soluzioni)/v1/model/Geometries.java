@@ -5,8 +5,8 @@ import java.util.ArrayList;
 /**
  * Container class for storing a set of polygons
  */
-public class Geometries {
-    private ArrayList<Polygon> elements;
+public class Geometries<T extends Polygon> {
+    private final ArrayList<T> elements;
 
     /**
      * Builds a new, empty, geometry container.
@@ -28,8 +28,8 @@ public class Geometries {
      * @param p the polygon to be added
      * @return true if the polygon has been added, false otherwise.
      */
-    public boolean add(Polygon p) {
-        for (Polygon current:this.elements) {
+    public boolean add(T p) {
+        for (T current:this.elements) {
             if (current.equals(p))
                 return false;
         }
@@ -42,7 +42,7 @@ public class Geometries {
      */
     public void printDescription() {
         System.out.println("Geometries collection:");
-        for (Polygon p:this.elements) {
+        for (T p:this.elements) {
             System.out.println("Polygon class: " + p.getClass() + " Area: " + p.getArea());
         }
     }
