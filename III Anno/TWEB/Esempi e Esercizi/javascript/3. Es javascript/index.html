@@ -8,9 +8,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body onload="init()">
 <div class="row">
-    <div class="card col-sm mx-2 text-center">
+    <div id="div_1" class="card col-sm mx-2 text-center">
         <img src="./images/manesk.png" alt="Maneskin" width="100%" height="250px"/>
         <h2>Maneskin</h2>
         <p style="height: 70%">
@@ -24,7 +24,7 @@
             with the son "Zitti e Buoni".
         </p>
 
-        <button type="button" class="btn bg-danger btn-block">Close</button>
+        <button id="btn_1" type="button" class="btn bg-danger btn-block">Close</button>
     </div>
     <div class="card col-sm mx-2 text-center">
         <img src="./images/gunsroses.png" alt="Gun's & Roses" width="100%" height="250px">
