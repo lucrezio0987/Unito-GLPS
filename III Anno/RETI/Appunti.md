@@ -72,7 +72,50 @@
 > sudo nc -l 127.0.0.1 9000
     comando neltcat che apre in ascolto sulla porta indicata
 > sudo nc 127.0.0.1 9000
-    comando netcat che permette di aprire (non in ascolto) la connessione TCP
+    comando netcat che permette di aprire una connessione TCP
 
+ - Le richieste ai server devono essere formate correttamente
+  esempio:
+
+  > nc -v www.facebook.com 80     (per contattare il server )
+    GET /index.html HTTP/1.1      (Richeista ben forata minimale)
+    ```Return
+      HTTP/1.1 301 Moved Permanently
+      Location: https:///index.html
+      Content-Type: text/plain
+      Server: proxygen-bolt
+      Date: Fri, 06 Oct 2023 09:34:47 GMT
+      Connection: keep-alive
+      Content-Length: 0
+    ```
+    GET / HTTP/1.1
+    host: www.facebook.com (in questo caso specifichiamo perche su questo server c'è anche Instagram)
+    ```Return
+      HTTP/1.1 301 Moved Permanently
+      Location: https://www.facebook.com/
+      Content-Type: text/plain
+      Server: proxygen-bolt
+      Date: Fri, 06 Oct 2023 09:37:02 GMT
+      Connection: keep-alive
+      Content-Length: 0
+    ```
 
 ### HTTP
+  [Metodi]:
+  - GET: mando dati
+  - POST: mando dati, come GET ma devo mandare anche dei payload
+  - HEAD
+  - PUT
+
+  [Errori]:
+  - 200 OK
+  - 301 Spostato Permanentemente
+  - 400 Richeista non valida
+  - [] Errore lato server
+  - [] Errore lato client
+
+### Cookies
+  - è un database che salve delle informazioni.
+  - l'utilizzo più importante  salvare le informazioni che identificano gli utenti.
+
+

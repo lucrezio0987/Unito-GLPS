@@ -70,3 +70,40 @@ contiende delle "direttive" per
     - si procede per confronto (boccettine con più o meno liquido)
     - il provare di trovare un modo per ordinare un mazzo di carte >>> ingegneristico
     - cheidersi se va bene per tutti i tupi di dati >>> matematico
+
+### Criteri che definiscono una Scienza come tale:
+ - ) capire, esplorare e comprendere dei fenomeni "pervasivi"
+ - ) comportamenti naturali e processi artificiali
+ - ) c'è un corpo della conoscienza strutturato
+ - risultati riproducibili
+ - è possibile falsificare ipotesi e modelli
+ - si riescono a fare ipotesi affidabili, alcune sono sorprendenti
+
+
+## Approcci didattici e teorie dell'apprendimento
+
+l'impostazione che diamo a un'attività diadttica si basa su:
+- una teoria dell'apprendimento
+-
+
+le teoride dell'apprendimento descrivono ocme le persone imparano.
+
+due macro categorie: istruttivismo, costruttivismo.
+
+  > Istruttivismo: trasmizzione della conoscenza
+   - c'è un tasferimento di verità/conoscenza, soprattutto n termini di rappresentazione attraverso il linguaggio del maestro all'alievo.
+
+  comportamentsimo:
+   - lo scopo dell'educazione è modellare un comportamento desirabile. per valutare l'apprendimento si valuta il cambiamento nella forma o frequenza di tale comportamento osservabile.
+   - principio è: c'è una realta oggettiva che può essere trasmessa da chi la conosce a chi non la conosce (non è necessario preoccuparsi di come ci arriva).
+
+  Cognitivismo:
+   - idea di carico cognitivo
+   - idea di schema o modello mentale
+
+  > Costruttivismo:
+   - non c'è una realta oggettiva, la conoscenza è quindi oggettiva e deriva dall'esperienza (percezione, azione, pensiero).
+
+   viabilità: non c'è una conoscenza vera, ma tutti impariamo attraverso esperienze e costruiamo la nostra conoscenze in base a concetti che "non sono stati ancora contraddetti" o coerenza logica.
+
+
