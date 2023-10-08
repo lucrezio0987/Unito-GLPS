@@ -49,6 +49,9 @@ public class Grafo<E extends Comparable<E>> {
     this.comparator = comparator;
     this.diretto = diretto;
 
+    this.ArchNumber = 0;
+    this.NodesNumber = 0;
+    this.GraphWeight = 0.0;
     // Creazione di un grafo vuoto – O(1)
   }
 
@@ -62,9 +65,10 @@ public class Grafo<E extends Comparable<E>> {
       hashMap.put(newNode, new ArrayList<>());
   }
 
-  public void addArch(Arch<E> arch) { // ! DA RIVEDERE
-    Node<E> sourceNode = new Node<>(arch.getSorgente());
-    Node<E> destNode = new Node<>(arch.getDestinazione());
+  /*
+  public void addArch(Arch<E> arch) { 
+    Node<E> sourceNode = arch.getSorgente();
+    Node<E> destNode = arch.getDestinazione();
 
     ArrayList<Arch<E>> archList = hashMap.getOrDefault(sourceNode, new ArrayList<>());
     archList.add(arch);
@@ -72,8 +76,24 @@ public class Grafo<E extends Comparable<E>> {
 
     if (diretto) {
       ArrayList<Arch<E>> reverseArchList = hashMap.getOrDefault(destNode, new ArrayList<>());
-      reverseArchList.add(new Arch<>(destNode.getVal(), sourceNode.getVal(), arch.getDistance()));
+      reverseArchList.add(new Arch<>(destNode, sourceNode, arch.getDistance()));
       hashMap.put(destNode, reverseArchList);
+    }
+  }
+*/
+
+  public void addArch(Arch<E> arch) { // ! DA RIVEDERE
+    Node<E> sourceNode = arch.getSorgente();
+    Node<E> destNode = arch.getDestinazione();
+
+    ArrayList<Arch<E>> archList = hashMap.computeIfAbsent(sourceNode, k -> new ArrayList<>());
+    archList.add(arch);
+    ArchNumber++;
+
+    if (!diretto) {
+        ArrayList<Arch<E>> reverseArchList = hashMap.computeIfAbsent(destNode, k -> new ArrayList<>());
+        reverseArchList.add(new Arch<>(destNode, sourceNode, arch.getDistance()));
+        ArchNumber++;
     }
   }
 
@@ -88,13 +108,13 @@ public class Grafo<E extends Comparable<E>> {
   }
 
   public boolean containsArch(Arch<E> arch) { // ! DA RIVEDERE
-    ArrayList<Arch<E>> archList = hashMap.get(new Node<>(arch.getSorgente()));
+    ArrayList<Arch<E>> archList = hashMap.get(arch.getSorgente());
 
     if (archList == null) return false; // The source node does not have any arches
 
     for (Arch<E> existingArch : archList)
-      if (comparator.compare(existingArch.getSorgente(), arch.getSorgente()) == 0 &&
-          comparator.compare(existingArch.getDestinazione(), arch.getDestinazione()) == 0 &&
+      if (comparator.compare(existingArch.getSorgente().getVal(), arch.getSorgente().getVal()) == 0 &&
+          comparator.compare(existingArch.getDestinazione().getVal(), arch.getDestinazione().getVal()) == 0 &&
           existingArch.getDistance() == arch.getDistance())
         return true; // Found the corresponding arch
 
@@ -107,7 +127,7 @@ public class Grafo<E extends Comparable<E>> {
       // Rimuovi gli archi in cui il nodo è coinvolto come sorgente
       ArrayList<Arch<E>> sourceArchList = hashMap.get(node);
       for (Arch<E> arch : sourceArchList) {
-        Node<E> destNode = new Node<>(arch.getDestinazione());
+        Node<E> destNode = arch.getDestinazione();
         ArrayList<Arch<E>> destinationArchList = hashMap.get(destNode);
         if (destinationArchList != null) {
           // Rimuovi gli archi inversi corrispondenti
@@ -120,19 +140,19 @@ public class Grafo<E extends Comparable<E>> {
       hashMap.remove(node);
     }
   }
-
-  public void removeArch(Arch<E> arch) { // ! DA RIVEDERE
+/* 
+  public void removeArch(Arch<E> arch) { 
     // Cancellazione di un arco – O(1)
     // Quando il grafo è veramente sparso, assumendo che l'operazione venga
     // effettuata su un nodo la cui lista di adiacenza ha una lunghezza in O(1).
-    Node<E> sourceNode = new Node<>(arch.getSorgente());
+    Node<E> sourceNode = arch.getSorgente();
     if (hashMap.containsKey(sourceNode)) {
       ArrayList<Arch<E>> archList = hashMap.get(sourceNode);
       archList.remove(arch);
       hashMap.put(sourceNode, archList);
 
       if (diretto) {
-        Node<E> destNode = new Node<>(arch.getDestinazione());
+        Node<E> destNode = arch.getDestinazione();
         ArrayList<Arch<E>> reverseArchList = hashMap.get(destNode);
         if (reverseArchList != null) {
           // Rimuovi gli archi inversi corrispondenti
@@ -142,7 +162,26 @@ public class Grafo<E extends Comparable<E>> {
       }
     }
   }
+*/
 
+public void removeArch(Arch<E> arch) { // ! DA RIVEDERE
+  Node<E> sourceNode = arch.getSorgente();
+  ArrayList<Arch<E>> archList = hashMap.get(sourceNode);
+
+  if (archList != null) {
+      archList.removeIf(a -> a.equals(arch));
+      ArchNumber--;
+
+      if (!diretto) {
+          Node<E> destNode = arch.getDestinazione();
+          ArrayList<Arch<E>> reverseArchList = hashMap.get(destNode);
+          if (reverseArchList != null) {
+            reverseArchList.removeIf(a -> a.getSorgente().equals(sourceNode) && a.getDestinazione().equals(destNode));
+              ArchNumber--;
+          }
+      }
+  }
+}
   public int getNodesNumber() { // ? COMPLETATO
     // Determinazione del numero di nodi – O(1)
     Set<Node<E>> nodi = hashMap.keySet();
@@ -188,7 +227,7 @@ public class Grafo<E extends Comparable<E>> {
     HashSet<Node<E>> adjacentNodes = new HashSet<>();
 
     for (Arch<E> arch : archList) {
-      Node<E> destNode = new Node<>(arch.getDestinazione());
+      Node<E> destNode = arch.getDestinazione();
       adjacentNodes.add(destNode);
     }
 
@@ -206,7 +245,7 @@ public class Grafo<E extends Comparable<E>> {
     ArrayList<Arch<E>> archList = hashMap.get(sorgente);
 
     for (Arch<E> arch : archList) {
-      Node<E> destNode = new Node<>(arch.getDestinazione());
+      Node<E> destNode = arch.getDestinazione();
       if (destNode.equals(destinazione))
         return (float) arch.getDistance();
     }
@@ -214,7 +253,8 @@ public class Grafo<E extends Comparable<E>> {
     return (float) -1;
   }
 
-  public double getGraphWeight() { // ! DA RIVEDERE
+  /* 
+  public double getGraphWeight() { 
     // Determinazione del peso del grafo (se il grafo non è pesato, il metodo può
     // terminare con un errore)– O(n)
     GraphWeight = 0.0;
@@ -227,9 +267,22 @@ public class Grafo<E extends Comparable<E>> {
         GraphWeight += arch.getDistance();
 
     return GraphWeight;
-  }
+  }*/
+  public double getGraphWeight() { // ! DA RIVEDERE
+    GraphWeight = 0.0;
 
-  public void MinForestPrim() { // TODO
+    for (ArrayList<Arch<E>> archList : hashMap.values()) {
+        for (Arch<E> arch : archList) {
+            GraphWeight += arch.getDistance();
+        }
+    }
+
+    return GraphWeight;
+}
+
+
+/* 
+  public void MinForestPrim() { 
     // IMPLEMENTAZIONE ALGORITMO di PRIM per calcolare la "minima foresta
     // ricoprente"
     
@@ -252,8 +305,8 @@ public class Grafo<E extends Comparable<E>> {
 
     while (!minHeap.empty() && visitedNodes.size() < hashMap.size()) {
       Arch<E> minArch = minHeap.top(); minHeap.pop();
-      Node<E> sourceNode = new Node<>(minArch.getSorgente());
-      Node<E> destNode = new Node<>(minArch.getDestinazione());
+      Node<E> sourceNode = minArch.getSorgente();
+      Node<E> destNode = minArch.getDestinazione();
 
       // Verifica se l'arco collega due nodi già visitati, in tal caso scartalo
       if (visitedNodes.contains(sourceNode) && visitedNodes.contains(destNode)) 
@@ -277,6 +330,60 @@ public class Grafo<E extends Comparable<E>> {
 
     hashMap = minimumForest;
   }
+  */
+
+  public void MinForestPrim() { // TODO: ALGORITMO DI PRIM
+    if (diretto)
+        throw new UnsupportedOperationException("L'algoritmo di Prim è applicabile solo a grafi non diretti.");
+    
+    PriorityQueue<Arch<E>> minHeap = new PriorityQueue<>(new ArchComparator<>());
+    // Inizializza la foresta
+    HashMap<Node<E>, ArrayList<Arch<E>>> minimumForest = new HashMap<>();
+    HashSet<Node<E>> visitedNodes = new HashSet<>();
+
+    // Scegli un nodo iniziale arbitrario
+    Node<E> startNode = hashMap.keySet().iterator().next();
+    visitedNodes.add(startNode);
+
+    // Aggiungi tutti gli archi uscenti dal nodo iniziale alla coda prioritaria personalizzata
+    ArrayList<Arch<E>> startNodeArchs = hashMap.get(startNode);
+    if (startNodeArchs != null)
+        minHeap.addAll(startNodeArchs);
+
+    for (Node<E> node : hashMap.keySet()) minimumForest.put(node, new ArrayList<>());
+
+    while (!minHeap.empty() && visitedNodes.size() < hashMap.size()) {
+        Arch<E> minArch = minHeap.top();
+        minHeap.pop();
+        Node<E> sourceNode = minArch.getSorgente();
+        Node<E> destNode = minArch.getDestinazione();
+
+        // Se entrambi i nodi sono già stati visitati, scarta l'arco
+        if (visitedNodes.contains(sourceNode) && visitedNodes.contains(destNode))
+            continue;
+
+        // Aggiungi il nodo di destinazione alla foresta
+        if (!minimumForest.containsKey(sourceNode))
+            minimumForest.put(sourceNode, new ArrayList<>());
+        minimumForest.get(sourceNode).add(minArch);
+
+        visitedNodes.add(destNode);
+
+        // Aggiungi tutti gli archi uscenti dal nodo di destinazione non visitato alla coda prioritaria personalizzata
+        ArrayList<Arch<E>> destNodeArchs = hashMap.get(destNode);
+        if (destNodeArchs != null) {
+            for (Arch<E> adjacentArch : destNodeArchs) {
+                if (!visitedNodes.contains(adjacentArch.getDestinazione())) {
+                    minHeap.push(adjacentArch);
+                }
+            }
+        }
+    }
+
+    // Sostituisci la mappa del grafo con la foresta minima
+    hashMap = minimumForest;
+}
+
 
 
   @Override
@@ -290,8 +397,8 @@ public class Grafo<E extends Comparable<E>> {
       
       // if (archList.isEmpty()) result.append("  (No Archi in uscita)\n"); else 
       for (Arch<E> arch : archList) 
-        result.append("  Arch: ").append(arch.getSorgente()).append(" -> ")
-              .append(arch.getDestinazione()).append(", Distance: ").append(arch.getDistance())
+        result.append("  Arch: ").append(arch.getSorgente().getVal()).append(" -> ")
+              .append(arch.getDestinazione().getVal()).append(", Distance: ").append(arch.getDistance())
               .append("\n");
     }
 

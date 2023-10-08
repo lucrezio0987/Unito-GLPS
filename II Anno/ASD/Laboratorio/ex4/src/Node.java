@@ -14,11 +14,12 @@ public class Node<E> implements Comparable<Node<E>> {
 
   @Override
   public boolean equals(Object o) {
-      if (this == o) return true;
+      //if (this == o) return true;
       if (o == null || getClass() != o.getClass()) return false;
       Node<?> node = (Node<?>) o;
       return Objects.equals(val, node.val);
   }
+  
 
   @Override
   public int hashCode() {
