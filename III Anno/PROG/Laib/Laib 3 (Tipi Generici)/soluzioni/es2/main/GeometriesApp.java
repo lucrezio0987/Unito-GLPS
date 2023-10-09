@@ -8,6 +8,7 @@ public class GeometriesApp {
         Geometries<Rectangle> g = new Geometries<>();
         g.add(new Rectangle(5, 5));
         g.add(new Rectangle(3, 3));
+        g.add(new Rectangle(4,7));
         g.printAreas();
         //g.add(new Triangle(2, 3)); // produce l'errore 'incompatible types: Triangle cannot be converted to Rectangle'
         System.out.println("Numero di poligoni: " + g.getElementsNum());

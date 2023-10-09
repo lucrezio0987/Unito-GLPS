@@ -48,7 +48,8 @@ public class Geometries<T extends Polygon> {
     }
 
     public void printAreas() {
-        this.printDescription();
+        for(T el : elements)
+            System.out.println("Area: " + el.getArea());
     }
 
 }
