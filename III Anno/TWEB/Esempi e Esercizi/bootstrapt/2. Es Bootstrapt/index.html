@@ -12,33 +12,109 @@
         <ul class="navbar-nav mx-5">
             <li class="nav-item"><a class="nav-link" href="#carousel" >Carousel</a></li>
             <li class="nav-item"><a class="nav-link" href="#maneskin">Maneskin</a></li>
-            <li class="nav-item"><a class="nav-link" href="#taylor swift">Taylor swift</a></li>
+            <li class="nav-item"><a class="nav-link" href="#taylor_swift">Taylor swift</a></li>
         </ul>
     </nav>
+    <div class="container-fluid px-5" id="carousel">
+        <div id="demo" class="carousel slide d-flex justify-content-center" data-bs-ride="carousel" style="height: 700px">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#demo" class="active" data-bs-slide-to="0"></button>
+                <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+            </div>
 
-    <div id="demo" class="carousel slide d-flex justify-content-center" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#demo" class="active" data-bs-slide-to="0"></button>
-            <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
-            <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="images/manesk.png" alt="Maneskin" class="d-block w-100 ">
+                </div>
+                <div class="carousel-item">
+                    <img src="images/gunsroses.png" alt="Gun's & roses" class="d-block w-100">
+                </div>
+                <div class="carousel-item">
+                    <img src="images/taylor.png" alt="Taylor Swift" class="d-block w-100">
+                </div>
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide ="prev">
+            <span class="carousel-control-prev-icon"></span></button>
+            <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide ="next">
+            <span class="carousel-control-next-icon"></span></button>
         </div>
 
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="images/manesk.png" alt="Maneskin" class="d-block w-80 ">
+        <h2 class="title my-3">Carousel Example</h2>
+        <p>The following example shows how to create a basic carousel with indicators and controls</p>
+
+        <div class="row">
+            <div class="col sm-3">
+                <img class="rounded-circle" src="images/gunsroses.png" alt="Gun's & Roses" width="160" height="160">
+                <h3 class="card-title my-3">Heading</h3>
+
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt
+                    ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis
+                    suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur
+                </p>
+
+                <a class="btn btn-secondary" href="https://getbootstrapt.com/docs/4.0/examples/carousel/#">View details >></a>
             </div>
-            <div class="carousel-item">
-                <img src="images/gunsroses.png" alt="Gun's & roses" class="d-block w-80">
+            <div class="col sm-4">
+                <img class="rounded-circle" src=images/manesk.png alt="Maneskin" width="160" height="160">
+                <h3 class="card-title my-3">Heading</h3>
+
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt
+                    ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis
+                    suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur
+                </p>
+
+                <a class="btn btn-secondary" href="https://getbootstrapt.com/docs/4.0/examples/carousel/#">View details >></a>
             </div>
-            <div class="carousel-item">
-                <img src="images/taylor.png" alt="Taylor Swift" class="d-block w-80">
+
+            <div class="col sm-4">
+                <img class="rounded-circle" src="images/taylor.png" alt="Taylor swift" width="160" height="160">
+                <h3 class="card-title my-3">Heading</h3>
+
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt
+                    ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis
+                    suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur
+                </p>
+
+                <a class="btn btn-secondary" href="https://getbootstrapt.com/docs/4.0/examples/carousel/#">View details >></a>
             </div>
         </div>
 
-        <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide ="prev">
-        <span class="carousel-control-prev-icon"></span></button>
-        <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide ="next">
-        <span class="carousel-control-next-icon"></span></button>
+        <hr class="divider m-3">
+
+        <div class="row" id="maneskin">
+            <div class="col-7">
+                <h3>
+                    First featturette heading. It'll blow your mind
+                    <span class="text-muted">It'll blow your mind.</span>
+                </h3>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt
+                    ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis
+                    suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur
+                </p>
+            </div>
+            <div class="col-5 p-8">
+                <img class="featurette-image" src="images/manesk.png" alt="maneskin" width="200" height="200" style="margin: 0 130px">
+            </div>
+        </div>
+        <hr class="divider m-3">
+
+        <div class="row" id="taylor_swift">
+            <div class="col-4 p-4">
+                <img src="images/taylor.png" alt="maneskin" width="100%" height="100%">
+            </div>
+            <div class="col-8">
+                <h3>
+                    First featturette heading. It'll blow your mind
+                    <span class="text-muted">It'll blow your mind.</span>
+                </h3>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt
+                    ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis
+                    suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur
+                </p>
+            </div>
+        </div>
     </div>
 </body>
 </html>
