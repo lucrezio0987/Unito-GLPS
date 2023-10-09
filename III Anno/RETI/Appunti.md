@@ -111,11 +111,26 @@
   - 200 OK
   - 301 Spostato Permanentemente
   - 400 Richeista non valida
-  - [] Errore lato server
-  - [] Errore lato client
+  - 404 Non trovato
+  - 505 versionene HTTP non supportata
 
 ### Cookies
   - è un database che salve delle informazioni.
   - l'utilizzo più importante  salvare le informazioni che identificano gli utenti.
 
+### Cache
+  - cache: Salvare il cotenuto per velocizzare il sito
+  - Proxy: sta tra il client e il server e serve a trasferire le richieste.
 
+  - il protocollo prevede un controllo degli header per controllare con il server se il contenuto è aggiornato.
+
+  se le performance calano, allora si può risolvere in 2 modi:
+   - aumentando la capacità di trasporto dei dati tra la cache e i server
+   - aggiungere un server all'interno di una rete locale.
+
+### HTTP/2
+
+...
+
+
+### Servizio di Posta

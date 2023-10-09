@@ -372,7 +372,8 @@ public class Grafo<E extends Comparable<E>> {
     if (startNodeArchs != null)
         minHeap.addAll(startNodeArchs);
 
-    for (Node<E> node : hashMap.keySet()) minimumForest.put(node, new ArrayList<>());
+    for (Node<E> node : hashMap.keySet()) 
+      minimumForest.put(node, new ArrayList<>());
 
     while (!minHeap.empty() && visitedNodes.size() < hashMap.size()) {
         Arch<E> minArch = minHeap.top();
