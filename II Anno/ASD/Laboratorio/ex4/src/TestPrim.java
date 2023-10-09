@@ -93,7 +93,15 @@ public class TestPrim {
       grafo.addArch(new Arch<>("B", "C", 3.0f));
 
       Set<Arch<String>> arches = grafo.getArch();
-      assertEquals(3, arches.size());
+      
+      if (grafo.isDirected()) 
+        assertEquals(3, arches.size());
+      else {
+        assertEquals(6, arches.size());
+        assertTrue(arches.contains(new Arch<>("B", "A", 2.5f))); // Archi inversi
+        assertTrue(arches.contains(new Arch<>("C", "A", 1.0f)));
+        assertTrue(arches.contains(new Arch<>("C", "B", 3.0f)));
+      }
 
       assertTrue(arches.contains(new Arch<>("A", "B", 2.5f)));
       assertTrue(arches.contains(new Arch<>("A", "C", 1.0f)));
@@ -136,8 +144,11 @@ public class TestPrim {
       grafo.addArch(new Arch<>("A", "B", 2.5f));
       grafo.addArch(new Arch<>("A", "C", 1.0f));
       grafo.addArch(new Arch<>("B", "C", 3.0f));
-
-      assertEquals(6.5f, grafo.getGraphWeight(), 0.001);
+  
+      if (grafo.isDirected()) 
+        assertEquals(6.5f, grafo.getGraphWeight(), 0.001);
+      else
+        assertEquals(13.0f, grafo.getGraphWeight(), 0.001); // Doppia somma nel caso di grafo non diretto
     } catch (AssertionError e) {
       System.err.println("# NOT PASS: testGetGraphWeight");
     }

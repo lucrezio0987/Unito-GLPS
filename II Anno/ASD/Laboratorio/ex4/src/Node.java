@@ -1,4 +1,7 @@
 import java.util.Objects;
+
+import javax.print.DocFlavor.STRING;
+
 import java.util.Comparator;
 
 public class Node<E> implements Comparable<Node<E>> {
@@ -39,4 +42,10 @@ public class Node<E> implements Comparable<Node<E>> {
 
       throw new IllegalArgumentException("Type E must implement Comparable to use compareTo");
   }
+
+  @Override
+  public String toString(){
+    return new StringBuilder().append("Node: ").append(this.getVal()).toString();
+  }
+
 }

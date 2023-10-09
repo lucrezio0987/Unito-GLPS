@@ -11,7 +11,6 @@ public class Arch<E> {
     this.distance = distance;
   }
   public Arch(Node<E> sorgente, Node<E> destinazione, float distance) {
-
     this.sorgente = sorgente;
     this.destinazione = destinazione;
     this.distance = distance;
@@ -43,20 +42,35 @@ public class Arch<E> {
 
   @Override
   public boolean equals(Object obj) {
-      if (this == obj) {
-          return true;
-      }
-      if (obj == null || getClass() != obj.getClass()) {
-          return false;
-      }
-      Arch<?> arch = (Arch<?>) obj;
-      return Float.compare(arch.distance, distance) == 0 &&
-             Objects.equals(sorgente, arch.sorgente) &&
-             Objects.equals(destinazione, arch.destinazione);
+    if (this == obj) 
+      return true;
+
+    if (obj == null || this.getClass() != obj.getClass()) 
+      return false;
+      
+    Arch<?> arch = (Arch<?>) obj;
+    return Float.compare(arch.distance, distance) == 0 &&
+           Objects.equals(sorgente, arch.sorgente) &&
+           Objects.equals(destinazione, arch.destinazione);
   }   
 
   @Override
   public int hashCode() {
     return Objects.hash(sorgente, destinazione, distance);
   }
+
+  @Override
+  public String toString() {
+    return new StringBuilder().append("  Arch: ")
+                              .append(this.getSorgente().getVal()).append(" -> ")
+                              .append(this.getDestinazione().getVal()).append(", Distance: ")
+                              .append(this.getDistance())
+                              .toString();
+  }
+
+  public Arch<E> reveArch() {
+    return new Arch<>(destinazione, sorgente, distance);
+  }
+  
+
 }

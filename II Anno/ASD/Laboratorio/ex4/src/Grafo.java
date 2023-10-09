@@ -91,9 +91,9 @@ public class Grafo<E extends Comparable<E>> {
     ArchNumber++;
 
     if (!diretto) {
-        ArrayList<Arch<E>> reverseArchList = hashMap.computeIfAbsent(destNode, k -> new ArrayList<>());
-        reverseArchList.add(new Arch<>(destNode, sourceNode, arch.getDistance()));
-        ArchNumber++;
+      ArrayList<Arch<E>> reverseArchList = hashMap.computeIfAbsent(destNode, k -> new ArrayList<>());
+      reverseArchList.add(new Arch<>(destNode, sourceNode, arch.getDistance()));
+      ArchNumber++;
     }
   }
 
@@ -163,25 +163,26 @@ public class Grafo<E extends Comparable<E>> {
     }
   }
 */
-
-public void removeArch(Arch<E> arch) { // ! DA RIVEDERE
-  Node<E> sourceNode = arch.getSorgente();
-  ArrayList<Arch<E>> archList = hashMap.get(sourceNode);
-
-  if (archList != null) {
+  
+  public void removeArch(Arch<E> arch) { // ! DA RIVEDERE
+    Node<E> sourceNode = arch.getSorgente();
+    ArrayList<Arch<E>> archList = hashMap.get(sourceNode);
+  
+    if (archList != null) {
       archList.removeIf(a -> a.equals(arch));
       ArchNumber--;
-
+  
       if (!diretto) {
-          Node<E> destNode = arch.getDestinazione();
-          ArrayList<Arch<E>> reverseArchList = hashMap.get(destNode);
-          if (reverseArchList != null) {
-            reverseArchList.removeIf(a -> a.getSorgente().equals(sourceNode) && a.getDestinazione().equals(destNode));
-              ArchNumber--;
-          }
+        Node<E> destNode = arch.getDestinazione();
+        ArrayList<Arch<E>> reverseArchList = hashMap.get(destNode);
+        if (reverseArchList != null) {
+          reverseArchList.removeIf(a -> a.getSorgente().equals(sourceNode) && a.getDestinazione().equals(destNode));
+          ArchNumber--;
+        }
       }
+    }
   }
-}
+  
   public int getNodesNumber() { // ? COMPLETATO
     // Determinazione del numero di nodi – O(1)
     Set<Node<E>> nodi = hashMap.keySet();
@@ -192,10 +193,19 @@ public void removeArch(Arch<E> arch) { // ! DA RIVEDERE
   public int getArchNumber() { // ? COMPLETATO
     // Determinazione del numero di archi – O(n)
     ArchNumber = 0;
-
-    for (ArrayList<Arch<E>> archList : hashMap.values())
-      ArchNumber += archList.size();
-
+    
+    if (diretto) 
+      for (ArrayList<Arch<E>> archList : hashMap.values())
+        ArchNumber += archList.size();
+    else {
+      Set<Arch<E>> uniqueArches = new HashSet<>();
+      for (ArrayList<Arch<E>> archList : hashMap.values())
+        for (Arch<E> arch : archList)
+          if (!uniqueArches.contains(arch) && !uniqueArches.contains(arch.reveArch()))
+            uniqueArches.add(arch);
+      ArchNumber = uniqueArches.size();
+    }
+    
     return ArchNumber;
   }
 
@@ -205,7 +215,7 @@ public void removeArch(Arch<E> arch) { // ! DA RIVEDERE
     return nodi;
   }
 
-  public Set<Arch<E>> getArch() { // ? COMPLETATO
+  public Set<Arch<E>> getArch() { // ? COMPLETATO         <<<--------------------------------------------------------
     // Recupero degli archi del grafo – O(n)
     Set<Arch<E>> archSet = new HashSet<>();
 
@@ -215,7 +225,8 @@ public void removeArch(Arch<E> arch) { // ! DA RIVEDERE
     return archSet;
   }
 
-  public Set<Node<E>> getNodesAdjacent(Node<E> node) { // ! DA RIVEDERE
+  /* 
+  public Set<Node<E>> getNodesAdjacent(Node<E> node) {
     // Recupero nodi adiacenti di un dato nodo – O(1)
     // Quando il grafo è veramente sparso, assumendo che l'operazione venga
     // effettuata su un nodo la cui lista di adiacenza ha una lunghezza in O(1).
@@ -233,6 +244,29 @@ public void removeArch(Arch<E> arch) { // ! DA RIVEDERE
 
     return adjacentNodes;
   }
+  */
+
+  public Set<Node<E>> getNodesAdjacent(Node<E> node) { // ! DA RIVEDERE
+    // Recupero nodi adiacenti di un dato nodo – O(1)
+    // Quando il grafo è veramente sparso, assumendo che l'operazione venga
+    // effettuata su un nodo la cui lista di adiacenza ha una lunghezza in O(1).
+    if (!hashMap.containsKey(node))
+      throw new IllegalArgumentException("Il nodo specificato non esiste nel grafo.");
+
+    ArrayList<Arch<E>> archList = hashMap.get(node);
+    HashSet<Node<E>> adjacentNodes = new HashSet<>();
+
+    for (Arch<E> arch : archList) {
+      adjacentNodes.add(arch.getDestinazione());
+
+      // Aggiungi anche il nodo di partenza se il grafo non è diretto
+      if (!diretto)
+        adjacentNodes.add(arch.getSorgente());
+    }
+
+    return adjacentNodes;
+}
+
 
   public float getNodesLabel(Node<E> sorgente, Node<E> destinazione) { // ? COMPLETATO
     // Recupero etichetta associata a una coppia di nodi – O(1)
@@ -271,11 +305,9 @@ public void removeArch(Arch<E> arch) { // ! DA RIVEDERE
   public double getGraphWeight() { // ! DA RIVEDERE
     GraphWeight = 0.0;
 
-    for (ArrayList<Arch<E>> archList : hashMap.values()) {
-        for (Arch<E> arch : archList) {
-            GraphWeight += arch.getDistance();
-        }
-    }
+    for (ArrayList<Arch<E>> archList : hashMap.values()) 
+      for (Arch<E> arch : archList) 
+        GraphWeight += arch.getDistance();
 
     return GraphWeight;
 }
@@ -334,7 +366,7 @@ public void removeArch(Arch<E> arch) { // ! DA RIVEDERE
 
   public void MinForestPrim() { // TODO: ALGORITMO DI PRIM
     if (diretto)
-        throw new UnsupportedOperationException("L'algoritmo di Prim è applicabile solo a grafi non diretti.");
+      throw new UnsupportedOperationException("L'algoritmo di Prim è applicabile solo a grafi non diretti.");
     
     PriorityQueue<Arch<E>> minHeap = new PriorityQueue<>(new ArchComparator<>());
     // Inizializza la foresta
@@ -391,15 +423,9 @@ public void removeArch(Arch<E> arch) { // ! DA RIVEDERE
     StringBuilder result = new StringBuilder();
 
     for (Node<E> node : hashMap.keySet()) {
-      result.append("Node: ").append(node.getVal()).append("\n");
-      
-      ArrayList<Arch<E>> archList = hashMap.get(node);
-      
-      // if (archList.isEmpty()) result.append("  (No Archi in uscita)\n"); else 
-      for (Arch<E> arch : archList) 
-        result.append("  Arch: ").append(arch.getSorgente().getVal()).append(" -> ")
-              .append(arch.getDestinazione().getVal()).append(", Distance: ").append(arch.getDistance())
-              .append("\n");
+      result.append(node.toString()).append("\n");
+      for (Arch<E> arch : hashMap.get(node)) 
+        result.append(arch.toString()).append("\n");
     }
 
     return result.toString();
