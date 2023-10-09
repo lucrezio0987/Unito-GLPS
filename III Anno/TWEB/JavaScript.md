@@ -164,4 +164,5 @@
   > [https://www.w3schools.com/js/js_htmldom.asp]
 
  - Oggetto in HTML che permette di interagiere tra gli oggetti e il js
+ - ...
 
