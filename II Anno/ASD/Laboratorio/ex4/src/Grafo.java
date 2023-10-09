@@ -88,12 +88,10 @@ public class Grafo<E extends Comparable<E>> {
 
     ArrayList<Arch<E>> archList = hashMap.computeIfAbsent(sourceNode, k -> new ArrayList<>());
     archList.add(arch);
-    ArchNumber++;
 
     if (!diretto) {
       ArrayList<Arch<E>> reverseArchList = hashMap.computeIfAbsent(destNode, k -> new ArrayList<>());
-      reverseArchList.add(new Arch<>(destNode, sourceNode, arch.getDistance()));
-      ArchNumber++;
+      reverseArchList.add(arch.reveArch());
     }
   }
 
@@ -170,19 +168,11 @@ public class Grafo<E extends Comparable<E>> {
   
     if (archList != null) {
       archList.removeIf(a -> a.equals(arch));
-      ArchNumber--;
-  
-      if (!diretto) {
-        Node<E> destNode = arch.getDestinazione();
-        ArrayList<Arch<E>> reverseArchList = hashMap.get(destNode);
-        if (reverseArchList != null) {
-          reverseArchList.removeIf(a -> a.getSorgente().equals(sourceNode) && a.getDestinazione().equals(destNode));
-          ArchNumber--;
-        }
-      }
+      if (!diretto)
+        archList.removeIf(a -> a.equals(arch.reveArch()));
     }
   }
-  
+
   public int getNodesNumber() { // ? COMPLETATO
     // Determinazione del numero di nodi – O(1)
     Set<Node<E>> nodi = hashMap.keySet();
