@@ -23,6 +23,13 @@ public class Node<E> implements Comparable<Node<E>> {
   public int hashCode() { return Objects.hash(val); }
 
   @Override
+  public boolean equals(Object o) {
+      if (this == o) return true;
+      if (o == null || getClass() != o.getClass()) return false;
+      return Objects.equals(val, ((Node<?>) o).val);
+  }
+
+  @Override
   public int compareTo(Node<E> other) {
     if (this == other) return 0;
     if (other == null) return 1;    // Consider non-null objects to be greater

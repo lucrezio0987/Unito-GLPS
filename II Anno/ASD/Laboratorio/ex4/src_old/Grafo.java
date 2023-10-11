@@ -365,7 +365,7 @@ public class Grafo<E extends Comparable<E>> {
     hashMap = minimumForest;
   }
   */
-
+  
   public void MinForestPrim() { // TODO: ALGORITMO DI PRIM
     if (diretto)
       throw new UnsupportedOperationException("L'algoritmo di Prim è applicabile solo a grafi non diretti.");
