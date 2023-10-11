@@ -97,6 +97,13 @@ public class Grafo<E extends Comparable<E>> {
     return adjacentNodes;
   }
 
+  // ! DA RIVEDERE
+  public void removeNode(Node<E> node) {
+    if (hashMap.remove(node) != null)
+      for (Arch<E> arch : getArchList(node))
+        getArchList(arch.getDestinazione()).remove(arch.reveArch());
+  }
+
   //* Arch
 
   public ArrayList<Arch<E>> getArchList(Node<E> node) { return  hashMap.get(node);}
