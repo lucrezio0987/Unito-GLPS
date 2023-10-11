@@ -1,0 +1,86 @@
+<!--
+ Copyright 2016 Google Inc.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="canonical" href="https://weather-pwa-sample.firebaseapp.com/final/">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather PWA</title>
+  <link rel="stylesheet" href="/styles/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="styles/inline.css">
+
+  <!-- TODO add manifest here -->
+  <link rel="manifest" href="/manifest.json">
+  <!-- Add to home screen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Weather PWA">
+  <link rel="apple-touch-icon" href="images/icons/icon-152x152.png">
+  <meta name="msapplication-TileImage" content="images/icons/icon-144x144.png">
+  <meta name="msapplication-TileColor" content="#2F3BA2">
+
+  <script src="/scripts/jquery.min.js"></script>
+
+      <!-- Latest compiled JavaScript -->
+      <script src="/scripts/bootstrap.min.js"></script>
+</head>
+<body onload="initWeatherForecasts()">
+<div class="container" style="width: 100%">
+    <div class="row">
+        <div class="col-xs-10"><h1><%= title %></h1></div>
+        <div class="col-xs-2">
+            <div class="form-group">
+                <h1>
+                    <button class="btn btn-primary btn-lg buttonField roundishShape " id="swap_button"
+                            onclick="loadData()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                <button class="btn btn-primary btn-lg buttonField roundishShape " id="swap_button"
+                        onclick="showCityList()">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </button>
+                    <button class="btn btn-primary btn-lg buttonField roundishShape " id="swap_button"
+                                            onclick="causeError()">
+                                        <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                                    </button>
+                </h1>
+                <div class="list-group pop_up_list" id='city_list' style="display:none">
+                    <button class="list-group-item " onclick="selectCity('London', new Date().getTime());">London</button>
+                  <button class="list-group-item" onclick="selectCity('Madrid', new Date().getTime());">Madrid</button>
+                  <button class="list-group-item" onclick="selectCity('Paris', new Date().getTime());">Paris</button>
+                  <button class="list-group-item" onclick="selectCity('Rome', new Date().getTime());">Rome</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="offline_div" id="offline_div" style="display: none">You are offline</div>
+    </div>
+    <div id="results" style="text-align: center">
+
+    </div>
+        </div>
+    </div>
+
+</div>
+<script src="/scripts/app.js" ></script>
+<script src="/scripts/database.js"></script>
+
+</body>
+</html>
