@@ -396,9 +396,8 @@ public class Grafo<E extends Comparable<E>> {
         ArrayList<Arch<E>> destNodeArchs = hashMap.get(destNode);
         if (destNodeArchs != null) {
             for (Arch<E> adjacentArch : destNodeArchs) {
-                if (!visitedNodes.contains(adjacentArch.getDestinazione())) {
+                if (!visitedNodes.contains(adjacentArch.getDestinazione()))
                     minHeap.push(adjacentArch);
-                }
             }
         }
     }

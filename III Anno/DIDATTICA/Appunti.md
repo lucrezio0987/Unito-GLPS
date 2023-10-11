@@ -47,7 +47,7 @@ contiende delle "direttive" per
     + Scuola Secondaria:
 
 
-    > 1° Consegna
+    > Esercizio
     ```
       Sfogliando le indicazioni nazionali, ragionare su "quella che viene venduta come informatica ma non lo è" e "ciò che è informatica, ma non viene trattata come tale".
       ```
@@ -60,7 +60,7 @@ contiende delle "direttive" per
 
     [Matematica - Scienza - Ingegneria]
 
- > 2° Consegna
+ > Esercizio
   ```
     Pensare a come introdurre gli algoritmi di ordinamento in una scuola secondaria
   ```
@@ -106,4 +106,27 @@ due macro categorie: istruttivismo, costruttivismo.
 
    viabilità: non c'è una conoscenza vera, ma tutti impariamo attraverso esperienze e costruiamo la nostra conoscenze in base a concetti che "non sono stati ancora contraddetti" o coerenza logica.
 
+  [Piaget]: 2 modi attraverso cui si può creare della conoscenza (formare schemi mentali su come penso funzioni la realtà)
+   - **Assimilazione**
+   - **Accomodamento**
+
+   [Apprendmento attivo]: Uno degli approcci costruttivisti
+
+   > Socio-Costruttivismo:
+    - c'è una maggiore enfasi sulle relazioni umane
+
+    [Vygotskij]: 3 zone di svilippo dell'apprendimento:
+     1. zona di sviluppo attuale (lo studente può imparare da solo)
+     2. zona di sviluppo prossimale (lo studende può apprendere solo se supportato da un insegnante)
+     3. zona di sviluppo potenziale (lo studente in quel momento, non  può apprendere ne da solo, ne supportato).
+
+### Teorie e pratche basate sul costruttivismo
+  - Active learning
+  - productive failure
+  - problem-based learning
+  - inquiry-based learning
+
+
+### Didattica costruttivista
+  Ciò che l'inegnante può offrire sono stimoli ed indirizzamento, un contesto in cui pote apprendere.
 
