@@ -48,7 +48,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/lucrezio0987/Documenti/Unito-GLPS/III Anno/TWEB/Esempi e Esercizi/NodeJS/Esercizio_ProgressiveApp",
+    "last_opened_file_path": "/home/lucrezio0987/Documenti/Unito-GLPS/III Anno/TWEB/Esempi e Esercizi/NodeJS/Example of Form Filling",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -138,7 +138,7 @@
       <workItem from="1697021232296" duration="6000" />
       <workItem from="1697021278302" duration="124000" />
       <workItem from="1697024983598" duration="3466000" />
-      <workItem from="1697101779364" duration="390000" />
+      <workItem from="1697101779364" duration="936000" />
     </task>
     <task id="LOCAL-00001" summary="final version">
       <option name="closed" value="true" />
@@ -162,11 +162,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/app.js</url>
-          <line>49</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/public/scripts/database.js</url>
           <line>98</line>
