@@ -1,5 +1,6 @@
 import java.util.AbstractQueue;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -39,40 +40,39 @@ import java.util.Set;
 public class Grafo<E extends Comparable<E>> {
 
   boolean diretto;
-  int ArchNumber;
-  int NodesNumber;
-  Double GraphWeight;
   HashMap<Node<E>, ArrayList<Arch<E>>> hashMap;
   Comparator<E> comparator;
 
   //* COSTRUTTORE e METODI BASE
-  // ? COMPLETATO
   public Grafo(Comparator<E> comparator, boolean diretto) {
     this.hashMap = new HashMap<>();
     this.comparator = comparator;
     this.diretto = diretto;
-
-    this.ArchNumber = 0;
-    this.NodesNumber = 0;
-    this.GraphWeight = 0.0;
   }
 
-  // ? COMPLETATO
-  public boolean isEmpty() { return hashMap.isEmpty(); }
-  
-  // ? COMPLETATO
+  public boolean empty() { return hashMap.isEmpty(); }
   public boolean isDirected() { return diretto; }
-  
+
+  // ! DA RIVEDERE
+  public double getGraphWeight() {
+    Double GraphWeight = 0.0;
+
+    for (ArrayList<Arch<E>> archList : getCollectioArchs()) 
+      for (Arch<E> arch : archList) 
+        GraphWeight += arch.getDistance();
+
+    return GraphWeight;
+  }
 
   //* Node
-  public void addNode(Node<E> node) { hashMap.putIfAbsent(node, new ArrayList<>()); }
+  public void addNode(Node<E> node) { hashMap.putIfAbsent(node, new ArrayList<Arch<E>>());}
   public boolean containsNode(Node<E> node) { return hashMap.containsKey(node); }
   public Set<Node<E>> getNodes() { return hashMap.keySet(); }
   public int getNodesNumber() { return this.getNodes().size(); }
 
   public float getNodesLabel(Node<E> sorgente, Node<E> destinazione) {
-    if (!hashMap.containsKey(sorgente) || !hashMap.containsKey(destinazione))
-      throw new IllegalArgumentException("Uno o entrambi i nodi specificati non esistono nel grafo.");
+//    if (!hashMap.containsKey(sorgente) || !hashMap.containsKey(destinazione))
+//      throw new IllegalArgumentException("Uno o entrambi i nodi specificati non esistono nel grafo.");
 
     for (Arch<E> arch : getArchList(sorgente))
       if (arch.getDestinazione().equals(destinazione))
@@ -83,8 +83,6 @@ public class Grafo<E extends Comparable<E>> {
 
   // ! DA RIVEDERE
   public Set<Node<E>> getNodesAdjacent(Node<E> node) {
-    if (!hashMap.containsKey(node))
-      throw new IllegalArgumentException("Il nodo specificato non esiste nel grafo.");
 
     HashSet<Node<E>> adjacentNodes = new HashSet<>();
 
@@ -106,7 +104,8 @@ public class Grafo<E extends Comparable<E>> {
 
   //* Arch
 
-  public ArrayList<Arch<E>> getArchList(Node<E> node) { return  hashMap.get(node);}
+  public ArrayList<Arch<E>> getArchList(Node<E> node) { return  hashMap.getOrDefault(node, new ArrayList<>());}
+  public Collection<ArrayList<Arch<E>>> getCollectioArchs() { return hashMap.values();}
   // ! DA RIVEDERE
   public void addArch(Arch<E> arch) {
     if (!diretto) 
@@ -122,7 +121,95 @@ public class Grafo<E extends Comparable<E>> {
     return getArchList(arch.getSorgente()).contains(arch);
   }
 
+  // ! DA RIVEDERE
+  public void removeArch(Arch<E> arch) {
+    if(getArchList(arch.getSorgente()).remove(arch) && !diretto)
+      getArchList(arch.getDestinazione()).remove(arch.reveArch());
+  }
+
+  public Set<Arch<E>> getArch() {
+    Set<Arch<E>> archSet = new HashSet<>();
+    for (ArrayList<Arch<E>> archList : getCollectioArchs())
+      archSet.addAll(archList);
+    return archSet;
+  }
+
+  public int getArchNumber() {
+    int ArchNumber = 0;
+
+    if (diretto) 
+      for (ArrayList<Arch<E>> allArchList : getCollectioArchs())
+        ArchNumber += allArchList.size();
+    else {
+      Set<Arch<E>> uniqueArches = new HashSet<>();
+      for (ArrayList<Arch<E>> archList : getCollectioArchs())
+        for (Arch<E> arch : archList)
+          if (!uniqueArches.contains(arch) && !uniqueArches.contains(arch.reveArch()))
+            uniqueArches.add(arch);
+      ArchNumber = uniqueArches.size();
+    }
+    
+    return ArchNumber;
+  }
+
 
   //* Algoritmo di PRIM
+
+  public void MinForestPrim() { // TODO: ALGORITMO DI PRIM
+    if (diretto)
+      throw new UnsupportedOperationException("L'algoritmo di Prim è applicabile solo a grafi non diretti.");
+    
+    PriorityQueue<Arch<E>> minHeap = new PriorityQueue<>(new ArchComparator<>());
+    HashMap<Node<E>, ArrayList<Arch<E>>> minimumForest = new HashMap<>();
+    HashSet<Node<E>> visitedNodes = new HashSet<>();
+
+    Node<E> startNode = hashMap.keySet().iterator().next();
+    visitedNodes.add(startNode);
+    ArrayList<Arch<E>> startNodeArchs = hashMap.get(startNode);
+    if (startNodeArchs != null)
+        minHeap.addAll(startNodeArchs);
+
+    for (Node<E> node : hashMap.keySet()) 
+      minimumForest.put(node, new ArrayList<>());
+
+    while (!minHeap.empty() && visitedNodes.size() < hashMap.size()) {
+        Arch<E> minArch = minHeap.top();
+        minHeap.pop();
+        Node<E> sourceNode = minArch.getSorgente();
+        Node<E> destNode = minArch.getDestinazione();
+
+        if (visitedNodes.contains(sourceNode) && visitedNodes.contains(destNode))
+            continue;
+
+        if (!minimumForest.containsKey(sourceNode))
+            minimumForest.put(sourceNode, new ArrayList<>());
+        minimumForest.get(sourceNode).add(minArch);
+
+        visitedNodes.add(destNode);
+        ArrayList<Arch<E>> destNodeArchs = hashMap.get(destNode);
+        if (destNodeArchs != null) {
+            for (Arch<E> adjacentArch : destNodeArchs) {
+                if (!visitedNodes.contains(adjacentArch.getDestinazione()))
+                    minHeap.push(adjacentArch);
+            }
+        }
+    }
+
+    hashMap = minimumForest;
+}
+
+  //* OVERRIDE
+  @Override
+  public String toString() {
+    StringBuilder result = new StringBuilder();
+
+    for (Node<E> node : hashMap.keySet()) {
+      result.append(node.toString()).append("\n");
+      for (Arch<E> arch : hashMap.get(node)) 
+        result.append(arch.toString()).append("\n");
+    }
+
+    return result.toString();
+  }
 
 }

@@ -49,8 +49,8 @@ public class Arch<E> {
     if (this == obj)                                  return true;
     if (obj == null || getClass() != obj.getClass())  return false;
     
-    return this.sorgente.compareTo((Node<E>) ((Arch<?>) obj).getSorgente()) == 0 &&
-           this.destinazione.compareTo((Node<E>) ((Arch<?>) obj).getDestinazione()) == 0 &&
+    return this.sorgente.equals(((Arch<?>) obj).getSorgente()) &&
+           this.destinazione.equals(((Arch<?>) obj).getDestinazione())&&
            Float.compare(this.distance, ((Arch<?>) obj).getDistance()) == 0;
   }
 
