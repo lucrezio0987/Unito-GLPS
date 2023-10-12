@@ -34,10 +34,6 @@ function retrieveAllCitiesData(cityList, date){
     refreshCityList();
     writeColumnHeaders();
 
-   let container=document.getElementById("container");
-   container.innerHTML = "Common JS Bugs and Errors";
-    if (!container) return;
-
     for (index in cityList)
         loadCityData(cityList[index], date);
 }

@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Weather Forecast(1)' });
+  res.render('index', { title: 'Weather Forecast' });
 });
 
 /**
@@ -21,9 +21,6 @@ router.post('/weather_data', function(req, res, next) {
 
 router.get('/weather_received', function(req, res, next) {
   // get random weather for a location
-    let location= req.body.location;
-    const forecast= {};
-    getWeatherForecastTwo(forecast);
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(forecast));
 
