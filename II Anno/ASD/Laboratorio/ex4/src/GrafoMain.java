@@ -9,7 +9,6 @@ public class GrafoMain {
     Grafo<String> grafo = new Grafo<>(String::compareTo, false);
   
     // Aggiungi alcuni nodi al grafo
-
     grafo.addNode(new Node<>("A"));
     grafo.addNode(new Node<>("B"));
     grafo.addNode(new Node<>("C"));
@@ -66,7 +65,6 @@ public class GrafoMain {
     System.out.println("Peso Grafo   :  " + String.format("%.3f", grafo.getGraphWeight()) + "  / 5.0 expected" );
 
     System.out.println("\n");
-
   }
 }
 

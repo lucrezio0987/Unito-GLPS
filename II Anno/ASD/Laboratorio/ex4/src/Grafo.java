@@ -135,27 +135,23 @@ public class Grafo<E extends Comparable<E>> {
 
   public Set<Arch<E>> getArch() {
     Set<Arch<E>> archSet = new HashSet<>();
-    for (ArrayList<Arch<E>> archList : getCollectioArchs())
-      archSet.addAll(archList);
+    getCollectioArchs().forEach((archList) -> archSet.addAll(archList));
     return archSet;
   }
 
   public int getArchNumber() {
-    int ArchNumber = 0;
-
     if (diretto) 
-      for (ArrayList<Arch<E>> allArchList : getCollectioArchs())
-        ArchNumber += allArchList.size();
-    else {
-      Set<Arch<E>> uniqueArches = new HashSet<>();
-      for (ArrayList<Arch<E>> archList : getCollectioArchs())
-        for (Arch<E> arch : archList)
-          if (!uniqueArches.contains(arch) && !uniqueArches.contains(arch.reveArch()))
-            uniqueArches.add(arch);
-      ArchNumber = uniqueArches.size();
-    }
+      return getArch().size();
     
-    return ArchNumber;
+    Set<Arch<E>> uniqueArches = new HashSet<>();
+    getCollectioArchs().forEach((archList) -> {
+      archList.forEach((arch) -> {
+        if (!uniqueArches.contains(arch) && !uniqueArches.contains(arch.reveArch()))
+            uniqueArches.add(arch);
+        });
+      });
+    
+    return uniqueArches.size();
   }
 
 
@@ -164,41 +160,33 @@ public class Grafo<E extends Comparable<E>> {
   public void MinForestPrim() { // TODO: ALGORITMO DI PRIM
     if (diretto)
       throw new UnsupportedOperationException("L'algoritmo di Prim è applicabile solo a grafi non diretti.");
-    
-    PriorityQueue<Arch<E>> minHeap = new PriorityQueue<>(new ArchComparator<>());
+     
     HashMap<Node<E>, ArrayList<Arch<E>>> minimumForest = new HashMap<>();
+    Node<E> startNode = getNodes().iterator().next();
     HashSet<Node<E>> visitedNodes = new HashSet<>();
+    PriorityQueue<Arch<E>> minHeap = new PriorityQueue<>(new ArchComparator<>());
 
-    Node<E> startNode = hashMap.keySet().iterator().next();
+    minHeap.addAll(hashMap.get(startNode));
     visitedNodes.add(startNode);
-    ArrayList<Arch<E>> startNodeArchs = hashMap.get(startNode);
-    if (startNodeArchs != null)
-        minHeap.addAll(startNodeArchs);
 
-    for (Node<E> node : hashMap.keySet()) 
-      minimumForest.put(node, new ArrayList<>());
+    getNodes().forEach((node) -> minimumForest.put(node, new ArrayList<>()));
 
     while (!minHeap.empty() && visitedNodes.size() < hashMap.size()) {
-        Arch<E> minArch = minHeap.top();
-        minHeap.pop();
+        Arch<E> minArch = minHeap.top();  minHeap.pop(); // Pull()
         Node<E> sourceNode = minArch.getSorgente();
         Node<E> destNode = minArch.getDestinazione();
 
         if (visitedNodes.contains(sourceNode) && visitedNodes.contains(destNode))
             continue;
 
-        if (!minimumForest.containsKey(sourceNode))
-            minimumForest.put(sourceNode, new ArrayList<>());
+        minimumForest.putIfAbsent(sourceNode, new ArrayList<>());
         minimumForest.get(sourceNode).add(minArch);
 
         visitedNodes.add(destNode);
-        ArrayList<Arch<E>> destNodeArchs = hashMap.get(destNode);
-        if (destNodeArchs != null) {
-            for (Arch<E> adjacentArch : destNodeArchs) {
-                if (!visitedNodes.contains(adjacentArch.getDestinazione()))
-                    minHeap.push(adjacentArch);
-            }
-        }
+        hashMap.get(destNode).forEach((adjacentArch) -> {
+                                          if (!visitedNodes.contains(adjacentArch.getDestinazione()))
+                                            minHeap.push(adjacentArch);
+                                        });
     }
 
     hashMap = minimumForest;
@@ -209,7 +197,7 @@ public class Grafo<E extends Comparable<E>> {
   public String toString() {
     StringBuilder result = new StringBuilder();
 
-    for (Node<E> node : hashMap.keySet()) {
+    for (Node<E> node : getNodes()) {
       result.append(node.toString()).append("\n");
       for (Arch<E> arch : hashMap.get(node)) 
         result.append(arch.toString()).append("\n");
