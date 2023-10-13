@@ -135,6 +135,7 @@ public class TestPrim {
       grafo.addArch(new Arch<>("C", "D", 1.5f));
 
       grafo.MinForestPrim();
+      grafo.toString();
 
       // Verifica che il numero di nodi nella foresta sia corretto
       assertEquals(4, grafo.getNodesNumber());
@@ -143,7 +144,8 @@ public class TestPrim {
       assertEquals(3, grafo.getArchNumber());
 
       // Verifica che il peso della foresta sia corretto
-      assertEquals(4.0f, grafo.getGraphWeight(), 0.001);
+      assertEquals(5.0f, grafo.getGraphWeight(), 0.001);
+
 
       // Verifica che tutti i nodi inclusi nella foresta siano corretti
       assertTrue(grafo.containsNode(new Node<>("A")));

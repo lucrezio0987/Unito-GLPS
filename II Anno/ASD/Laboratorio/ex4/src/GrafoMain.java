@@ -62,7 +62,7 @@ public class GrafoMain {
 
     // Cose
     System.out.println("Numero Archi :  " + grafo.getArchNumber()  + "    / 3   expected" );
-    System.out.println("Numero Nodi  :  " + grafo.getNodesNumber() + "    / 4   expected" );
+    System.out.println("Numero Nodi  :  " + grafo.getNodesNumber() + "    / 6   expected" );
     System.out.println("Peso Grafo   :  " + String.format("%.3f", grafo.getGraphWeight()) + "  / 5.0 expected" );
 
     System.out.println("\n");
