@@ -161,7 +161,6 @@ public class TestPrim {
       assertFalse(grafo.containsArch(new Arch<>("B", "D", 2.0f)));
   }
 
-  @Ignore
   @Test
   public void testGetNodesAdjacent() {
       grafo.addNode(new Node<>("A"));
@@ -181,8 +180,8 @@ public class TestPrim {
       assertTrue(adjacentNodes.contains(new Node<>("C")));
 
       adjacentNodes = grafo.getNodesAdjacent(new Node<>("B"));
-      assertEquals(2, adjacentNodes.size());
-      assertFalse(adjacentNodes.contains(new Node<>("A")));
+      assertEquals(3, adjacentNodes.size());
+      assertTrue(adjacentNodes.contains(new Node<>("A")));
       assertTrue(adjacentNodes.contains(new Node<>("C")));
       assertTrue(adjacentNodes.contains(new Node<>("D")));
   }
@@ -248,5 +247,4 @@ public class TestPrim {
           assertTrue(arches.contains(new Arch<>("A", "C", 1.0f)));
           assertTrue(arches.contains(new Arch<>("B", "C", 3.0f)));
   }
-  
 }

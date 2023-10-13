@@ -83,14 +83,20 @@ public class Grafo<E extends Comparable<E>> {
 
   // ! DA RIVEDERE
   public Set<Node<E>> getNodesAdjacent(Node<E> node) {
+    if (!hashMap.containsKey(node))
+      throw new IllegalArgumentException("Il nodo specificato non esiste nel grafo.");
 
-    HashSet<Node<E>> adjacentNodes = new HashSet<>();
+    Set<Node<E>> adjacentNodes = new HashSet<>();
 
-    for (Arch<E> arch : getArchList(node)) {
-      if (!diretto)
-        adjacentNodes.add( arch.getSorgente()     );
-        adjacentNodes.add( arch.getDestinazione() );
-    }
+    for (Arch<E> arch : getArchList(node))
+      adjacentNodes.add(arch.getDestinazione());
+
+    if (!diretto)
+      for (Node<E> currentNode : getNodes())
+        if (!currentNode.equals(node) && !adjacentNodes.contains(currentNode))
+          for (Arch<E> arch : getArchList(currentNode))
+            if (arch.getDestinazione().equals(node))
+              adjacentNodes.add(currentNode);
 
     return adjacentNodes;
   }
@@ -196,7 +202,7 @@ public class Grafo<E extends Comparable<E>> {
     }
 
     hashMap = minimumForest;
-}
+  }
 
   //* OVERRIDE
   @Override
@@ -211,5 +217,4 @@ public class Grafo<E extends Comparable<E>> {
 
     return result.toString();
   }
-
 }

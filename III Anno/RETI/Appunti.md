@@ -134,3 +134,12 @@
 
 
 ### Servizio di Posta
+
+( >$ ps     mostra i processi)
+
+ [SMTP]:
+
+ >netstat -lptn (lissen, programs, tcp, numeric)
+
+ >telnet
+
