@@ -143,3 +143,4 @@
 
  >telnet
 
+ > bat /etc/resolv.conf  (contiene bho...)
