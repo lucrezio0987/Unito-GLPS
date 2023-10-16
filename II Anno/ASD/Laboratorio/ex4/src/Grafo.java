@@ -161,10 +161,10 @@ public class Grafo<E extends Comparable<E>> {
     if (diretto)
       throw new UnsupportedOperationException("L'algoritmo di Prim è applicabile solo a grafi non diretti.");
      
-    HashMap<Node<E>, ArrayList<Arch<E>>> minimumForest = new HashMap<>();
-    Node<E> startNode = getNodes().iterator().next();
-    HashSet<Node<E>> visitedNodes = new HashSet<>();
-    PriorityQueue<Arch<E>> minHeap = new PriorityQueue<>(new ArchComparator<>());
+    HashMap<Node<E>, ArrayList<Arch<E>>>  minimumForest   = new HashMap<>();
+    Node<E>                               startNode       = getNodes().iterator().next();
+    HashSet<Node<E>>                      visitedNodes    = new HashSet<>();
+    PriorityQueue<Arch<E>>                minHeap         = new PriorityQueue<>(new ArchComparator<>());
 
     minHeap.addAll(hashMap.get(startNode));
     visitedNodes.add(startNode);
