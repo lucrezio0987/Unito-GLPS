@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="/javascripts/javascript.js"></script>
+  </head>
+  <body onload="checkForErrors(<%= login_is_correct %>)">
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+
+    <table>
+      <th>Please fill the form</th>
+      <form action = "/submit" method="POST">
+        <tr>
+          <td><label for="txtLogin">Login:</label></td>
+          <td><input type="text" id="login" name="login"></td>
+        </tr>
+        <tr>
+          <td><label for="txtPassword">Password:</label></td>
+          <td><input type="password" id="password" name="password"></td>
+        </tr>
+        <tr>
+          <td><button type="submit">Submit</button></td>
+        </tr>
+      </form>
+    </table>
+  </body>
+</html>
