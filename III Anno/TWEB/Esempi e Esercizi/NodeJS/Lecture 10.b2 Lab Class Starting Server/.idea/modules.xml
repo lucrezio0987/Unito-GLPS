@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../Server per 10.b1/.idea/Server per 10.b1.iml" filepath="$PROJECT_DIR$/../Server per 10.b1/.idea/Server per 10.b1.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Week 2.b2 Lab Class Supporting Server.iml" filepath="$PROJECT_DIR$/.idea/Week 2.b2 Lab Class Supporting Server.iml" />
     </modules>
   </component>
