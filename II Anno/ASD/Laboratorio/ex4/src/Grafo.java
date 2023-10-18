@@ -77,7 +77,7 @@ public class Grafo<E extends Comparable<E>> {
     for (Arch<E> arch : getArchList(sorgente))
       if (arch.getDestinazione().equals(destinazione))
         return (float) arch.getDistance();
-    
+
     return (float) -1;
   }
 
@@ -88,24 +88,26 @@ public class Grafo<E extends Comparable<E>> {
 
     Set<Node<E>> adjacentNodes = new HashSet<>();
 
-    for (Arch<E> arch : getArchList(node))
-      adjacentNodes.add(arch.getDestinazione());
+
+    getArchList(node).forEach((arch) -> adjacentNodes.add(arch.getDestinazione()));
 
     if (!diretto)
-      for (Node<E> currentNode : getNodes())
-        if (!currentNode.equals(node) && !adjacentNodes.contains(currentNode))
-          for (Arch<E> arch : getArchList(currentNode))
-            if (arch.getDestinazione().equals(node))
-              adjacentNodes.add(currentNode);
-
+    getNodes().forEach((currentNode) -> {
+      if (!currentNode.equals(node) && !adjacentNodes.contains(currentNode))
+        getArchList(currentNode).forEach((arch) -> {
+          if (arch.getDestinazione().equals(node))
+            adjacentNodes.add(currentNode);
+        });
+    });
     return adjacentNodes;
   }
 
   // ! DA RIVEDERE
   public void removeNode(Node<E> node) {
     if (hashMap.remove(node) != null)
-      for (Arch<E> arch : getArchList(node))
-        getArchList(arch.getDestinazione()).remove(arch.reveArch());
+        getArchList(node).forEach((arch) ->
+          getArchList(arch.getDestinazione()).remove(arch.reveArch())
+        );
   }
 
   //* Arch
