@@ -88,7 +88,6 @@ public class Grafo<E extends Comparable<E>> {
 
     Set<Node<E>> adjacentNodes = new HashSet<>();
 
-
     getArchList(node).forEach((arch) -> adjacentNodes.add(arch.getDestinazione()));
 
     if (!diretto)

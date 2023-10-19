@@ -226,27 +226,27 @@ public class TestPrim {
 
   @Test
   public void testRemoveArch() {
-          grafo.addArch(new Arch<>("A", "B", 2.5f));
-          grafo.addArch(new Arch<>("A", "C", 1.0f));
-          grafo.addArch(new Arch<>("B", "C", 3.0f));
+        grafo.addArch(new Arch<>("A", "B", 2.5f));
+        grafo.addArch(new Arch<>("A", "C", 1.0f));
+        grafo.addArch(new Arch<>("B", "C", 3.0f));
   
-          Arch<String> archToRemove = new Arch<>("A", "B", 2.5f);
-          grafo.removeArch(archToRemove);
+        Arch<String> archToRemove = new Arch<>("A", "B", 2.5f);
+        grafo.removeArch(archToRemove);
   
-          Set<Arch<String>> arches = grafo.getArch();
+        Set<Arch<String>> arches = grafo.getArch();
+        
+        if (!grafo.isDirected()) {
+          assertEquals(4, arches.size());
+          assertFalse(arches.contains(archToRemove));
           
-          if (!grafo.isDirected()) {
-            assertEquals(4, arches.size());
-            assertFalse(arches.contains(archToRemove));
-            
-            Arch<String> reverseArch = archToRemove.reveArch();
-            assertFalse(arches.contains(reverseArch));
-          } else {
-            assertEquals(2, arches.size());
-            assertFalse(arches.contains(archToRemove));
-          }
-          
-          assertTrue(arches.contains(new Arch<>("A", "C", 1.0f)));
-          assertTrue(arches.contains(new Arch<>("B", "C", 3.0f)));
+          Arch<String> reverseArch = archToRemove.reveArch();
+          assertFalse(arches.contains(reverseArch));
+        } else {
+          assertEquals(2, arches.size());
+          assertFalse(arches.contains(archToRemove));
+        }
+        
+        assertTrue(arches.contains(new Arch<>("A", "C", 1.0f)));
+        assertTrue(arches.contains(new Arch<>("B", "C", 3.0f)));
   }
 }
