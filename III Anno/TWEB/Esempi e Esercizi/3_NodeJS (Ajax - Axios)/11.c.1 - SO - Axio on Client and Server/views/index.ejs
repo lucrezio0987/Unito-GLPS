@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/javascripts/index.js"></script>
+  </head>
+  <body onload="init()">
+    <h1><%= title %></h1>
+
+    <form id="xForm" >
+      <label for="no1">First number:</label>
+            <input type="number" id="no1" name="no1"><br><br>
+      <label for="no2">Second number:</label>
+            <input type="number" id="no2" name="no2"><br><br>
+      <input type="submit" value="Submit">
+    </form>
+    <p id="results"></p>
+  </body>
+</html>
