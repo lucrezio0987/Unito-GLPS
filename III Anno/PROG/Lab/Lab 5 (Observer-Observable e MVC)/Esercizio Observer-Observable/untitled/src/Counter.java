@@ -1,4 +1,8 @@
-class Counter{
+import java.util.*;
+import java.util.Observable;
+import java.util.Observer;
+
+class Counter {
 
     private int c;
     private Filter filter;
@@ -10,9 +14,9 @@ class Counter{
 
     public void start() {
 
-        for (int i=0; i<50; i++) {
+        for (int i = 0; i < 50; i++) {
             c++;
-            if (c%5==0) {
+            if (c % 5 == 0) {
                 filter.filter(c);
             }
         }
