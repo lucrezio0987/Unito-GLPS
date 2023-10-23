@@ -139,8 +139,31 @@
 
  [SMTP]:
 
- >netstat -lptn (lissen, programs, tcp, numeric)
+ > netstat -lptn (lissen, programs, tcp, numeric)
 
- >telnet
+ > telnet
 
  > bat /etc/resolv.conf  (contiene bho...)
+
+
+## Livello di Trasporto
+
+  Permette la comuncazione tra due processi (uno nel browser e uno nel server)
+
+  Floow-controll: regola la quantità di pacchetti che vengono mandati
+
+  i paccehtti mandati sono numerati per poter essere riodinati quando arrivano.
+
+
+~~  multipexing (in invio) - demultipexing (in ricezione)
+~~    (Porta sorgente)        (porta destinazione)
+
+  Protocolli di trasporto:
+    [TCP]: (Transmission Control Protocol)
+      - riceve in ordine i pacchetti (se un pacchetti manca viene richiesto)
+      - prende la storia delle comnicazini con quella connessione e verifica se manca qualcosa.
+
+    [UDP]: (User Datagram Protocol)
+      - stateless, quando arriva qualcosa risponde (non importa da dove arriva.
+      - inverte porta ssorgente con destinazione e manda la risposta
+      - usato dai protocolli di gestione
