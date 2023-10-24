@@ -22,7 +22,7 @@ public class Viewe extends JFrame implements Observer {
         panel.add(button);
         panel.add(label);
 
-        button.addActionListener(new Controller());
+        button.addActionListener(new Controller(new Model()));
 
     }
     public void start() {
