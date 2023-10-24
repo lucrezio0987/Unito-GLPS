@@ -5,6 +5,8 @@
 
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setVisible(true);
+
+    frame.dispose();
 ```
 
 ### Label
@@ -88,6 +90,29 @@
     private static class Listener implements ActionListener {
       public void actionPerformed(ActionEvent event) { /* ... */}
     }
+
+    button.getActionListeners();
+    button.removeActionListener(Listener);
+    button.removeAllActionListeners();
+
+```
+  rimuove l'action listener
+```java
+
+    public class FrameListener extends JFrame {
+
+      public FrameListener(final JButton button) {
+
+        ActionListener Listener = new ActionListener() {
+             public void actionPerformed(ActionEvent event) {
+                button.removeActionListener(this);
+             }
+          };
+
+        button.addActionListener(Listener);
+      }
+    }
+
 ```
 
 ```Java
@@ -261,3 +286,29 @@ class FrameListener implements ActionListener {
   }
 
 ```
+
+[con le classi anonime]:
+```Java
+    addMouseMotionListener(new MouseMotionAdapter() {
+      public void mouseDragged(MouseEvent e) {/*...*/}
+    });
+
+    addMouseListener(new MouseAdapter() {
+          public void mouseEntered(MouseEvent e) {/*...*/}
+    });
+```
+
+## JOptionPane
+  una versione di CiaoNome in cui l'input e l'output sono fatti non su consolle, bensi' su finestre di dialogo, usando metodi statici della classe JOptionPane
+
+```Java
+  String nome = JOptionPane.showInputDialog("Come ti chiami?");
+  JOptionPane.showMessageDialog(null, "Ciao, " + nome);
+```
+### JTextArea
+
+```Java
+  JTextArea textArea = new JTextArea("Titolo");
+```
+
+

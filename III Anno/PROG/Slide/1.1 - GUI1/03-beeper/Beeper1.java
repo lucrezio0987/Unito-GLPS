@@ -22,14 +22,14 @@ public class Beeper1 extends JFrame {
       Beeper1 beep = new Beeper1();
    }
 
-   // BeepListener è innestata per
+   // BeepListener innestata per
    // nascondere i tipi che non servono al di fuori della classe principale
    // siccome non utilizza lo stato di Beeper1, la definisco static
       private static class BeepListener implements ActionListener {
       	public void actionPerformed(ActionEvent e) {
          Toolkit.getDefaultToolkit().beep();
          System.out.println("BEEEEPPPP!!!!!");
-         System.out.println("Il command del bottone è: " + e.getActionCommand());
+         System.out.println("Il command del bottone : " + e.getActionCommand());
       	}
       }
 }

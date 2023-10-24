@@ -1,6 +1,6 @@
 /**
   una versione di CiaoNome in cui l'input e l'output sono fatti
-  non su consolle, bensì su finestre di dialogo, usando metodi
+  non su consolle, bensi' su finestre di dialogo, usando metodi
   statici della classe JOptionPane
 */
 
