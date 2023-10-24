@@ -10,10 +10,10 @@ public class Two2 extends JFrame {
 
   private class MA extends MouseAdapter {
 	public void mouseEntered(MouseEvent e) {
-		tf.setText("Il mouse è entrato");
+		tf.setText("Il mouse e' entrato");
 	}
 	public void mouseExited(MouseEvent e) {
-		tf.setText("Il mouse è uscito");
+		tf.setText("Il mouse e' uscito");
 	}
   }
 
