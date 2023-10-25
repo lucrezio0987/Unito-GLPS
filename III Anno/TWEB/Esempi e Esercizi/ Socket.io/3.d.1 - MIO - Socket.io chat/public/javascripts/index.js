@@ -1,7 +1,7 @@
 let name = null;
 let roomNo = null;
 let chat= io.connect('/chat');
-let news= io.connect('/news');
+//@todo declare the news namespace here
 
 
 /**
@@ -15,7 +15,7 @@ function init() {
     document.getElementById('chat_interface').style.display = 'none';
 
     initChatSocket();
-    initNewsSocket();
+    //@todo insert here the init of the /news socket
 }
 
 
@@ -31,6 +31,7 @@ function generateRoom() {
 
 /**
  * it initialises the socket for /chat
+ * @todo create an equivalent one for /news
  */
 
 function initChatSocket() {
@@ -53,40 +54,22 @@ function initChatSocket() {
 
 }
 
-/**
- * it initialises the socket for /news
- */
-function initNewsSocket(){
-    news.on('joined', function (room, userId) {
-            if (userId !== name) {
-                // notifies that someone has joined the room
-                writeOnNewsHistory('<b>'+userId+'</b>' + ' joined news room ' + room);
-            }
-        });
-
-    // called when some news is received (note: only news received by others are received)
-    news.on('news', function (room, userId, newsText) {
-        writeOnNewsHistory('<b>' + userId + ':</b> ' + newsText);
-    });
-}
-
 
 /**
  * called when the Send button is pressed. It gets the text to send from the interface
  * and sends the message via  socket
+ * @todo create sendNewsText which is the equivalent function for /news. the stub is below
  */
 function sendChatText() {
     let chatText = document.getElementById('chat_input').value;
     chat.emit('chat', roomNo, name, chatText);
 }
+
 /**
- * called when the Send button is pressed for news. It gets the text to send from the interface
- * and sends the message via  socket
+ * todo to be implemented
  */
-function sendNewsText() {
-    let newsText = document.getElementById('news_input').value;
-    news.emit('news', roomNo, name, newsText);
-    document.getElementById('news_input').value='';
+function sendNewsText(){
+
 }
 
 /**
@@ -99,12 +82,13 @@ function connectToRoom() {
     name = document.getElementById('name').value;
     if (!name) name = 'Unknown-' + Math.random();
     chat.emit('create or join', roomNo, name);
-    news.emit('create or join', roomNo, name);
+    //@todo insert here the emit 'create or join' for /news
 }
 
 /**
  * it appends the given html text to the history div
  * @param text: teh text to append
+ * @todo create an equivalent one for /news
  */
 function writeOnChatHistory(text) {
     let history = document.getElementById('chat_history');
@@ -114,17 +98,6 @@ function writeOnChatHistory(text) {
     document.getElementById('chat_input').value = '';
 }
 
-/**
- * it appends the given html text to the history div
- * @param text: teh text to append
- */
-function writeOnNewsHistory(text) {
-    let history = document.getElementById('news_history');
-    let paragraph = document.createElement('p');
-    paragraph.innerHTML = text;
-    history.appendChild(paragraph);
-    document.getElementById('news_input').value = '';
-}
 
 /**
  * it hides the initial form and shows the chat
