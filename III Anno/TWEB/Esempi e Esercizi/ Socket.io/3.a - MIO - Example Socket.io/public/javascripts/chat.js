@@ -14,6 +14,7 @@ function init() {
     const formButton = document.getElementById("form-btn");
 
     messageButton.addEventListener('click', () => {
+        socket.emit('chat message', currentRoom, messageInput.value, getMyFullName());
         //@todo here we should extract the message from the form
         //@todo here we should send the message via socket
         messageInput.value = '';
@@ -26,11 +27,21 @@ function init() {
         document.getElementById("form_container").style.display = 'none';
         document.getElementById("message_container").style.display = 'block';
         document.getElementById('logout').style.display='block';
+
+        socket.emit('create or join conversation', currentRoom, getMyFullName());
+
         event.preventDefault()
     });
 
     let logoutButton = document.getElementById('logout');
     logoutButton.addEventListener('click', (event) => {
+
+        document.getElementById("form_container").style.display = 'block';
+        document.getElementById("message_container").style.display = 'none';
+        document.getElementById('logout').style.display='none';
+
+        socket.emit('leave conversation', currentRoom, getMyFullName());
+
         // @todo here we should send a leave message through the socket
     })
 
@@ -39,6 +50,7 @@ function init() {
     field.addEventListener('keypress', function (event) {
         if (event.key === 'Enter') {
             // @todo here we should share the message through the socket
+            socket.emit('chat message', currentRoom, messageInput.value, getMyFullName());
             messageInput.value = '';
             return false;
         }
@@ -51,7 +63,11 @@ function init() {
 
     // here we receive the join message via the socket
     socket.on('create or join conversation', (name) => {
-        insertMessage(name+ " has joined the conversation")
+        insertMessage(messages, name+ " has joined the conversation")
+    });
+
+    socket.on('leave conversation', (name) => {
+        insertMessage(messages,name+ " has left the conversation");
     });
 
     myName = localStorage.getItem('my_name');
