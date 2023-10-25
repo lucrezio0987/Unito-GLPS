@@ -11,11 +11,11 @@ exports.init = function(io) {
        */
       socket.on('create or join', function (room, userId) {
         socket.join(room);
-        chat.to(room).emit('joined', room, userId);
+        chat.to(room).emit('joined_Chat', room, userId);
       });
 
       socket.on('chat', function (room, userId, chatText) {
-        chat.to(room).emit('chat', room, userId, chatText);
+        chat.to(room).emit('chat_Chat', room, userId, chatText);
       });
 
       socket.on('disconnect', function(){
@@ -36,4 +36,24 @@ exports.init = function(io) {
   // use
   //     socket.broadcast.to(room).emit
 
+  const news= io
+      .of('/news')
+      .on('connection', function (socket) {
+        try {
+
+          socket.on('create or join', function (room, userId) {
+            socket.join(room);
+            news.to(room).emit('joined_News', room, userId);
+          });
+
+          socket.on('chat', function (room, userId, chatText) {
+            news.to(room).emit('chat_News', room, userId, chatText);
+          });
+
+          socket.on('disconnect', function(){
+            console.log('someone disconnected');
+          });
+        } catch (e) {
+        }
+      });
 }

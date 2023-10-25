@@ -2,7 +2,7 @@ let name = null;
 let roomNo = null;
 let chat= io.connect('/chat');
 //@todo declare the news namespace here
-
+let news= io.connect('/news');
 
 /**
  * called by <body onload>
@@ -15,6 +15,7 @@ function init() {
     document.getElementById('chat_interface').style.display = 'none';
 
     initChatSocket();
+    initNewsSocket();
     //@todo insert here the init of the /news socket
 }
 
@@ -34,9 +35,29 @@ function generateRoom() {
  * @todo create an equivalent one for /news
  */
 
+function initNewsSocket() {
+    // called when someone joins the room. If it is someone else it notifies the joining of the room
+    news.on('joined_News', function (room, userId) {
+        if (userId === name) {
+            // it enters the chat
+            hideLoginInterface(room, userId);
+        } else {
+            // notifies that someone has joined the room
+            writeOnNewsHistory('<b>' + userId + '</b>' + ' joined room ' + room);
+        }
+    });
+    // called when a message is received
+    news.on('chat_News', function (room, userId, chatText) {
+        let who = userId
+        if (userId === name) who = 'Me';
+        writeOnNewsHistory('<b>' + who + ':</b> ' + chatText);
+    });
+
+}
+
 function initChatSocket() {
     // called when someone joins the room. If it is someone else it notifies the joining of the room
-    chat.on('joined', function (room, userId) {
+    chat.on('joined_Chat', function (room, userId) {
         if (userId === name) {
             // it enters the chat
             hideLoginInterface(room, userId);
@@ -46,7 +67,7 @@ function initChatSocket() {
         }
     });
     // called when a message is received
-    chat.on('chat', function (room, userId, chatText) {
+    chat.on('chat_Chat', function (room, userId, chatText) {
         let who = userId
         if (userId === name) who = 'Me';
         writeOnChatHistory('<b>' + who + ':</b> ' + chatText);
@@ -69,7 +90,8 @@ function sendChatText() {
  * todo to be implemented
  */
 function sendNewsText(){
-
+    let newsText = document.getElementById('news_input').value;
+    news.emit('chat', roomNo, name, newsText);
 }
 
 /**
@@ -83,6 +105,7 @@ function connectToRoom() {
     if (!name) name = 'Unknown-' + Math.random();
     chat.emit('create or join', roomNo, name);
     //@todo insert here the emit 'create or join' for /news
+    news.emit('create or join', roomNo, name);
 }
 
 /**
@@ -96,6 +119,14 @@ function writeOnChatHistory(text) {
     paragraph.innerHTML = text;
     history.appendChild(paragraph);
     document.getElementById('chat_input').value = '';
+}
+
+function writeOnNewsHistory(text) {
+    let history = document.getElementById('news_history');
+    let paragraph = document.createElement('p');
+    paragraph.innerHTML = text;
+    history.appendChild(paragraph);
+    document.getElementById('news_input').value = '';
 }
 
 
