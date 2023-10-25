@@ -38,6 +38,7 @@ function extractFormData() {
  */
 function submitForm(event){
     let formData= extractFormData();
+    console.log(formData);
     axios.post('/form_submission', formData)
         .then (data=>{
             data = data.data;
