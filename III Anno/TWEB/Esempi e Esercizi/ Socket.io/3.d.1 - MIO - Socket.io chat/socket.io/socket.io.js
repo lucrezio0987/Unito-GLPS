@@ -43,11 +43,11 @@ exports.init = function(io) {
 
           socket.on('create or join', function (room, userId) {
             socket.join(room);
-            news.to(room).emit('joined_News', room, userId);
+            socket.broadcast.to(room).emit('joined_News', room, userId);
           });
 
           socket.on('chat', function (room, userId, chatText) {
-            news.to(room).emit('chat_News', room, userId, chatText);
+            socket.broadcast.to(room).emit('chat_News', room, userId, chatText);
           });
 
           socket.on('disconnect', function(){

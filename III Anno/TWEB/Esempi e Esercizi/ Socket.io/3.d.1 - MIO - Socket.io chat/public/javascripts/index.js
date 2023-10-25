@@ -84,6 +84,7 @@ function initChatSocket() {
 function sendChatText() {
     let chatText = document.getElementById('chat_input').value;
     chat.emit('chat', roomNo, name, chatText);
+    document.getElementById('chat_input').value= '';
 }
 
 /**
@@ -92,6 +93,7 @@ function sendChatText() {
 function sendNewsText(){
     let newsText = document.getElementById('news_input').value;
     news.emit('chat', roomNo, name, newsText);
+    document.getElementById('news_input').value = '';
 }
 
 /**
@@ -118,7 +120,6 @@ function writeOnChatHistory(text) {
     let paragraph = document.createElement('p');
     paragraph.innerHTML = text;
     history.appendChild(paragraph);
-    document.getElementById('chat_input').value = '';
 }
 
 function writeOnNewsHistory(text) {
@@ -126,7 +127,6 @@ function writeOnNewsHistory(text) {
     let paragraph = document.createElement('p');
     paragraph.innerHTML = text;
     history.appendChild(paragraph);
-    document.getElementById('news_input').value = '';
 }
 
 
