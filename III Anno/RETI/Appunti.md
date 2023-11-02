@@ -167,3 +167,19 @@
       - stateless, quando arriva qualcosa risponde (non importa da dove arriva.
       - inverte porta ssorgente con destinazione e manda la risposta
       - usato dai protocolli di gestione
+
+
+## Principles of reliable data transfer
+
+  - Problemi legati al'utilizzzo di **canali non affidabili** sono:
+    + perdita di pacchetti
+    + pacchetti danneggiati
+    + pacchetti in ritardo
+
+ - Serve uno scambio di messaggi tra chi manda e chi riceve per avere informazioni relativi a "cosa sta succedendo dall'altra parte".
+
+ [Notazioni]:
+   - **rdt_send()**: Reliable data transfer
+    protocollo API per mandare i dati.
+   - **rdt_rcv()**: interfaccia di ricevimento Reliable
+

@@ -15,7 +15,7 @@ class GLConJFrame {
 
 	public GLConJFrame() {
 		//f.setLayout(new GridLayout(3, 2));
-		f.setLayout(new GridLayout(3, 2, 20, 50)); // rows, cols, hgap (distanza orizzontale tra colonne), vgap (dist verticale)
+		f.setLayout(new GridLayout(5, 5, 20, 50)); // rows, cols, hgap (distanza orizzontale tra colonne), vgap (dist verticale)
 		f.add(b1);
 		f.add(b2);
 		f.add(b3);
