@@ -13,6 +13,6 @@ public class Controller implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        this.model.addElement("ciao");
+        model.addElement(actionEvent.getActionCommand());
     }
 }

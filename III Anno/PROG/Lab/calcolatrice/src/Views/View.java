@@ -5,15 +5,14 @@ import Model.Model;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 public class View  extends JFrame  implements Observer {
     JButton b1, b2, b3, b4, b5, b6, b7, b8, b9, b0;
-    JButton b_piu, b_meno, b_uguale, b_per, b_div;
+    JButton b_piu, b_meno, b_per, b_div, b_open, b_close;
+    JButton b_uguale, b_reset;
     JLabel label, result;
-    JPanel text_panel, button_panel;
+    JPanel text_panel, button_panel, controll_panel;
 
     public View() {
         super("Calcolatrice");
@@ -32,18 +31,22 @@ public class View  extends JFrame  implements Observer {
         b_meno = new JButton("-");
         b_per = new JButton("*");
         b_div = new JButton("/");
+        b_open = new JButton("(");
+        b_close = new JButton(")");
         b_uguale = new JButton("=");
+        b_reset = new JButton("res");
 
         label = new JLabel();   label.setBorder(BorderFactory.createTitledBorder("Testo"));
         result = new JLabel();  result.setBorder(BorderFactory.createTitledBorder("Risultato"));
 
         text_panel = new JPanel();
         button_panel = new JPanel();
+        controll_panel = new JPanel();
 
-        setLayout(new GridLayout(2, 1));
-        button_panel.setLayout(new GridLayout(3, 5));
+        setLayout(new GridLayout(3, 1));
+        button_panel.setLayout(new GridLayout(4, 5));
         text_panel.setLayout(new GridLayout(2, 1));
-
+        controll_panel.setLayout(new GridLayout(1, 2));
         add(text_panel);
             text_panel.add(label);
             text_panel.add(result);
@@ -62,7 +65,11 @@ public class View  extends JFrame  implements Observer {
             button_panel.add(b_meno);
             button_panel.add(b_per);
             button_panel.add(b_div);
-            button_panel.add(b_uguale);
+            button_panel.add(b_open);
+            button_panel.add(b_close);
+        add(controll_panel);
+            controll_panel.add(b_uguale);
+            controll_panel.add(b_reset);
 
 
         pack();
@@ -73,10 +80,8 @@ public class View  extends JFrame  implements Observer {
 
     @Override
     public void update(Observable observable, Object o) {
-        if(o instanceof Model)
-            label.setText(((Model) o).getTextString());
-        else
-            label.setText("Errore");
+        label.setText(((Model) observable).getTextString());
+        result.setText(((Model) observable).getTextResutl());
     }
 
     public void setListener(Controller c) {
@@ -95,5 +100,8 @@ public class View  extends JFrame  implements Observer {
         b_per.addActionListener(c);
         b_div.addActionListener(c);
         b_uguale.addActionListener(c);
+        b_reset.addActionListener(c);
+        b_open.addActionListener(c);
+        b_close.addActionListener(c);
     }
 }
