@@ -11,7 +11,7 @@ public class View  extends JFrame  implements Observer {
     JButton b1, b2, b3, b4, b5, b6, b7, b8, b9, b0;
     JButton b_piu, b_meno, b_per, b_div, b_open, b_close;
     JButton b_uguale, b_reset;
-    JLabel label, result;
+    JLabel input, result;
     JPanel text_panel, button_panel, controll_panel;
 
     public View() {
@@ -36,7 +36,7 @@ public class View  extends JFrame  implements Observer {
         b_uguale = new JButton("=");
         b_reset = new JButton("res");
 
-        label = new JLabel();   label.setBorder(BorderFactory.createTitledBorder("Testo"));
+        input = new JLabel();   input.setBorder(BorderFactory.createTitledBorder("Input"));
         result = new JLabel();  result.setBorder(BorderFactory.createTitledBorder("Risultato"));
 
         text_panel = new JPanel();
@@ -47,8 +47,9 @@ public class View  extends JFrame  implements Observer {
         button_panel.setLayout(new GridLayout(4, 5));
         text_panel.setLayout(new GridLayout(2, 1));
         controll_panel.setLayout(new GridLayout(1, 2));
+
         add(text_panel);
-            text_panel.add(label);
+            text_panel.add(input);
             text_panel.add(result);
         add(button_panel);
             button_panel.add(b1);
@@ -80,7 +81,7 @@ public class View  extends JFrame  implements Observer {
 
     @Override
     public void update(Observable observable, Object o) {
-        label.setText(((Model) observable).getTextString());
+        input.setText(((Model) observable).getTextString());
         result.setText(((Model) observable).getTextResutl());
     }
 
