@@ -1,2 +1,4 @@
-package Views;public class View {
+package Views;
+
+public class View {
 }

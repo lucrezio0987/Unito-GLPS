@@ -1,2 +1,7 @@
-package Model;public class Model {
+package Model;
+
+import javax.swing.*;
+
+public class Model extends JFrame {
+    
 }

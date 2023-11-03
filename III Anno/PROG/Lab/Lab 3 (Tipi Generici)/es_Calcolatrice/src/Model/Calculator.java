@@ -12,6 +12,7 @@ public class Calculator {
         if (list == null || list.isEmpty()) {
             return null;
         }
+
         Element<T> sum = list.get(0);
         for (int i = 1; i < list.size(); ++i) {
             sum = sum.add(list.get(i));
