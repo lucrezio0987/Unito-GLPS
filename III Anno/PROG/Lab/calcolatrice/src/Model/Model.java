@@ -4,11 +4,16 @@ import javax.swing.*;
 import java.util.Observable;
 
 public class Model extends Observable {
+    String TextString = "";
 
-    public void nonFareNulla(){
-        return;
+    public String getTextString(){
+        return TextString;
     }
-    public String nonScrivereNulla(){
-        return "nulla";
+
+    public void addElement(String el){
+        TextString += el;
+        setChanged();
+        notifyObservers();
     }
+
 }

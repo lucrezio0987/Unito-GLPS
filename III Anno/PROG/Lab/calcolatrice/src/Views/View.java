@@ -74,10 +74,26 @@ public class View  extends JFrame  implements Observer {
     @Override
     public void update(Observable observable, Object o) {
         if(o instanceof Model)
-            label.setText(((Model) o).nonScrivereNulla());
+            label.setText(((Model) o).getTextString());
+        else
+            label.setText("Errore");
     }
 
     public void setListener(Controller c) {
-        b1.addActionListener((ActionListener) c);
+        b1.addActionListener(c);
+        b2.addActionListener(c);
+        b3.addActionListener(c);
+        b4.addActionListener(c);
+        b5.addActionListener(c);
+        b6.addActionListener(c);
+        b7.addActionListener(c);
+        b8.addActionListener(c);
+        b9.addActionListener(c);
+        b0.addActionListener(c);
+        b_piu.addActionListener(c);
+        b_meno.addActionListener(c);
+        b_per.addActionListener(c);
+        b_div.addActionListener(c);
+        b_uguale.addActionListener(c);
     }
 }

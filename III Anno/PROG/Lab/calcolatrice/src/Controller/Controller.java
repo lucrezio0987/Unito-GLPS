@@ -13,6 +13,6 @@ public class Controller implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        this.model.nonFareNulla();
+        this.model.addElement("ciao");
     }
 }
