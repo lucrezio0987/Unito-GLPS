@@ -186,7 +186,8 @@ public class Grafo<E extends Comparable<E>> {
         visitedNodes.add(destNode);
         hashMap.get(destNode).forEach((adjacentArch) -> {
                                           if (!visitedNodes.contains(adjacentArch.getDestinazione()))
-                                            minHeap.push(adjacentArch);
+                                            //if (!minHeap.contains(adjacentArch))
+                                              minHeap.push(adjacentArch);
                                         });
     }
 
