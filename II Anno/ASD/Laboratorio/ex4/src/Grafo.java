@@ -76,9 +76,9 @@ public class Grafo<E extends Comparable<E>> {
 
     for (Arch<E> arch : getArchList(sorgente))
       if (arch.getDestinazione().equals(destinazione))
-        return (float) arch.getDistance();
+        return arch.getDistance();
 
-    return (float) -1;
+    return -1.0f;
   }
 
   // ! DA RIVEDERE
@@ -167,8 +167,8 @@ public class Grafo<E extends Comparable<E>> {
     getNodes().forEach((node) -> minimumForest.put(node, new ArrayList<>()));
 
     while (visitedNodes.size() != hashMap.size()) {
-      Node<E>                               startNode       = getNodes().iterator().next();
-      PriorityQueue<Arch<E>>                minHeap         = new PriorityQueue<>(new ArchComparator<>());
+      Node<E>                             startNode       = getNodes().iterator().next();
+      PriorityQueue<Arch<E>>              minHeap         = new PriorityQueue<>(new ArchComparator<>());
 
 
       for(Node<E> node : getNodes()){
@@ -196,7 +196,6 @@ public class Grafo<E extends Comparable<E>> {
           visitedNodes.add(destNode);
           hashMap.get(destNode).forEach((adjacentArch) -> {
                                             if (!visitedNodes.contains(adjacentArch.getDestinazione()))
-                                              //if (!minHeap.contains(adjacentArch))
                                                 minHeap.push(adjacentArch);
                                           });
       }
