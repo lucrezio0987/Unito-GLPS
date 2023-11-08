@@ -91,8 +91,8 @@ public class Translator {
                 match(Tag.WHILE);
                 match(Token.lpt.tag); // (
                 
-                int return_while = code.newLabel(); 
-                int true_while   = code.newLabel();   
+                int return_while = code.newLabel();
+                int true_while   = code.newLabel();
                 int end_while    = code.newLabel();
                 code.emitLabel(return_while);
                 bexpr(true_while, end_while);
@@ -108,8 +108,8 @@ public class Translator {
 
             case Tag.COND:
                 match(Tag.COND);
-                int end_cond = code.newLabel();
-                int lbl = code.newLabel();
+                int end_cond = code.newLabel(); // L1
+                int lbl = code.newLabel(); // L2, L3 etc..
                 match(Token.lpq.tag); // [
                 do {
                     match(Tag.OPTION);
