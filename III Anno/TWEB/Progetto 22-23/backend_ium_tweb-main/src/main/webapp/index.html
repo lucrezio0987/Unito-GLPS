@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!--VueJs-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!--Css-->
+    <link rel="stylesheet" href="singlePagestyle.css">
+
+    <title>Progetto IUM-tweb</title>
+</head>
+<body>
+
+<!--<form name="loginForm" method="post" action="api/login">
+  Account: <input class = "d" type="text" name="mail" required autofocus> <br>
+  Password: <input class="d" type="password" name="pass" required autofocus> <br>
+  <input type="submit" value="Sign In" />-->
+
+<!-- App vue -->
+<div id="app">
+
+    <!--Sezione Nav (link per collegamenti ad altre pagine-->
+    <div v-if="ruolo?" class="nav_container">  <!--Capire cosa mettere a ruolo-->
+        <div class="wrapper">
+            <nav>
+                <div class="nav_text">
+                    <h5 v-if="ruolo==utente">Benvenuto {{mail}}</h5>
+                    <!--username_utente nome all'interno del database-->
+                    <h5 v-if="ruolo==amministratore">Benvenuto {{mail}}</h5>
+                    <h5 v-if="ruolo==guest" class="nav-item">Ruolo: Guest</h5>
+                </div>
+
+                <ul v-if="ruolo==utente">in base al ruolo da un benvenuto diverso
+                    <li>
+                        <a v-on:click="setHome" role="button">Home</a>
+                    </li>
+                    <li>
+                        <a v-on:click="setPaginaPersonale" role="button">User page</a>
+                        <!--bottoni che mi compaiono dopo il login-->
+                    </li>
+                    <li>
+                        <a v-on:click="logout" role="button">Logout</a>
+                    </li>
+                </ul>
+
+                <ul v-if="ruolo==amministratore">
+                    <li>
+                        <a v-on:click="setHome" role="button">Home</a>
+                    </li>
+                    <li>
+                        <a v-on:click="setPaginaAmministratoreListaPrenotazioni" role="button">Lista Prenotazioni
+                            Utenti </a>
+                    </li>
+                    <li>
+                        <a v-on:click="setPaginaAmministratore" role="button">Pagina Amministratore</a>
+                    </li>
+                    <li>
+                        <a v-on:click="logout">Logout</a>
+                    </li>
+                </ul>
+                <ul v-if="ruolo==guest">
+                    <li>
+                        <a v-on:click="logout" role="button">Logout</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!--Fine Sezione Nav -->
+
+    <!--HomePage-->
+    <div v-if="varHome">
+
+        <!--Visualizza prenotazioni prenotabili e prenota per utente-->
+        <div class="ruolo==utente">
+<!--profilo,ordini passati,calendario,
+mail numero aiuto, immagini e tasto prenota lezione e sotto tutte le prossime lezioni-->
+            <nav>
+                <h5>Elenco prenotazioni</h5>
+                <p class="output1">{{message1}}</p>
+                <ul>
+                    <li>
+                        <button class="filter_button" type="button" v-on:click="getPrenotazioniDisponibili()">
+                            Tutte le materie
+                        </button>
+                    </li>
+                    <li>
+
+                    </li>
+                </ul>
+            </nav>
+
+
+
+        </div>
+
+        <div class="ruolo==amministratore">
+
+        </div>
+
+        <div class="ruolo==guest">
+
+        </div>
+    </div>
+
+
+    <!-- Sezione Login -->
+    <div v-if="ruolo<0" class="box"><!--ruolo <0 perchè succesivamente stabilisce se è ruolo 0 1 o 2-->
+        <div class="container">
+                <div class="top-header">
+                    <header>Login</header>
+                </div>
+                    <div class="input-field-username"><!--email-->
+                            <input type="text" class="input" v-model="mail" id="mail" name="mail"
+                                   placeholder="Username" required autofocus>
+                    </div>
+                    <div class="input-field-password"><!--password-->
+                            <input type="password" class="input" v-model="pass" id="pass" name="pass"
+                                   placeholder="Password" required autofocus>
+                    </div>
+                        <!--<div class="output1">
+                            <p>{{ message }}</p> stampa il valore di message
+                        </div>-->
+                            <div>
+                                <button v-on:click="autentica" class="login_button" name="SignUpBtn" value="SignIn">Accedi</button>
+                            </div>
+
+                            <form action="SignUpServlet" method="get">
+                                <div>
+                                <button type="submit" name="action" value="Registrazione Utente">
+                                    Registrati
+                                </button>
+                                </div>
+                            </form>
+                            <div>
+                                <a v-on:click="autenticaOspite" class="login_guest">Accedi come ospite</a>
+                            </div>
+        </div>
+    </div>
+    <!-- Fine Sezione Login -->
+</div>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            varHome: false,
+            varPaginaAmministratore: false,
+            varPaginaPersonale: false,
+            varAmministratoreListaPrenotazioni: false,
+
+            mail: '',
+            pass: '',
+            message: ' ',
+
+            <!--Dal nostro DAO - INSERT di Utente-->
+            ID:'',
+            Email:'',
+            Password:'',
+            Nome:'',
+            Cognome:'',
+            Ruolo:'',
+            PF:'',
+            Stelle:'',
+            Attivo:'',
+
+            <!--Dal nostro DAO - INSERT di Corso-->
+            ID:'',
+            nome:'',
+            attivo:'',
+
+            <!--Dal nostro DAO - INSERT di Lezione (errore apici dell'insert nel DAO)-->
+            Data:'',
+            Ora:'',
+            Stato:'',
+            Corso_ID:'',
+            Docente_ID:'',
+            prezzo:'',
+            Utente_ID:'',
+
+            <!--Metodi ancora da creare-->
+            linkAutentica : 'login',  //api di utente
+            linkLogout: 'LogoutServlet',
+            linkAdmin:'AdminServlet',
+            linkUser:'UtenteServlet', <!--Nelle nostre Servlet dovrebbe essere apiUtente-->
+
+        },
+        methods: {
+            //metodi autenticazione
+            autentica: function () {  <!--Autenticazione utente ed amministratore-->
+                var self = this;
+
+                $.post(this.linkAutentica, {
+                    mail: this.mail,
+                    pass: this.pass,
+                }, function (data) {
+                    if (data == utente) {
+                        self.message = "Benvenuto, hai effettuato l'accesso come UTENTE";
+                        self.getListaPrenotazioniUtente();
+                        self.varHome = true;
+                    }
+                    if (data == amministratore) {
+                        self.message = "Benvenuto, hai effettuato l'accesso come AMMINISTRATORE";
+                        self.varHome = true;
+                    }
+                    if (data == -1) {
+                        self.message = "Dati inseriti INCORRETTI, riprova!";
+                    }
+                    self.ruolo = Number(data);
+                });
+
+            },
+            autenticaOspite: function () {  <!--Autenticazione ospite-->
+                var self = this;
+
+                $.post(this.linkAutentica, {
+                    nome: "guest",
+                    password: "guest",
+                }, function (data) {
+                    self.message = "Benvenuto, hai effettuato l'accesso come OSPITE";
+                    self.ruolo = Number(data);
+                });
+                this.varHome = true;
+            },
+            logout: function () {
+                var self = this;
+
+                $.post(this.linkLogout, function (data) {
+                    self.message = "Logout effettuato con successo";
+                    self.ruolo = -1;    <!--Capire cosa bisogna mettere-->
+                    self.mail = "";
+
+
+                });
+                <!--this.message1 = " ";
+                this.message2 = " ";
+                this.message3 = " ";-->
+                this.varHome = false;
+                this.varPaginaAmministratore = false;
+                this.varPaginaPersonale = false;
+                this.varAmministratoreListaPrenotazioni = false;
+
+            },
+
+            //Metodi visualizzazione pagine
+            setHome:function (){
+                this.varHome=true;
+                this.varPaginaAmministratore = false;
+                this.varPaginaPersonale = false;
+                this.varAmministratoreListaPrenotazioni = false;
+            },
+            setPaginaPersonale:function (){
+                this.varHome=true;
+                this.varPaginaAmministratore = false;
+                this.varPaginaPersonale = false;
+                this.varAmministratoreListaPrenotazioni = false;
+            },
+            setPaginaAmministratore:function (){
+                this.varHome=false;
+                this.varPaginaAmministratore = true;
+                this.varPaginaPersonale = false;
+                this.varAmministratoreListaPrenotazioni = false;
+            },
+            setPaginaAmministratoreListaPrenotazioni:function (){
+                this.varHome=false;
+                this.varPaginaAmministratore = false;
+                this.varPaginaPersonale = false;
+                this.varAmministratoreListaPrenotazioni = true;
+            },
+        }
+    })
+
+
+</script>
+</body>
+</html>

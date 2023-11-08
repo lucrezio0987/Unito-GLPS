@@ -1,0 +1,9 @@
+BEE fatte :
+-getLeasonsByUserAndByDay
+-login
+-getPrenotazioniByUtente
+-getLeasonsStory
+-getAllDocenti
+-getAllCorsiDisponibili
+-getLezioniByCorso
+-getLezioniByDocente

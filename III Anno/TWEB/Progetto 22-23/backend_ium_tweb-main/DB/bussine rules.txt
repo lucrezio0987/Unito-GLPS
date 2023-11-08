@@ -1,0 +1,20 @@
+-Campo valutazione e contabile sono se lo stato della lezione e conclusa
+-Campo utente_id se è diveso da 0 lo stato della lezione e prenotata o in secondo luogo conclusa
+-Se l utente ha ruolo diverso da "docente" il suo campo stelle non e contabile
+- la mail e univoca
+
+
+
+
+
+
+- il ricalcolo delle stelle docente viene fatto ogni ora
+
+Note:
+- le lezioni nello storico avranno 2 colori
+    1mo quelle concluse
+    2do quelle prenotate(forse verdi)
+    getLEzioniByUtente() ritoena sia prenotate che concluse
+
+-valuta lezione riscrive il voto se gia esiste
+ per dare la possibilita di cambiare voto in un secondo momento

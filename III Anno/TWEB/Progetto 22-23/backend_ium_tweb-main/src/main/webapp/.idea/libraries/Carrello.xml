@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Carrello">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Carrello.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

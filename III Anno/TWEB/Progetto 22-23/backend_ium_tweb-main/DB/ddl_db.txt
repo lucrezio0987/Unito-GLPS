@@ -1,0 +1,59 @@
+drop DATABASE if EXISTS db_book;
+CREATE DATABASE db_book;
+USE db_book;
+DELETE FROM mysql.user WHERE user='dbhelper';
+CREATE USER 'dbhelper'@'%' IDENTIFIED VIA mysql_native_password USING '73C88AAFCFC9701657356F643382EBE40E2B8660C';
+GRANT ALL PRIVILEGES ON db_book.* TO 'dbhelper'@'%' IDENTIFIED BY '73C88AAFCFC9701657356F643382EBE40E2B8660C';
+
+CREATE TABLE Corso (
+	ID int NOT NULL AUTO_INCREMENT,
+	nome varchar(30) NOT NULL,
+
+
+
+
+	PRIMARY KEY (ID)
+);
+
+CREATE TABLE Utente (
+	ID int NOT NULL AUTO_INCREMENT,
+	Email varchar(30) NOT NULL UNIQUE,
+	Password varchar(50) NOT NULL,
+	Nome varchar(30) NOT NULL,
+    Cogonome varchar(30) NOT NULL,
+    Ruolo enum('utente', 'docente', 'admin') NOT NULL,
+    PF varchar(100) ,
+    Stelle enum('0', '1', '2', '3', '4', '5') DEFAULT '0' NOT NULL,
+
+
+
+
+	 PRIMARY KEY (ID)
+);
+
+CREATE TABLE Lezione (
+
+	Data date NOT NULL,
+    Ora time NOT NULL,
+    Stato enum('Libera', 'Conclusa', 'Prenotata') NOT NULL ,
+	Corso_ID int NOT NULL,
+    Docente_ID int NOT NULL,
+    Utente_ID int DEFAULT '0' NOT NULL ,
+
+
+
+
+
+	 PRIMARY KEY (Data,Ora,Docente_ID),
+     FOREIGN KEY (Docente_ID)
+	REFERENCES Utente(ID)ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (Corso_ID)
+	REFERENCES Corso(ID)ON UPDATE CASCADE ON DELETE CASCADE
+
+);
+
+
+
+
+
+

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <!--VueJs-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!--Css-->
+    <link rel="stylesheet" href="singlePagestyle.css">
+
+    <title>Progetto IUM-tweb</title>
+</head>
+<body>
+
+
+<!--<form name="loginForm" method="post" action="api/login">
+  Account: <input class = "d" type="text" name="mail" required autofocus> <br>
+  Password: <input class="d" type="password" name="pass" required autofocus> <br>
+  <input type="submit" value="Sign In" />-->
+
+<!-- App vue -->
+<div id="app">
+    <!-- Sezione Login -->
+    <div v-if="ruolo<0" class="box"><!--ruolo <0 perchè succesivamente stabilisce se è ruolo 0 1 o 2-->
+        <div class="container">
+            <div class="top-header">
+                <header>Register</header>
+            </div>
+
+            <div class="input-field">
+                <input type="text" class="input" v-model="username_utente" id="username_utente" name="username_utente"
+                       placeholder="Username" required autofocus>
+            </div>
+
+            <div class="input-field">
+                <input type="text" class="input" v-model="nome" id="nome" name="nome"
+                       placeholder="Nome" required autofocus>
+            </div>
+
+            <div class="input-field">
+                <input type="text" class="input" v-model="cognome" id="cognome" name="cognome"
+                       placeholder="Cognome" required autofocus>
+            </div>
+
+            <div class="input-field">
+                <input type="password" class="input" v-model="password_utente" id="password_utente" name="password-utente"
+                       placeholder="Password" required autofocus>
+            </div>
+
+            <div class="input-field">
+                <input type="password" class="input" v-model="Confirmpassword_utente" id="Confirmpassword_utente" name="Confirmpassword-utente"
+                       placeholder="Conferma Password" required autofocus>
+            </div>
+
+            <div>
+                <button v-on:click="autentica" class="signUp_button2" name="signUp_button" value="SignUp">Registrati</button>
+            </div>
+
+            <form action="SignUpServlet" method="get">
+
+            </form>
+
+            <div>
+                <a class="signUp_text" role="article">Sei gia un nostro utente?</a>
+                <a href="index.html" class="login_guest">Accedi</a>
+            </div>
+
+        </div>
+    </div>
+    <!-- Fine Sezione Login -->
+</div>
+</body>
+</html>

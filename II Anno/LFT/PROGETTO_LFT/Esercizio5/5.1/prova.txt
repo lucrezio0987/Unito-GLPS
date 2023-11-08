@@ -1,4 +1,5 @@
 assign 0 to x;
+read [a]; print[a];
 conditional [
     option (> x 0) do print[x, y]
     option (<= x 0) do print[y]

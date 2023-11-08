@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css" rel="stylesheet" />
+  <link href="singlePagestyle2.css" rel="stylesheet" />
+  <script src="JavaScript.js"></script>
+  <title></title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+<header class="header clearfix">
+  <a href="" class="header__icon-bar">
+    <span></span>
+    <span></span>
+    <span></span>
+  </a>
+  <ul class="header__menu animate">
+    <li class="header__menu__item"><a href="HomePage.html">Home</a></li>
+  </ul>
+</header>
+
+<section class="cards clearfix">
+  <div class="card">
+    <img class="card__image" src="https://www.open-minds.it/wp-content/uploads/2020/03/clil-matematica-inglese.jpg" />
+    <div class="card__copy">
+      <h2 align="center">Matematica</h2>
+      <h2 align="center"><a href="PageMatematica.html" class="button">SELEZIONA</a></h2>
+    </div>
+  </div>
+  <div class="card">
+    <img class="card__image" src="https://st3.depositphotos.com/3591429/13656/i/450/depositphotos_136562916-stock-photo-creative-website-banner.jpg" />
+    <div class="card__copy">
+      <h2 align="center">Algebra</h2>
+      <h2 align="center"><a href="AcquistaBiglietto2.html" class="button">SELEZIONA</a></h2>
+    </div>
+  </div>
+  <div class="card">
+    <img class="card__image" src="https://www.shutterstock.com/image-vector/physics-chalkboard-background-hand-drawn-600w-1988419205.jpg" />
+    <div class="card__copy">
+      <h2 align="center">Fisica</h2>
+      <h2 align="center"><a href="AcquistaBiglietto3.html" class="button">SELEZIONA</a></h2>
+    </div>
+  </div>
+</section>
+<section class="cards clearfix">
+  <div class="card">
+    <img class="card__image" src="https://www.lffl.org/wp-content/uploads/2020/07/flutter-google-canonical-1155x770.jpg" />
+    <div class="card__copy">
+      <h2 align="center">IUM</h2>
+      <h2 align="center"><a href="AcquistaBiglietto3.html" class="button">SELEZIONA</a></h2>
+    </div>
+  </div>
+  <div class="card">
+    <img class="card__image" src="https://www.asistar.it/var/ezdemo_site/storage/images/media/images/30-anni-web/11896-1-ita-IT/30-anni-web_hq.jpg" />
+    <div class="card__copy">
+      <h2 align="center">TWEB</h2>
+      <h2 align="center"><a href="AcquistaBiglietto3.html" class="button">SELEZIONA</a></h2>
+    </div>
+  </div>
+</section>
+<br>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $(".header__icon-bar").click(function (e) {
+      $(".header__menu").toggleClass('is-open');
+      e.preventDefault();
+    })
+  })
+</script>
+</body>
+</html>
