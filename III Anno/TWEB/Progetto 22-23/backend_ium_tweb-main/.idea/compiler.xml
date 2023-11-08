@@ -9,8 +9,5 @@
         <module name="servlet" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="servlet" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>

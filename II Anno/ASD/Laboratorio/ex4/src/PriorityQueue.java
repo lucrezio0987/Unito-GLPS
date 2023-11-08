@@ -41,7 +41,7 @@ public class PriorityQueue<E> implements AbstractQueue<E> {
         heap.add(e);
         int i = heap.size() - 1;
 
-        while (i > 0 && comparator.compare(heap.get(i), heap.get(parent(i))) < 0) {
+        while (i > 0 && comparator.compare(heap.get(i), heap.get(parent(i))) <= 0) {
           swap(i, parent(i));
           i = parent(i);
         }

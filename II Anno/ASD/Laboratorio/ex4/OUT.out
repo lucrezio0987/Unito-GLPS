@@ -1,0 +1,79 @@
+
+
+Il grafo contiene il nodo A: false/true
+Il grafo contiene il nodo Z: false/false
+Il grafo contiene l'arco A -> B: false/true
+Il grafo contiene l'arco A -> D: false/false
+
+
+Node: a
+  Arch: a -> b, Distance: 9.0
+  Arch: a -> c, Distance: 3.0
+  Arch: a -> d, Distance: 2.0
+  Arch: a -> e, Distance: 5.0
+Node: b
+  Arch: b -> a, Distance: 9.0
+  Arch: b -> c, Distance: 9.0
+  Arch: b -> f, Distance: 5.0
+Node: c
+  Arch: c -> a, Distance: 3.0
+  Arch: c -> b, Distance: 9.0
+  Arch: c -> e, Distance: 4.0
+Node: d
+  Arch: d -> a, Distance: 2.0
+  Arch: d -> f, Distance: 9.0
+  Arch: d -> h, Distance: 2.0
+Node: e
+  Arch: e -> a, Distance: 5.0
+  Arch: e -> c, Distance: 4.0
+  Arch: e -> h, Distance: 2.0
+Node: f
+  Arch: f -> b, Distance: 5.0
+  Arch: f -> d, Distance: 9.0
+  Arch: f -> h, Distance: 9.0
+  Arch: f -> g, Distance: 9.0
+Node: g
+  Arch: g -> f, Distance: 9.0
+Node: h
+  Arch: h -> d, Distance: 2.0
+  Arch: h -> e, Distance: 2.0
+  Arch: h -> f, Distance: 9.0
+
+Numero Archi :  12
+Numero Nodi  :  8
+Peso Grafo   :  136,000
+
+
+GRAFO MINIMIZZATO
+
+
+Node: a
+  Arch: a -> d, Distance: 2.0
+  Arch: a -> c, Distance: 3.0
+  Arch: a -> b, Distance: 9.0
+Node: b
+  Arch: b -> f, Distance: 5.0
+Node: c
+Node: d
+  Arch: d -> h, Distance: 2.0
+Node: e
+Node: f
+  Arch: f -> g, Distance: 9.0
+Node: g
+Node: h
+  Arch: h -> e, Distance: 2.0
+
+    EXPECTED                          
+    |  Node: A                        
+    |    Arch: A -> B, Distance: 2.5  
+    |    Arch: A -> C, Distance: 1.0  
+    |  Node: B                        
+    |  Node: C                        
+    |    Arch: C -> D, Distance: 1.5  
+    |  Node: D                        
+
+Numero Archi :  7    / 3   expected
+Numero Nodi  :  8    / 6   expected
+Peso Grafo   :  32,000  / 5.0 expected
+
+
