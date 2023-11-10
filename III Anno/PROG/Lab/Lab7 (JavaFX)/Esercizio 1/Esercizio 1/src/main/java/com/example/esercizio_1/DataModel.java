@@ -39,11 +39,14 @@ public class DataModel {
     public void setEsercizio() {
         scelta = r.nextInt(esercizi.length);
         testoEsercizioProperty.set(esercizi[scelta].testo);
+        rispostaProperty.set("");
+        verificaRispostaProperty.set("");
     }
 
-    public boolean checkRisposta() {
-        // completare il codice, io ora faccio restituire sempre true
-        return false;
+    public void checkRisposta() {
+        if (rispostaProperty.get().equals(esercizi[scelta].risultato))
+            verificaRispostaProperty.set("Risposta corretta!");
+        else verificaRispostaProperty.set("Errore!");
     }
 
     private static class Esercizio {

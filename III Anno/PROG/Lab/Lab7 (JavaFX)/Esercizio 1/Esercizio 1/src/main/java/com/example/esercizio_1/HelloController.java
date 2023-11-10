@@ -1,30 +1,30 @@
 package com.example.esercizio_1;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.TextField;
-
+import javafx.event.ActionEvent;
 
 public class HelloController {
     @FXML
-    private TextField testoEsercizio;
+    private TextField testoEsercizio, testoRisposta;
     @FXML
-    private Label verificaRisposta;
-    DataModel model = new DataModel();
+    private Label testoVerifica;
+    @FXML
+    private Button btnAltroEsercizio, btnConferma;
 
-    @FXML
-    protected void OnClickAltroEsercizio() {
+    DataModel model = new DataModel();;
+
+    public void initModel() {
+
+        btnAltroEsercizio.setOnAction(  event -> model.setEsercizio()   );
+        btnConferma.setOnAction(        event -> model.checkRisposta()  );
+
+        testoEsercizio.textProperty()   .bind( model.getTestoEsercizioProperty()    );
+        testoVerifica.textProperty()    .bindBidirectional( model.getVerificaRispostaProperty()  );
+        model.getRispostaProperty()     .bindBidirectional( testoRisposta.textProperty()         );
+
         model.setEsercizio();
-        testoEsercizio.textProperty().setValue(model.getTestoEsercizioProperty().getValue());
-
-    }
-    @FXML
-    protected void OnClickVerifica() {
-
-        String str;
-        if(model.checkRisposta())   str="Risposta Corretta";
-        else                        str="ERRORE";
-        verificaRisposta.setText(str);
     }
 }

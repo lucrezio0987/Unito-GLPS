@@ -14,7 +14,7 @@
   </padding>
    <BorderPane prefHeight="200.0" prefWidth="200.0">
       <right>
-         <Button onAction="#OnClickVerifica" text="Conferma" BorderPane.alignment="CENTER">
+         <Button fx:id="btnConferma" text="Conferma" BorderPane.alignment="CENTER">
             <BorderPane.margin>
                <Insets right="10.0" />
             </BorderPane.margin>
@@ -41,21 +41,21 @@
          </TextField>
       </top>
       <center>
-         <TextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="89.0" BorderPane.alignment="CENTER">
+         <TextField fx:id="testoRisposta" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="89.0" BorderPane.alignment="CENTER">
             <font>
                <Font size="18.0" />
             </font>
          </TextField>
       </center>
       <bottom>
-         <Label fx:id="verificaRisposta" BorderPane.alignment="CENTER">
+         <Label fx:id="testoVerifica" BorderPane.alignment="CENTER">
             <font>
                <Font size="18.0" />
             </font>
          </Label>
       </bottom>
    </BorderPane>
-   <Button onAction="#OnClickAltroEsercizio" mnemonicParsing="false" text="Altro Esercizio">
+   <Button fx:id="btnAltroEsercizio" mnemonicParsing="false" text="Altro Esercizio">
       <font>
          <Font size="18.0" />
       </font>
