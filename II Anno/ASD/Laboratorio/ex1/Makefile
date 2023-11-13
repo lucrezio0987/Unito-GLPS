@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -w
+CFLAGS = -w -Wno-return-type
 
 MAIN = bin/main_ex1 
 TEST = bin/test_ex1
