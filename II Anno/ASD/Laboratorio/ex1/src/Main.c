@@ -3,7 +3,7 @@
 #define INPUT_FILE "../records.csv"
 #define OUTPUT_FILE "outfile.csv"
 
-#define K 50
+#define K 25 // 30
 
 enum enum_field { FIELD_POS,
     FIELD_STRING,

@@ -5,7 +5,7 @@
 
 #define OUTPUT_FILE "tempi.csv"
 
-#define MAX_REC 1000000
+#define MAX_REC 500000
 #define N_CONTR 5
 #define Q_VAL 1000
 

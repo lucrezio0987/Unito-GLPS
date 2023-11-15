@@ -3,6 +3,10 @@
 #include "Interfaccia.h"
 
 #define INPUT_FILE "../records.csv"
+#define OUTPUT_FILE "k_medi.csv"
+
+#define MAX_REC 100
+#define N_CONTR 1000
 
 typedef struct _Clock {
     int start;
@@ -10,43 +14,38 @@ typedef struct _Clock {
     int time;
 } Clock;
 
-typedef struct _Record {
+struct _Record {
     long int pos;
     long int item_int;
     double item_float;
     char* item_string;
-} Records;
+};
 
-typedef struct _Array {
+struct _Array {
     Records** base;
     unsigned int nitems;
-} Array;
+};
 
 void main(int argc, const char* argv[])
 {
     int field = 2;
     int min = 1;
-    int start_max = 1000;
+    int max_rec = MAX_REC;
     int max;
     int n_records = 0;
     int time;
     int flag_trovato = 0;
     int i;
     int media_k = 0;
-    int min_k = start_max;
+    int min_k = max_rec;
     int max_k = 0;
     int k_null = 0;
-    int n_controlli = 10;
-
-    if (argc == 3) {
-        start_max = atoi(argv[1]);
-        n_controlli = atoi(argv[2]);
-        min_k = start_max;
-    }
+    int n_controlli = N_CONTR;
+    FILE* output = fopen(OUTPUT_FILE, "w+");
 
     for (i = 0; i < n_controlli; ++i) {
         min = 1;
-        max = start_max;
+        max = max_rec;
         while (flag_trovato == 0) {
             n_records = (min + max) / 2;
             printf(":::: test on: %d\n", n_records);
@@ -63,7 +62,10 @@ void main(int argc, const char* argv[])
             else if (time > 0)
                 max = n_records - 1;
         }
-        printf("================================ (TEST: %d) k = %d\n", i, n_records);
+        if (n_records != 0) {
+            printf("================================ (TEST: %d) k = %d\n", i, n_records);
+            fprintf(output, "%d %d\n", i, n_records);
+        }
         --flag_trovato;
         if (min_k > n_records && n_records != 0)
             min_k = n_records;
@@ -74,8 +76,10 @@ void main(int argc, const char* argv[])
 
     media_k = media_k / (n_controlli - k_null);
 
+    fclose(output);
+
     printf("TEST_EFFICIENZA: TERMINATO\n");
-    printf("  [max_records:%d, n_controlli: %d]\n", start_max, n_controlli);
+    printf("  [max_records:%d, n_controlli: %d]\n", max_rec, n_controlli);
     printf("  >> K_MEDIO: %d  (K_min: %d, K_max: %d)\n", media_k, min_k, max_k);
 }
 
