@@ -11,7 +11,7 @@ void main(int argc, const char* argv[]) {
     
     if(argc == 3)
         sort_recordsMAX(argv[1], argv[2], K, FIELD_POS);
-    else 
+    else
         sort_recordsMAX(INPUT_FILE, OUTPUT_FILE, K, FIELD_STRING);
 }
 

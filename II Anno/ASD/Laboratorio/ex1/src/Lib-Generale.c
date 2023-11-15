@@ -1,7 +1,7 @@
 #include "Interfaccia.h"
 
 #define DISC 50
-#define MAX_REC 30
+#define MAX_REC 20000000
 
 //--------- PROTOTIPI ---------//
 
@@ -79,7 +79,7 @@ int CompareString(Records* i, Records* j)
 
 void merge_binary_insertion_sort(void** base, size_t nitems, size_t k, int (*compar)(const void*, const void*))
 {
-    if (k > DISC)
+    if (nitems > k)
         MergeSort(base, 0, nitems - 1, compar);
     else
         BinaryInsertionSort(base, nitems, compar);
@@ -87,17 +87,24 @@ void merge_binary_insertion_sort(void** base, size_t nitems, size_t k, int (*com
 
 Records** CreateArray()
 {
-    Array* A = (Array*)malloc(sizeof(Records));
-    A->base = (Records**)malloc(sizeof(Records*));
+    Array* A;
+    if ((A = (Array*)malloc(sizeof(Array))) == NULL)
+        ERROR
+    if ((A->base = (Records**)malloc(sizeof(Records*))) == NULL)
+        ERROR
     A->nitems = 0;
     return A;
 }
 
 void arrayAdd(Array* A, Records* rec)
 {
-    A->base = (Records**)realloc(A->base, sizeof(Records*) * (A->nitems + 2));
-    A->base[A->nitems] = (Records*)malloc(sizeof(Records));
-    A->base[A->nitems]->item_string = malloc(sizeof(char) * strlen(rec->item_string));
+    if (A->nitems % 100 == 0)
+        if ((A->base = (Records**)realloc(A->base, sizeof(Records*) * (A->nitems + 100))) == NULL)
+            ERROR
+    if ((A->base[A->nitems] = (Records*)malloc(sizeof(Records))) == NULL)
+        ERROR
+    if ((A->base[A->nitems]->item_string = malloc(sizeof(char) * strlen(rec->item_string))) == NULL)
+        ERROR
 
     A->base[A->nitems]->pos = rec->pos;
     A->base[A->nitems]->item_int = rec->item_int;
@@ -109,13 +116,16 @@ void arrayAdd(Array* A, Records* rec)
 
 void LoadArray(Array* A, const char* infile)
 {
-    unsigned int i = 0;
-    Records* rec = (Records*)malloc(sizeof(Records));
-    rec->item_string = (char*)malloc(sizeof(char) * 100);
+    FILE* fp;
+    Records* rec;
 
-    FILE* fp = fopen(infile, "r");
-    if (fp == NULL)
-        exit(1);
+    if ((rec = (Records*)malloc(sizeof(Records))) == NULL)
+        ERROR
+    if ((rec->item_string = (char*)malloc(sizeof(char) * 100)) == NULL)
+        ERROR
+
+    if ((fp = fopen(infile, "r")) == NULL)
+        ERROR
 
     while ((fscanf(fp, "%ld,%[^,],%ld,%lf\n", &rec->pos, rec->item_string, &rec->item_int, &rec->item_float)) == 4)
         arrayAdd(A, rec);
@@ -129,12 +139,16 @@ void LoadArray(Array* A, const char* infile)
 void LoadArrayMAX(Array* A, const char* infile, unsigned int max_records)
 {
     unsigned int i = 0;
-    Records* rec = (Records*)malloc(sizeof(Records));
-    rec->item_string = (char*)malloc(sizeof(char) * 100);
+    FILE* fp;
+    Records* rec;
 
-    FILE* fp = fopen(infile, "r");
-    if (fp == NULL)
-        exit(1);
+    if ((rec = (Records*)malloc(sizeof(Records))) == NULL)
+        ERROR
+    if ((rec->item_string = (char*)malloc(sizeof(char) * 100)) == NULL)
+        ERROR
+
+    if ((fp = fopen(infile, "r")) == NULL)
+        ERROR
 
     while ((fscanf(fp, "%ld,%[^,],%ld,%lf\n", &rec->pos, rec->item_string, &rec->item_int, &rec->item_float)) == 4 && i++ != max_records)
         arrayAdd(A, rec);
@@ -147,7 +161,9 @@ void LoadArrayMAX(Array* A, const char* infile, unsigned int max_records)
 void PrintArray(const char* outfile, Array* A)
 {
     unsigned int i;
-    FILE* fp = fopen(outfile, "w+");
+    FILE* fp;
+    if ((fp = fopen(outfile, "w+")) == NULL)
+        ERROR
     for (i = 0; i < A->nitems; ++i)
         fprintf(fp, "%d,%s,%d,%f\n", A->base[i]->pos, A->base[i]->item_string, A->base[i]->item_int, A->base[i]->item_float);
     fclose(fp);
@@ -155,8 +171,10 @@ void PrintArray(const char* outfile, Array* A)
 
 void sort_recordsMAX(const char* infile, const char* outfile, size_t k, size_t field)
 {
+    printf("Inizio Caricamento\n");
     Array* A = CreateArray();
     LoadArrayMAX(A, infile, MAX_REC);
+    printf("Fine Caricamento - Inizio Ordinamento\n");
 
     switch (field) {
     case 1:
@@ -173,7 +191,11 @@ void sort_recordsMAX(const char* infile, const char* outfile, size_t k, size_t f
         break;
     }
 
+    printf("Fine Ordinamento - Inizio Stampa\n");
+
     PrintArray(outfile, A);
+
+    printf("Fine Stampa\n");
 
     free(A);
     return;
