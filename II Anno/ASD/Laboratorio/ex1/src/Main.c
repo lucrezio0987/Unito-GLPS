@@ -5,8 +5,6 @@
 
 #define K 50
 
-#
-
 enum enum_field { FIELD_POS,
     FIELD_STRING,
     FIELD_INT,
