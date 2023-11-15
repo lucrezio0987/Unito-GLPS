@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #define ERROR                                                                                                                                     \
     {                                                                                                                                             \
@@ -47,7 +48,7 @@ void BinaryInsertionSort(void** base, unsigned int nitems, int (*compar)(const v
 // Macro-Funzioni
 void merge_binary_insertion_sort(void** base, size_t nitems, size_t k, int (*compar)(const void*, const void*));
 void sort_records(const char* infile, const char* outfile, size_t k, size_t field);
-void sort_recordsMAX(const char* infile, const char* outfile, size_t k, size_t field);
+void sort_recordsMAX(const char* infile, const char* outfile, size_t k, size_t field, size_t max_records);
 
 // Test
 int Array_is_empty(Array* array);

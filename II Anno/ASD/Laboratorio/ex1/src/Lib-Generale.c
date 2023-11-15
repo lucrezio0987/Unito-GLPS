@@ -1,7 +1,5 @@
 #include "Interfaccia.h"
 
-#define MAX_REC 20000000
-
 //--------- PROTOTIPI ---------//
 
 int ComparePos(Records* i, Records* j);
@@ -17,7 +15,7 @@ void PrintArray(const char* outfile, Array* A);
 
 void merge_binary_insertion_sort(void** base, size_t nitems, size_t k, int (*compar)(const void*, const void*));
 void sort_records(const char* infile, const char* outfile, size_t k, size_t field);
-void sort_recordsMAX(const char* infile, const char* outfile, size_t k, size_t field);
+void sort_recordsMAX(const char* infile, const char* outfile, size_t k, size_t field, size_t max_records);
 
 //--------- STRUTTURE ---------//
 
@@ -78,10 +76,13 @@ int CompareString(Records* i, Records* j)
 
 void merge_binary_insertion_sort(void** base, size_t nitems, size_t k, int (*compar)(const void*, const void*))
 {
-    if (nitems > k)
+    if (nitems > k) {
+        printf("\t[ k: %d, nitems: %d] Alrogitmo Utilizzato ->  Merge Sort\n", k, nitems);
         MergeSort(base, 0, nitems - 1, compar);
-    else
+    } else {
+        printf("\t[ k: %d, nitems: %d] Alrogitmo Utilizzato ->  Binary Insertion Sort\n", k, nitems);
         BinaryInsertionSort(base, nitems, compar);
+    }
 }
 
 Records** CreateArray()
@@ -168,12 +169,16 @@ void PrintArray(const char* outfile, Array* A)
     fclose(fp);
 }
 
-void sort_recordsMAX(const char* infile, const char* outfile, size_t k, size_t field)
+void sort_recordsMAX(const char* infile, const char* outfile, size_t k, size_t field, size_t max_records)
 {
-    printf("Inizio Caricamento\n");
+    setbuf(stdout, NULL);
+
+    printf(" >> START (max_records: %d)\n", max_records);
+
     Array* A = CreateArray();
-    LoadArrayMAX(A, infile, MAX_REC);
-    printf("Fine Caricamento - Inizio Ordinamento\n");
+    LoadArrayMAX(A, infile, max_records);
+
+    printf(" >> Fine Caricamento - Inizio Ordinamento\n");
 
     switch (field) {
     case 1:
@@ -190,11 +195,9 @@ void sort_recordsMAX(const char* infile, const char* outfile, size_t k, size_t f
         break;
     }
 
-    printf("Fine Ordinamento - Inizio Stampa\n");
-
+    printf(" >> Fine Ordinamento - Inizio Stampa\n");
     PrintArray(outfile, A);
-
-    printf("Fine Stampa\n");
+    printf(" >> Fine Stampa (%s)\n", outfile);
 
     free(A);
     return;
@@ -202,8 +205,14 @@ void sort_recordsMAX(const char* infile, const char* outfile, size_t k, size_t f
 
 void sort_records(const char* infile, const char* outfile, size_t k, size_t field)
 {
+    setbuf(stdout, NULL);
+
+    printf(" >> START\n");
+
     Array* A = CreateArray();
     LoadArray(A, infile);
+
+    printf(" >> Fine Caricamento - Inizio Ordinamento\n");
 
     switch (field) {
     case 1:
@@ -220,7 +229,9 @@ void sort_records(const char* infile, const char* outfile, size_t k, size_t fiel
         break;
     }
 
+    printf(" >> Fine Ordinamento - Inizio Stampa\n");
     PrintArray(outfile, A);
+    printf(" >> Fine Stampa (%s)\n", outfile);
 
     free(A);
     return;

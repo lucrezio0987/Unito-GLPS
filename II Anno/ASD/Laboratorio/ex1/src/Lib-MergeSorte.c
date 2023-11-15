@@ -11,7 +11,7 @@ void** temp;
 
 void MergeSort(void** base, unsigned int i, unsigned int j, int (*compar)(const void*, const void*))
 {
-    if (temp = (void**)malloc((j + 1) * sizeof(void*)) == NULL)
+    if ((temp = (void**)malloc((j + 1) * sizeof(void*))) == NULL)
         ERROR
     MergeSortRic(base, i, j, compar);
     free(temp);
