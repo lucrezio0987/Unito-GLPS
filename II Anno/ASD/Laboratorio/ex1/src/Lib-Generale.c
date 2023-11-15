@@ -1,6 +1,5 @@
 #include "Interfaccia.h"
 
-#define DISC 50
 #define MAX_REC 20000000
 
 //--------- PROTOTIPI ---------//
