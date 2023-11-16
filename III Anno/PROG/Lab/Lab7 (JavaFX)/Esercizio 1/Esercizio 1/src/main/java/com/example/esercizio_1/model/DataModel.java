@@ -36,7 +36,7 @@ public class DataModel {
         return verificaRispostaProperty;
     }
 
-    public void setEsercizio() {
+        public void setEsercizio() {
         scelta = r.nextInt(esercizi.length);
         testoEsercizioProperty.set(esercizi[scelta].testo);
         rispostaProperty.set("");

@@ -1,6 +1,7 @@
 package com.example.esercizio_1.controller;
 
 import com.example.esercizio_1.model.DataModel;
+import com.example.esercizio_1.model.MailCardModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,7 +15,8 @@ public class HelloController {
     @FXML
     private Button btnAltroEsercizio, btnConferma;
 
-    DataModel model = new DataModel();;
+    DataModel model = new DataModel();
+    MailCardModel mailCardModel = new MailCardModel();
 
     public void initModel() {
 

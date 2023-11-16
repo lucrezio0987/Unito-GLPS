@@ -1,5 +1,6 @@
 package com.example.prva;
 
+import com.example.prva.controller.ClientController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -16,9 +17,14 @@ public class ClientApplication extends Application {
         stage.setTitle("Client di Posta Elettronica");
         stage.setScene(scene);
         stage.show();
+
+        ClientController contr = fxmlLoader.getController();
+                         contr.initModel();
     }
 
     public static void main(String[] args) {
         launch();
     }
+
+
 }
