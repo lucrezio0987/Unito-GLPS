@@ -1,9 +1,12 @@
 package com.example.prva.model;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -11,23 +14,35 @@ import javafx.scene.text.Text;
 
 public class MailCardModel {
 
-        public VBox buildCard(String soggetto, Mail mail) {
+        public VBox buildCard(String soggetto, Mail mail, MailModel mailModel) {
         VBox vbox = new VBox();
         vbox.setPrefHeight(85.0);
         vbox.setPrefWidth(278.0);
         vbox.getStyleClass().add("class-card-posta");
         vbox.setId(mail.getUuid());
+        //Button buttonX = createButtonX();
+        //buttonX.setId(mail.getUuid() + "_Xbtn");
+        //HBox.setMargin(buttonX, new Insets(0, 0, 0, 20));
+        if(soggetto.equals("Mittente:")){
+            vbox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                public void handle(MouseEvent e) {
+                    mailModel.openMailReceived(mail.getUuid());
+                }
+            });
+            //buttonX.setOnAction(event -> mailModel.deleteMailReceived(mail.getUuid()));
+        }
+        if(soggetto.equals("Destinatario:")){
+            vbox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                public void handle(MouseEvent e) { mailModel.openMailSent(mail.getUuid());}
+            });
+            //buttonX.setOnAction(event -> mailModel.deleteMailSent(mail.getUuid()));
+        }
 
         HBox hbox1 = createHBox(soggetto, mail.getAddress());
         HBox hbox2 = createHBox("Oggetto:", mail.getObject());
         HBox hbox3 = createHBox("Data:", mail.getDate(), "Ora", mail.getTime());
 
-        vbox.getChildren().addAll(hbox1, hbox2, hbox3);
-
-        Button buttonX = createButtonX();
-        buttonX.setId(mail.getUuid() + "_Xbtn");
-        HBox.setMargin(buttonX, new Insets(0, 0, 0, 20)); // Aggiungi margine sinistro al pulsante
-        hbox3.getChildren().add(buttonX);
+        vbox.getChildren().addAll(hbox1, hbox2, hbox3/*, buttonX*/);
 
         return vbox;
     }
