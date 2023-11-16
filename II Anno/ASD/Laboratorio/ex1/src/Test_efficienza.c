@@ -26,6 +26,9 @@ struct _Array {
     unsigned int nitems;
 };
 
+int controllo(Array* A, Array* B, int n_records);
+int calcDif(unsigned int n_records, unsigned int field);
+
 void main(int argc, const char* argv[])
 {
     int field = 2;

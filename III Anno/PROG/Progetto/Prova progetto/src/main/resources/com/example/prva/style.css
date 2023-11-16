@@ -1,0 +1,9 @@
+.class-card-posta {
+    -fx-background-color: #7798bd;
+    -fx-border-color: #ffffff;
+    -fx-border-style: segments(0, 0, 2, 0);
+}
+
+Text {
+    -fx-fill: #ffffff;
+}

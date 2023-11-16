@@ -9,6 +9,8 @@
 #define N_CONTR 5
 #define Q_VAL 1000
 
+int time_exec(int max_records);
+
 void main(int argc, const char* argv[])
 {
     int i, j, res;
@@ -25,19 +27,19 @@ int time_exec(int max_records)
 {
     pid_t pid;
     int start;
+    char str[10];
 
     switch ((pid = fork())) {
     case -1:
         ERROR;
     case 0:
-        char str[10];
         sprintf(str, "%d", max_records);
         execl("./bin/main_ex1", "./bin/main_ex1", str, NULL);
         printf("main_ex1 non avviato correttamente\n");
         ERROR;
     default:
         start = clock();
-        waitpid(pid);
+        waitpid(pid, NULL, NULL);
         return clock() - start;
     }
 }
