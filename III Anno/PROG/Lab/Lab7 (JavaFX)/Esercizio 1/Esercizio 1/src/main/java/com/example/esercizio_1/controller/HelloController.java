@@ -1,10 +1,10 @@
-package com.example.esercizio_1;
+package com.example.esercizio_1.controller;
 
+import com.example.esercizio_1.model.DataModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.event.ActionEvent;
 
 public class HelloController {
     @FXML

@@ -1,4 +1,4 @@
-package com.example.esercizio_1;
+package com.example.esercizio_1.model;
 
 import javafx.beans.property.SimpleStringProperty;
 import java.util.Random;

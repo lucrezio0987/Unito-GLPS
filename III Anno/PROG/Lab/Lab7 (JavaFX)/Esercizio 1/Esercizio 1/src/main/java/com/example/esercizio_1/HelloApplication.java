@@ -1,5 +1,6 @@
 package com.example.esercizio_1;
 
+import com.example.esercizio_1.controller.HelloController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

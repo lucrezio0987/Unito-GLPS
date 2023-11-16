@@ -14,6 +14,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -38,6 +39,11 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.prva.model" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="ClientApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="jbrsdk_jcef-17" />
@@ -46,7 +52,7 @@
       <module name="Prva" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.example.prva.*" />
+          <option name="PATTERN" value="com.example.prva.controller.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -84,7 +90,7 @@
       <workItem from="1700079721394" duration="614000" />
       <workItem from="1700084569285" duration="47000" />
       <workItem from="1700128670714" duration="2507000" />
-      <workItem from="1700132256157" duration="7563000" />
+      <workItem from="1700132256157" duration="10999000" />
     </task>
     <servers />
   </component>

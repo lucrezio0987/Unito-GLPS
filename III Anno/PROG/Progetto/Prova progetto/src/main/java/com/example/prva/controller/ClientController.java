@@ -1,4 +1,6 @@
-package com.example.prva;
+package com.example.prva.controller;
+
+import com.example.prva.model.MailModel;
 
 public class ClientController {
     /*
@@ -10,4 +12,12 @@ public class ClientController {
         welcomeText.setText("Welcome to JavaFX Application!");
     }
     */
+
+    MailModel model = new MailModel();
+
+    public void initModel() {
+
+
+
+    }
 }
