@@ -10,19 +10,22 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class MailCardModel {
-    public VBox buildCard(String soggetto, String indirizzo, String oggetto, String data, String ora) {
+
+        public VBox buildCard(String soggetto, Mail mail) {
         VBox vbox = new VBox();
         vbox.setPrefHeight(85.0);
         vbox.setPrefWidth(278.0);
         vbox.getStyleClass().add("class-card-posta");
+        vbox.setId(mail.getUuid());
 
-        HBox hbox1 = createHBox(soggetto, indirizzo);
-        HBox hbox2 = createHBox("Oggetto:", oggetto);
-        HBox hbox3 = createHBox("Data:", data, "Ora", ora);
+        HBox hbox1 = createHBox(soggetto, mail.getAddress());
+        HBox hbox2 = createHBox("Oggetto:", mail.getObject());
+        HBox hbox3 = createHBox("Data:", mail.getDate(), "Ora", mail.getTime());
 
         vbox.getChildren().addAll(hbox1, hbox2, hbox3);
 
         Button buttonX = createButtonX();
+        buttonX.setId(mail.getUuid() + "_Xbtn");
         HBox.setMargin(buttonX, new Insets(0, 0, 0, 20)); // Aggiungi margine sinistro al pulsante
         hbox3.getChildren().add(buttonX);
 

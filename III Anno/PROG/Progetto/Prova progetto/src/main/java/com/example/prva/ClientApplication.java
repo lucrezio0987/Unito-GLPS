@@ -20,6 +20,7 @@ public class ClientApplication extends Application {
 
         ClientController contr = fxmlLoader.getController();
                          contr.initModel();
+                         contr.setSccene(scene);
     }
 
     public static void main(String[] args) {
