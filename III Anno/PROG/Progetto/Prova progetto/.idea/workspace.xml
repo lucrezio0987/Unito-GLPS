@@ -56,7 +56,7 @@
   <component name="RunManager">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.prva.ClientApplication" />
-      <module name="Prva" />
+      <module name="Prova" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>

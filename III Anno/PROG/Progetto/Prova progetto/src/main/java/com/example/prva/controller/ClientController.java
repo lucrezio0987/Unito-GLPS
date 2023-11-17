@@ -29,30 +29,24 @@ public class ClientController {
     @FXML
     private TextField objectMailSent, objectMailRecived, objectMailSend;
     @FXML
-    private Button deleteBtnSent, replyBtnReceived, deleateRecived, sendBtn;
+    private Button deleteBtnSent, replyBtnReceived, deleteBtnRecived, sendBtn;
     @FXML
-    private ImageView imgEmail;
+    private ImageView imgEmailReceived, imgEmailSent;
     @FXML
     private Label addressLabelSent, objectLabelSent, addressLabelReceived, objectLabelReceived;
+    @FXML
+    private Label countMailSent, countMailReceived;
 
     MailModel mailModel;
     MailCardModel mailCardModel;
-
-    //TODO: Aggiungere un logo all'apertura della finestra nella sezione "vuota" di posta inviata e ricevuta
 
     //TODO: Cambiare sfumatura delle card per simulare la mail letta
 
     //TODO: AGGIUNGERE COMMENTI!!!!!!
 
-    //TODO: Nei metodi di cancellazione della lista completa, deve anche farlo nel server!
-
     //TODO: Aggiungere possibilità di rispondere e inviare una mail a più destinatari
 
     //TODO: Aggiungere l'opzione di poter inoltrare una mail
-
-    //TODO: Il cancella tutto deve far apparire il logo
-
-    //TODO: Gestire il contatore delle mail
 
 
     public void initModel() {
@@ -60,6 +54,7 @@ public class ClientController {
         mailCardModel = new MailCardModel(mailModel);
 
         showMailPanelReceived(false);
+        showMailPanelSent(false);
 
         textMailSent.textProperty().bind(mailModel.getTextMailSentProperty());
         addressMailSent.textProperty().bind(mailModel.getAddressMailSentProperty());
@@ -73,11 +68,14 @@ public class ClientController {
         mailModel.getAddressMailSendProperty().bindBidirectional(addressMailSend.textProperty());
         mailModel.getObjectMailSendProperty().bindBidirectional(objectMailSend.textProperty());
 
+
+        setCountMailSent();
         mailModel.getListMailSent().forEach((mail) -> {
                     VBox card = mailCardModel.buildCard("Destinatario:", mail);
                     Lista_posta_inviata.getChildren().add(card);
                 });
 
+        setCountMailReceived();
         mailModel.getListMailReceived().forEach((mail) -> {
                     VBox card = mailCardModel.buildCard("Mittente:",mail);
                     Lista_posta_ricevuta.getChildren().add(card);
@@ -87,6 +85,7 @@ public class ClientController {
             System.out.println("MailReceivedList: Prima della cancellazione ( " + mailModel.getListMailReceived().toString() + " )");
             mailModel.deleteMailSentList();
             Lista_posta_inviata.getChildren().clear();
+            setCountMailSent();
             System.out.println("MailSentList: Cancellata ( " + mailModel.getListMailSent().toString() + " )\n");
         });
 
@@ -95,6 +94,7 @@ public class ClientController {
             mailModel.deleteMailReceivedList();
             Lista_posta_ricevuta.getChildren().clear();
             showMailPanelReceived(false);
+            setCountMailReceived();
             System.out.println("MailReceivedList: Cancellata ( " + mailModel.getListMailReceived().toString() + " )\n");
         });
 
@@ -102,25 +102,32 @@ public class ClientController {
             Mail mail = mailModel.sendMail();
             VBox card = mailCardModel.buildCard("Destinatario:",mail);
             Lista_posta_inviata.getChildren().add(card);
+            setCountMailSent();
         });
 
         deleteBtnSent.setOnAction(event -> {
             String idMail = mailModel.deleteActualMailSent();
             Lista_posta_inviata.getChildren().removeIf(card -> card.getId().equals(idMail));
+            showMailPanelSent(false);
+            setCountMailSent();
         });
 
-        deleateRecived.setOnAction(event -> {
+        deleteBtnRecived.setOnAction(event -> {
             String idMail = mailModel.deleteActualMailReceived();
             Lista_posta_ricevuta.getChildren().removeIf(card -> card.getId().equals(idMail));
             showMailPanelReceived(false);
+            setCountMailReceived();
         });
 
         replyBtnReceived.setDisable(true);
     }
 
+    private void setCountMailSent() { countMailSent.setText(String.valueOf(mailModel.getListMailSent().size())); }
+    private void setCountMailReceived() { countMailReceived.setText(String.valueOf(mailModel.getListMailReceived().size())); }
+
     private void showMailPanelReceived(boolean bool) {
         if(bool) {
-            imgEmail.setVisible(false);
+            imgEmailReceived.setVisible(false);
 
             textMailReceived.setVisible(true);
             addressMailRecived.setVisible(true);
@@ -131,9 +138,9 @@ public class ClientController {
             addressLabelReceived.setVisible(true);
             objectLabelReceived.setVisible(true);
             replyBtnReceived.setVisible(true);
-            deleateRecived.setVisible(true);
+            deleteBtnRecived.setVisible(true);
         } else {
-            imgEmail.setVisible(true);
+            imgEmailReceived.setVisible(true);
 
             textMailReceived.setVisible(false);
             addressMailRecived.setVisible(false);
@@ -144,7 +151,32 @@ public class ClientController {
             addressLabelReceived.setVisible(false);
             objectLabelReceived.setVisible(false);
             replyBtnReceived.setVisible(false);
-            deleateRecived.setVisible(false);
+            deleteBtnRecived.setVisible(false);
+        }
+    }
+    private void showMailPanelSent(boolean bool) {
+        if(bool) {
+            imgEmailSent.setVisible(false);
+
+            textMailSent.setVisible(true);
+            addressMailSent.setVisible(true);
+            objectMailSent.setVisible(true);
+            addressLabelSent.setVisible(true);
+            objectLabelSent.setVisible(true);
+            addressLabelSent.setVisible(true);
+            objectLabelSent.setVisible(true);
+            deleteBtnSent.setVisible(true);
+        } else {
+            imgEmailSent.setVisible(true);
+
+            textMailSent.setVisible(false);
+            addressMailSent.setVisible(false);
+            objectMailSent.setVisible(false);
+            addressLabelSent.setVisible(false);
+            objectLabelSent.setVisible(false);
+            addressLabelSent.setVisible(false);
+            objectLabelSent.setVisible(false);
+            deleteBtnSent.setVisible(false);
         }
     }
 
@@ -169,7 +201,9 @@ public class ClientController {
             }
             if(soggetto.equals("Destinatario:")){
                 vbox.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    public void handle(MouseEvent e) { mailModel.openMailSent(mail.getUuid());}
+                    public void handle(MouseEvent e) {
+                        mailModel.openMailSent(mail.getUuid());
+                        showMailPanelSent(true);}
                 });
             }
 

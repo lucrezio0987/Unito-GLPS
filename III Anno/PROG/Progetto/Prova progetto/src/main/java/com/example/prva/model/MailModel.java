@@ -97,8 +97,8 @@ public class MailModel {
 
     }
 
-    public void deleteMailSentList(){ mailSent.clear(); }
-    public void deleteMailReceivedList(){ mailReceived.clear(); }
+    public void deleteMailSentList(){ server.deleteMailSentList(); mailSent.clear(); }
+    public void deleteMailReceivedList(){ server.deleteMailReceivedList(); mailReceived.clear(); }
 
     public void deleteMailSent(String uuid){ server.deleteMailSent(mailSent.remove(uuid));}
     public void deleteMailReceived(String uuid){ server.deleteMailReceived(mailReceived.remove(uuid)); }
@@ -158,6 +158,9 @@ public class MailModel {
 
         public boolean deleteMailSent(Mail mail) { return mailSent.remove(mail); }
         public boolean deleteMailReceived(Mail mail) { return mailReceived.remove(mail); }
+
+        public void deleteMailSentList() { mailSent.clear(); }
+        public void deleteMailReceivedList() { mailReceived.clear(); }
 
         public void setMailSent() {
             mailSent.add(new Mail("alice@example.com", "Oggetto 1", "Contenuto della mail 1", "28/03/2022", "11:30"));

@@ -16,9 +16,9 @@
                   <Button fx:id="replyBtnReceived" layoutX="854.0" layoutY="14.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="81.0" text="Rispondi" />
                   <Separator layoutX="316.0" layoutY="1.0" orientation="VERTICAL" prefHeight="692.0" prefWidth="12.0" />
                   <Label layoutX="14.0" layoutY="28.0" prefHeight="28.0" prefWidth="42.0" text="Posta:" />
-                  <Label layoutX="56.0" layoutY="28.0" prefHeight="28.0" prefWidth="29.0" text="99+" />
+                  <Label fx:id="countMailReceived" layoutX="56.0" layoutY="28.0" prefHeight="28.0" prefWidth="29.0" text="99+" />
                   <Button fx:id="Cancella_Tutto_Ricevuta" layoutX="160.0" layoutY="25.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="151.0" text="Cancella Tutto" />
-                  <Button fx:id="deleateRecived" layoutX="854.0" layoutY="61.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="81.0" text="Cancella" />
+                  <Button fx:id="deleteBtnRecived" layoutX="854.0" layoutY="61.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="81.0" text="Cancella" />
                   <TextField fx:id="addressMailRecived" layoutX="417.0" layoutY="15.0" prefHeight="26.0" prefWidth="382.0" />
                   <TextField fx:id="objectMailRecived" layoutX="417.0" layoutY="62.0" prefHeight="26.0" prefWidth="382.0" />
                   <ScrollPane layoutX="9.0" layoutY="68.0" prefHeight="624.0" prefWidth="305.0">
@@ -27,7 +27,7 @@
                         </VBox>
                      </content>
                   </ScrollPane>
-                  <ImageView fx:id="imgEmail" fitHeight="382.0" fitWidth="310.0" layoutX="505.0" layoutY="182.0" opacity="0.39" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="imgEmailReceived" fitHeight="382.0" fitWidth="310.0" layoutX="505.0" layoutY="176.0" opacity="0.39" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@email-img.png" />
                      </image>
@@ -45,7 +45,7 @@
                   <Label fx:id="objectLabelSent" layoutX="336.0" layoutY="61.0" prefHeight="28.0" prefWidth="64.0" text="Oggetto" />
                   <Separator layoutX="316.0" layoutY="1.0" orientation="VERTICAL" prefHeight="692.0" prefWidth="12.0" />
                   <Label layoutX="14.0" layoutY="28.0" prefHeight="28.0" prefWidth="42.0" text="Posta:" />
-                  <Label layoutX="56.0" layoutY="28.0" prefHeight="28.0" prefWidth="29.0" text="99+" />
+                  <Label fx:id="countMailSent" layoutX="56.0" layoutY="28.0" prefHeight="28.0" prefWidth="29.0" text="99+" />
                   <Button fx:id="Cancella_Tutto_Inviata" layoutX="160.0" layoutY="25.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="151.0" text="Cancella Tutto" />
                   <Button fx:id="deleteBtnSent" layoutX="854.0" layoutY="61.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="81.0" text="Cancella" />
                   <TextField fx:id="addressMailSent" layoutX="417.0" layoutY="15.0" prefHeight="26.0" prefWidth="382.0" />
@@ -56,6 +56,11 @@
                         </VBox>
                      </content>
                   </ScrollPane>
+                  <ImageView fx:id="imgEmailSent" fitHeight="382.0" fitWidth="310.0" layoutX="505.0" layoutY="176.0" opacity="0.39" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@email-img.png" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
          </content>

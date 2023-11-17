@@ -4,6 +4,7 @@ import com.example.prva.controller.ClientController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -16,6 +17,7 @@ public class ClientApplication extends Application {
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
         stage.setTitle("Client di Posta Elettronica");
         stage.setScene(scene);
+        stage.getIcons().add(new Image(ClientApplication.class.getResourceAsStream("email-img.png")));
         stage.show();
 
         ClientController contr = fxmlLoader.getController();
@@ -25,6 +27,5 @@ public class ClientApplication extends Application {
     public static void main(String[] args) {
         launch();
     }
-
 
 }
