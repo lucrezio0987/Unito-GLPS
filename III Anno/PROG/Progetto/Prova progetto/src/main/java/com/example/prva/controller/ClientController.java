@@ -18,6 +18,15 @@ import javafx.scene.text.Text;
 public class ClientController {
 
     @FXML
+    private Button forwardBtnSent, forwardBtnReceived,sendBtnClear;
+    @FXML
+    private TextField ccMailRecived, ccMailSend, ccMailSent;
+    @FXML
+    private Label ccLabelReceived, ccLabelSent;
+    @FXML
+    private TextField localAddressLabelReceived, localAddressLabelSent;
+
+    @FXML
     private VBox Lista_posta_inviata, Lista_posta_ricevuta;
     @FXML
     private Button Cancella_Tutto_Ricevuta, Cancella_Tutto_Inviata;
@@ -36,6 +45,7 @@ public class ClientController {
     private Label addressLabelSent, objectLabelSent, addressLabelReceived, objectLabelReceived;
     @FXML
     private Label countMailSent, countMailReceived;
+
 
     MailModel mailModel;
     MailCardModel mailCardModel;

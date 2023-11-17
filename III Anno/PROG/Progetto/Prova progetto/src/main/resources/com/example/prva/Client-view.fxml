@@ -10,20 +10,20 @@
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="436.0" prefWidth="749.0">
                <children>
-                  <TextArea fx:id="textMailReceived" layoutX="331.0" layoutY="101.0" prefHeight="592.0" prefWidth="657.0" />
+                  <TextArea fx:id="textMailReceived" layoutX="331.0" layoutY="152.0" prefHeight="541.0" prefWidth="657.0" />
                   <Label fx:id="addressLabelReceived" layoutX="334.0" layoutY="14.0" prefHeight="28.0" prefWidth="68.0" text="Mittente" />
                   <Label fx:id="objectLabelReceived" layoutX="336.0" layoutY="61.0" prefHeight="28.0" prefWidth="64.0" text="Oggetto" />
-                  <Button fx:id="replyBtnReceived" layoutX="854.0" layoutY="14.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="81.0" text="Rispondi" />
+                  <Button fx:id="replyBtnReceived" layoutX="854.0" layoutY="110.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="81.0" text="Rispondi" />
                   <Separator layoutX="316.0" layoutY="1.0" orientation="VERTICAL" prefHeight="692.0" prefWidth="12.0" />
-                  <Label layoutX="14.0" layoutY="28.0" prefHeight="28.0" prefWidth="42.0" text="Posta:" />
-                  <Label fx:id="countMailReceived" layoutX="56.0" layoutY="28.0" prefHeight="28.0" prefWidth="29.0" text="99+" />
-                  <Button fx:id="Cancella_Tutto_Ricevuta" layoutX="160.0" layoutY="25.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="151.0" text="Cancella Tutto" />
+                  <Label layoutX="13.0" layoutY="82.0" prefHeight="28.0" prefWidth="42.0" text="Posta:" />
+                  <Label fx:id="countMailReceived" layoutX="56.0" layoutY="82.0" prefHeight="28.0" prefWidth="29.0" text="99+" />
+                  <Button fx:id="Cancella_Tutto_Ricevuta" layoutX="162.0" layoutY="80.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="151.0" text="Cancella Tutto" />
                   <Button fx:id="deleteBtnRecived" layoutX="854.0" layoutY="61.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="81.0" text="Cancella" />
                   <TextField fx:id="addressMailRecived" layoutX="417.0" layoutY="15.0" prefHeight="26.0" prefWidth="382.0" />
                   <TextField fx:id="objectMailRecived" layoutX="417.0" layoutY="62.0" prefHeight="26.0" prefWidth="382.0" />
-                  <ScrollPane layoutX="9.0" layoutY="68.0" prefHeight="624.0" prefWidth="305.0">
+                  <ScrollPane layoutX="9.0" layoutY="122.0" prefHeight="570.0" prefWidth="305.0">
                      <content>
-                        <VBox fx:id="Lista_posta_ricevuta" prefHeight="621.0" prefWidth="286.0">
+                        <VBox fx:id="Lista_posta_ricevuta" prefHeight="567.0" prefWidth="286.0">
                         </VBox>
                      </content>
                   </ScrollPane>
@@ -32,6 +32,11 @@
                         <Image url="@email-img.png" />
                      </image>
                   </ImageView>
+                  <Button fx:id="forwardBtnReceived" layoutX="854.0" layoutY="14.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="81.0" text="Inoltra" />
+                  <TextField fx:id="ccMailRecived" layoutX="417.0" layoutY="111.0" prefHeight="26.0" prefWidth="382.0" />
+                  <Label fx:id="ccLabelReceived" layoutX="336.0" layoutY="110.0" prefHeight="28.0" prefWidth="64.0" text="Cc" />
+                  <TextField fx:id="localAddressLabelReceived" layoutX="13.0" layoutY="41.0" prefHeight="26.0" prefWidth="298.0" />
+                  <Label layoutX="13.0" layoutY="14.0" prefHeight="28.0" prefWidth="98.0" text="Indirizzo locale" />
                </children>
             </AnchorPane>
          </content>
@@ -40,19 +45,19 @@
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="436.0" prefWidth="749.0">
                <children>
-                  <TextArea fx:id="textMailSent" layoutX="331.0" layoutY="101.0" prefHeight="592.0" prefWidth="657.0" />
+                  <TextArea fx:id="textMailSent" layoutX="331.0" layoutY="152.0" prefHeight="541.0" prefWidth="657.0" />
                   <Label fx:id="addressLabelSent" layoutX="334.0" layoutY="14.0" prefHeight="28.0" prefWidth="81.0" text="Destinatario" />
                   <Label fx:id="objectLabelSent" layoutX="336.0" layoutY="61.0" prefHeight="28.0" prefWidth="64.0" text="Oggetto" />
                   <Separator layoutX="316.0" layoutY="1.0" orientation="VERTICAL" prefHeight="692.0" prefWidth="12.0" />
-                  <Label layoutX="14.0" layoutY="28.0" prefHeight="28.0" prefWidth="42.0" text="Posta:" />
-                  <Label fx:id="countMailSent" layoutX="56.0" layoutY="28.0" prefHeight="28.0" prefWidth="29.0" text="99+" />
-                  <Button fx:id="Cancella_Tutto_Inviata" layoutX="160.0" layoutY="25.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="151.0" text="Cancella Tutto" />
+                  <Label layoutX="13.0" layoutY="82.0" prefHeight="28.0" prefWidth="42.0" text="Posta:" />
+                  <Label fx:id="countMailSent" layoutX="56.0" layoutY="82.0" prefHeight="28.0" prefWidth="29.0" text="99+" />
+                  <Button fx:id="Cancella_Tutto_Inviata" layoutX="162.0" layoutY="80.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="151.0" text="Cancella Tutto" />
                   <Button fx:id="deleteBtnSent" layoutX="854.0" layoutY="61.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="81.0" text="Cancella" />
                   <TextField fx:id="addressMailSent" layoutX="417.0" layoutY="15.0" prefHeight="26.0" prefWidth="382.0" />
                   <TextField fx:id="objectMailSent" layoutX="417.0" layoutY="62.0" prefHeight="26.0" prefWidth="382.0" />
-                  <ScrollPane layoutX="9.0" layoutY="68.0" prefHeight="624.0" prefWidth="305.0">
+                  <ScrollPane layoutX="9.0" layoutY="122.0" prefHeight="570.0" prefWidth="305.0">
                      <content>
-                        <VBox fx:id="Lista_posta_inviata" prefHeight="621.0" prefWidth="286.0">
+                        <VBox fx:id="Lista_posta_inviata" prefHeight="568.0" prefWidth="286.0">
                         </VBox>
                      </content>
                   </ScrollPane>
@@ -61,6 +66,11 @@
                         <Image url="@email-img.png" />
                      </image>
                   </ImageView>
+                  <Button fx:id="forwardBtnSent" layoutX="854.0" layoutY="14.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="81.0" text="Inoltra" />
+                  <TextField fx:id="ccMailSent" layoutX="417.0" layoutY="111.0" prefHeight="26.0" prefWidth="382.0" />
+                  <Label fx:id="ccLabelSent" layoutX="336.0" layoutY="110.0" prefHeight="28.0" prefWidth="64.0" text="Cc" />
+                  <TextField fx:id="localAddressLabelSent" layoutX="13.0" layoutY="41.0" prefHeight="26.0" prefWidth="298.0" />
+                  <Label layoutX="13.0" layoutY="14.0" prefHeight="28.0" prefWidth="98.0" text="Indirizzo locale" />
                </children>
             </AnchorPane>
          </content>
@@ -69,13 +79,16 @@
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="436.0" prefWidth="749.0">
                <children>
-                  <TextArea fx:id="textMailSend" layoutX="15.0" layoutY="101.0" prefHeight="592.0" prefWidth="966.0" />
+                  <TextArea fx:id="textMailSend" layoutX="15.0" layoutY="152.0" prefHeight="541.0" prefWidth="966.0" />
                   <Label layoutX="31.0" layoutY="14.0" prefHeight="28.0" prefWidth="80.0" text="Destinatario" />
                   <Label layoutX="33.0" layoutY="61.0" prefHeight="28.0" prefWidth="64.0" text="Oggetto" />
                   <TextField fx:id="addressMailSend" layoutX="116.0" layoutY="15.0" prefHeight="26.0" prefWidth="726.0" />
                   <Button fx:id="sendBtn" layoutX="876.0" layoutY="15.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="81.0" text="Invia" />
                   <TextField fx:id="objectMailSend" layoutX="116.0" layoutY="62.0" prefHeight="26.0" prefWidth="726.0" />
-                  <Label layoutX="901.0" layoutY="75.0" prefHeight="28.0" prefWidth="79.0" text="1024 / 1024" textFill="#656565" />
+                  <Label layoutX="902.0" layoutY="130.0" prefHeight="28.0" prefWidth="79.0" text="1024 / 1024" textFill="#656565" />
+                  <TextField fx:id="ccMailSend" layoutX="116.0" layoutY="104.0" prefHeight="26.0" prefWidth="726.0" />
+                  <Label layoutX="33.0" layoutY="103.0" prefHeight="28.0" prefWidth="64.0" text="Cc" />
+                  <Button fx:id="sendBtnClear" layoutX="876.0" layoutY="71.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="81.0" text="Svuota" />
                </children>
             </AnchorPane>
          </content>
