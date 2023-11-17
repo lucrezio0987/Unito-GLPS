@@ -2,6 +2,8 @@
     -fx-background-color: #7798bd;
     -fx-border-color: #ffffff;
     -fx-border-style: segments(0, 0, 2, 0);
+    -fx-pref-height: 85.0;
+    -fx-pref-width: 278.0;
 }
 
 Text {
