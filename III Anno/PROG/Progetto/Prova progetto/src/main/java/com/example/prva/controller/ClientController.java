@@ -26,8 +26,14 @@ public class ClientController {
     MailModel mailModel = new MailModel();
     MailCardModel mailCardModel = new MailCardModel(mailModel);
 
-    //TODO: Fare un listener per il bottone che sia generico e che possa essere passato a buildCard
-    // ( ad esempio che faccia rimuova la mail che ha id = [nome bottone senza _Xbtn] )
+    //TODO: Aggiungere un logo all'apertura della finestra nella sezione "vuota" di posta inviata e ricevuta
+
+    //TODO: Dimensioni nel file css
+
+    //TODO: Cambiare sfumatura delle card per simulare la mail letta
+
+    //TODO: AGGIUNGERE COMMENTI!!!!!!
+
 
     public void initModel() {
 
