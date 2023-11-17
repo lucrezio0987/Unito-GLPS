@@ -1,6 +1,6 @@
 #include "Interfaccia.h"
 
-//--------- PROTOTIPI ---------//
+//--------- PROTOTYPES ---------//
 
 int compare_pos(Records* i, Records* j);
 int compare_int(Records* i, Records* j);
@@ -17,7 +17,7 @@ void merge_binary_insertion_sort(void** base, size_t nitems, size_t k, int (*com
 void sort_records(const char* infile, const char* outfile, size_t k, size_t field);
 void sort_records_max(const char* infile, const char* outfile, size_t k, size_t field, size_t max_records);
 
-//--------- STRUTTURE ---------//
+//--------- STRUCTURES ---------//
 
 struct _Record {
     long int pos;
@@ -31,7 +31,7 @@ struct _Array {
     unsigned int nitems;
 };
 
-//------ IMPLEMENTAZIONI ------//
+//------ IMPLEMENTATION ------//
 
 int compare_pos(Records* i, Records* j)
 {
