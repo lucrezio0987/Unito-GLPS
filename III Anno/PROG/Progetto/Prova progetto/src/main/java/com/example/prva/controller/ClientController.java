@@ -21,7 +21,7 @@ public class ClientController {
     @FXML
     private TextField objectMailSent, objectMailRecived, objectMailSend;
     @FXML
-    private Button deleateBtnSent, replyBtnRecived, deleateRecived, sendBtn;
+    private Button deleteBtnSent, replyBtnReceived, deleateRecived, sendBtn;
 
     MailModel mailModel = new MailModel();
     MailCardModel mailCardModel = new MailCardModel(mailModel);
@@ -33,6 +33,16 @@ public class ClientController {
     //TODO: Cambiare sfumatura delle card per simulare la mail letta
 
     //TODO: AGGIUNGERE COMMENTI!!!!!!
+
+    //TODO: Nei metodi di cancellazione della lista completa, deve anche farlo nel server!
+
+    //TODO: Aggiungere possibilità di rispondere e inviare una mail a più destinatari
+
+    //TODO: Aggiungere l'opzione di poter inoltrare una mail
+
+    //TODO: Il cancella tutto deve far apparire il logo
+
+    //TODO: Gestire il contatore delle mail
 
 
     public void initModel() {
@@ -94,7 +104,7 @@ public class ClientController {
             Lista_posta_inviata.getChildren().add(card);
         });
 
-        deleateBtnSent.setOnAction(event -> {
+        deleteBtnSent.setOnAction(event -> {
             String idMail = mailModel.deleteActualMailSent();
             Lista_posta_inviata.getChildren().removeIf(card -> card.getId().equals(idMail));
         });
@@ -102,7 +112,7 @@ public class ClientController {
             String idMail = mailModel.deleteActualMailReceived();
             Lista_posta_ricevuta.getChildren().removeIf(card -> card.getId().equals(idMail));
         });
-        replyBtnRecived.setDisable(true);
+        replyBtnReceived.setDisable(true);
 
 
     }

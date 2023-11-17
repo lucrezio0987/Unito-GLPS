@@ -101,7 +101,7 @@ public class MailModel {
     public void deleteMailReceivedList(){ mailReceived.clear(); }
 
     public void deleteMailSent(String uuid){ server.deleteMailSent(mailSent.remove(uuid));}
-    public void deleteMailReceved(String uuid){ server.deleteMailReceived(mailReceived.remove(uuid)); }
+    public void deleteMailReceived(String uuid){ server.deleteMailReceived(mailReceived.remove(uuid)); }
 
     public String deleteActualMailSent(){
         String actual = activeMailSent;
@@ -111,7 +111,7 @@ public class MailModel {
     }
     public String deleteActualMailReceived(){
         String actual = activeMailReceived;
-        deleteMailReceved(actual);
+        deleteMailReceived(actual);
         openMailReceived("");
         return actual;
     }
