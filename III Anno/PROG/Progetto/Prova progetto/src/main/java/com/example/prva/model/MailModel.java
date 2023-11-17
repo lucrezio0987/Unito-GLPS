@@ -6,8 +6,8 @@ import java.util.*;
 import javafx.beans.property.SimpleStringProperty;
 
 public class MailModel {
-    private Map<String, Mail> mailSent = new HashMap<>();
-    private Map<String, Mail> mailReceived = new HashMap<>();
+    private final Map<String, Mail> mailSent = new HashMap<>();
+    private final Map<String, Mail> mailReceived = new HashMap<>();
    // private Mail mail;
 
     private SimpleStringProperty textMailSendProperty = null; // testo mail da inviare
@@ -25,35 +25,7 @@ public class MailModel {
     private String activeMailSent = null;
     private String activeMailRecived  = null;
 
-    public ArrayList<Mail> getListMailSent(){
-        return new ArrayList<Mail>(mailSent.values());
-    }
-
-    public void setMailSent(){}
-
-    public ArrayList<Mail> getListMailReceived(){
-        return new ArrayList<Mail>(mailReceived.values());
-    }
-
-    public void setMailReceived(){}
-
- /*   public Mail getMail(){
-        return this.mail;
-    }
-    */
-
-    public SimpleStringProperty getTextMailSendProperty(){ return this.textMailSendProperty; }
-    public SimpleStringProperty getTextMailReceivedProperty(){ return this.textMailReceivedProperty; }
-    public SimpleStringProperty getTextMailSentProperty(){ return this.textMailSentProperty; }
-
-    public SimpleStringProperty getAddressMailSendProperty(){ return this.addressMailSendProperty; }
-    public SimpleStringProperty getAddressMailReceivedProperty(){ return this.addressMailReceivedProperty; }
-    public SimpleStringProperty getAddressMailSentProperty(){ return this.addressMailSentProperty; }
-
-    public SimpleStringProperty getObjectMailSentProperty(){ return this.objectMailSentProperty; }
-    public SimpleStringProperty getObjectMailReceivedProperty(){ return this.objectMailReceivedProperty; }
-    public SimpleStringProperty getObjectMailSendProperty(){ return this.objectMailSendProperty; }
-
+    private final Server server = new Server();
 
     public MailModel() {
         textMailSendProperty = new SimpleStringProperty();
@@ -68,32 +40,38 @@ public class MailModel {
         objectMailReceivedProperty = new SimpleStringProperty();
         objectMailSentProperty = new SimpleStringProperty();
 
-        /*
-        mailSent.add(new Mail("mario@example.com", "Oggetto 1", "Contenuto della mail 1", "15/03/2022", "08:45"));
-        mailSent.add(new Mail("giovanna@example.com", "Oggetto 3", "Contenuto della mail 3", "17/03/2022", "12:15"));
-        mailSent.add(new Mail("lisa@example.com", "Oggetto 5", "Contenuto della mail 5", "19/03/2022", "16:30"));
-        mailSent.add(new Mail("sara@example.com", "Oggetto 7", "Contenuto della mail 7", "21/03/2022", "21:00"));
-        mailSent.add(new Mail("anna@example.com", "Oggetto 9", "Contenuto della mail 9", "23/03/2022", "02:30"));
-        mailSent.add(new Mail("chiara@example.com", "Oggetto 11", "Contenuto della mail 11", "25/03/2022", "08:45"));
-        mailSent.add(new Mail("giuseppe@example.com", "Oggetto 12", "Contenuto della mail 12", "26/03/2022", "12:15"));
-        mailSent.add(new Mail("elena@example.com", "Oggetto 13", "Contenuto della mail 13", "27/03/2022", "16:30"));
-        */
-
-        Mail mail;
-
-        mail = new Mail("gabriele@example.com", "Oggetto 14", "Contenuto della mail 14", "28/03/2022", "10:30");
-        mailReceived.put(mail.getUuid(), mail);
-        mail = new Mail("ilaria@example.com", "Oggetto 15", "Contenuto della mail 15", "29/03/2022", "14:00");
-        mailReceived.put(mail.getUuid(), mail);
-        mail = new Mail("lorenzo@example.com", "Oggetto 16", "Contenuto della mail 16", "30/03/2022", "18:45");
-        mailReceived.put(mail.getUuid(), mail);
+        setMailSent();
+        setMailReceived();
     }
+
+    public SimpleStringProperty getTextMailSendProperty(){ return this.textMailSendProperty; }
+    public SimpleStringProperty getTextMailReceivedProperty(){ return this.textMailReceivedProperty; }
+    public SimpleStringProperty getTextMailSentProperty(){ return this.textMailSentProperty; }
+
+    public SimpleStringProperty getAddressMailSendProperty(){ return this.addressMailSendProperty; }
+    public SimpleStringProperty getAddressMailReceivedProperty(){ return this.addressMailReceivedProperty; }
+    public SimpleStringProperty getAddressMailSentProperty(){ return this.addressMailSentProperty; }
+
+    public SimpleStringProperty getObjectMailSentProperty(){ return this.objectMailSentProperty; }
+    public SimpleStringProperty getObjectMailReceivedProperty(){ return this.objectMailReceivedProperty; }
+    public SimpleStringProperty getObjectMailSendProperty(){ return this.objectMailSendProperty; }
+
+
+    public ArrayList<Mail> getListMailSent(){
+        return new ArrayList<Mail>(mailSent.values());
+    }
+    public ArrayList<Mail> getListMailReceived(){
+        return new ArrayList<Mail>(mailReceived.values());
+    }
+
+    public void setMailSent(){ server.getMailSent().forEach( mail -> mailSent.put(mail.getUuid(), mail)); }
+    public void setMailReceived(){ server.getMailReceived().forEach(mail -> mailReceived.put(mail.getUuid(), mail));}
+
 
     public void openMailReceived(String uuid){
         Mail mail;
-        activeMailRecived = uuid;
 
-        if(uuid.equals("") || mailReceived.isEmpty())
+        if(uuid.isEmpty() || mailReceived.isEmpty())
             mail = new Mail("", "", "", "", "");
         else
             mail = mailReceived.get(uuid);
@@ -104,17 +82,15 @@ public class MailModel {
         textMailReceivedProperty.set(mail.getText());
     }
 
-    // DA RIVEDERE
-    // v v v v v v v v v v v
     public void openMailSent(String uuid){
         Mail mail;
-        activeMailSent = uuid;
 
-        if(uuid.equals("") || mailSent.isEmpty())
+        if(uuid.isEmpty() || mailSent.isEmpty())
             mail = new Mail("", "", "", "", "");
         else
             mail = mailSent.get(uuid);
 
+        activeMailSent = uuid;
         addressMailSentProperty.set(mail.getAddress());
         objectMailSentProperty.set(mail.getObject());
         textMailSentProperty.set(mail.getText());
@@ -122,20 +98,10 @@ public class MailModel {
     }
 
     public void deleteMailSentList(){ mailSent.clear(); }
-
     public void deleteMailReceivedList(){ mailReceived.clear(); }
 
-    public void deleteMailSent(String uuid){
-        if(mailSent.isEmpty())
-            return;
-        mailSent.remove(uuid);
-    }
-
-    public void deleteMailReceved(String uuid){
-        if(mailReceived.isEmpty())
-            return;
-        mailReceived.remove(uuid);
-    }
+    public void deleteMailSent(String uuid){ server.deleateMailSent(mailSent.remove(uuid));}
+    public void deleteMailReceved(String uuid){ server.deleateMailReceived(mailReceived.remove(uuid)); }
 
     public String deleteActualMailSent(){
         String actual = activeMailSent;
@@ -168,6 +134,54 @@ public class MailModel {
         addressMailSendProperty.set("");
         objectMailSendProperty.set("");
 
+        server.addMailSent(mailSend);
+
         return mailSend;
+    }
+
+    private static class Server {
+        private final List<Mail> mailSent;
+        private final List<Mail> mailReceived;
+
+        public Server() {
+            mailSent = new ArrayList<>();
+            mailReceived = new ArrayList<>();
+            setMailSent();
+            setMailReceived();
+        }
+
+        public List<Mail> getMailSent() { return mailSent; }
+        public List<Mail> getMailReceived() { return mailReceived; }
+
+        public boolean addMailSent(Mail mail) { return mailSent.add(mail); }
+        public boolean addMailReceived(Mail mail) { return mailReceived.add(mail); }
+
+        public boolean deleateMailSent(Mail mail) { return mailSent.remove(mail); }
+        public boolean deleateMailReceived(Mail mail) { return mailReceived.remove(mail); }
+
+        public void setMailSent() {
+            mailSent.add(new Mail("alice@example.com", "Oggetto 1", "Contenuto della mail 1", "28/03/2022", "11:30"));
+            mailSent.add(new Mail("bob@example.com", "Oggetto 2", "Contenuto della mail 2", "28/03/2022", "12:30"));
+            mailSent.add(new Mail("charlie@example.com", "Oggetto 3", "Contenuto della mail 3", "28/03/2022", "13:30"));
+            mailSent.add(new Mail("dave@example.com", "Oggetto 4", "Contenuto della mail 4", "28/03/2022", "14:30"));
+            mailSent.add(new Mail("emma@example.com", "Oggetto 5", "Contenuto della mail 5", "28/03/2022", "15:30"));
+            mailSent.add(new Mail("frank@example.com", "Oggetto 6", "Contenuto della mail 6", "28/03/2022", "16:30"));
+            mailSent.add(new Mail("hannah@example.com", "Oggetto 7", "Contenuto della mail 7", "28/03/2022", "17:30"));
+            mailSent.add(new Mail("irene@example.com", "Oggetto 8", "Contenuto della mail 8", "28/03/2022", "18:30"));
+            mailSent.add(new Mail("jack@example.com", "Oggetto 9", "Contenuto della mail 9", "28/03/2022", "19:30"));
+        }
+
+        public void setMailReceived() {
+            mailReceived.add(new Mail("mary@example.com", "Oggetto 2", "Contenuto della mail 2", "28/03/2022", "11:30"));
+            mailReceived.add(new Mail("peter@example.com", "Oggetto 3", "Contenuto della mail 3", "28/03/2022", "12:30"));
+            mailReceived.add(new Mail("susan@example.com", "Oggetto 4", "Contenuto della mail 4", "28/03/2022", "13:30"));
+            mailReceived.add(new Mail("tom@example.com", "Oggetto 5", "Contenuto della mail 5", "28/03/2022", "14:30"));
+            mailReceived.add(new Mail("linda@example.com", "Oggetto 6", "Contenuto della mail 6", "28/03/2022", "15:30"));
+            mailReceived.add(new Mail("kevin@example.com", "Oggetto 7", "Contenuto della mail 7", "28/03/2022", "16:30"));
+            mailReceived.add(new Mail("natalie@example.com", "Oggetto 8", "Contenuto della mail 8", "28/03/2022", "17:30"));
+            mailReceived.add(new Mail("alex@example.com", "Oggetto 9", "Contenuto della mail 9", "28/03/2022", "18:30"));
+            mailReceived.add(new Mail("olivia@example.com", "Oggetto 10", "Contenuto della mail 10", "28/03/2022", "19:30"));
+        }
+
     }
 }

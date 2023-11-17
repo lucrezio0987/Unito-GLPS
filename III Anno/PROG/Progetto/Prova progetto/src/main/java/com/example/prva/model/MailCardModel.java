@@ -14,7 +14,13 @@ import javafx.scene.text.Text;
 
 public class MailCardModel {
 
-        public VBox buildCard(String soggetto, Mail mail, MailModel mailModel) {
+        private final MailModel mailModel;
+
+        public MailCardModel(MailModel mailModel) {
+            this.mailModel = mailModel;
+        }
+
+        public VBox buildCard(String soggetto, Mail mail) {
         VBox vbox = new VBox();
         vbox.setPrefHeight(85.0);
         vbox.setPrefWidth(278.0);

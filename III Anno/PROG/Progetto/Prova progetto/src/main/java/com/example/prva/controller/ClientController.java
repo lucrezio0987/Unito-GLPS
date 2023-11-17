@@ -2,14 +2,10 @@ package com.example.prva.controller;
 
 import com.example.prva.model.*;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-
-import java.util.Optional;
 
 public class ClientController {
 
@@ -28,7 +24,7 @@ public class ClientController {
     private Button deleateBtnSent, replyBtnRecived, deleateRecived, sendBtn;
 
     MailModel mailModel = new MailModel();
-    MailCardModel mailCardModel = new MailCardModel();
+    MailCardModel mailCardModel = new MailCardModel(mailModel);
 
     //TODO: Fare un listener per il bottone che sia generico e che possa essere passato a buildCard
     // ( ad esempio che faccia rimuova la mail che ha id = [nome bottone senza _Xbtn] )
@@ -48,7 +44,7 @@ public class ClientController {
         mailModel.getObjectMailSendProperty().bindBidirectional(objectMailSend.textProperty());
 
         mailModel.getListMailSent().forEach((mail) -> {
-                    VBox card = mailCardModel.buildCard("Destinatario:", mail, mailModel);
+                    VBox card = mailCardModel.buildCard("Destinatario:", mail);
                     Lista_posta_inviata.getChildren().add(card);
                     /*
                     Button Xbtn = (Button) scene.lookup("#" + mail.getUuid() + "_Xbtn");
@@ -60,7 +56,7 @@ public class ClientController {
                      */
                 });
         mailModel.getListMailReceived().forEach((mail) -> {
-                    VBox card = mailCardModel.buildCard("Mittente:",mail, mailModel);
+                    VBox card = mailCardModel.buildCard("Mittente:",mail);
                     Lista_posta_ricevuta.getChildren().add(card);
                     /*
                     Button Xbtn = (Button) scene.lookup("#" + mail.getUuid() + "_Xbtn");
@@ -88,7 +84,7 @@ public class ClientController {
 
         sendBtn.setOnAction(event -> {
             Mail mail = mailModel.sendMail();
-            VBox card = mailCardModel.buildCard("Destinatario:",mail, mailModel);
+            VBox card = mailCardModel.buildCard("Destinatario:",mail);
             Lista_posta_inviata.getChildren().add(card);
         });
 
