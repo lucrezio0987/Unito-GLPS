@@ -2,13 +2,13 @@
 
 //--------- PROTOTIPI ---------//
 
-void Insert(void** base, unsigned int i, unsigned int loc, int (*compar)(const void*, const void*));
+void insert(void** base, unsigned int i, unsigned int loc, int (*compar)(const void*, const void*));
 int search(unsigned int x, void** base, unsigned int i, unsigned int j, int (*compar)(const void*, const void*));
-void BinaryInsertionSort(void** base, unsigned int nitems, int (*compar)(const void*, const void*));
+void binary_insertion_sort(void** base, unsigned int nitems, int (*compar)(const void*, const void*));
 
 //------ IMPLEMENTAZIONI ------//
 
-void Insert(void** base, unsigned int i, unsigned int loc, int (*compar)(const void*, const void*))
+void insert(void** base, unsigned int i, unsigned int loc, int (*compar)(const void*, const void*))
 {
     void* temp = base[i];
     if (i - loc > 1) {
@@ -49,7 +49,7 @@ int search(unsigned int x, void** base, unsigned int i, unsigned int j, int (*co
     return left;
 }
 
-void BinaryInsertionSort(void** base, unsigned int nitems, int (*compar)(const void*, const void*))
+void binary_insertion_sort(void** base, unsigned int nitems, int (*compar)(const void*, const void*))
 {
     unsigned int i, loc;
     for (i = 1; i < nitems; ++i) {
@@ -58,7 +58,7 @@ void BinaryInsertionSort(void** base, unsigned int nitems, int (*compar)(const v
             if (loc < 0)
                 ERROR
             else
-                Insert(base, i, loc, compar);
+                insert(base, i, loc, compar);
         }
     }
     return;

@@ -11,20 +11,20 @@
 
 //--------- PROTOTIPI ---------//
 
-int Array_is_empty(Array *array);
+int array_is_empty(Array *array);
 
 void setUp(void);
 void tearDown(void);
 
 void test_create_array_empty();
 void test_create_array_add_not_empty();
-void test_LoadArray();
-void test_LoadArrayMAX();
+void test_load_array();
+void test_load_array_max();
 
-void test_ComparePos();
-void test_CompareInt();
-void test_CompareFloat();
-void test_CompareString();
+void test_compare_pos();
+void test_compare_int();
+void test_compare_float();
+void test_compare_string();
 
 void test_sort_records_Pos();
 void test_sort_records_String();
@@ -82,20 +82,20 @@ void tearDown(void){
 
 //------ IMPLEMENTAZIONI ------//
 
-int Array_is_empty(Array *array) {
+int array_is_empty(Array *array) {
   if (array == NULL) {
-    fprintf(stderr, "Array_is_empty: array parameter cannot be NULL");
+    fprintf(stderr, "array_is_empty: array parameter cannot be NULL");
     exit(EXIT_FAILURE);
   }
   return array->nitems == 0;
 }
 
 void test_create_array_empty(){
-  TEST_ASSERT_NOT_NULL(CreateArray());
+  TEST_ASSERT_NOT_NULL(create_array());
 }
 
 void test_create_array_add_not_empty(){
-  Array *A = CreateArray();
+  Array *A = create_array();
   Records *rec = (Records*) malloc(sizeof(Records));
   
   rec -> item_int = 10;
@@ -106,83 +106,83 @@ void test_create_array_add_not_empty(){
   
   printf("%s",rec->item_string);
   
-  arrayAdd(A,rec);
+  array_add(A,rec);
   
-  TEST_ASSERT_FALSE(Array_is_empty(A));
+  TEST_ASSERT_FALSE(array_is_empty(A));
 
   free(A);
   free(rec);
 }
 
-void test_LoadArray() {
-  Array *A = CreateArray();
-  LoadArray(A, INPUT_FILE);
-  TEST_ASSERT_FALSE(Array_is_empty(A));
+void test_load_array() {
+  Array *A = create_array();
+  load_array(A, INPUT_FILE);
+  TEST_ASSERT_FALSE(array_is_empty(A));
   free(A);
 }
 
-void test_LoadArrayMAX() {
-  Array *A = CreateArray();
-  LoadArrayMAX(A, INPUT_FILE,n_records);
-  TEST_ASSERT_FALSE(Array_is_empty(A));
+void test_load_array_max() {
+  Array *A = create_array();
+  load_array_max(A, INPUT_FILE,n_records);
+  TEST_ASSERT_FALSE(array_is_empty(A));
   free(A);
 }
 
-void test_ComparePos() {
+void test_compare_pos() {
   Records *a = (Records*)malloc(sizeof(Records));
   Records *b = (Records*)malloc(sizeof(Records));
   
   a->pos = 1;
   b->pos = 2;
 
-  TEST_ASSERT_EQUAL(-1, ComparePos(a, b));
-  TEST_ASSERT_EQUAL(0, ComparePos(a, a));
-  TEST_ASSERT_EQUAL(1, ComparePos(b, a));
+  TEST_ASSERT_EQUAL(-1, compare_pos(a, b));
+  TEST_ASSERT_EQUAL(0, compare_pos(a, a));
+  TEST_ASSERT_EQUAL(1, compare_pos(b, a));
 
   free(a);
   free(b);
 }
 
-void test_CompareInt() {
+void test_compare_int() {
   Records *a = (Records*)malloc(sizeof(Records));
   Records *b = (Records*)malloc(sizeof(Records));
 
   a->item_int = 1;
   b->item_int = 2;
 
-  TEST_ASSERT_EQUAL(-1, CompareInt(a, b));
-  TEST_ASSERT_EQUAL(0, CompareInt(a, a));
-  TEST_ASSERT_EQUAL(1, CompareInt(b, a));
+  TEST_ASSERT_EQUAL(-1, compare_int(a, b));
+  TEST_ASSERT_EQUAL(0, compare_int(a, a));
+  TEST_ASSERT_EQUAL(1, compare_int(b, a));
 
   free(a);
   free(b);
 }
 
-void test_CompareFloat() {
+void test_compare_float() {
   Records *a = (Records*)malloc(sizeof(Records));
   Records *b = (Records*)malloc(sizeof(Records));
 
   a->item_float = 1.5;
   b->item_float = 2.5;
 
-  TEST_ASSERT_EQUAL(-1, CompareFloat(a, b));
-  TEST_ASSERT_EQUAL(0, CompareFloat(a, a));
-  TEST_ASSERT_EQUAL(1, CompareFloat(b, a));
+  TEST_ASSERT_EQUAL(-1, compare_float(a, b));
+  TEST_ASSERT_EQUAL(0, compare_float(a, a));
+  TEST_ASSERT_EQUAL(1, compare_float(b, a));
 
   free(a);
   free(b);
 }
 
-void test_CompareString() {
+void test_compare_string() {
   Records *a = (Records*)malloc(sizeof(Records));
   Records *b = (Records*)malloc(sizeof(Records));
 
   a->item_string = strdup("fruttoA");
   b->item_string = strdup("fruttoB");
   
-  TEST_ASSERT_EQUAL(-1, CompareString(a, b));
-  TEST_ASSERT_EQUAL(0, CompareString(a, a));
-  TEST_ASSERT_EQUAL(1, CompareString(b, a));
+  TEST_ASSERT_EQUAL(-1, compare_string(a, b));
+  TEST_ASSERT_EQUAL(0, compare_string(a, a));
+  TEST_ASSERT_EQUAL(1, compare_string(b, a));
 
   free(a->item_string);
   free(b->item_string);
@@ -195,52 +195,52 @@ void test_CompareString() {
 void test_sort_records_Pos(){
     sort_records(INPUT_FILE, OUTPUT_FILE, K, 0);
 
-    Array *A = CreateArray();
-    LoadArray(A, OUTPUT_FILE);
+    Array *A = create_array();
+    load_array(A, OUTPUT_FILE);
 
-    TEST_ASSERT_TRUE(ComparePos(A->base[0], A->base[1]) <= 0);
-    TEST_ASSERT_TRUE(ComparePos(A->base[1], A->base[2]) <= 0);
-    TEST_ASSERT_TRUE(ComparePos(A->base[2], A->base[3]) <= 0);
-    TEST_ASSERT_TRUE(ComparePos(A->base[3], A->base[4]) <= 0);
+    TEST_ASSERT_TRUE(compare_pos(A->base[0], A->base[1]) <= 0);
+    TEST_ASSERT_TRUE(compare_pos(A->base[1], A->base[2]) <= 0);
+    TEST_ASSERT_TRUE(compare_pos(A->base[2], A->base[3]) <= 0);
+    TEST_ASSERT_TRUE(compare_pos(A->base[3], A->base[4]) <= 0);
 
     free(A);
 }
 void test_sort_records_String(){
     sort_records(INPUT_FILE, OUTPUT_FILE, K, 1);
 
-    Array *A = CreateArray();
-    LoadArray(A, OUTPUT_FILE);
+    Array *A = create_array();
+    load_array(A, OUTPUT_FILE);
 
-    TEST_ASSERT_TRUE(CompareString(A->base[0], A->base[1]) <= 0);
-    TEST_ASSERT_TRUE(CompareString(A->base[1], A->base[2]) <= 0);
-    TEST_ASSERT_TRUE(CompareString(A->base[2], A->base[3]) <= 0);
-    TEST_ASSERT_TRUE(CompareString(A->base[3], A->base[4]) <= 0);
+    TEST_ASSERT_TRUE(compare_string(A->base[0], A->base[1]) <= 0);
+    TEST_ASSERT_TRUE(compare_string(A->base[1], A->base[2]) <= 0);
+    TEST_ASSERT_TRUE(compare_string(A->base[2], A->base[3]) <= 0);
+    TEST_ASSERT_TRUE(compare_string(A->base[3], A->base[4]) <= 0);
 
     free(A);
 }
 void test_sort_records_Int(){
     sort_records(INPUT_FILE, OUTPUT_FILE, K, 2);
 
-    Array *A = CreateArray();
-    LoadArray(A, OUTPUT_FILE);
+    Array *A = create_array();
+    load_array(A, OUTPUT_FILE);
 
-    TEST_ASSERT_TRUE(CompareInt(A->base[0], A->base[1]) <= 0);
-    TEST_ASSERT_TRUE(CompareInt(A->base[1], A->base[2]) <= 0);
-    TEST_ASSERT_TRUE(CompareInt(A->base[2], A->base[3]) <= 0);
-    TEST_ASSERT_TRUE(CompareInt(A->base[3], A->base[4]) <= 0);
+    TEST_ASSERT_TRUE(compare_int(A->base[0], A->base[1]) <= 0);
+    TEST_ASSERT_TRUE(compare_int(A->base[1], A->base[2]) <= 0);
+    TEST_ASSERT_TRUE(compare_int(A->base[2], A->base[3]) <= 0);
+    TEST_ASSERT_TRUE(compare_int(A->base[3], A->base[4]) <= 0);
 
     free(A);
 }
 void test_sort_records_Float(){
     sort_records(INPUT_FILE, OUTPUT_FILE, K, 3);
 
-    Array *A = CreateArray();
-    LoadArray(A, OUTPUT_FILE);
+    Array *A = create_array();
+    load_array(A, OUTPUT_FILE);
 
-    TEST_ASSERT_TRUE(CompareFloat(A->base[0], A->base[1]) <= 0);
-    TEST_ASSERT_TRUE(CompareFloat(A->base[1], A->base[2]) <= 0);
-    TEST_ASSERT_TRUE(CompareFloat(A->base[2], A->base[3]) <= 0);
-    TEST_ASSERT_TRUE(CompareFloat(A->base[3], A->base[4]) <= 0);
+    TEST_ASSERT_TRUE(compare_float(A->base[0], A->base[1]) <= 0);
+    TEST_ASSERT_TRUE(compare_float(A->base[1], A->base[2]) <= 0);
+    TEST_ASSERT_TRUE(compare_float(A->base[2], A->base[3]) <= 0);
+    TEST_ASSERT_TRUE(compare_float(A->base[3], A->base[4]) <= 0);
 
     free(A);
 }

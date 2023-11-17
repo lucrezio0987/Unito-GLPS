@@ -27,7 +27,7 @@ struct _Array {
 };
 
 int controllo(Array* A, Array* B, int n_records);
-int calcDif(unsigned int n_records, unsigned int field);
+int calc_dif(unsigned int n_records, unsigned int field);
 
 void main(int argc, const char* argv[])
 {
@@ -56,7 +56,7 @@ void main(int argc, const char* argv[])
                 ++flag_trovato;
                 ++k_null;
             } else
-                time = calcDif(n_records, field);
+                time = calc_dif(n_records, field);
 
             if (time == 0 || min >= max)
                 ++flag_trovato;
@@ -86,56 +86,56 @@ void main(int argc, const char* argv[])
     printf("  >> K_MEDIO: %d  (K_min: %d, K_max: %d)\n", media_k, min_k, max_k);
 }
 
-int calcDif(unsigned int n_records, unsigned int field)
+int calc_dif(unsigned int n_records, unsigned int field)
 {
     int i;
     Clock ms, is;
 
-    Array* A = CreateArray();
-    Array* B = CreateArray();
+    Array* A = create_array();
+    Array* B = create_array();
 
-    LoadArrayMAX(A, INPUT_FILE, n_records);
-    LoadArrayMAX(B, INPUT_FILE, n_records);
+    load_array_max(A, INPUT_FILE, n_records);
+    load_array_max(B, INPUT_FILE, n_records);
 
     // printf(":: (I) Merge - ");
     ms.start = clock();
     switch (field) {
     case 1:
-        MergeSort(A->base, 0, A->nitems - 1, CompareString);
+        merge_sort(A->base, 0, A->nitems - 1, compare_string);
         break;
     case 2:
-        MergeSort(A->base, 0, A->nitems - 1, CompareInt);
+        merge_sort(A->base, 0, A->nitems - 1, compare_int);
         break;
     case 3:
-        MergeSort(A->base, 0, A->nitems - 1, CompareFloat);
+        merge_sort(A->base, 0, A->nitems - 1, compare_float);
         break;
     default:
-        MergeSort(A->base, 0, A->nitems - 1, ComparePos);
+        merge_sort(A->base, 0, A->nitems - 1, compare_pos);
         break;
     }
     ms.end = clock();
     ms.time = ms.end - ms.start;
 
-    // printf("(F) Merge (%d)\n:: (I) BinaryInsertion - ", ms.time);
+    // printf("(F) Merge (%d)\n:: (I) Binaryinsertion - ", ms.time);
     is.start = clock();
     switch (field) {
     case 1:
-        BinaryInsertionSort(B->base, B->nitems, CompareString);
+        binary_insertion_sort(B->base, B->nitems, compare_string);
         break;
     case 2:
-        BinaryInsertionSort(B->base, B->nitems, CompareInt);
+        binary_insertion_sort(B->base, B->nitems, compare_int);
         break;
     case 3:
-        BinaryInsertionSort(B->base, B->nitems, CompareFloat);
+        binary_insertion_sort(B->base, B->nitems, compare_float);
         break;
     default:
-        BinaryInsertionSort(B->base, B->nitems, ComparePos);
+        binary_insertion_sort(B->base, B->nitems, compare_pos);
         break;
     }
     is.end = clock();
     is.time = is.end - is.start;
 
-    // printf("(F) BinaryInsertion (%d)\n", is.time);
+    // printf("(F) Binaryinsertion (%d)\n", is.time);
 
     if (controllo(A, B, n_records) != 0)
         printf(":: ERRORE: vettori non uguali\n");

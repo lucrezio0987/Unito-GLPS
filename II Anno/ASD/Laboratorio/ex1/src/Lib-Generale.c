@@ -2,20 +2,20 @@
 
 //--------- PROTOTIPI ---------//
 
-int ComparePos(Records* i, Records* j);
-int CompareInt(Records* i, Records* j);
-int CompareFloat(Records* i, Records* j);
-int CompareString(Records* i, Records* j);
+int compare_pos(Records* i, Records* j);
+int compare_int(Records* i, Records* j);
+int compare_float(Records* i, Records* j);
+int compare_string(Records* i, Records* j);
 
-Records** CreateArray();
-void arrayAdd(Array* A, Records* rec);
-void LoadArray(Array* A, const char* infile);
-void LoadArrayMAX(Array* A, const char* infile, unsigned int max_records);
-void PrintArray(const char* outfile, Array* A);
+Records** create_array();
+void array_add(Array* A, Records* rec);
+void load_array(Array* A, const char* infile);
+void load_array_max(Array* A, const char* infile, unsigned int max_records);
+void print_array(const char* outfile, Array* A);
 
 void merge_binary_insertion_sort(void** base, size_t nitems, size_t k, int (*compar)(const void*, const void*));
 void sort_records(const char* infile, const char* outfile, size_t k, size_t field);
-void sort_recordsMAX(const char* infile, const char* outfile, size_t k, size_t field, size_t max_records);
+void sort_records_max(const char* infile, const char* outfile, size_t k, size_t field, size_t max_records);
 
 //--------- STRUTTURE ---------//
 
@@ -33,7 +33,7 @@ struct _Array {
 
 //------ IMPLEMENTAZIONI ------//
 
-int ComparePos(Records* i, Records* j)
+int compare_pos(Records* i, Records* j)
 {
     if (i->pos < j->pos)
         return -1;
@@ -43,7 +43,7 @@ int ComparePos(Records* i, Records* j)
         return 1;
 }
 
-int CompareInt(Records* i, Records* j)
+int compare_int(Records* i, Records* j)
 {
     if (i->item_int < j->item_int)
         return -1;
@@ -53,7 +53,7 @@ int CompareInt(Records* i, Records* j)
         return 1;
 }
 
-int CompareFloat(Records* i, Records* j)
+int compare_float(Records* i, Records* j)
 {
     if (i->item_float < j->item_float)
         return -1;
@@ -62,7 +62,7 @@ int CompareFloat(Records* i, Records* j)
     else
         return 1;
 }
-int CompareString(Records* i, Records* j)
+int compare_string(Records* i, Records* j)
 {
     int res = strcmp(i->item_string, j->item_string);
     if (res < 0)
@@ -77,15 +77,15 @@ int CompareString(Records* i, Records* j)
 void merge_binary_insertion_sort(void** base, size_t nitems, size_t k, int (*compar)(const void*, const void*))
 {
     if (nitems > k) {
-        printf("\t[ k: %d, nitems: %d] Alrogitmo Utilizzato ->  Merge Sort\n", k, nitems);
-        MergeSort(base, 0, nitems - 1, compar);
+        printf("\t[ k: %d, nitems: %d] Alrogitmo Utilizzato ->  merge Sort\n", k, nitems);
+        merge_sort(base, 0, nitems - 1, compar);
     } else {
-        printf("\t[ k: %d, nitems: %d] Alrogitmo Utilizzato ->  Binary Insertion Sort\n", k, nitems);
-        BinaryInsertionSort(base, nitems, compar);
+        printf("\t[ k: %d, nitems: %d] Alrogitmo Utilizzato ->  Binary insertion Sort\n", k, nitems);
+        binary_insertion_sort(base, nitems, compar);
     }
 }
 
-Records** CreateArray()
+Records** create_array()
 {
     Array* A;
     if ((A = (Array*)malloc(sizeof(Array))) == NULL)
@@ -96,7 +96,7 @@ Records** CreateArray()
     return A;
 }
 
-void arrayAdd(Array* A, Records* rec)
+void array_add(Array* A, Records* rec)
 {
     if (A->nitems % 100 == 0)
         if ((A->base = (Records**)realloc(A->base, sizeof(Records*) * (A->nitems + 100))) == NULL)
@@ -114,7 +114,7 @@ void arrayAdd(Array* A, Records* rec)
     A->nitems++;
 }
 
-void LoadArray(Array* A, const char* infile)
+void load_array(Array* A, const char* infile)
 {
     FILE* fp;
     Records* rec;
@@ -128,7 +128,7 @@ void LoadArray(Array* A, const char* infile)
         ERROR
 
     while ((fscanf(fp, "%ld,%[^,],%ld,%lf\n", &rec->pos, rec->item_string, &rec->item_int, &rec->item_float)) == 4)
-        arrayAdd(A, rec);
+        array_add(A, rec);
 
     fclose(fp);
 
@@ -136,7 +136,7 @@ void LoadArray(Array* A, const char* infile)
     free(rec);
 }
 
-void LoadArrayMAX(Array* A, const char* infile, unsigned int max_records)
+void load_array_max(Array* A, const char* infile, unsigned int max_records)
 {
     unsigned int i = 0;
     FILE* fp;
@@ -151,14 +151,14 @@ void LoadArrayMAX(Array* A, const char* infile, unsigned int max_records)
         ERROR
 
     while ((fscanf(fp, "%ld,%[^,],%ld,%lf\n", &rec->pos, rec->item_string, &rec->item_int, &rec->item_float)) == 4 && i++ != max_records)
-        arrayAdd(A, rec);
+        array_add(A, rec);
     fclose(fp);
 
     free(rec->item_string);
     free(rec);
 }
 
-void PrintArray(const char* outfile, Array* A)
+void print_array(const char* outfile, Array* A)
 {
     unsigned int i;
     FILE* fp;
@@ -169,34 +169,34 @@ void PrintArray(const char* outfile, Array* A)
     fclose(fp);
 }
 
-void sort_recordsMAX(const char* infile, const char* outfile, size_t k, size_t field, size_t max_records)
+void sort_records_max(const char* infile, const char* outfile, size_t k, size_t field, size_t max_records)
 {
     setbuf(stdout, NULL);
 
     printf(" >> START (max_records: %d)\n", max_records);
 
-    Array* A = CreateArray();
-    LoadArrayMAX(A, infile, max_records);
+    Array* A = create_array();
+    load_array_max(A, infile, max_records);
 
     printf(" >> Fine Caricamento - Inizio Ordinamento\n");
 
     switch (field) {
     case 1:
-        merge_binary_insertion_sort(A->base, A->nitems, k, CompareString);
+        merge_binary_insertion_sort(A->base, A->nitems, k, compare_string);
         break;
     case 2:
-        merge_binary_insertion_sort(A->base, A->nitems, k, CompareInt);
+        merge_binary_insertion_sort(A->base, A->nitems, k, compare_int);
         break;
     case 3:
-        merge_binary_insertion_sort(A->base, A->nitems, k, CompareFloat);
+        merge_binary_insertion_sort(A->base, A->nitems, k, compare_float);
         break;
     default:
-        merge_binary_insertion_sort(A->base, A->nitems, k, ComparePos);
+        merge_binary_insertion_sort(A->base, A->nitems, k, compare_pos);
         break;
     }
 
     printf(" >> Fine Ordinamento - Inizio Stampa\n");
-    PrintArray(outfile, A);
+    print_array(outfile, A);
     printf(" >> Fine Stampa (%s)\n", outfile);
 
     free(A);
@@ -209,28 +209,28 @@ void sort_records(const char* infile, const char* outfile, size_t k, size_t fiel
 
     printf(" >> START\n");
 
-    Array* A = CreateArray();
-    LoadArray(A, infile);
+    Array* A = create_array();
+    load_array(A, infile);
 
     printf(" >> Fine Caricamento - Inizio Ordinamento\n");
 
     switch (field) {
     case 1:
-        merge_binary_insertion_sort(A->base, A->nitems, k, CompareString);
+        merge_binary_insertion_sort(A->base, A->nitems, k, compare_string);
         break;
     case 2:
-        merge_binary_insertion_sort(A->base, A->nitems, k, CompareInt);
+        merge_binary_insertion_sort(A->base, A->nitems, k, compare_int);
         break;
     case 3:
-        merge_binary_insertion_sort(A->base, A->nitems, k, CompareFloat);
+        merge_binary_insertion_sort(A->base, A->nitems, k, compare_float);
         break;
     default:
-        merge_binary_insertion_sort(A->base, A->nitems, k, ComparePos);
+        merge_binary_insertion_sort(A->base, A->nitems, k, compare_pos);
         break;
     }
 
     printf(" >> Fine Ordinamento - Inizio Stampa\n");
-    PrintArray(outfile, A);
+    print_array(outfile, A);
     printf(" >> Fine Stampa (%s)\n", outfile);
 
     free(A);

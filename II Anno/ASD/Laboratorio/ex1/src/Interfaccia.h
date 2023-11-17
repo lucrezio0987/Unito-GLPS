@@ -23,48 +23,48 @@ typedef struct _Record Records;
 //--------- PROTOTIPI ---------//
 
 // Funzioni di comparazione
-int ComparePos(Records* i, Records* j);
-int CompareInt(Records* i, Records* j);
-int CompareFloat(Records* i, Records* j);
-int CompareString(Records* i, Records* j);
+int compare_pos(Records* i, Records* j);
+int compare_int(Records* i, Records* j);
+int compare_float(Records* i, Records* j);
+int compare_string(Records* i, Records* j);
 
 // Funzioni di Creazione e riempimento Array
-Records** CreateArray();
-void arrayAdd(Array* A, Records* rec);
-void LoadArray(Array* A, const char* infile);
-void LoadArrayMAX(Array* A, const char* infile, unsigned int max_records);
-void PrintArray(const char* outfile, Array* A);
+Records** create_array();
+void array_add(Array* A, Records* rec);
+void load_array(Array* A, const char* infile);
+void load_array_max(Array* A, const char* infile, unsigned int max_records);
+void print_array(const char* outfile, Array* A);
 
 // Algoritmo Merge-Sort
-void Merge(void** base, unsigned int l, unsigned int m, unsigned int r, int (*compar)(const void*, const void*));
-void MergeSortRic(void** base, unsigned int i, unsigned int j, int (*compar)(const void*, const void*));
-void MergeSort(void** base, unsigned int i, unsigned int j, int (*compar)(const void*, const void*));
+void merge(void** base, unsigned int l, unsigned int m, unsigned int r, int (*compar)(const void*, const void*));
+void merge_sort_ric(void** base, unsigned int i, unsigned int j, int (*compar)(const void*, const void*));
+void merge_sort(void** base, unsigned int i, unsigned int j, int (*compar)(const void*, const void*));
 
 // Algoritmo di Bynary-Insertion-Sort
-void Insert(void** base, unsigned int i, unsigned int loc, int (*compar)(const void*, const void*));
+void insert(void** base, unsigned int i, unsigned int loc, int (*compar)(const void*, const void*));
 int search(unsigned int x, void** base, unsigned int i, unsigned int j, int (*compar)(const void*, const void*));
-void BinaryInsertionSort(void** base, unsigned int nitems, int (*compar)(const void*, const void*));
+void binary_insertion_sort(void** base, unsigned int nitems, int (*compar)(const void*, const void*));
 
 // Macro-Funzioni
 void merge_binary_insertion_sort(void** base, size_t nitems, size_t k, int (*compar)(const void*, const void*));
 void sort_records(const char* infile, const char* outfile, size_t k, size_t field);
-void sort_recordsMAX(const char* infile, const char* outfile, size_t k, size_t field, size_t max_records);
+void sort_records_max(const char* infile, const char* outfile, size_t k, size_t field, size_t max_records);
 
 // Test
-int Array_is_empty(Array* array);
+int array_is_empty(Array* array);
 
 void setUp(void);
 void tearDown(void);
 
 void test_create_array_empty();
 void test_create_array_add_not_empty();
-void test_LoadArray();
-void test_LoadArrayMAX();
+void test_load_array();
+void test_load_array_max();
 
-void test_ComparePos();
-void test_CompareInt();
-void test_CompareFloat();
-void test_CompareString();
+void test_compare_pos();
+void test_compare_int();
+void test_compare_float();
+void test_compare_string();
 
 void test_sort_records_Pos();
 void test_sort_records_String();
