@@ -23,7 +23,7 @@ public class MailModel {
     private SimpleStringProperty objectMailSentProperty = null; // oggetto mail inviata
 
     private String activeMailSent = null;
-    private String activeMailRecived  = null;
+    private String activeMailReceived = null;
 
     private final Server server = new Server();
 
@@ -76,7 +76,7 @@ public class MailModel {
         else
             mail = mailReceived.get(uuid);
 
-        activeMailRecived = uuid;
+        activeMailReceived = uuid;
         addressMailReceivedProperty.set(mail.getAddress());
         objectMailReceivedProperty.set(mail.getObject());
         textMailReceivedProperty.set(mail.getText());
@@ -100,8 +100,8 @@ public class MailModel {
     public void deleteMailSentList(){ mailSent.clear(); }
     public void deleteMailReceivedList(){ mailReceived.clear(); }
 
-    public void deleteMailSent(String uuid){ server.deleateMailSent(mailSent.remove(uuid));}
-    public void deleteMailReceved(String uuid){ server.deleateMailReceived(mailReceived.remove(uuid)); }
+    public void deleteMailSent(String uuid){ server.deleteMailSent(mailSent.remove(uuid));}
+    public void deleteMailReceved(String uuid){ server.deleteMailReceived(mailReceived.remove(uuid)); }
 
     public String deleteActualMailSent(){
         String actual = activeMailSent;
@@ -109,8 +109,8 @@ public class MailModel {
         openMailSent("");
         return actual;
     }
-    public String deleteActualMailRecived(){
-        String actual = activeMailRecived;
+    public String deleteActualMailReceived(){
+        String actual = activeMailReceived;
         deleteMailReceved(actual);
         openMailReceived("");
         return actual;
@@ -156,8 +156,8 @@ public class MailModel {
         public boolean addMailSent(Mail mail) { return mailSent.add(mail); }
         public boolean addMailReceived(Mail mail) { return mailReceived.add(mail); }
 
-        public boolean deleateMailSent(Mail mail) { return mailSent.remove(mail); }
-        public boolean deleateMailReceived(Mail mail) { return mailReceived.remove(mail); }
+        public boolean deleteMailSent(Mail mail) { return mailSent.remove(mail); }
+        public boolean deleteMailReceived(Mail mail) { return mailReceived.remove(mail); }
 
         public void setMailSent() {
             mailSent.add(new Mail("alice@example.com", "Oggetto 1", "Contenuto della mail 1", "28/03/2022", "11:30"));

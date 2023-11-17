@@ -46,17 +46,9 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="ClientApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="ALTERNATIVE_JRE_PATH" value="jbrsdk_jcef-17" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.prva.ClientApplication" />
       <module name="Prva" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.example.prva.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -74,11 +66,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.ClientApplication" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -94,6 +81,7 @@
       <workItem from="1700132256157" duration="22470000" />
       <workItem from="1700167862373" duration="10789000" />
       <workItem from="1700207896396" duration="2436000" />
+      <workItem from="1700213517701" duration="833000" />
     </task>
     <servers />
   </component>

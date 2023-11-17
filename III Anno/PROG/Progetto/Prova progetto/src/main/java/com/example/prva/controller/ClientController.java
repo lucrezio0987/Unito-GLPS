@@ -93,7 +93,7 @@ public class ClientController {
             Lista_posta_inviata.getChildren().removeIf(card -> card.getId().equals(idMail));
         });
         deleateRecived.setOnAction(event -> {
-            String idMail = mailModel.deleteActualMailRecived();
+            String idMail = mailModel.deleteActualMailReceived();
             Lista_posta_ricevuta.getChildren().removeIf(card -> card.getId().equals(idMail));
         });
         replyBtnRecived.setDisable(true);
