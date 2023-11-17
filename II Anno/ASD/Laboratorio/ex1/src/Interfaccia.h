@@ -4,6 +4,17 @@
 #include <string.h>
 #include <unistd.h>
 
+/*
+- Compare functions used to switch the type of sort
+- create_array, array_add, load_array, print_array functions used to create an empty array, add an element, 
+  load an input file to the array, print array on file
+- merge_binary_insertion_sort, sort_records functions used to choice the algorithm depending on k value, 
+  called by main depending on parameter field call the function described previously
+- load_array_max and sort_records_max are used to test the code
+- merge, merge_sort_ric, merge_sort functions used to execute the merge algorithm
+- insert, sort, binary_insertion_sort used to execute the binaryInsertion algorithm
+*/
+
 #define ERROR                                                                                                                                     \
     {                                                                                                                                             \
         if (errno) {                                                                                                                              \
