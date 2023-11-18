@@ -21,7 +21,7 @@ public class ClientApplication extends Application {
         stage.show();
 
         ClientController contr = fxmlLoader.getController();
-                         contr.initModel();
+                         contr.initModel("client.mail@example.com");
     }
 
     public static void main(String[] args) {

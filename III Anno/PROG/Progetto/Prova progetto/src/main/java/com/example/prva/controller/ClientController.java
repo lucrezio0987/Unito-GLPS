@@ -20,11 +20,7 @@ public class ClientController {
     @FXML
     private Button forwardBtnSent, forwardBtnReceived,sendBtnClear;
     @FXML
-    private TextField ccMailRecived, ccMailSend, ccMailSent;
-    @FXML
-    private Label ccLabelReceived, ccLabelSent;
-    @FXML
-    private TextField localAddressLabelReceived, localAddressLabelSent;
+    private TextField localAddressReceived, localAddressSent, localAddressSend;
 
     @FXML
     private VBox Lista_posta_inviata, Lista_posta_ricevuta;
@@ -54,12 +50,10 @@ public class ClientController {
 
     //TODO: AGGIUNGERE COMMENTI!!!!!!
 
-    //TODO: Aggiungere possibilità di rispondere e inviare una mail a più destinatari
-
     //TODO: Aggiungere l'opzione di poter inoltrare una mail
 
 
-    public void initModel() {
+    public void initModel(String localAddressMail) {
         mailModel = new MailModel();
         mailCardModel = new MailCardModel(mailModel);
 
@@ -78,10 +72,15 @@ public class ClientController {
         mailModel.getAddressMailSendProperty().bindBidirectional(addressMailSend.textProperty());
         mailModel.getObjectMailSendProperty().bindBidirectional(objectMailSend.textProperty());
 
+        mailModel.getLocalAddressProperty().bindBidirectional(localAddressReceived.textProperty());
+        mailModel.getLocalAddressProperty().bindBidirectional(localAddressSent.textProperty());
+        mailModel.getLocalAddressProperty().bindBidirectional(localAddressSend.textProperty());
+
+        localAddressSend.textProperty().set(localAddressMail);
 
         setCountMailSent();
         mailModel.getListMailSent().forEach((mail) -> {
-                    VBox card = mailCardModel.buildCard("Destinatario:", mail);
+                    VBox card = mailCardModel.buildCard("Destinatari:", mail);
                     Lista_posta_inviata.getChildren().add(card);
                 });
 
@@ -95,6 +94,7 @@ public class ClientController {
             System.out.println("MailReceivedList: Prima della cancellazione ( " + mailModel.getListMailReceived().toString() + " )");
             mailModel.deleteMailSentList();
             Lista_posta_inviata.getChildren().clear();
+            showMailPanelSent(false);
             setCountMailSent();
             System.out.println("MailSentList: Cancellata ( " + mailModel.getListMailSent().toString() + " )\n");
         });
@@ -110,7 +110,7 @@ public class ClientController {
 
         sendBtn.setOnAction(event -> {
             Mail mail = mailModel.sendMail();
-            VBox card = mailCardModel.buildCard("Destinatario:",mail);
+            VBox card = mailCardModel.buildCard("Destinatari:",mail);
             Lista_posta_inviata.getChildren().add(card);
             setCountMailSent();
         });
@@ -129,6 +129,8 @@ public class ClientController {
             setCountMailReceived();
         });
 
+        sendBtnClear.setOnAction( event -> { mailModel.sendMailClear(); });
+
         replyBtnReceived.setDisable(true);
     }
 
@@ -142,26 +144,24 @@ public class ClientController {
             textMailReceived.setVisible(true);
             addressMailRecived.setVisible(true);
             objectMailRecived.setVisible(true);
-
-            addressLabelSent.setVisible(true);
-            objectLabelSent.setVisible(true);
             addressLabelReceived.setVisible(true);
             objectLabelReceived.setVisible(true);
             replyBtnReceived.setVisible(true);
             deleteBtnRecived.setVisible(true);
+
+            forwardBtnReceived.setVisible(false);
         } else {
             imgEmailReceived.setVisible(true);
 
             textMailReceived.setVisible(false);
             addressMailRecived.setVisible(false);
             objectMailRecived.setVisible(false);
-
-            addressLabelSent.setVisible(false);
-            objectLabelSent.setVisible(false);
             addressLabelReceived.setVisible(false);
             objectLabelReceived.setVisible(false);
             replyBtnReceived.setVisible(false);
             deleteBtnRecived.setVisible(false);
+
+            forwardBtnReceived.setVisible(false);
         }
     }
     private void showMailPanelSent(boolean bool) {
@@ -173,9 +173,9 @@ public class ClientController {
             objectMailSent.setVisible(true);
             addressLabelSent.setVisible(true);
             objectLabelSent.setVisible(true);
-            addressLabelSent.setVisible(true);
-            objectLabelSent.setVisible(true);
             deleteBtnSent.setVisible(true);
+            forwardBtnSent.setVisible(true);
+
         } else {
             imgEmailSent.setVisible(true);
 
@@ -184,9 +184,8 @@ public class ClientController {
             objectMailSent.setVisible(false);
             addressLabelSent.setVisible(false);
             objectLabelSent.setVisible(false);
-            addressLabelSent.setVisible(false);
-            objectLabelSent.setVisible(false);
             deleteBtnSent.setVisible(false);
+            forwardBtnSent.setVisible(false);
         }
     }
 
@@ -200,6 +199,7 @@ public class ClientController {
             VBox vbox = new VBox();
             vbox.getStyleClass().add("class-card-posta");
             vbox.setId(mail.getUuid());
+            HBox hbox1 = null;
 
             if(soggetto.equals("Mittente:")){
                 vbox.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -208,16 +208,17 @@ public class ClientController {
                         showMailPanelReceived(true);
                     }
                 });
-            }
-            if(soggetto.equals("Destinatario:")){
+                hbox1 = createHBox(soggetto, mail.getSender());
+            } else if(soggetto.equals("Destinatari:")){
                 vbox.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     public void handle(MouseEvent e) {
                         mailModel.openMailSent(mail.getUuid());
                         showMailPanelSent(true);}
                 });
+                hbox1 = createHBox(soggetto, mail.getRecipients());
             }
+            else System.err.println("ERRORE");
 
-            HBox hbox1 = createHBox(soggetto, mail.getAddress());
             HBox hbox2 = createHBox("Oggetto:", mail.getObject());
             HBox hbox3 = createHBox("Data:", mail.getDate(), "Ora", mail.getTime());
 
