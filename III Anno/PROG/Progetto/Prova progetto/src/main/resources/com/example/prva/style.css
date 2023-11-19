@@ -1,10 +1,15 @@
 .class-card-posta {
-    -fx-background-color: #7798bd;
+    -fx-background-color: #92bbe7;
     -fx-border-color: #ffffff;
     -fx-border-style: segments(0, 0, 2, 0);
     -fx-pref-height: 85.0;
     -fx-pref-width: 278.0;
 }
+
+.read {
+    -fx-background-color: #7798bd !important;
+}
+
 
 Text {
     -fx-fill: #ffffff;

@@ -13,9 +13,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="737.0" prefWidth="996.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.prva.controller.ClientController">
+<TabPane fx:id="tabPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="737.0" prefWidth="996.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.prva.controller.ClientController">
    <tabs>
-      <Tab fx:id="Tab_PostaInArrivo" text="Posta In Arrivo">
+      <Tab fx:id="tabReceived" text="Posta In Arrivo">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="436.0" prefWidth="749.0">
                <children>
@@ -48,7 +48,7 @@
             </AnchorPane>
          </content>
       </Tab>
-      <Tab fx:id="Tab_PostaInviata" text="Posta Inviata">
+      <Tab fx:id="tabSent" text="Posta Inviata">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="436.0" prefWidth="749.0">
                <children>
@@ -80,7 +80,7 @@
             </AnchorPane>
          </content>
       </Tab>
-      <Tab fx:id="Tab_Invia" text="Invia">
+      <Tab fx:id="tabSend" text="Invia">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="436.0" prefWidth="749.0">
                <children>

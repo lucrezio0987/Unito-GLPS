@@ -4,10 +4,8 @@ import com.example.prva.model.*;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -16,6 +14,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class ClientController {
+
+    @FXML
+    private TabPane tabPanel;
+    @FXML
+    private Tab tabSend;
 
     @FXML
     private Button forwardBtnSent, forwardBtnReceived,sendBtnClear;
@@ -46,12 +49,9 @@ public class ClientController {
     MailModel mailModel;
     MailCardModel mailCardModel;
 
-    //TODO: Cambiare sfumatura delle card per simulare la mail letta
+    //TODO: cambiare il metodo di memorizzare le mail, no hasmap ma qualcosa hce permetta di mantenere l'ordine di arrivo.
 
     //TODO: AGGIUNGERE COMMENTI!!!!!!
-
-    //TODO: Aggiungere l'opzione di poter inoltrare una mail
-
 
     public void initModel(String localAddressMail) {
         mailModel = new MailModel();
@@ -131,7 +131,15 @@ public class ClientController {
 
         sendBtnClear.setOnAction( event -> { mailModel.sendMailClear(); });
 
-        replyBtnReceived.setDisable(true);
+        replyBtnReceived.setOnAction(event ->{
+            tabPanel.getSelectionModel().select(tabSend);
+            mailModel.reply();
+        });
+
+        forwardBtnSent.setOnAction(event ->{
+            tabPanel.getSelectionModel().select(tabSend);
+            mailModel.forward();
+        });
     }
 
     private void setCountMailSent() { countMailSent.setText(String.valueOf(mailModel.getListMailSent().size())); }
@@ -197,8 +205,11 @@ public class ClientController {
 
         public VBox buildCard(String soggetto, Mail mail) {
             VBox vbox = new VBox();
-            vbox.getStyleClass().add("class-card-posta");
             vbox.setId(mail.getUuid());
+            vbox.getStyleClass().add("class-card-posta");
+            if(mail.getRead())
+                vbox.getStyleClass().add("read");
+
             HBox hbox1 = null;
 
             if(soggetto.equals("Mittente:")){
@@ -206,6 +217,8 @@ public class ClientController {
                     public void handle(MouseEvent e) {
                         mailModel.openMailReceived(mail.getUuid());
                         showMailPanelReceived(true);
+                        mailModel.setMailRead(mail.getUuid(), true);
+                        ((Node) e.getSource()).getStyleClass().add("read");
                     }
                 });
                 hbox1 = createHBox(soggetto, mail.getSender());
@@ -213,7 +226,10 @@ public class ClientController {
                 vbox.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     public void handle(MouseEvent e) {
                         mailModel.openMailSent(mail.getUuid());
-                        showMailPanelSent(true);}
+                        showMailPanelSent(true);
+                        mailModel.setMailRead(mail.getUuid(), true);
+                        ((Node) e.getSource()).getStyleClass().add("read");
+                    }
                 });
                 hbox1 = createHBox(soggetto, mail.getRecipients());
             }

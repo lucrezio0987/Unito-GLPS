@@ -10,14 +10,16 @@ public class Mail{
     private String object;
     private String date;
     private String time;
+    private boolean read;
 
-    Mail(String sender, String recipients, String object, String text, String date, String time){
+    Mail(String sender, String recipients, String object, String text, String date, String time, boolean read){
         this.sender = sender;
         this.recipients = recipients;
         this.object = object;
         this.text = text;
         this.date = date;
         this.time = time;
+        this.read = read;
         this.uuid = UUID.randomUUID().toString();
     }
 
@@ -28,7 +30,10 @@ public class Mail{
     public String getDate()         { return date;          }
     public String getTime()         { return time;          }
     public String getUuid()         { return uuid;          }
+    public boolean getRead()        { return read;          }
 
     public List<String> getRecipientsList()   { return List.of(recipients.split("\\s*,\\s*")); }
+
+    public void setRead(boolean read) { this.read = read; }
 
 }
