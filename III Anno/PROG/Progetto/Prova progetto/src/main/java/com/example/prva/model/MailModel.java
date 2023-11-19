@@ -4,8 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 
 public class MailModel {
     private final Map<String, Mail> mailSent = new HashMap<>();

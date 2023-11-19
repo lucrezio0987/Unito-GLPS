@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.prova_server.HelloController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="627.0" prefWidth="906.0" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.prova_server.controller.ServerController">
+   <children>
+      <ScrollPane layoutX="14.0" layoutY="13.0" prefHeight="604.0" prefWidth="725.0">
+         <content>
+            <TextArea fx:id="textArea" prefHeight="601.0" prefWidth="712.0" />
+         </content>
+      </ScrollPane>
+      <Button fx:id="stopBtn" layoutX="767.0" layoutY="590.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="106.0" text="Stop" />
+      <Button fx:id="resetBtn" layoutX="767.0" layoutY="553.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="106.0" text="Reset" />
+      <Button fx:id="startBtn" layoutX="767.0" layoutY="516.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="106.0" text="Start" />
+      <Label layoutX="751.0" layoutY="29.0" prefHeight="18.0" prefWidth="106.0" text="Client Connect:" />
+      <Label fx:id="countLabel" layoutX="763.0" layoutY="53.0" prefHeight="22.0" prefWidth="41.0" text="99+">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
