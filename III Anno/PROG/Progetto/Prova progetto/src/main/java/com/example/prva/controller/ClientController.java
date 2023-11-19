@@ -14,37 +14,27 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class ClientController {
-
     @FXML
-    private TabPane tabPanel;
+    private TextField   localAddressReceived, localAddressSent, localAddressSend,
+                        addressMailSent, addressMailRecived, addressMailSend,
+                        objectMailSent, objectMailRecived, objectMailSend;
     @FXML
-    private Tab tabSend;
-
+    private Button      Cancella_Tutto_Ricevuta, Cancella_Tutto_Inviata,
+                        forwardBtnSent, forwardBtnReceived,sendBtnClear,
+                        deleteBtnSent, replyBtnReceived, deleteBtnRecived, sendBtn;
     @FXML
-    private Button forwardBtnSent, forwardBtnReceived,sendBtnClear;
+    private Label       addressLabelSent, objectLabelSent, addressLabelReceived, objectLabelReceived,
+                        countMailSent, countMailReceived;
     @FXML
-    private TextField localAddressReceived, localAddressSent, localAddressSend;
-
+    private TextArea    textMailSent, textMailReceived, textMailSend;
     @FXML
-    private VBox Lista_posta_inviata, Lista_posta_ricevuta;
+    private ImageView   imgEmailReceived, imgEmailSent;
     @FXML
-    private Button Cancella_Tutto_Ricevuta, Cancella_Tutto_Inviata;
-
+    private VBox        Lista_posta_inviata, Lista_posta_ricevuta;
     @FXML
-    private TextArea textMailSent, textMailReceived, textMailSend;
+    private TabPane     tabPanel;
     @FXML
-    private TextField addressMailSent, addressMailRecived, addressMailSend;
-    @FXML
-    private TextField objectMailSent, objectMailRecived, objectMailSend;
-    @FXML
-    private Button deleteBtnSent, replyBtnReceived, deleteBtnRecived, sendBtn;
-    @FXML
-    private ImageView imgEmailReceived, imgEmailSent;
-    @FXML
-    private Label addressLabelSent, objectLabelSent, addressLabelReceived, objectLabelReceived;
-    @FXML
-    private Label countMailSent, countMailReceived;
-
+    private Tab         tabSend;
 
     MailModel mailModel;
     MailCardModel mailCardModel;
@@ -277,14 +267,5 @@ public class ClientController {
             return label;
         }
 
-        private static Button createButtonX() {
-            // Crea il pulsante "X"
-            Button button = new Button("X");
-            button.setPrefHeight(28.0);
-            button.setPrefWidth(66.0);
-            button.setMnemonicParsing(false);
-
-            return button;
-        }
     }
 }
