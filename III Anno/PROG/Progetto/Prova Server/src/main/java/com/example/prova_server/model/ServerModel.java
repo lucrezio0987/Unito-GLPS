@@ -2,10 +2,10 @@ package com.example.prova_server.model;
 
 import javafx.beans.property.SimpleStringProperty;
 
-public class DataModel {
+public class ServerModel {
     private SimpleStringProperty textAreaProperty = null;
 
-    public DataModel() {
+    public ServerModel() {
         textAreaProperty = new SimpleStringProperty();
     }
 

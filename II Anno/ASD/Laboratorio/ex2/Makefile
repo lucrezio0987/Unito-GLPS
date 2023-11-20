@@ -16,7 +16,7 @@
 #	$(RM) -rf outfile.csv
 
 CC = gcc
-CFLAGS = -w
+CFLAGS = -w -Wno-return-type
 
 MAIN = bin/main_ex2
 TEST = bin/test_ex2
