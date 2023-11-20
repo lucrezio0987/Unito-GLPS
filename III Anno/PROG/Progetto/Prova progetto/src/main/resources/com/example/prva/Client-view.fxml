@@ -36,7 +36,7 @@
                         </VBox>
                      </content>
                   </ScrollPane>
-                  <ImageView fx:id="imgEmailReceived" fitHeight="382.0" fitWidth="310.0" layoutX="505.0" layoutY="176.0" opacity="0.39" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="imgEmailReceived" fitHeight="382.0" fitWidth="310.0" layoutX="505.0" layoutY="176.0" opacity="0.80" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@email-img.png" />
                      </image>

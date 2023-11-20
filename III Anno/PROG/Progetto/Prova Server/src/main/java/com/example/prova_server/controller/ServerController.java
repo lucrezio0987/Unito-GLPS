@@ -6,6 +6,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
+import java.io.IOException;
+
 public class ServerController {
 
     ServerModel model;
@@ -24,8 +26,11 @@ public class ServerController {
         model = new ServerModel();
 
         textArea.textProperty().bind(model.getTextAreaProperty());
-        model.addElement();
 
-        System.out.println("Server Start");
+        model.start();
+
+        System.out.println("Server Avviato");
+
+
     }
 }

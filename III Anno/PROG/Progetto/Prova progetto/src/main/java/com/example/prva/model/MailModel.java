@@ -1,7 +1,10 @@
 package com.example.prva.model;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import com.google.gson.Gson;
+
 
 import javafx.beans.property.SimpleStringProperty;
 
@@ -27,7 +30,7 @@ public class MailModel {
     private String activeMailSent = null;
     private String activeMailReceived = null;
 
-    private final Server server = new Server();
+    private Server server = null;
 
     public MailModel() {
         textMailSendProperty = new SimpleStringProperty();
@@ -43,6 +46,8 @@ public class MailModel {
         objectMailSentProperty = new SimpleStringProperty();
 
         localAddressProperty = new SimpleStringProperty();
+
+        server = new Server();
 
         setMailSent();
         setMailReceived();

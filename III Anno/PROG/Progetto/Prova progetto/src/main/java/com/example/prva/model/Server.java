@@ -1,23 +1,78 @@
 package com.example.prva.model;
 
+import java.io.*;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Server {
-    private final List<Mail> mailSent;
-    private final List<Mail> mailReceived;
+    private List<Mail> mailSent;
+    private List<Mail> mailReceived;
 
-    public Server() {
+    ObjectOutputStream outputStream;
+    ObjectInputStream inputStream;
+    Socket socket;
+
+    public Server(){
         mailSent = new ArrayList<>();
         mailReceived = new ArrayList<>();
+
+        connectToServer();
+        startListening();
+
+
         setMailSent();
         setMailReceived();
+    }
+
+    private void startListening() {
+        new Thread(() -> {
+            try {
+                while (true) {
+                    Object messaggio = inputStream.readObject();
+                    System.out.println("Messaggio dal Server: " + messaggio);
+                }
+            } catch (IOException | ClassNotFoundException e) {
+                System.out.println("Errore durante la lettura del messaggio dal Server");
+            }
+        }).start();
+    }
+
+    private void connectToServer() {
+        String serverAddress = "localhost";
+        int port = 8000;
+
+        try {
+            socket = new Socket(serverAddress, port);
+            outputStream = new ObjectOutputStream(socket.getOutputStream());
+            inputStream = new ObjectInputStream(socket.getInputStream());
+        } catch (IOException e) {
+            System.out.println("Connessione al Server Fallita");
+        }
     }
 
     public List<Mail> getMailSent() { return mailSent; }
     public List<Mail> getMailReceived() { return mailReceived; }
 
-    public void addMailSent(Mail mail) { mailSent.add(mail); }
+    public void addMailSent(Mail mail){
+        mailSent.add(mail);
+
+        try {
+            outputStream.writeObject(mail.getObject());
+        } catch (IOException e) {
+            System.out.println("invio server fallita");
+        }
+
+        Object response = null;
+        try {
+            response = inputStream.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Risposta server fallita");
+        }
+        System.out.println("Server: " + response);
+
+
+    }
     public void addMailReceived(Mail mail) { mailReceived.add(mail); }
 
     public void deleteMailSent(Mail mail) { mailSent.remove(mail); }

@@ -43,6 +43,8 @@ public class ClientController {
 
     //TODO: AGGIUNGERE COMMENTI!!!!!!
 
+    //TODO: inserire le mail dalla più recente.
+
     public void initModel(String localAddressMail) {
         mailModel = new MailModel();
         mailCardModel = new MailCardModel(mailModel);

@@ -56,7 +56,7 @@
   <component name="RunManager">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.prva.ClientApplication" />
-      <module name="Prova" />
+      <module name="Prva" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -98,6 +98,7 @@
       <workItem from="1700382189978" duration="4864000" />
       <workItem from="1700387139843" duration="661000" />
       <workItem from="1700394663926" duration="2100000" />
+      <workItem from="1700471730335" duration="8527000" />
     </task>
     <servers />
   </component>
@@ -110,6 +111,10 @@
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.util.NoSuchElementException" package="java.util" />
           <option name="timeStamp" value="1" />
+        </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.reflect.InvocationTargetException" package="java.lang.reflect" />
+          <option name="timeStamp" value="2" />
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>

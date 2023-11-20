@@ -1,8 +1,9 @@
 package com.example.prva.model;
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
-public class Mail{
+public class Mail implements Serializable {
     private String uuid;
     private String sender;
     private String recipients;

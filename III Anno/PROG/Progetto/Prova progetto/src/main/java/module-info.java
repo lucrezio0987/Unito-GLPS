@@ -1,6 +1,7 @@
 module com.example.prva {
     requires javafx.controls;
     requires javafx.fxml;
+    requires com.google.gson;
 
 
     opens com.example.prva to javafx.fxml;
