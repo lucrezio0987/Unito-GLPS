@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Insert A Character</title>
+  <link rel='stylesheet' href='/css/index.css' />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="/javascripts/index.js"></script>
+</head>
+<body onload="init()">
+<h1>Insert A Character</h1>
+<!--first_name: {type: String, required: true, max: 100},
+        family_name: {type: String, required: true, max: 100},
+        dob-->
+<form id="xForm" >
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name">
+  <label for="surname">Surname:</label>
+  <input type="text" id="surname" name="surname">
+  <label for="dob">Year of Birth:</label>
+  <input type="date" id="dob" name="dob">
+  <button id="submit" value="Submit">Submit</button>
+</form>
+<p id="results"></p>
+</body>
+</html>
