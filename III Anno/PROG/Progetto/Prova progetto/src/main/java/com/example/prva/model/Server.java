@@ -5,6 +5,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.Gson;
+
+
 public class Server {
     private List<Mail> mailSent;
     private List<Mail> mailReceived;
@@ -12,14 +15,15 @@ public class Server {
     ObjectOutputStream outputStream;
     ObjectInputStream inputStream;
     Socket socket;
+    private Gson gson;
 
     public Server(){
         mailSent = new ArrayList<>();
         mailReceived = new ArrayList<>();
+        gson = new Gson();
 
         connectToServer();
         startListening();
-
 
         setMailSent();
         setMailReceived();
@@ -58,7 +62,8 @@ public class Server {
         mailSent.add(mail);
 
         try {
-            outputStream.writeObject(mail.getObject());
+            String jsonString = gson.toJson(mail);
+            outputStream.writeObject(jsonString);
         } catch (IOException e) {
             System.out.println("invio server fallita");
         }
@@ -73,7 +78,9 @@ public class Server {
 
 
     }
-    public void addMailReceived(Mail mail) { mailReceived.add(mail); }
+    public void addMailReceived(Mail mail) {
+        mailReceived.add(mail);
+    }
 
     public void deleteMailSent(Mail mail) { mailSent.remove(mail); }
     public void deleteMailReceived(Mail mail) { mailReceived.remove(mail); }

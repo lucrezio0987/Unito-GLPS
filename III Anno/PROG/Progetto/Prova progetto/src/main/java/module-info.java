@@ -8,4 +8,7 @@ module com.example.prva {
     exports com.example.prva;
     exports com.example.prva.controller;
     opens com.example.prva.controller to javafx.fxml;
+
+    opens com.example.prva.model to com.google.gson;
+
 }

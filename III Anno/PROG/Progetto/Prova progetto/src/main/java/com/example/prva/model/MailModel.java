@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import javafx.beans.property.SimpleStringProperty;
 
 public class MailModel {
+
     private final Map<String, Mail> mailSent = new HashMap<>();
     private final Map<String, Mail> mailReceived = new HashMap<>();
    // private Mail mail;
