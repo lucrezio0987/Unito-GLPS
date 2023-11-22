@@ -2,7 +2,7 @@
 
 #define DICTIONARY "dictionary.txt"
 #define TEXT_FILE "correctme.txt"
-#define MAX_HEIGHT 19
+#define MAX_HEIGHT 10
 
 void main(int argc, const char* argv[])
 {

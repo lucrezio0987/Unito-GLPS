@@ -3,7 +3,7 @@
 #include <time.h>
 
 #define MAX_RECORDS 30
-#define MAX_STRING 100
+#define MAX_STRING 30
 #define TEST(text) printf("\033[4;36m%s\033[0;31m\n", text);
 
 //--------- PROTOTIPI ---------//
@@ -51,12 +51,13 @@ int random_level(int max)
     srand(time(NULL));
 
     int liv;
-    double randomValue;
+    double randVal;
 
-    for (liv = 1, randomValue = (double)random() / RAND_MAX;
-         randomValue < 0.5 && liv < max;
-         ++liv, randomValue = (double)random() / RAND_MAX)
-        printf("  > liv: %d(/%d) - rand[%.2f]\n", liv, max, randomValue);
+    for (liv = 1, randVal = (double)random() / RAND_MAX;
+         randVal < 0.5 && liv < max;
+         ++liv, randVal = (double)random() / RAND_MAX)
+        // printf("  > liv: %d(/%d) - rand[%.2f]\n", liv, max, randVal)
+        ;
 
     return liv;
 }
@@ -136,10 +137,12 @@ const void* search_skiplist(struct SkipList* list, void* item)
 
     struct Node* Attuale = list->head;
 
-    for (int i = list->max_level - 1; i >= 0; --i)
-        while (Attuale->next[i] != NULL && list->compare(Attuale->next[i]->item, item) < 0) {
-            Attuale = Attuale->next[i];
-        }
+    for (int i = list->max_level - 1; i >= 0; --i) {
+        if (i < Attuale->size)
+            while (Attuale->next[i] != NULL && list->compare(Attuale->next[i]->item, item) < 0) {
+                Attuale = Attuale->next[i];
+            }
+    }
 
     if ((Attuale = Attuale->next[0]) == NULL) {
         return NULL;
@@ -163,24 +166,21 @@ void insert_skiplist(struct SkipList* list, void* item)
         return;
     }
 
-    // if (list->compare(item, list->head->item) < 0) {
-    //     New->next[0] = list->head;
-    //     list->head = New;
-    //     return;
-    // }
+    if (list->compare(item, list->head->item) < 0) {
+        New->next[0] = list->head;
+        list->head = New;
+        return;
+    }
 
     Node* Attuale = list->head;
 
-    for (int i = list->max_level - 1; i >= 0; --i) {
-        if (Attuale->next[i] == NULL || list->compare(item, Attuale->next[i]->item) < 0) {
-            if (i < Attuale->size) {
+    for (int i = list->max_level - 1; i >= 0; --i)
+        if (i < Attuale->size)
+            if (Attuale->next[i] == NULL || list->compare(item, Attuale->next[i]->item) < 0) {
                 New->next[i] = Attuale->next[i];
                 Attuale->next[i] = New;
-            }
-        } else {
-            Attuale = Attuale->next[i++];
-        }
-    }
+            } else
+                Attuale = Attuale->next[i++];
 }
 
 void print_list(struct SkipList* list)
