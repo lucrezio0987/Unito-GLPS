@@ -1,4 +1,5 @@
 #include "Interfaccia.h"
+#include <stdio.h>
 #include <time.h>
 
 #define MAX_RECORDS 30
@@ -47,17 +48,15 @@ struct SkipList {
 
 int random_level(int max)
 {
-    // srand(time(NULL));
-    // return (rand() % max) + 1;
+    srand(time(NULL));
 
-    int liv = 1;
+    int liv;
+    double randomValue;
 
-    srandom(time(NULL));
-    double randomValue = (double)random() / RAND_MAX;
-    while (randomValue < 0.5 && liv < max) {
-        ++liv;
-        randomValue = (double)random() / RAND_MAX;
-    }
+    for (liv = 1, randomValue = (double)random() / RAND_MAX;
+         randomValue < 0.5 && liv < max;
+         ++liv, randomValue = (double)random() / RAND_MAX)
+        printf("  > liv: %d(/%d) - rand[%.2f]\n", liv, max, randomValue);
 
     return liv;
 }
@@ -72,7 +71,8 @@ Node* create_node(size_t size, void* item)
         N_New->item = (char*)malloc(sizeof(char) * strlen((char*)item));
         strcpy(N_New->item, (char*)item);
     } else {
-        N_New->item = NULL;
+        N_New->item = (char*)malloc(sizeof(char) * strlen((char*)item));
+        ;
     }
     return N_New;
 }
@@ -155,30 +155,32 @@ void insert_skiplist(struct SkipList* list, void* item)
 {
     Node* New = create_node(random_level(list->max_height), item);
 
+    if (New->size > list->max_level)
+        list->max_level = New->size;
+
     if (list_is_empty(list) == TRUE) {
         list->head = New;
         return;
     }
 
-    if (list->compare(item, list->head->item) < 0) {
-        New->next[0] = list->head;
-        list->head = New;
-        return;
-    }
-
-    if (New->size > list->max_level)
-        list->max_level = New->size;
+    // if (list->compare(item, list->head->item) < 0) {
+    //     New->next[0] = list->head;
+    //     list->head = New;
+    //     return;
+    // }
 
     Node* Attuale = list->head;
 
-    for (int i = list->max_level - 1; i >= 0; --i)
+    for (int i = list->max_level - 1; i >= 0; --i) {
         if (Attuale->next[i] == NULL || list->compare(item, Attuale->next[i]->item) < 0) {
             if (i < Attuale->size) {
                 New->next[i] = Attuale->next[i];
                 Attuale->next[i] = New;
             }
-        } else
+        } else {
             Attuale = Attuale->next[i++];
+        }
+    }
 }
 
 void print_list(struct SkipList* list)
@@ -202,7 +204,7 @@ void LoadData(struct SkipList* list, const char* file)
     char string[MAX_STRING];
     int i = 0;
 
-    while (fscanf(fp, "%s\n", string) != EOF) {
+    while (fscanf(fp, "%s\n", string) != EOF && string[0] == 'a') {
         printf("\033[0;33m  [\033[0;30m%6d\033[0;33m] Inserito: \033[1;33m%s \033[0;31m\n", i++, string);
         insert_skiplist(list, string);
     }
@@ -229,7 +231,9 @@ void find_errors(const char* dictfile, const char* textfile, size_t max_height)
 {
     SkipList* Dict;
 
-    new_skiplist(&Dict, max_height, &strcmp);
+    setbuf(stdout, NULL);
+
+    new_skiplist(&Dict, max_height, CompareString);
     printf("\033[0;32m[ Creato ]\033[0;31m\n");
 
     LoadData(Dict, dictfile);
