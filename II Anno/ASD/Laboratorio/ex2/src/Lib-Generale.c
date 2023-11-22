@@ -48,8 +48,6 @@ struct SkipList {
 
 int random_level(int max)
 {
-    srand(time(NULL));
-
     int liv;
     double randVal;
 
@@ -211,6 +209,10 @@ void LoadData(struct SkipList* list, const char* file)
     // print_list(list);
     fclose(fp);
 
+    struct timespec ts;
+    clock_gettime(CLOCK_MONOTONIC, &ts);
+    srand((time_t)ts.tv_nsec);
+
     return;
 }
 
@@ -227,11 +229,19 @@ void LoadData_no_print(struct SkipList* list, const char* file)
     return;
 }
 
-void find_errors(const char* dictfile, const char* textfile, size_t max_height)
+void init()
 {
-    SkipList* Dict;
+    struct timespec ts;
+    clock_gettime(CLOCK_MONOTONIC, &ts);
+    srand((time_t)ts.tv_nsec);
 
     setbuf(stdout, NULL);
+}
+
+void find_errors(const char* dictfile, const char* textfile, size_t max_height)
+{
+    init();
+    SkipList* Dict;
 
     new_skiplist(&Dict, max_height, CompareString);
     printf("\033[0;32m[ Creato ]\033[0;31m\n");
