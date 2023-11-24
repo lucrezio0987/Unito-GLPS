@@ -107,7 +107,7 @@ void clear_skiplist(struct SkipList** list)
 {
     Node* next = (*list)->next;
 
-    clear_skiplist_ric(Attuale);
+    clear_skiplist_ric(next);
 
     free((*list)->next);
     free((*list)->next);
@@ -133,9 +133,6 @@ int list_is_empty(struct SkipList* list)
 
 const void* search_skiplist(struct SkipList* list, void* item)
 {
-    if (list_is_empty(list) == TRUE)
-        return NULL;
-
     Node** next = list->next;
 
     for (int i = list->max_level - 1; i >= 0; --i)
