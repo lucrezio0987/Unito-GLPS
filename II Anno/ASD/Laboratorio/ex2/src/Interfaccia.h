@@ -26,7 +26,7 @@ void LoadData_no_print(struct SkipList *list, const char *file);
 const void* search_skiplist(struct SkipList *list, void *item);
 void find_errors(const char *dictfile, const char *textfile, size_t max_height);
 
-int random_level(int max);
+size_t random_level(size_t max);
 int CompareString(char* i, char* j);
 int list_is_empty(struct SkipList *list);
 void print_list(struct SkipList *list);
