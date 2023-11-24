@@ -1,8 +1,10 @@
 #include "Interfaccia.h"
+#include <ctype.h>
 #include <stdio.h>
+#include <string.h>
 #include <time.h>
 
-#define MAX_RECORDS 30
+#define MAX_RECORDS 50
 #define MAX_STRING 30
 #define TEST(text) printf("\033[4;36m%s\033[0;31m\n", text);
 
@@ -24,7 +26,9 @@ void find_errors(const char* dictfile, const char* textfile, size_t max_height);
 size_t random_level(size_t max);
 int CompareString(char* i, char* j);
 int list_is_empty(struct SkipList* list);
-void print_list(struct SkipList* list);
+
+void init();
+void clean_string(char* str);
 
 //--------- STRUTTURE ---------//
 
@@ -101,7 +105,7 @@ void clear_skiplist_ric(Node* Attuale)
 
 void clear_skiplist(struct SkipList** list)
 {
-    Node* Attuale = (*list)->next[0];
+    Node* next = (*list)->next;
 
     clear_skiplist_ric(Attuale);
 
@@ -132,35 +136,24 @@ const void* search_skiplist(struct SkipList* list, void* item)
     if (list_is_empty(list) == TRUE)
         return NULL;
 
-    if (list->compare(item, list->next) == 0)
-        return list->next;
-
-    struct Node* Attuale = list->next;
+    Node** next = list->next;
 
     for (int i = list->max_level - 1; i >= 0; --i)
-        if (i < Attuale->size)
-            while (Attuale->next[i] != NULL && list->compare(Attuale->next[i]->item, item) < 0)
-                Attuale = Attuale->next[i];
-
-    if ((Attuale = Attuale->next[0]) == NULL)
-        return NULL;
-
-    if (list->compare(Attuale->item, item) == 0)
-        return Attuale->item;
-    else
-        return NULL;
+        if (i < next[i]->size)
+            while (next[i] != NULL && list->compare(next[i]->item, item) < 0)
+                next = next[i]->next;
 }
 
 void insert_skiplist(struct SkipList* list, void* item)
 {
-    Node* New = create_node(random_level((int) list->max_height), item);
+    Node* New = create_node(random_level((int)list->max_height), item);
 
     if (New->size > list->max_level)
         list->max_level = New->size;
 
     Node** next = list->next;
 
-    for (int i = (int) list->max_level - 1; i >= 0; --i) {
+    for (int i = (int)list->max_level - 1; i >= 0; --i) {
 
         if (next == NULL || next[i] == NULL || list->compare(item, next[i]->item) < 0) {
             if (i < New->size) {
@@ -170,21 +163,6 @@ void insert_skiplist(struct SkipList* list, void* item)
         } else
             next = next[i++]->next;
     }
-}
-
-void print_list(struct SkipList* list)
-{
-    struct Node* Attuale = list->next;
-
-    printf("\033[0;30m   PRINT LIST: \033[0;31m\n");
-    printf("\033[0;30m   | %s\033[0;31m", Attuale->item);
-
-    while (Attuale->next[0] != NULL) {
-        printf(" \033[0;30m%s \033[0;31m", Attuale->next[0]->item);
-        Attuale = Attuale->next[0];
-    }
-
-    printf("\n");
 }
 
 void LoadData(struct SkipList* list, const char* file)
@@ -197,7 +175,6 @@ void LoadData(struct SkipList* list, const char* file)
         printf("\033[0;33m  [\033[0;30m%6d\033[0;33m] Inserito: \033[1;33m%s \033[0;31m\n", i++, string);
         insert_skiplist(list, string);
     }
-    // print_list(list);
     fclose(fp);
 
     struct timespec ts;
@@ -229,6 +206,17 @@ void init()
     setbuf(stdout, NULL);
 }
 
+void clean_string(char* str)
+{
+    int i, j;
+
+    for (i = 0, j = 0; str[i] != '\0'; ++i)
+        if (isalpha(str[j]))
+            str[j++] = tolower(str[i]);
+
+    str[j] = '\0';
+}
+
 void find_errors(const char* dictfile, const char* textfile, size_t max_height)
 {
     init();
@@ -237,7 +225,7 @@ void find_errors(const char* dictfile, const char* textfile, size_t max_height)
     new_skiplist(&Dict, max_height, CompareString);
     printf("\033[0;32m[ Creato ]\033[0;31m\n");
 
-    LoadData_no_print(Dict, dictfile);
+    LoadData(Dict, dictfile);
     printf("\033[0;32m[ Caricato ]\033[0;31m\n");
 
     int i = 0;
@@ -252,8 +240,9 @@ void find_errors(const char* dictfile, const char* textfile, size_t max_height)
     printf("\033[0;32m[ File Aperto ]\033[0;31m\n");
 
     while (fscanf(fp_textfile, "%s", string) == 1 && ++i != MAX_RECORDS) {
+        clean_string(string);
         printf("\033[0;34m%20s:\033[0;31m", string);
-        if (search_skiplist(Dict, string) == NULL)
+        if (search_skiplist(Dict, string) != NULL)
             printf("\t\033[1;34m Non Presente\033[0;31m\n");
         else
             printf("\t\033[1;34m Presente\033[0;31m\n");
@@ -263,7 +252,7 @@ void find_errors(const char* dictfile, const char* textfile, size_t max_height)
 
     printf("\033[0;32m[ File Chiuso ]\033[0;31m\n");
 
-   // clear_skiplist(Dict);
+    // clear_skiplist(Dict);
     printf("\033[0;32m[ Deallocazione ]\033[0;31m\n");
 
     return;
