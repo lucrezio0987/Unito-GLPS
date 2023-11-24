@@ -38,7 +38,7 @@ struct Node {
 };
 
 struct SkipList {
-    struct Node* head;
+    struct Node** next;
     size_t max_level;
     size_t max_height;
     int (*compare)(const void*, const void*);
@@ -81,10 +81,13 @@ Node* create_node(size_t size, void* item)
 void new_skiplist(struct SkipList** list, size_t max_height, int (*compar)(const void*, const void*))
 {
     *list = (struct SkipList*)malloc(sizeof(struct SkipList));
-    (*list)->head = NULL;
+    (*list)->next = (struct Node**)malloc(sizeof(struct Node*) * max_height);
     (*list)->max_level = 1;
     (*list)->max_height = max_height;
     (*list)->compare = compar;
+
+    for (int i = 0; i < max_height; ++i)
+        (*list)->next[i] = NULL;
 }
 
 void clear_skiplist_ric(Node* Attuale)
@@ -98,12 +101,12 @@ void clear_skiplist_ric(Node* Attuale)
 
 void clear_skiplist(struct SkipList** list)
 {
-    Node* Attuale = (*list)->head->next[0];
+    Node* Attuale = (*list)->next[0];
 
     clear_skiplist_ric(Attuale);
 
-    free((*list)->head->next);
-    free((*list)->head);
+    free((*list)->next);
+    free((*list)->next);
     free(*list);
 }
 
@@ -121,7 +124,7 @@ int CompareString(char* i, char* j)
 
 int list_is_empty(struct SkipList* list)
 {
-    return list->head == NULL;
+    return list->next[0] == NULL;
 }
 
 const void* search_skiplist(struct SkipList* list, void* item)
@@ -129,10 +132,10 @@ const void* search_skiplist(struct SkipList* list, void* item)
     if (list_is_empty(list) == TRUE)
         return NULL;
 
-    if (list->compare(item, list->head->item) == 0)
-        return list->head;
+    if (list->compare(item, list->next) == 0)
+        return list->next;
 
-    struct Node* Attuale = list->head;
+    struct Node* Attuale = list->next;
 
     for (int i = list->max_level - 1; i >= 0; --i)
         if (i < Attuale->size)
@@ -150,70 +153,28 @@ const void* search_skiplist(struct SkipList* list, void* item)
 
 void insert_skiplist(struct SkipList* list, void* item)
 {
-    Node* New = create_node(random_level(list->max_height), item);
+    Node* New = create_node(random_level((int) list->max_height), item);
 
     if (New->size > list->max_level)
         list->max_level = New->size;
 
-    if (list_is_empty(list) == TRUE) {
-        list->head = New;
-        return;
-    }
+    Node** next = list->next;
 
-    // if (list->compare(item, list->head->item) < 0) {
-    //     New->next[0] = list->head;
-    //     list->head = New;
-    //     return;
-    // }
+    for (int i = (int) list->max_level - 1; i >= 0; --i) {
 
-    Node* Attuale = list->head;
-
-    // NO ERRORE di segmentazione
-    // for (int k = list->max_level - 1; k >= 0; --k)
-    //     if (k < Attuale->size)
-    //         if (Attuale->next[k] == NULL || list->compare(item, Attuale->next[k]->item) < 0) {
-    //             New->next[k] = Attuale->next[k];
-    //             Attuale->next[k] = New;
-    //         } else
-    //             Attuale = Attuale->next[k++];
-
-    // DEL PROFESSORE
-    for (int k = list->max_level - 1; k >= 0; --k)
-        if (Attuale->next[k] == NULL || list->compare(item, Attuale->next[k]->item) < 0) {
-            if (k < Attuale->size) {
-                New->next[k] = Attuale->next[k];
-                Attuale->next[k] = New;
+        if (next == NULL || next[i] == NULL || list->compare(item, next[i]->item) < 0) {
+            if (i < New->size) {
+                New->next[i] = next[i];
+                next[i] = New;
             }
         } else
-            Attuale = Attuale->next[k++];
-
-    // ALTERNATIFA UGUALEMNTE LENTA
-    // for (int k = list->max_level - 1; k >= 0; --k)
-    //     if (k < Attuale->size) {
-    //         if (Attuale->next[k] == NULL)
-    //             Attuale->next[k] = New;
-    //         else if (list->compare(item, Attuale->next[k]->item) < 0) {
-    //             New->next[k] = Attuale->next[k];
-    //             Attuale->next[k] = New;
-    //         } else
-    //             Attuale = Attuale->next[k++];
-
-    /* PSEUDOCODICE DEL PROFESSORE
-     for k = list->max_level downto 1 do
-        if (x->next[k] == NULL || item < x->next[k]->item)
-            if k < new->size {
-                new->next[k] = x->next[k]
-                x->next[k] = new
-            }
-        else
-            x = x->next[k]
-            k++
-    */
+            next = next[i++]->next;
+    }
 }
 
 void print_list(struct SkipList* list)
 {
-    struct Node* Attuale = list->head;
+    struct Node* Attuale = list->next;
 
     printf("\033[0;30m   PRINT LIST: \033[0;31m\n");
     printf("\033[0;30m   | %s\033[0;31m", Attuale->item);
@@ -232,7 +193,7 @@ void LoadData(struct SkipList* list, const char* file)
     char string[MAX_STRING];
     int i = 0;
 
-    while (fscanf(fp, "%s\n", string) != EOF && string[0] == 'a') {
+    while (fscanf(fp, "%s\n", string) != EOF) {
         printf("\033[0;33m  [\033[0;30m%6d\033[0;33m] Inserito: \033[1;33m%s \033[0;31m\n", i++, string);
         insert_skiplist(list, string);
     }
@@ -276,7 +237,7 @@ void find_errors(const char* dictfile, const char* textfile, size_t max_height)
     new_skiplist(&Dict, max_height, CompareString);
     printf("\033[0;32m[ Creato ]\033[0;31m\n");
 
-    LoadData(Dict, dictfile);
+    LoadData_no_print(Dict, dictfile);
     printf("\033[0;32m[ Caricato ]\033[0;31m\n");
 
     int i = 0;
@@ -302,7 +263,7 @@ void find_errors(const char* dictfile, const char* textfile, size_t max_height)
 
     printf("\033[0;32m[ File Chiuso ]\033[0;31m\n");
 
-    clear_skiplist(Dict);
+   // clear_skiplist(Dict);
     printf("\033[0;32m[ Deallocazione ]\033[0;31m\n");
 
     return;
