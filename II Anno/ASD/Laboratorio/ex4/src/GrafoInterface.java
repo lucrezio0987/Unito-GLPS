@@ -10,14 +10,6 @@ import java.util.Comparator;
 public interface GrafoInterface<E extends Comparable<E>> {
 
     /**
-     * Constructs an empty graph.
-     *
-     * @param comparator The comparator for comparing node labels.
-     * @param directed   True if the graph is directed, false otherwise.
-     */
-    public Grafo(Comparator<E> comparator, boolean directed);
-
-    /**
      * Checks if the graph is empty.
      *
      * @return True if the graph is empty, false otherwise.

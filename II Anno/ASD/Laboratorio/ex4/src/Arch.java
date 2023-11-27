@@ -1,9 +1,9 @@
 import java.util.Objects;
 
 public class Arch<E> {
-  Node<E> sorgente;
-  Node<E> destinazione;
-  float distance;
+  private Node<E> sorgente;
+  private Node<E> destinazione;
+  private float distance;
 
   //* COSTRUTTORI
   public Arch(E sorgente, E destinazione, float distance) {

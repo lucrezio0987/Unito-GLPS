@@ -52,7 +52,7 @@ public class Prim {
 
   public static void main(String[] args) {
 
-    Grafo<String> grafo = new Grafo<>(String::compareTo, false);
+    GrafoInterface<String> grafo = new Grafo<>(String::compareTo, false);
 
       //BufferedReader inputFile;
       String[] lnBufferSplitted;
@@ -104,6 +104,6 @@ public class Prim {
     System.out.println("    | Numero Archi:  18637");
     System.out.println("    | Numero di Nodi(Erticigrafo): 18640");
     System.out.println("    | Peso Grafo: 89939.913 Km");
-
+    */
   }
 }

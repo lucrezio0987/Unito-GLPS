@@ -68,12 +68,12 @@ public class TestPrim {
   }
 
   @Test
-  public void testGetArch() {
+  public void testGetArches() {
       grafo.addArch(new Arch<>("A", "B", 2.5f));
       grafo.addArch(new Arch<>("A", "C", 1.0f));
       grafo.addArch(new Arch<>("B", "C", 3.0f));
 
-      Set<Arch<String>> arches = grafo.getArch();
+      Set<Arch<String>> arches = grafo.getArches();
       
       if (grafo.isDirected()) 
         assertEquals(3, arches.size());
@@ -252,7 +252,7 @@ public class TestPrim {
         Arch<String> archToRemove = new Arch<>("A", "B", 2.5f);
         grafo.removeArch(archToRemove);
   
-        Set<Arch<String>> arches = grafo.getArch();
+        Set<Arch<String>> arches = grafo.getArches();
         
         if (!grafo.isDirected()) {
           assertEquals(4, arches.size());

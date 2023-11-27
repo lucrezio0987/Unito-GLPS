@@ -5,43 +5,38 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Grafo<E extends Comparable<E>> implements GrafoInterface {
+public class Grafo<E extends Comparable<E>> implements GrafoInterface<E> {
 
   boolean diretto;
   HashMap<Node<E>, ArrayList<Arch<E>>> hashMap;
   Comparator<E> comparator;
 
-  //* COSTRUTTORE e METODI BASE
+
   public Grafo(Comparator<E> comparator, boolean diretto) {
     this.hashMap = new HashMap<>();
     this.comparator = comparator;
     this.diretto = diretto;
   }
 
-  public boolean empty() { return hashMap.isEmpty(); }
-  public boolean isDirected() { return diretto; }
+  public boolean empty()                                        { return hashMap.isEmpty(); }
+  public boolean isDirected()                                   { return diretto; }
+  public void addNode(Node<E> node)                             { hashMap.putIfAbsent(node, new ArrayList<Arch<E>>());}
+  public boolean containsNode(Node<E> node)                     { return hashMap.containsKey(node); }
+  public Set<Node<E>> getNodes()                                { return hashMap.keySet(); }
+  public int getNodesNumber()                                   { return this.getNodes().size(); }
+  private ArrayList<Arch<E>> getArchList(Node<E> node)          { return  hashMap.getOrDefault(node, new ArrayList<>());}
+  private Collection<ArrayList<Arch<E>>> getCollectioArches()   { return hashMap.values();}
 
-  // ! DA RIVEDERE
   public double getGraphWeight() {
     Double GraphWeight = 0.0;
 
     for (ArrayList<Arch<E>> archList : getCollectioArches())
       for (Arch<E> arch : archList) 
         GraphWeight += arch.getDistance();
-
     return GraphWeight;
   }
 
-  //* Node
-  public void addNode(Node<E> node) { hashMap.putIfAbsent(node, new ArrayList<Arch<E>>());}
-  public boolean containsNode(Node<E> node) { return hashMap.containsKey(node); }
-  public Set<Node<E>> getNodes() { return hashMap.keySet(); }
-  public int getNodesNumber() { return this.getNodes().size(); }
-
   public float getNodesLabel(Node<E> sorgente, Node<E> destinazione) {
-//    if (!hashMap.containsKey(sorgente) || !hashMap.containsKey(destinazione))
-//      throw new IllegalArgumentException("Uno o entrambi i nodi specificati non esistono nel grafo.");
-
     for (Arch<E> arch : getArchList(sorgente))
       if (arch.getDestinazione().equals(destinazione))
         return arch.getDistance();
@@ -49,7 +44,6 @@ public class Grafo<E extends Comparable<E>> implements GrafoInterface {
     return -1.0f;
   }
 
-  // ! DA RIVEDERE
   public Set<Node<E>> getNodesAdjacent(Node<E> node) {
     if (!hashMap.containsKey(node))
       throw new IllegalArgumentException("Il nodo specificato non esiste nel grafo.");
@@ -69,7 +63,6 @@ public class Grafo<E extends Comparable<E>> implements GrafoInterface {
     return adjacentNodes;
   }
 
-  // ! DA RIVEDERE
   public void removeNode(Node<E> node) {
     if (hashMap.remove(node) != null)
         getArchList(node).forEach((arch) ->
@@ -77,18 +70,12 @@ public class Grafo<E extends Comparable<E>> implements GrafoInterface {
         );
   }
 
-  //* Arch
-
-  private ArrayList<Arch<E>> getArchList(Node<E> node) { return  hashMap.getOrDefault(node, new ArrayList<>());}
-  private Collection<ArrayList<Arch<E>>> getCollectioArches() { return hashMap.values();}
-  // ! DA RIVEDERE
   public void addArch(Arch<E> arch) {
     if (!diretto) 
       hashMap.computeIfAbsent( arch.getDestinazione(), k -> new ArrayList<>() ).add( arch.reveArch() );
       hashMap.computeIfAbsent( arch.getSorgente(),     k -> new ArrayList<>() ).add( arch            );
   }
 
-  // ! DA RIVEDERE
   public boolean containsArch(Arch<E> arch) {
     if(!diretto)
       if(getArchList(arch.getDestinazione()).contains(arch.reveArch()))
@@ -96,7 +83,6 @@ public class Grafo<E extends Comparable<E>> implements GrafoInterface {
     return getArchList(arch.getSorgente()).contains(arch);
   }
 
-  // ! DA RIVEDERE
   public void removeArch(Arch<E> arch) {
     if(getArchList(arch.getSorgente()).remove(arch) && !diretto)
       getArchList(arch.getDestinazione()).remove(arch.reveArch());
@@ -123,10 +109,7 @@ public class Grafo<E extends Comparable<E>> implements GrafoInterface {
     return uniqueArches.size();
   }
 
-
-  //* Algoritmo di PRIM
-
-  public void MinForestPrim() { // TODO: ALGORITMO DI PRIM
+  public void MinForestPrim() {
     if (diretto)
       throw new UnsupportedOperationException("L'algoritmo di Prim è applicabile solo a grafi non diretti.");
     
@@ -138,18 +121,14 @@ public class Grafo<E extends Comparable<E>> implements GrafoInterface {
       Node<E>                             startNode       = getNodes().iterator().next();
       AbstractQueue<Arch<E>>              minHeap         = new PriorityQueue<>(new ArchComparator<>());
 
-
-      for(Node<E> node : getNodes()){
+      for(Node<E> node : getNodes())
         if(!visitedNodes.contains(node)){
           startNode = node;
           break;
         }
-      }
-
 
       hashMap.get(startNode).forEach( (arch) -> minHeap.push(arch));
       visitedNodes.add(startNode);
-
 
       while (!minHeap.empty() && visitedNodes.size() < hashMap.size()) {
           Arch<E> minArch = minHeap.top();  minHeap.pop(); // Pull()
@@ -172,7 +151,6 @@ public class Grafo<E extends Comparable<E>> implements GrafoInterface {
     hashMap = minimumForest;
   }
 
-  //* OVERRIDE
   @Override
   public String toString() {
     StringBuilder result = new StringBuilder();

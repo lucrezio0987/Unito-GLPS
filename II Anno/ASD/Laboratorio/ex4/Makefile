@@ -14,7 +14,6 @@ Test: Compilazione
 	java -cp $(JUNIT_JAR):$(CLASS_DIR) org.junit.runner.JUnitCore $(TEST_CLASS)
 
 Eseguzione:
-	java -cp classes GrafoMain robaProf.csv > OUT.out
 	java -cp classes Prim italian_dist_graph.csv
 
 clean:
