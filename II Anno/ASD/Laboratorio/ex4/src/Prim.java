@@ -52,9 +52,7 @@ public class Prim {
 
   public static void main(String[] args) {
 
-    Grafo<String> grafo = new Grafo<>(String::compareTo, false); // false perchè è richiesto che il grafo possa essere diretto (true) o non diretto (false)
-    
-    //TODO: leggi i dati CSV del grafo dal percorso in args[1] 
+    Grafo<String> grafo = new Grafo<>(String::compareTo, false);
 
       //BufferedReader inputFile;
       String[] lnBufferSplitted;
@@ -89,7 +87,6 @@ public class Prim {
     System.out.println("Numero_di_Nodi(Erticigrafo): " + grafo.getNodesNumber());
     System.out.println("Peso_Grafo: " + grafo.getGraphWeight()/1000 + " Km");
     
-    //TODO: calcola la minima foresta ricoprente con l'algoritmo di Prim
     
     System.out.println("");
 
@@ -98,14 +95,11 @@ public class Prim {
     
     System.out.println("");
 
-    //TODO: scrivi su standard output una descrizione della foresta calcolata come CSV 
-    
-    //System.out.println("\n" + grafo.toString() + "\n");
-    
     System.out.println("Numero_Archi:  " + grafo.getArchNumber());
     System.out.println("Numero_di_Nodi(Erticigrafo): " + grafo.getNodesNumber());
     System.out.println("Peso_Grafo: " + grafo.getGraphWeight()/1000 + " Km");
     
+    /*
     System.out.println("    EXPECTED");
     System.out.println("    | Numero Archi:  18637");
     System.out.println("    | Numero di Nodi(Erticigrafo): 18640");
