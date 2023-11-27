@@ -1,11 +1,9 @@
-import java.util.AbstractQueue;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
-
 
 /*
  * L'implementazione deve essere generica sia per quanto riguarda il tipo dei
@@ -168,7 +166,7 @@ public class Grafo<E extends Comparable<E>> {
 
     while (visitedNodes.size() != hashMap.size()) {
       Node<E>                             startNode       = getNodes().iterator().next();
-      PriorityQueue<Arch<E>>              minHeap         = new PriorityQueue<>(new ArchComparator<>());
+      AbstractQueue<Arch<E>>              minHeap         = new PriorityQueue<>(new ArchComparator<>());
 
 
       for(Node<E> node : getNodes()){
@@ -179,7 +177,7 @@ public class Grafo<E extends Comparable<E>> {
       }
 
 
-      minHeap.addAll(hashMap.get(startNode));
+      hashMap.get(startNode).forEach( (arch) -> minHeap.push(arch));
       visitedNodes.add(startNode);
 
 

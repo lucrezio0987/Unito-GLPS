@@ -15,14 +15,12 @@ void main(int argc, const char* argv[])
 
     if (argc == 3)
         sort_records(argv[1], argv[2], K, FIELD_POS);
-    else if (argc == 2) {
+    else if (argc == 2)
         sort_records_max(INPUT_FILE, OUTPUT_FILE, K, FIELD_STRING, atoi(argv[1]));
-
-    } else if (argc == 4)
+    else if (argc == 4)
         sort_records_max(argv[1], argv[2], K, FIELD_STRING, atoi(argv[3]));
+    else if (argc == 5)
+        sort_records_max(argv[1], argv[2], K, atoi(argv[4]), atoi(argv[3]));
     else
         sort_records(INPUT_FILE, OUTPUT_FILE, K, FIELD_STRING);
 }
-
-// Si prevede che la funzione venga chiamata con (altrimenti verranno usati i valori di default):
-//    ./bin/main_ex1 [INPUT_FILE] [OUTPUT_FILE]
