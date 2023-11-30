@@ -89,7 +89,7 @@ void merge_binary_insertion_sort(void** base, size_t nitems, size_t k, int (*com
         binary_insertion_sort(base, nitems, compar);
     }
     */
-    merge_sort_2(base, 0, nitems - 1, 30, compar);
+    merge_sort_2(base, 0, nitems - 1, k, compar);
 
     printf("Tempo: %d\n", clock() - start);
 }

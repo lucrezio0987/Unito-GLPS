@@ -16,7 +16,7 @@
 #	$(RM) -rf outfile.csv
 
 CC = gcc
-CFLAGS = -w -Wno-return-type -Wincompatible-function-pointer-types
+CFLAGS = -w -Wno-return-type -Wincompatible-pointer-types
 
 MAIN = bin/main_ex2
 TEST = bin/test_ex2

@@ -131,6 +131,16 @@ int list_is_empty(struct SkipList* list)
     return list->next[0] == NULL;
 }
 
+// const void* search_skiplist(struct SkipList* list, void* item)
+//{
+//     Node** next = list->next;
+//
+//     for (int i = list->max_level - 1; i >= 0; --i)
+//         if (i < next[i]->size)
+//             while (next[i] != NULL && list->compare(next[i]->item, item) < 0)
+//                 next = next[i]->next;
+// }
+
 const void* search_skiplist(struct SkipList* list, void* item)
 {
     Node** next = list->next;
@@ -139,6 +149,11 @@ const void* search_skiplist(struct SkipList* list, void* item)
         if (i < next[i]->size)
             while (next[i] != NULL && list->compare(next[i]->item, item) < 0)
                 next = next[i]->next;
+
+    // next = next[0]->next;
+    if (next != 0 && list->compare(next[0]->item, item) == 0)
+        return next;
+    return NULL;
 }
 
 void insert_skiplist(struct SkipList* list, void* item)
@@ -239,7 +254,7 @@ void find_errors(const char* dictfile, const char* textfile, size_t max_height)
     while (fscanf(fp_textfile, "%s", string) == 1 && ++i != MAX_RECORDS) {
         clean_string(string);
         printf("\033[0;34m%20s:\033[0;31m", string);
-        if (search_skiplist(Dict, string) != NULL)
+        if (search_skiplist(Dict, string) == NULL)
             printf("\t\033[1;34m Non Presente\033[0;31m\n");
         else
             printf("\t\033[1;34m Presente\033[0;31m\n");
