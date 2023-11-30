@@ -10,7 +10,7 @@ EXEC_PARAM = ../records.csv outfile.csv 100
 
 
 MAIN_OBJ = build/Main.o
-LIB_OBJ = build/Lib-Generale.o build/Lib-MergeSorte.o build/Lib-BinaryInsertionSort.o
+LIB_OBJ = build/Lib-Generale.o build/Lib-MergeSorte.o build/Lib-BinaryInsertionSort.o build/Lib-MergeSorteConInsertion.o
 TEST_MAIN_OBJ = build/Test.o
 TEST_LIB_OBJ = build/Lib-Test.o build/unity.o
 TEST_EFFICIENZA_OBJ = build/Test_efficienza.o

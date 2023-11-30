@@ -2,13 +2,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include <unistd.h>
 
 /*
 - Compare functions used to switch the type of sort
-- create_array, array_add, load_array, print_array functions used to create an empty array, add an element, 
+- create_array, array_add, load_array, print_array functions used to create an empty array, add an element,
   load an input file to the array, print array on file
-- merge_binary_insertion_sort, sort_records functions used to choice the algorithm depending on k value, 
+- merge_binary_insertion_sort, sort_records functions used to choice the algorithm depending on k value,
   called by main depending on parameter field call the function described previously
 - load_array_max and sort_records_max are used to test the code
 - merge, merge_sort_ric, merge_sort functions used to execute the merge algorithm
@@ -55,6 +56,12 @@ void merge_sort(void** base, unsigned int i, unsigned int j, int (*compar)(const
 void insert(void** base, unsigned int i, unsigned int loc, int (*compar)(const void*, const void*));
 int search(unsigned int x, void** base, unsigned int i, unsigned int j, int (*compar)(const void*, const void*));
 void binary_insertion_sort(void** base, unsigned int nitems, int (*compar)(const void*, const void*));
+
+// Algoritmo Merge-Sort-Con-Insertion
+void merge_2(void** base, unsigned int l, unsigned int m, unsigned int r, int (*compar)(const void*, const void*));
+void merge_sort_ric_2(void** base, unsigned int i, unsigned int j, unsigned int k, int (*compar)(const void*, const void*));
+void merge_sort_2(void** base, unsigned int i, unsigned int j, unsigned int k, int (*compar)(const void*, const void*));
+void binary_insertion_sort_2(void** base, unsigned int l, int r, int (*compar)(const void*, const void*));
 
 // Macro-Funzioni
 void merge_binary_insertion_sort(void** base, size_t nitems, size_t k, int (*compar)(const void*, const void*));

@@ -76,6 +76,11 @@ int compare_string(Records* i, Records* j)
 
 void merge_binary_insertion_sort(void** base, size_t nitems, size_t k, int (*compar)(const void*, const void*))
 {
+    struct timespec ts;
+    clock_gettime(CLOCK_THREAD_CPUTIME_ID, &ts);
+
+    int start = clock();
+    /*
     if (nitems > k) {
         printf("\t[ k: %d, nitems: %d] Alrogitmo Utilizzato ->  merge Sort\n", k, nitems);
         merge_sort(base, 0, nitems - 1, compar);
@@ -83,6 +88,10 @@ void merge_binary_insertion_sort(void** base, size_t nitems, size_t k, int (*com
         printf("\t[ k: %d, nitems: %d] Alrogitmo Utilizzato ->  Binary insertion Sort\n", k, nitems);
         binary_insertion_sort(base, nitems, compar);
     }
+    */
+    merge_sort_2(base, 0, nitems - 1, 30, compar);
+
+    printf("Tempo: %d\n", clock() - start);
 }
 
 Records** create_array()
@@ -173,12 +182,12 @@ void sort_records_max(const char* infile, const char* outfile, size_t k, size_t 
 {
     setbuf(stdout, NULL);
 
-    printf(" >> START (max_records: %d)\n", max_records);
+    // printf(" >> START (max_records: %d)\n", max_records);
 
     Array* A = create_array();
     load_array_max(A, infile, max_records);
 
-    printf(" >> Fine Caricamento - Inizio Ordinamento\n");
+    // printf(" >> Fine Caricamento - Inizio Ordinamento\n");
 
     switch (field) {
     case 1:
@@ -195,9 +204,9 @@ void sort_records_max(const char* infile, const char* outfile, size_t k, size_t 
         break;
     }
 
-    printf(" >> Fine Ordinamento - Inizio Stampa\n");
+    // printf(" >> Fine Ordinamento - Inizio Stampa\n");
     print_array(outfile, A);
-    printf(" >> Fine Stampa (%s)\n", outfile);
+    // printf(" >> Fine Stampa (%s)\n", outfile);
 
     free(A);
     return;
@@ -207,12 +216,12 @@ void sort_records(const char* infile, const char* outfile, size_t k, size_t fiel
 {
     setbuf(stdout, NULL);
 
-    printf(" >> START\n");
+    //    printf(" >> START\n");
 
     Array* A = create_array();
     load_array(A, infile);
 
-    printf(" >> Fine Caricamento - Inizio Ordinamento\n");
+    //    printf(" >> Fine Caricamento - Inizio Ordinamento\n");
 
     switch (field) {
     case 1:
@@ -229,9 +238,9 @@ void sort_records(const char* infile, const char* outfile, size_t k, size_t fiel
         break;
     }
 
-    printf(" >> Fine Ordinamento - Inizio Stampa\n");
+    //    printf(" >> Fine Ordinamento - Inizio Stampa\n");
     print_array(outfile, A);
-    printf(" >> Fine Stampa (%s)\n", outfile);
+    //    printf(" >> Fine Stampa (%s)\n", outfile);
 
     free(A);
     return;
