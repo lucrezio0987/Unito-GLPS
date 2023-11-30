@@ -150,9 +150,9 @@ const void* search_skiplist(struct SkipList* list, void* item)
             while (next[i] != NULL && list->compare(next[i]->item, item) < 0)
                 next = next[i]->next;
 
-    // next = next[0]->next;
     if (next != 0 && list->compare(next[0]->item, item) == 0)
         return next;
+
     return NULL;
 }
 
