@@ -91,7 +91,7 @@ void merge_binary_insertion_sort(void** base, size_t nitems, size_t k, int (*com
     */
     merge_sort_2(base, 0, nitems - 1, k, compar);
 
-    printf("Tempo: %d\n", clock() - start);
+    printf("Tempo[k=%d]: %d\n", k, clock() - start);
 }
 
 Records** create_array()
