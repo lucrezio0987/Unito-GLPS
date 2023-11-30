@@ -5,6 +5,7 @@
 void insert(void** base, unsigned int i, unsigned int loc, int (*compar)(const void*, const void*));
 int search(unsigned int x, void** base, unsigned int i, unsigned int j, int (*compar)(const void*, const void*));
 void binary_insertion_sort(void** base, unsigned int nitems, int (*compar)(const void*, const void*));
+void binary_insertion_sort_2(void** base, unsigned int l, int r, int (*compar)(const void*, const void*));
 
 //------ IMPLEMENTAZIONI ------//
 
@@ -35,31 +36,38 @@ void insert(void** base, unsigned int i, unsigned int loc, int (*compar)(const v
 
 int search(unsigned int x, void** base, unsigned int i, unsigned int j, int (*compar)(const void*, const void*))
 {
-    int left = i, right = j;
-    while (left <= right) {
-        int mid = (right + left) / 2;
-        if ((compar)(base[x], base[mid]) == 0)
-            return mid;
-        else if ((compar)(base[x], base[mid]) == 1)
-            left = mid + 1;
+    int l = i, r = j, m;
+
+    while (l <= r) {
+        m = (r + l) / 2;
+        if ((compar)(base[x], base[m]) == 0)
+            return m;
+        else if ((compar)(base[x], base[m]) == 1)
+            l = m + 1;
         else
-            right = mid - 1;
+            r = m - 1;
     }
 
-    return left;
+    return l;
 }
 
+// Non più utilizzata
 void binary_insertion_sort(void** base, unsigned int nitems, int (*compar)(const void*, const void*))
 {
-    unsigned int i, loc;
-    for (i = 1; i < nitems; ++i) {
-        if ((compar)(base[i], base[i - 1]) == -1) {
-            loc = search(i, base, 0, i - 1, compar);
-            if (loc < 0)
+    for (unsigned int loc, i = 1; i < nitems; ++i)
+        if ((compar)(base[i], base[i - 1]) == -1)
+            if ((loc = search(i, base, 0, i - 1, compar)) < 0)
                 ERROR
             else
                 insert(base, i, loc, compar);
-        }
-    }
-    return;
+}
+
+void binary_insertion_sort_2(void** base, unsigned int l, int r, int (*compar)(const void*, const void*))
+{
+    for (unsigned int loc, i = l + 1; i <= r; ++i)
+        if ((compar)(base[i], base[i - 1]) == -1)
+            if ((loc = search(i, base, l, i - 1, compar)) < 0)
+                ERROR
+            else
+                insert(base, i, loc, compar);
 }
