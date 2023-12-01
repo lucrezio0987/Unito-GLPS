@@ -1,3 +1,9 @@
+
+/**
+ * @file Lib-Generale.c
+ * @author Lucrezio Del Ponte, Simone Bergesio, Mario Corrao
+ */
+
 #include "Interfaccia.h"
 #include <time.h>
 
@@ -14,7 +20,6 @@ void load_array(Array* A, const char* infile);
 void load_array_max(Array* A, const char* infile, unsigned int max_records);
 void print_array(const char* outfile, Array* A);
 
-void merge_binary_insertion_sort(void** base, size_t nitems, size_t k, int (*compar)(const void*, const void*));
 void sort_records(const char* infile, const char* outfile, size_t k, size_t field);
 void sort_records_max(const char* infile, const char* outfile, size_t k, size_t field, size_t max_records);
 
@@ -73,28 +78,6 @@ int compare_string(Records* i, Records* j)
     else
         return 1;
     return 0;
-}
-
-void merge_binary_insertion_sort(void** base, size_t nitems, size_t k, int (*compar)(const void*, const void*))
-{
-    struct timespec ts;
-    clock_gettime(CLOCK_THREAD_CPUTIME_ID, &ts);
-
-    printf("|  T_Sorting: ");
-    int start = clock();
-
-    /*
-    if (nitems > k) {
-        printf("\t[ k: %d, nitems: %d] Alrogitmo Utilizzato ->  merge Sort\n", k, nitems);
-        merge_sort(base, 0, nitems - 1, compar);
-    } else {
-        printf("\t[ k: %d, nitems: %d] Alrogitmo Utilizzato ->  Binary insertion Sort\n", k, nitems);
-        binary_insertion_sort(base, nitems, compar);
-    }
-    */
-    merge_sort_2(base, 0, nitems - 1, k, compar);
-
-    printf("%f s\n", ((double)(clock() - start)) / CLOCKS_PER_SEC);
 }
 
 Records** create_array()

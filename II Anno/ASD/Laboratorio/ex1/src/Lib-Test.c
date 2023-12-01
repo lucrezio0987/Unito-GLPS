@@ -1,10 +1,13 @@
+/**
+ * @file Lib-Test.c
+ * @author Lucrezio Del Ponte, Simone Bergesio, Mario Corrao
+ */
+
 #include "Interfaccia.h"
 #include "unity.h"
 
 #define OUTPUT_FILE "test_outfile.csv"
 #define INPUT_FILE "test_records.csv"
-// #define INPUT_FILE "../records.csv"
-// #define OUTPUT_FILE "bin/outfile.csv"
 
 //--------- PROTOTIPI ---------//
 
@@ -27,10 +30,6 @@ void test_sort_records_Pos();
 void test_sort_records_String();
 void test_sort_records_Int();
 void test_sort_records_Float();
-
-// void test_merge_sorte();
-// void test_binary_insertion_sort();
-// void test_merge_binary_insertion_sort();
 
 //--------- STRUTTURE ---------//
 

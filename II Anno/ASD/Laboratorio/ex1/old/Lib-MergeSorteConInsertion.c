@@ -18,7 +18,6 @@ void merge_sort_2(void** base, unsigned int i, unsigned int j, unsigned int k, i
         ERROR
     merge_sort_ric_2(base, i, j, k, compar);
     free(temp_2);
-    //    printf("\n");
 }
 
 void merge_2(void** base, unsigned int l, unsigned int m, unsigned int r, int (*compar)(const void*, const void*))

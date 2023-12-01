@@ -4,6 +4,7 @@
 
 void insert(void** base, unsigned int i, unsigned int loc, int (*compar)(const void*, const void*));
 int search(unsigned int x, void** base, unsigned int i, unsigned int j, int (*compar)(const void*, const void*));
+int searchRec(unsigned int x, void** base, unsigned int i, unsigned int j, int (*compar)(const void*, const void*));
 void binary_insertion_sort(void** base, unsigned int nitems, int (*compar)(const void*, const void*));
 void binary_insertion_sort_2(void** base, unsigned int l, int r, int (*compar)(const void*, const void*));
 
@@ -12,34 +13,10 @@ void binary_insertion_sort_2(void** base, unsigned int l, int r, int (*compar)(c
 void insert(void** base, unsigned int i, unsigned int loc, int (*compar)(const void*, const void*))
 {
     void* temp = base[i];
-    if (i - loc > 1) {
-        for (; i > loc; --i)
-            base[i] = base[i - 1];
-        base[loc] = temp;
-    } else {
-        base[i] = base[loc];
-        base[loc] = temp;
-    }
-}
-
-void insertEasy(void** base, unsigned int i, unsigned int loc, int (*compar)(const void*, const void*))
-{
-    void* temp = base[i];
     for (; i > loc; --i)
         base[i] = base[i - 1];
     base[loc] = temp;
 }
-
-// int search2(unsigned int x, void** base, unsigned int i, unsigned int j, int (*compar)(const void *, const void*)) {
-//
-//     if (i > j) return i;
-//
-//     unsigned int m = (i + j) / 2;
-//
-//     if ((compar)(base[x], base[m])==0)         return m;
-//     else if ((compar)(base[x], base[m])==-1)   return search(x, base, i, m - 1, compar);
-//     else                                       return search(x, base, m + 1, j, compar);
-// }
 
 int search(unsigned int x, void** base, unsigned int i, unsigned int j, int (*compar)(const void*, const void*))
 {
@@ -62,6 +39,7 @@ int search(unsigned int x, void** base, unsigned int i, unsigned int j, int (*co
     return l;
 }
 
+// Non usata
 int searchRec(unsigned int x, void** base, unsigned int i, unsigned int j, int (*compar)(const void*, const void*))
 {
     int l = i, r = j;
@@ -93,10 +71,13 @@ void binary_insertion_sort(void** base, unsigned int nitems, int (*compar)(const
 
 void binary_insertion_sort_2(void** base, unsigned int l, int r, int (*compar)(const void*, const void*))
 {
-    for (unsigned int loc, i = l + 1; i <= r; ++i)
-        if ((compar)(base[i], base[i - 1]) == -1)
-            if ((loc = search(i, base, l, i - 1, compar)) < 0)
-                ERROR
-            else
-                insertEasy(base, i, loc, compar);
+    int loc, j, i;
+    void* temp;
+
+    for (i = 1; i < r - l; ++i) {
+        loc = search(i, base, 0, i - 1, compar);
+        for (temp = base[i--], j = i - 1; j >= loc; --j)
+            base[j] = base[j - 1];
+        base[loc] = temp;
+    }
 }

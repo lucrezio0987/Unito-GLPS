@@ -1,3 +1,8 @@
+/**
+ * @file Test.C
+ * @author Lucrezio Del Ponte, Simone Bergesio, Mario Corrao
+ */
+
 #include "Interfaccia.h"
 #include "unity.h"
 
@@ -22,10 +27,6 @@ void main()
     RUN_TEST(test_sort_records_String);
     RUN_TEST(test_sort_records_Int);
     RUN_TEST(test_sort_records_Float);
-
-    // TODO: RUN_TEST(test_binary_insertion_sort);
-    // TODO: RUN_TEST(test_merge_sorte);
-    // TODO: RUN_TEST(test_merge_binary_insertion_sort);
 
     return UNITY_END();
 }
