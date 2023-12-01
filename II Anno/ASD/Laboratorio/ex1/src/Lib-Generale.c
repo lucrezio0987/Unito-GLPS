@@ -1,4 +1,5 @@
 #include "Interfaccia.h"
+#include <time.h>
 
 //--------- PROTOTYPES ---------//
 
@@ -79,7 +80,9 @@ void merge_binary_insertion_sort(void** base, size_t nitems, size_t k, int (*com
     struct timespec ts;
     clock_gettime(CLOCK_THREAD_CPUTIME_ID, &ts);
 
+    printf("|  T_Sorting: ");
     int start = clock();
+
     /*
     if (nitems > k) {
         printf("\t[ k: %d, nitems: %d] Alrogitmo Utilizzato ->  merge Sort\n", k, nitems);
@@ -91,7 +94,7 @@ void merge_binary_insertion_sort(void** base, size_t nitems, size_t k, int (*com
     */
     merge_sort_2(base, 0, nitems - 1, k, compar);
 
-    printf("Tempo[k=%d]: %d\n", k, clock() - start);
+    printf("%f s\n", ((double)(clock() - start)) / CLOCKS_PER_SEC);
 }
 
 Records** create_array()
@@ -178,16 +181,24 @@ void print_array(const char* outfile, Array* A)
     fclose(fp);
 }
 
+void init()
+{
+    setbuf(stdout, NULL);
+    struct timespec ts;
+    clock_gettime(CLOCK_THREAD_CPUTIME_ID, &ts);
+}
+
 void sort_records_max(const char* infile, const char* outfile, size_t k, size_t field, size_t max_records)
 {
     setbuf(stdout, NULL);
 
     // printf(" >> START (max_records: %d)\n", max_records);
 
+    printf("|  T_loading: ");
+    int start = clock();
     Array* A = create_array();
     load_array_max(A, infile, max_records);
-
-    // printf(" >> Fine Caricamento - Inizio Ordinamento\n");
+    printf("%f s\n", ((double)(clock() - start)) / CLOCKS_PER_SEC);
 
     switch (field) {
     case 1:
@@ -204,9 +215,10 @@ void sort_records_max(const char* infile, const char* outfile, size_t k, size_t 
         break;
     }
 
-    // printf(" >> Fine Ordinamento - Inizio Stampa\n");
+    printf("|  T_printing: ");
+    start = clock();
     print_array(outfile, A);
-    // printf(" >> Fine Stampa (%s)\n", outfile);
+    printf("%f s\n", ((double)(clock() - start)) / CLOCKS_PER_SEC);
 
     free(A);
     return;
@@ -214,14 +226,13 @@ void sort_records_max(const char* infile, const char* outfile, size_t k, size_t 
 
 void sort_records(const char* infile, const char* outfile, size_t k, size_t field)
 {
-    setbuf(stdout, NULL);
+    init();
 
-    //    printf(" >> START\n");
-
+    printf("|  T_loading: ");
+    int start = clock();
     Array* A = create_array();
     load_array(A, infile);
-
-    //    printf(" >> Fine Caricamento - Inizio Ordinamento\n");
+    printf("%f s\n", ((double)(clock() - start)) / CLOCKS_PER_SEC);
 
     switch (field) {
     case 1:
@@ -238,9 +249,10 @@ void sort_records(const char* infile, const char* outfile, size_t k, size_t fiel
         break;
     }
 
-    //    printf(" >> Fine Ordinamento - Inizio Stampa\n");
+    printf("|  T_printing: ");
+    start = clock();
     print_array(outfile, A);
-    //    printf(" >> Fine Stampa (%s)\n", outfile);
+    printf("%f s\n", ((double)(clock() - start)) / CLOCKS_PER_SEC);
 
     free(A);
     return;

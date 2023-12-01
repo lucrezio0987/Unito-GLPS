@@ -1,9 +1,8 @@
-
 /**
-        @autor: Luca;
-        @data: 28/12/2018;
-        @nome: Flores Colorida;
-*/
+ * @file Main.c
+ *
+ * @author Lucrezio Del Ponte, Simone Bergesio, Mario Corrao
+ */
 
 #include "Interfaccia.h"
 
@@ -22,4 +21,10 @@ void main(int argc, const char* argv[])
         find_errors(DICTIONARY, TEXT_FILE, MAX_HEIGHT);
 }
 
-// .build/main_ex2 [DICTIONARY] [TEXT_FILE]
+/**
+ *  @code{.bash}
+ *    ./bin/main_ex2 [DICTIONARY] [TEXT_FILE]
+ *    ./bin/main_ex2 [MAX_HEIGHT]
+ *    ./bin/main_ex2
+ *  @endcode
+ */

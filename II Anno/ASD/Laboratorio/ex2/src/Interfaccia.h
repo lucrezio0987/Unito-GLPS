@@ -32,7 +32,7 @@ typedef struct SkipList SkipList;
  *
  * @param list Pointer to a pointer of SkipList.
  * @param max_height Maximum height of the SkipList.
- * @param compar Comparison function for elements in the SkipList.
+ * @param compar Comparison function for generic type of elements in the SkipList.
  */
 void new_skiplist(struct SkipList** list, size_t max_height, int (*compar)(const void*, const void*));
 

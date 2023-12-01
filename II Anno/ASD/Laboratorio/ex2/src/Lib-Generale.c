@@ -1,3 +1,9 @@
+/**
+ * @file Lib-Generale.c
+ *
+ * @author Lucrezio Del Ponte, Simone Bergesio, Mario Corrao
+ */
+
 #include "Interfaccia.h"
 #include <ctype.h>
 #include <stdio.h>
