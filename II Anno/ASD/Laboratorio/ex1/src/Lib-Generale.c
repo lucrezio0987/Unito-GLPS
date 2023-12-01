@@ -177,12 +177,13 @@ void sort_records_max(const char* infile, const char* outfile, size_t k, size_t 
 
     // printf(" >> START (max_records: %d)\n", max_records);
 
-    printf("|  T_loading: ");
+    printf("\033[0;34m|  T_loading: \033[0;30m");
     int start = clock();
     Array* A = create_array();
     load_array_max(A, infile, max_records);
     printf("%f s\n", ((double)(clock() - start)) / CLOCKS_PER_SEC);
 
+    printf("\033[0;34m|  T_Sorting: \033[1;30m");
     switch (field) {
     case 1:
         merge_binary_insertion_sort(A->base, A->nitems, k, compare_string);
@@ -198,7 +199,7 @@ void sort_records_max(const char* infile, const char* outfile, size_t k, size_t 
         break;
     }
 
-    printf("|  T_printing: ");
+    printf("\033[0;34m|  T_printing: \033[0;30m");
     start = clock();
     print_array(outfile, A);
     printf("%f s\n", ((double)(clock() - start)) / CLOCKS_PER_SEC);
@@ -211,12 +212,13 @@ void sort_records(const char* infile, const char* outfile, size_t k, size_t fiel
 {
     init();
 
-    printf("|  T_loading: ");
+    printf("\033[0;34m|  T_loading: \033[0;30m");
     int start = clock();
     Array* A = create_array();
     load_array(A, infile);
     printf("%f s\n", ((double)(clock() - start)) / CLOCKS_PER_SEC);
 
+    printf("\033[0;34m|  T_Sorting: \033[1;30m");
     switch (field) {
     case 1:
         merge_binary_insertion_sort(A->base, A->nitems, k, compare_string);
@@ -232,7 +234,7 @@ void sort_records(const char* infile, const char* outfile, size_t k, size_t fiel
         break;
     }
 
-    printf("|  T_printing: ");
+    printf("\033[0;34m|  T_printing: \033[0;30m");
     start = clock();
     print_array(outfile, A);
     printf("%f s\n", ((double)(clock() - start)) / CLOCKS_PER_SEC);

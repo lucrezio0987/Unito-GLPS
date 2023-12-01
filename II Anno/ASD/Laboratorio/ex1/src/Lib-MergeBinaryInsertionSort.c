@@ -19,8 +19,6 @@ void merge_binary_insertion_sort(void** base, size_t nitems, size_t k, int (*com
     struct timespec ts;
     clock_gettime(CLOCK_THREAD_CPUTIME_ID, &ts);
 
-    printf("|  T_Sorting: ");
-
     if ((temp_merge = (void**)malloc(nitems * sizeof(void*))) == NULL)
         ERROR
     int start = clock();
