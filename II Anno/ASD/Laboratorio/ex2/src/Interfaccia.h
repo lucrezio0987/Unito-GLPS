@@ -1,3 +1,7 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 /**
  * @file Interfaccia.h
  * @brief Declarations and definitions for managing a dictionary implemented with a SkipList.
