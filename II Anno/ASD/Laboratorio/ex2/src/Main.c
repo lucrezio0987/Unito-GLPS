@@ -1,3 +1,10 @@
+
+/**
+        @autor: Luca;
+        @data: 28/12/2018;
+        @nome: Flores Colorida;
+*/
+
 #include "Interfaccia.h"
 
 #define DICTIONARY "dictionary.txt"
