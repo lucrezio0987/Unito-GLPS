@@ -1,3 +1,4 @@
+
 /**
  * @file binary_insertion_sort.h
  * @brief Header file for the Binary Insertion Sort library.
