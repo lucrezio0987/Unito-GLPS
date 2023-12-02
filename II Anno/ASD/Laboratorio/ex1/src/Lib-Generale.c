@@ -1,4 +1,3 @@
-
 /**
  * @file Lib-Generale.c
  * @author Lucrezio Del Ponte, Simone Bergesio, Mario Corrao
