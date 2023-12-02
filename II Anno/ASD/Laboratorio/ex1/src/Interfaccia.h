@@ -10,23 +10,6 @@
  * @author Lucrezio Del Ponte, Simone Bergesio, Mario Corrao
  */
 
-/**
- * @OLD_DOCUMENTATION
- * Compare functions used to switch the type of sort
- *
- * create_array, array_add, load_array, print_array functions used to create an empty array, add an element,
- * load an input file to the array, print array on file
- *
- * merge_binary_insertion_sort, sort_records functions used to choice the algorithm depending on k value,
- * called by main depending on parameter field call the function described previously
- *
- * load_array_max and sort_records_max are used to test the code
- *
- * merge, merge_sort_ric, merge_sort functions used to execute the merge algorithm
- *
- * insert, sort, binary_insertion_sort used to execute the binaryInsertion algorithm
- */
-
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -98,14 +81,14 @@ Records** create_array();
 void array_add(Array* A, Records* rec);
 
 /**
- * @brief Loads records from an input file to the array.
+ * @brief Loads records from an input file into the array.
  * @param A The array.
  * @param infile The input file name.
  */
 void load_array(Array* A, const char* infile);
 
 /**
- * @brief Loads a specified number of records from an input file to the array.
+ * @brief Loads a specified number of records from an input file to the array. (used for tests)
  * @param A The array.
  * @param infile The input file name.
  * @param max_records The maximum number of records to load.
@@ -128,7 +111,6 @@ void print_array(const char* outfile, Array* A);
  * @param compar The comparison function.
  */
 void merge(void** base, unsigned int l, unsigned int m, unsigned int r, int (*compar)(const void*, const void*));
-
 /**
  * @brief Sorts an array using the Merge Sort algorithm.
  * @param base The base array.
@@ -158,7 +140,7 @@ void merge_binary_insertion_sort(void** base, size_t nitems, size_t k, int (*com
 void binary_insertion_sort(void** base, unsigned int l, int r, int (*compar)(const void*, const void*));
 
 /**
- * @brief Searches for an element in a sorted array.
+ * @brief Searches for a specific element in a sorted array.
  * @param x The element to search for.
  * @param base The base array.
  * @param i The start index.
@@ -169,7 +151,7 @@ void binary_insertion_sort(void** base, unsigned int l, int r, int (*compar)(con
 int search(unsigned int x, void** base, unsigned int i, unsigned int j, int (*compar)(const void*, const void*));
 
 /**
- * @brief Sorts records in an input file and writes the result to an output file.
+ * @brief Sorts records in an input file and writes the result to an output file. (The first function called from main)
  * @param infile The input file name.
  * @param outfile The output file name.
  * @param k The threshold value for binary insertion sort.
@@ -178,7 +160,7 @@ int search(unsigned int x, void** base, unsigned int i, unsigned int j, int (*co
 void sort_records(const char* infile, const char* outfile, size_t k, size_t field);
 
 /**
- * @brief Sorts a specified number of records in an input file and writes the result to an output file.
+ * @brief Sorts a specified number of records in an input file and writes the result to an output file. (used for tests)
  * @param infile The input file name.
  * @param outfile The output file name.
  * @param k The threshold value for binary insertion sort.
