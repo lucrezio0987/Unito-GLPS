@@ -1,0 +1,132 @@
+INSERTION SORT 	
+	for (i = 1; i < n; i++) {							A[1, 2, 3, 4, 6]
+		int j = i;				
+		while (A[j] < A[j-1] && j > 0) {					Complessità lineare 	O(n)
+			swap(A, j-1, j); 						Complessità quadratica  O(n^2)
+			j--;								
+		}
+	}
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+SELECTION SORT
+	for (i = 0; i < n - 1; i++) {							A[2, 3, 5, 6 i] j
+		int j = i + 1; 								
+		int min = i;								Complessità quadratica O(n^2)
+		while (j < n) {
+			if (A[j] < A[min])
+				min = j;
+			j++;	
+		}
+		swap (A, i, min);
+	}
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+QUICK SORT -> partition
+	
+int partition(int *A, int p, int j) {							Caso migliore
+    int i = p + 1;									Complessità theta(n log n)
+    while (i <= j) {
+        while (A[i] < A[p]) i++;							Caso peggiore
+        while (A[j] > A[p]) j--;							Complessità theta(n^2)
+    
+        if (i <= j) {
+            scambia(A, i, j);
+            i++; j--;
+        }
+    }
+    scambia(A, p, j);
+    return j;
+}
+
+void QuickSort(int *A, int i, int j) {
+    int p;
+    if (i < j) {
+        p = partition(A, i, j); 
+        QuickSort(A, i, p - 1);
+        QuickSort(A, p + 1, j);
+    }
+
+--------------------------------------------------------------------------------------------------------------------------------
+MERGE SORT
+void MergeSort(A, left, right) {							Complessità O(n log n)
+	if (i < j) {
+		int m = (left + (right - left)) / 2;
+		
+		MergeSort(A, left, m);
+		MergeSort(A, m+1, right);
+
+		Merge(A, left, m, right);
+	}
+}
+
+void Merge(A, left, right, m) {
+	int i = left;
+	int j = m + 1;
+	int k = 0;
+	int B[right - left + 1]
+
+	while (i <= m && j <= right) {
+		if (A[i] < A[j]) {
+			B[k] = A[i]; 
+			i++;
+		}
+		else {
+			B[k] = A[j];
+			j++;
+		}
+		k++;
+	}
+	
+	while (j <= right) {
+		B[k] = A[j];
+		k++; j++;
+		
+	} 
+
+	while (i <= m) {
+		B[k] = A[i];
+		k++; i++;
+	}
+
+	Return B;	
+}
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+BUBBLE SORT
+void BubbleSort(A, n) {									Caso Migliore
+	boolean swap = true;								Complessità O(n)
+	for (int i = n - 1; i > 0 && swap; i--) {
+		swap = false;
+		for (int j = 0; j < i; j++) {						Caso peggiore
+			if (A[j] > A[j + 1]) {						Complessità O(n^2)
+				f_swap(A, j, j + 1);
+				swap = true;
+			}
+		}
+	}
+}
+--------------------------------------------------------------------------------------------------------------------------------
+
+DIVIDE et IMPERA (ricerca)
+int DIVIDEetIMPERA (int *A, int i, int j, int el) {
+	int m = (i+j)/2;								Complessità O(log n)
+	
+	if (m > 0) {
+		if (A[m] == el)
+			return m; 
+		if (el < A[m])
+			return DIVIDEetIMPERA (A, i, m, el);
+		else return DIVIDEetIMPERA (A, m+1, j, el);
+	}
+    	return -1;
+}
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+ 
+
+
