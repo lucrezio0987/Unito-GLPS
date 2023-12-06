@@ -114,3 +114,44 @@ ENIAC:
  - Prendere un problema da risolvere e mapparlo nell’ENIAC era un compito molto complicato, che richiedeva settimane! Tuttavia impiegava pochi secondi per l'esecuzione.
  - quasi tutta la programmazione maunale veniva fatta da 6 donne...
  - l’ENIAC fu spento definitivamente alle ore 23:45 del 2 ottobre 1955
+
+EDVAC:
+ - dopo la costruzione dell'ENIAC, Ecker e Mauchly incominciano a lavorare all'EDVAC
+ - 1944 -> Ecker DESCRIVE un nuovo tipo di memoria: Mercury Delay Line (MDL)
+    * aveva lo scopo di memoriazzare sia dati che programma
+    * memoria ad accesso sequenziale
+ - von Neumann scrisse un report dal titolo "First Draft of a Report on the EDVAC"
+    * contiene la descrizione della struttura logica di un computer basato su programma memorizzato
+    * (la distribuzione al pubblico di informazioni sull’EDVAC fece si che l’EDVAC stesso non potesse più essere brevettato)
+ - Architettura Eckert-Goldstine-Mauchly-von-Neumann
+ -  l’idea di memorizzare i programmi in una memoria, e potenzialmente nella stessa memoria che contiene i dati è ottima:
+   * esecuzione dei programmi più veloce
+   * cambiare il programma da eseguire o modifica e ricompilazione più facili e veloci
+   * istruzioni di controllo più facili da eseguire
+ - problemi:
+    * necessità di una memoria sufficientemente spaziosa
+    * rischi di modificare inavvertitamente il programma
+ - 1946-1949 -> costruzione
+ - 1951 -> diventa operativo
+ - composto da:
+    * 1 memoria
+    * 3 registri
+    * 1 ALU
+    * 1 Control Unit
+ - informazioni in codice binario (a differenza dell'ENIAC)
+    * istruzione: 44 bit
+    * 12 istruzioni macchina disponibili
+ - non esisteva un concetto di memoria secondaria permanete
+ - rimase operativo per ~10 anni
+ - sicuramente il primo a contenere l'IDEA di un computer a programma memorizzato, ma non si può considerare tale (vedi SSEM)
+
+ - l'efficienza del computer non diepndeva solo dalla velocità di calcolo, ma anche dalla velocità con cui vengono inseriti di dati
+
+SSEM:
+ - 1948 -> divena operatovo
+ - Primo computer a programma memorizato
+ - progettato da  F. Williams e T. Kilburn:
+    * inizialmente solo per testare un nuovo tipo di memoria (Williams-Kilburn Tube (WKT))
+        - un tipo di memoria per computer che eliminava alcuni dei difetti delle Mercury Delay Lines.
+
+
