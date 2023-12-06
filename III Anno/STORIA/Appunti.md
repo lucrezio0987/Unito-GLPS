@@ -153,5 +153,10 @@ SSEM:
  - progettato da  F. Williams e T. Kilburn:
     * inizialmente solo per testare un nuovo tipo di memoria (Williams-Kilburn Tube (WKT))
         - un tipo di memoria per computer che eliminava alcuni dei difetti delle Mercury Delay Lines.
-
-
+ - macchiana a 32 bit
+ - l'ALU eseguiva solo sotrazioni e negazioni (le altre erano svolte tramite software)
+ - aveva 4 memorie WKT utilizate per:
+    * 1 ram
+    * 1 registro (contentente istruzioen in eseguzione)
+    * 1 registro (accumulatore: riusltato delle operazioni)
+    * 1 monitor
