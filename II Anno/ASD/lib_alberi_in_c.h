@@ -248,3 +248,28 @@ kTree pop(Stack* stack)
     // Restituisci il valore rimosso
     return poppedValue;
 }
+
+void initKTree(kTree* A, kTree* B, kTree* C, kTree* D, kTree* E, kTree* F, kTree* G)
+{
+    A->key = 'A';
+    A->child = B;
+    A->sibling = NULL;
+    B->key = 'B';
+    B->child = E;
+    B->sibling = C;
+    C->key = 'C';
+    C->child = NULL;
+    C->sibling = D;
+    D->key = 'D';
+    D->child = G;
+    D->sibling = NULL;
+    E->key = 'E';
+    E->child = NULL;
+    E->sibling = F;
+    F->key = 'F';
+    F->child = NULL;
+    F->sibling = NULL;
+    G->key = 'G';
+    G->child = NULL;
+    G->sibling = NULL;
+}
