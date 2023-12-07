@@ -273,3 +273,53 @@ void initKTree(kTree* A, kTree* B, kTree* C, kTree* D, kTree* E, kTree* F, kTree
     G->child = NULL;
     G->sibling = NULL;
 }
+
+typedef struct _serBinTree {
+    struct _serBinTree* parent;
+    int key;
+    struct _serBinTree* left;
+    struct _serBinTree* right;
+} serBinTree;
+
+void initSerBinTree(serBinTree* A, serBinTree* B, serBinTree* C, serBinTree* D, serBinTree* E, serBinTree* F, serBinTree* G, serBinTree* H)
+{
+    A->parent = NULL;
+    A->key = 12;
+    A->left = B;
+    A->right = C;
+
+    B->parent = A;
+    B->key = 7;
+    B->left = D;
+    B->right = E;
+
+    C->parent = A;
+    C->key = 15;
+    C->left = NULL;
+    C->right = F;
+
+    D->parent = B;
+    D->key = 3;
+    D->left = NULL;
+    D->right = NULL;
+
+    E->parent = B;
+    E->key = 10;
+    E->left = G;
+    E->right = NULL;
+
+    F->parent = C;
+    F->key = 18;
+    F->left = H;
+    F->right = NULL;
+
+    G->parent = E;
+    G->key = 9;
+    G->left = NULL;
+    G->right = NULL;
+
+    H->parent = F;
+    H->key = 16;
+    H->left = NULL;
+    H->right = NULL;
+}
