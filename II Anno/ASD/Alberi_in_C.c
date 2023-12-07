@@ -74,7 +74,7 @@ List* BFS_DX(List* l, kTree T) // DA CORREGGERE
 
     while (!isQueueEmpty(myQueue)) {
         kTree tmp = dequeue(myQueue);
-        l = l = add(l, tmp.key);
+        l = add(l, tmp.key);
 
         kTree* tmp2 = tmp.child;
         while (tmp2 != NULL) {
@@ -93,7 +93,7 @@ List* BFS_SX(List* l, kTree T)
 
     while (!isQueueEmpty(myQueue)) {
         kTree tmp = dequeue(myQueue);
-        l = l = add(l, tmp.key);
+        l = add(l, tmp.key);
 
         kTree* tmp2 = tmp.child;
         while (tmp2 != NULL) {
@@ -105,7 +105,7 @@ List* BFS_SX(List* l, kTree T)
     return l;
 }
 
-void main()
+int main()
 {
     kTree A, B, C, D, E, F, G;
     initKTree(&A, &B, &C, &D, &E, &F, &G);
@@ -117,12 +117,13 @@ void main()
     printf("    / \\    |        |       |       |   \n");
     printf("    E  F   G        |       E - F   G   \n");
     printf("\n");
-    printf(" Card:\t%d\n", kTreeCard(A));
-    printf(" Hight:\t%d\n", kTreeHight(A));
+    printf("Card:\t%d\n", kTreeCard(A));
+    printf("Heigth:\t%d\n", kTreeHight(A));
     printf("\n");
     printf(" DFS_DX: %s\n", printListToString(DFS_DX(NULL, A)));
-    // printf(" DFS_SX: %s - [Non funziona]\n", printListToString(DFS_SX(NULL, A)));
-    // printf(" BFS_DX: %s - [Non funziona]\n", printListToString(BFS_DX(NULL, A)));
+    printf(" DFS_SX: %s - [Non funziona]\n", printListToString(DFS_SX(NULL, A)));
+    printf(" BFS_DX: %s - [Non funziona]\n", printListToString(BFS_DX(NULL, A)));
     printf(" BFS_SX: %s\n", printListToString(BFS_SX(NULL, A)));
     printf("\n");
+    return 0;
 }
