@@ -147,7 +147,7 @@ EDVAC:
 
  - l'efficienza del computer non diepndeva solo dalla velocità di calcolo, ma anche dalla velocità con cui vengono inseriti di dati
 
-SSEM:
+SSEM (Small Scale Ecperimental Machine):
  - 1948 -> divena operatovo
  - Primo computer a programma memorizato
  - progettato da  F. Williams e T. Kilburn:
@@ -160,3 +160,37 @@ SSEM:
     * 1 registro (contentente istruzioen in eseguzione)
     * 1 registro (accumulatore: riusltato delle operazioni)
     * 1 monitor
+
+Il successo del SSEM, portò rapidamente allo sviluppo del Manchester Mark I.
+
+Alcuni considerano il Whirlwind I, sviluppato in Massachusetts da Forrester e Everett, il primo computer a programma memorizzato. 
+
+In realtà fu completato in seguito al SSEM ma conteneva due fondamentali innovazioni
+* fu il primo computer ad operare in parallelo sui 16 bit che componevano le sue word, con l'inserimento di una memoria a nucleo magnetico, core memory
+* introdusse il microprogramma, un livello intermedio tra le porte logiche e le istruzioni macchina
+
+- Nel 1952 viene usato un UNIVAC I per predire in diretta i risultati delle elezioni presidenziali.
+
+- Nel 1947, ai laboratori Bell, Bardeen, Brattain, e Shockley, annunciano lo sviluppo del transistor, che sostituirà le valvole termoioniche. 
+
+Con i transistor, si possono costruire circuiti logici molto più veloci, affidabili e compatti, e con consumi minori.
+   
+Nel 1953 Kilburn costruisce una versione a transistor del Manchester Mark I
+
+LE MEMORIE NEGLI ANNI 50
+- vengono sviluppate nuove tecniche di memorizzazione, i nastri magnetici, le rotating drum memory e gli hard disk.
+
+L'UNIVAC I, progettato da Eckert-Mauchly fu uno dei primi computer commerciali.
+- usava come memoria principale una MDL, come memoria di massa un nastro magnetico.
+
+- Nel 1952 commercializzazione Mainframe IBM.
+Il termine Main Frames, significa grossi armadi in cui erano ospitati la CPU e la memoria del computer. Molto costosi e usati da grandi compagnie.
+
+Erano suddivisi a seconda dell'utilizzo:
+* Applicazioni scientifico ingegneristiche
+* Applicazioni commerciali e elaborazione dati
+I primi modelli utilizzavano MKT memory, poi sostituiti da memorie a tamburo rotante e dalle Magnetic Core Memory.
+
+Le memorie a nucleo magnetico sono state la forma predominante di memoria primaria all’incirca dal 1955 al 1975, ideate da JAY FORRESTER.
+
+Le prime MCM avevano temi di accesso intorno ai 10 millisecondi. Erano spesso chiamate core memory o core, ed è per questo che il file che registra un errore di sistema viene chiamato "CORE DUMP".
