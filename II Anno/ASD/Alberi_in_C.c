@@ -30,7 +30,7 @@ int kTreeHight(kTree T)
     return hight + 1;
 }
 
-List* DFS_DX(List* l, kTree T) // DA CORREGGERE
+List* DFS_SX(List* l, kTree T) // DA CORREGGERE
 {
     Stack* myStack = newStack();
     push(myStack, T);
@@ -48,7 +48,7 @@ List* DFS_DX(List* l, kTree T) // DA CORREGGERE
 
     return l;
 }
-List* DFS_SX(List* l, kTree T)
+List* DFS_DX(List* l, kTree T)
 {
     Stack* myStack = newStack();
     push(myStack, T);
@@ -120,9 +120,9 @@ void main()
     printf(" Card:\t%d\n", kTreeCard(A));
     printf(" Hight:\t%d\n", kTreeHight(A));
     printf("\n");
-    printf(" DFS_SX: %s\n", printListToString(DFS_SX(NULL, A)));
-    // printf(" DFS_DX: %s - [Non funziona]\n", printListToString(DFS_DX(NULL, A)));
-    printf(" BFS_SX: %s\n", printListToString(BFS_SX(NULL, A)));
+    printf(" DFS_DX: %s\n", printListToString(DFS_DX(NULL, A)));
+    // printf(" DFS_SX: %s - [Non funziona]\n", printListToString(DFS_SX(NULL, A)));
     // printf(" BFS_DX: %s - [Non funziona]\n", printListToString(BFS_DX(NULL, A)));
+    printf(" BFS_SX: %s\n", printListToString(BFS_SX(NULL, A)));
     printf("\n");
 }
