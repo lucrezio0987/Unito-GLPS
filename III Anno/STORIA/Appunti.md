@@ -279,3 +279,51 @@ GLI ANNI '60 E LA NASCITA DEI COMPUTER MODERNI:
 - **ATLAS**
 
     Implementate la **paginazione e la memoria virtuale**.
+
+
+La serie IBM/360, a partire dal 1964 inaugura la terza generazione di computer, basata sui CIRCUITI INTEGRATI
+
+(seconda generazione -> costituiti da transistor)
+(prima generazione -> valvole termoioniche)
+
+Novità 
+* L'adozione di byte di dimensione fissa da 8 bit
+* Memoria principale indirizzabile a byte
+* Word di dati da 32 bit
+* L'uso esteso del microcodice in tutti i processori
+* 16 registri da 32 bit ciascuno
+* Una program status word da 64 bit
+* Un meccanismo di interrupt
+* L'uso di un tlb per la traduzine degli indirizzi
+* Istruzioni di lunghezza variabile
+* Istruzioni macchina complesse con 2 operandi 
+* Introduzione del Direct Memory Access (DMA)
+
+
+- il CDC 6600
+  
+SEYMOUR CRAY è una figura leggendaria nel campo dei supercomputer. 
+
+Progetta il **CDC 6600**, considerato il primo supercomputer della storia, il più veloce della sua generazione.
+
+Crey introdusse il **Processore Periferico**, che operando in parallelo al processore principale, lo liberava della gestione diretta dei vari dispositivi.
+
+Non più oberata di lavoro quindi, la CPU del CDC 6600 era decisamente la più veloce di quel tempo
+
+Su questa falsariga, la CPU oggi è assistita da altri processori, il NORTHBRIDGE, per comunicare con i dispositivi veloci, e il SOUTHBRIDGE per comunicare con i dispositivi più lenti
+
+Questi circuiti integrati, detti **CHIPSET**, sono collegati alla cpu motherboard del computer
+
+Il processore era dotato di 10 unità funzionali che potevano eseguire istruzioni in parallelo. Primo esempio di INSTRUCTION LEVEL PARALLELISM, oggi usato da tutti i processori moderni
+
+- 1964 -> Douglas EngelBart inventa il **MOUSE**
+
+- 1965 -> PDP-8, nasce una nuova categoria, i MINICOMPUTER
+  
+
+LE PRIME CACHE
+1965 -> Maurice Wilkes
+Idea di utilizzare uno strato di memoria intermedio tra RAM e CPU che sia più veloce, la **CACHE**.
+
+Il primo computer a contenere una cache fu l'IBM 360/85. Al giorno d'oggi tutti i processori usano più livelli di cache.
+
