@@ -110,13 +110,13 @@ void Merge_Sort(int* A, int l, int r)
     }
 }
 
-/** BOUBLE SORT
+/** BUBBLE SORT
  *
  * @caso_migliore:  O(n)
  * @caso_medio:     O(n^2)
  * @caso_peggiore:  O(n^2)
  */
-void Bouble_Sort(int* A, int n)
+void Bubble_Sort(int* A, int n)
 {
     for (int i = n - 1, count = FALSE; i > 0 && !count; --i, count = FALSE) {
         for (int j = 0; j < i; ++j)
