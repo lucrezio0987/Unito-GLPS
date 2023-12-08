@@ -263,13 +263,10 @@ GLI ANNI '60 E LA NASCITA DEI COMPUTER MODERNI:
 
     - Caratteristiche:
 
-        Era composto da un lettore di nastro perforato come memoria di massa e come MCM.
-
-        Era in grado di eseguire 100k istruzioni al secondo.
-
-        L'output veniva scritto sul nasteo perforato o sul monitor.
-     
-     Era completamente costruito con transistor e diodi montati su schede.
+        - Era composto da un lettore di nastro perforato come memoria di massa e come MCM.
+        - Era in grado di eseguire 100k istruzioni al secondo.
+        - L'output veniva scritto sul nasteo perforato o sul monitor.
+        - Era completamente costruito con transistor e diodi montati su schede.
 
 - **ILIAC II**
 
