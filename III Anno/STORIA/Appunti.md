@@ -194,3 +194,58 @@ I primi modelli utilizzavano MKT memory, poi sostituiti da memorie a tamburo rot
 Le memorie a nucleo magnetico sono state la forma predominante di memoria primaria all’incirca dal 1955 al 1975, ideate da JAY FORRESTER.
 
 Le prime MCM avevano temi di accesso intorno ai 10 millisecondi. Erano spesso chiamate core memory o core, ed è per questo che il file che registra un errore di sistema viene chiamato "CORE DUMP".
+
+- L'IBM 650 -> 1953
+  
+Fu il primo computer ad essere commercializzato in grandi quantità.  
+Viene utilizzato per l'insegnamento della programmazione nelle scuole e molti lo considerano l'antenato del PC.  
+Funzionava a tubi catodici con memoria a tamburo rotante "Magnetic drum" ed era composto da
+* unità principale
+* modulo di alimentazione 
+* lettore/perforatore di schede
+  
+I dati erano memorizzati in word contenenti valori decimali a 10 cifre, un meccanismo che non avrà successo in futuro.  
+Era composto da 3 registi per contenere:
+* l'istruzione in esecuzione 
+* il dato indirizzato dall'istruzione
+* il risultato dell'esecuzione
+  
+Le istruzioni macchina avevano un formato fisso: XX YYYY ZZZZ
+* xx:   il codice operativo da eseguire
+* yyyy: l'indirizzo in memoria del dato da usare
+* zzzz: l'indirizzo in memoria della prossima istruzione da eseguire
+  
+1957 -> diventa disponibile un compilatore per il FORTRAN, primo linguaggio di programmazione, ma questo non rese l'utilizzo del 650 più comodo
+
+1968 -> **DONALD KNUTH** -> The Art of Computer Programming (TAOCP)
+Era trattato qualsiasi fondamento teorico e qualsiasi algoritmo
+- ordinamento, ricerca, ricorsione, complessità, numeri casuali etc.
+  
+Knuth non è solo noto per il TAOCP, constatò la necessità di un editore di testi al computer, e sviluppò il TeX.
+
+1956 -> Werner Buccholz inventa la parola byte 
+(ci volle un po' perchè la dimensione si stabilizzasse a 8 bit)
+
+- MEMORIE A TAMBURO ROTANTE
+L'IBM 650 era dotato di una memoria "Magnetic Drum Memory" (MDM).  
+Si incominciarono a costruire computer dotati di due livelli di memoria
+primaria
+* Memorie a nucleo magnetico (MCM)
+* Memorie a tamburo rotante  (MDM)
+Sia le MDM che le MCM erano memorie non volatili, ma troppo piccole per essere usate come memoria secondaria, per la quale si continuarono ad usare nastri magnetici e hard disk
+
+1932 -> GUSTAV TAUSCHEK inventa le MDM
+Costituite da un tamburo rotante la cui superficie era ricoperta da bande di materiale ferromagnetico.
+Con l'inizio degli anni 60 le MDM furono velocemente rimpiazzate dalle MCM e dagli hard disk
+
+1956 -> Primo Hard Disk
+Concettualmente molto simile a quelli moderni, con capacità e dimensioni diverse
+
+1958 -> JACK KILBY, primo circuito integrato
+Conteneva un solo flip flop e pochi transistor, ma aveva dimostrato che questi componenti si potevano integrare e miniaturizzare
+
+I primi IC contenevano ben pochi transistor, col tempo si è riusciti
+ad inserirne sempre di più su un’unica fettina di silicio, fino a
+realizzare processori multi core formati da qualche miliardo di transistor. 
+
+La LEGGE DI MOORE stima che il numero di transistor inseribili in un IC raddoppia ogni 18/24 mesi
