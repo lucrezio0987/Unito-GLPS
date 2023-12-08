@@ -134,24 +134,24 @@ void Bubble_Sort(int* A, int n)
  * @caso_peggiore:  O(log n)
  */
 
-int Binary_Serch(int x, int* A, int l, int r)
+int Binary_Search(int x, int* A, int l, int r)
 {
     int m = (r + l) / 2;
 
-    if (m > 0)
+    if (m > 0){
         if (x == A[m])
             return m;
         else if (x < A[m])
             return Binary_Serch(x, A, l, m - 1);
         else
             return Binary_Serch(x, A, m + 1, r);
-
+    }
     return -1;
 }
 
 #define N 10
 
-void main()
+int main()
 {
     int A[N] = { 4, 2, 3, 9, 1, 5, 7, 6, 0, 8 };
 
@@ -172,11 +172,11 @@ void main()
     else {
         printf("\t[OK]\n");
 
-        printf("Serch: ");
-        if (Binary_Serch(7, A, 0, N - 1) == -1)
+        printf("Search: ");
+        if (Binary_Search(8, A, 0, N - 1) == -1)
             printf("\t[FAIL]\n");
         else
             printf("\t[OK]\n");
     }
-    return;
+    return 0;
 }
