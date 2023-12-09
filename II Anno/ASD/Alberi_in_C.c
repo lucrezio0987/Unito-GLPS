@@ -16,18 +16,26 @@ int kTreeCard(kTree T)
 }
 
 int kTreeHight(kTree T)
-{
+{   
+    if (T.child == NULL)
+        return 0;
+    else if (T.sibling == NULL)
+        return 1 + kTreeHight(*T.child);
+    else 
+        return 1 + max(kTreeHight(*T.sibling), kTreeHight(*T.child));
+
+    /*
     if (T.child == NULL && T.sibling == NULL) // T == NUL -> return 0;
-        return 1;
+        return 0;
 
     int hight = 0;
     kTree* tmp = T.child;
-
+    
     while (tmp != NULL) {
         hight = max(hight, kTreeHight(*tmp));
         tmp = tmp->sibling;
-    }
-    return hight + 1;
+    }*/
+    //return 1 + hight;
 }
 
 List* DFS_SX(List* l, kTree T) // DA CORREGGERE

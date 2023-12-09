@@ -294,7 +294,7 @@ Novità
 * 16 registri da 32 bit ciascuno
 * Una program status word da 64 bit
 * Un meccanismo di interrupt
-* L'uso di un tlb per la traduzine degli indirizzi
+* L'uso di un tlb per la traduzione degli indirizzi
 * Istruzioni di lunghezza variabile
 * Istruzioni macchina complesse con 2 operandi 
 * Introduzione del Direct Memory Access (DMA)
@@ -327,3 +327,51 @@ Idea di utilizzare uno strato di memoria intermedio tra RAM e CPU che sia più v
 
 Il primo computer a contenere una cache fu l'IBM 360/85. Al giorno d'oggi tutti i processori usano più livelli di cache.
 
+- 1967 -> Robert Tomasulo inventa nuovo schema architetturale
+OUT OF ORDER, le istruzioni vengono eseguite in ordine diverso da quello con cui le ha generate il compilatore
+
+Lo schema si basa sulle RESERVATION STATION (RS), complesse memorie in cui sostano le istruzioni in attesa di essere eseguite.
+Appena l'operando diventa disponibile, viene smistato attraverso il COMMON DATA BUS (CDB).
+
+- PDP 11 -> Anni 70
+Il computer più famoso della Digital Equipment Corporation. 
+La caratteristica fondamentale era l'ortogonalità dell'instruction set
+* qualunque modalità di indirizzamento dei dati poteva essere usata da qualsiasi istruzione
+  
+- Floppy Disk -> 1971
+Erano dei semplici supporti di memoria magnetica permanente, trasportabili.
+
+- INTEL -> 1968, ROBERT NOYCE e GORDON MOORE
+Fondano la NM electronics, che diventerà INTEL (integrated electronic corporation)
+
+ANDREY GROVE -> assunto dalla INTEL, la farà diventare il più importante produttore di circuiti integrati
+
+Nel 1966 la Transitron produce un TTL IC in grado di memorizzare 16 bit di dati, nel frattempo al IBM viene sviluppata l'idea di Dynamic Ram, usando un solo transistor per memorizzare i dati
+
+1969 -> La intel produce il 3101 Schottky bipolar memory, un innovativo chip  
+1971 -> la prima Eprom, la 1702
+1979 -> Intel 1103, Magnetic Core Memory Killer, grande quantità di Ram in un unico chip
+
+1970 -> la Intel assume Federico Faggin per lo sviluppo di un nuovo chip.
+1971 -> La Intel rilascia il chip, chiamato 4004, il primo processore sviluppato su un'unica fettina di silicio.
+
+Insieme al 4004 svilupparono:
+* 4001: ROM
+* 4002: RAM
+* 4003: input/output
+
+- COMPUTER TERMINAL CORPORATION, poi DataPoint ->1968, Ray e Roche
+A quei tempi, per interagire con i computer si scriveva su carta e di conseguenza i dispositivi erano lenti e rumorosi (TELETYPE Model 33 -> usata con i computer IBM)
+
+DataPoint 3300 -> nuovo terminale che poteva sostituire la Teletype 33
+Molto più silenzioso e veloce, dotato di monitor
+Il successo del 3300 sollevò enorme richiesta di terminali simili per altri modelli di computer
+
+1969 -> Poor e Pyle vengono assunti con il compito di creare un computer per qualunque terminale scrivente
+
+Le intenzioni di Poor erano di utiizzare un centinaio di Transistor, invece Ray e Roche invitano Poor a parlare con la Intel per realizzare ilprogetto usando un unico circuito integrato
+
+La Intel era impegnata nel 4004, e quindi il prototipo viene sviluppato usando normali circuiti integrati
+
+1970 -> esce quindi il DataPoint 2200, come terminale programmabile
+Visto il successo, viene sviluppato il 2200 II, molto più potente
