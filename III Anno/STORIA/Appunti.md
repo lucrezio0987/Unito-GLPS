@@ -375,3 +375,150 @@ La Intel era impegnata nel 4004, e quindi il prototipo viene sviluppato usando n
 
 1970 -> esce quindi il DataPoint 2200, come terminale programmabile
 Visto il successo, viene sviluppato il 2200 II, molto più potente
+
+
+**Gli anni '70: microprocessori**
+
+La capacità di inserire più componenti miniaturizzati su un'unica fettina di silicio, permetteva di creare processori sempre più prestanti:
+
+* **Velocità**: lavorare con frequenze di clock più alte. (da 0,8 MHz a circa 4 GHz)
+* **Sofisticati**: sfruttare tecniche diverse per velocizzare l'esecuzione di istruzioni.
+* **Più memoria a disposizione**: RAM e più livelli di cache (da qualche KB a qualche GB).
+
+Integrare più transistor porta una grande evoluzione:
+
+* Anni '60: **centinaia** di transistor
+* Anni '70: **migliaia** di transistor
+* Anni '80: **centinaia di migliaia** di transistor
+* Anni '90: **milioni** di transistor
+* Nel 2005 viene prodotto il primo chip contenente più di un **miliardo** di transistor
+
+Come dimensioni siamo all'incirca nell'ordine dei micro/nano metri. Era nota usare la terminologia **"tecnologia a xx micro/nano metri"** introdotta dalla **International Technology Roadmap for Semiconductors**.
+
+Tra le **innovazioni architetturali** troviamo:
+
+* L'evoluzione **RISC** -> anni '80: istruzioni macchina riviste in modo da poter creare macchine più semplici e veloci.
+* Lo sfruttamento dell' **Instruction Level Parallelism** -> anni '90.
+* Introduzione del **multithreading** e dei processori **multicore** -> fine anni '90 / inizio 2000.
+* Uso dei processori grafici per elaborazioni non grafiche (es. GPGPU, GPGP ecc..).
+
+**Xerox** -> nel 1973:
+
+Viene sviluppato **Alto** il primo desktop/personal computer con mouse, GUI e collegamento a rete LAN tramite ethernet.
+
+Ispirato alle idee di Engelbart (inventore del mouse) era un minicomputer ma considerato a tutti gli effetti un **PC**. (influenzò i progetti del Macintosh e delle workstation Sun)
+
+**Apple** -> 1976, Steve Jobs e Steve Wozniak
+
+Wozniak aveva l'intenzione di trasformare il terminale video progettato da lui stesso in un vero e proprio computer.
+
+A quei tempi però, come microprocesori disponibili c'erano l'Intel 8080 e il Motorola 6800 troppo costosi per essere utilizzati. Poco dopo viene reso disponibile il 6502, un microprocessore super-economico molto simile al Motorola 6800, così Wozniak monta quello sul suo progetto.
+
+Alla presentazione del progetto, Jobs riesce a trovare un acquirente disposto a comprare qualche esemplare e da lì venne venduto come **Apple I**.
+
+Ai due (geni indiscussi), si aggiunge un terzo socio Mike Markkula e insieme fondano la **Apple Computers Inc.** (1 aprile 1976)
+
+Intanto, Wozniak inizia a progettare l'**Apple II** che sarà presentato nel 1977.
+
+Nel 1980, venne rilasciato l'**Apple III**, simile al II, ma senza ventilatore. Questo costrinse l'azienda a ritirare dal mercato 14k esemplari.
+
+**Il PC IBM**
+
+Nel 1981 la IBM rilascia l'IBM 5150, un desktop computer con Intel 8080, RAM da 256KB e Floppy come memoria di massa.
+
+**PC vs MAC**
+
+Nel 1979, dopo una visita di Apple a Xerox Parc, nasce l'idea di creare un nuovo computer con UI, icone e finestre.
+
+Inizialmente l'idea viene sviluppata sul **LISA**, con scarso successo per il costo troppo elevato, ma subito dopo con l'uscita del **Macintosh 128k** ebbe un grande successo. Questo segnò l'inizio della divisione tra **PC e MAC**.
+
+**RISC Revolution** -> anni '80 (Restricted Instruction Set Computer)
+
+Patterson e Hennessy diedero luogo alla RISC Revolution, nuovi processori caratterizzati da istruzioni macchina semplici, struttura regolare e dimensione fissa.
+
+Le nuove macchine RISC, rimpiazzeranno i vecchi processori denominati CISC. (Complex Instruction Set Computer)
+
+Negli anni '60 e '70 i processori impiegavano instruction set con le seguenti caratteristiche:
+
+* Gran numero di istruzioni macchina
+* Istruzioni macchina complesse
+* Molteplici modalità di indirizzamento della memoria dati
+* Possibilità per tutte le istruzioni di indirizzare la memoria dati usando una delle tante modalità
+
+(es. istruzione MVC usata per spostare dati in vari punti della RAM)
+
+Le istruzioni macchina complesse avevano dei vantaggi:
+* Generavano eseguibili molto ridotti
+* Dato che i tempi di accesso alla memoria principale erano elevati, aveva senso esprimere istruzioni con grande quantità di lavoro
+* I compilatori erano arretrati, erano progettati per questo tipo di operazioni.
+
+Parte della difficoltà della traduzione veniva trasferita al processore, grazie al microprogramma.
+* L'uso della microprogrammazione portava alla generazione di istruzioni complesse
+* Essendo memorizzate nella ROM, era comodo aggiungere il relativo microprogramma alla ROM
+* Era possibile cambiare l'instruction set solo cambiando la ROM.
+
+Tuttavia aveva delle conseguenze:
+* Richiedevano molti byte di descrizione, le istruzioni avevano lunghezza variabile.
+* La lunghezza variabile faceva si che i bit per gli operandi si trovassero in posizioni diverse
+
+Istruzioni così formate avevano tempi di esecuzione elevati:
+* La memoria istruzioni veniva letta a blocchi di dimensione fissa, quindi non era possibile stabilire se era stata presa un'istruzione completa, o due ecc..
+* Una volta prelevata l'istruzione era necessario decodificare l'opcode per capire in quali bit venivano specificati gli operandi
+* Istruzioni complesse richiedono data-path e UC complesse
+* Poichè tutte le istruzioni possono indirizzare la RAM, poteva nascere un bottle-neck
+
+Per ovviare a queste problematiche (negli anni '80) si iniziò a studiare un nuovo paradigma architetturale:
+* A Berkeley, Patterson e Sequin creano un nuovo processore chiamato **SPARC**
+* A Stanford, Hennessy sviluppa un processore chiamato **MIPS**
+
+Un'architettura RISC quindi, impiega istruzioni macchina **semplici** ovvero che specificano poco lavoro
+
+Quindi:
+* Data-path corto e cicli di clock più corti
+* Istruzioni tutte con la stessa lunghezza e struttura regolare
+* Solo istruzioni di **LOAD e STORE** indirizzano la RAM (no bottle-neck)
+
+**MIPS** -> anni '80, Hennessy (Microprocessor without Interlocked Pipelines Stages)
+
+**SPARC** -> anni '80, Patterson e Sequin (Scalable Processor ARChitecture)
+
+RISC  quindi per funzionare aveva bisogno di RAM più grandi e più registri.
+
+A causa della diatriba tra i sostenitori RISC e CISC, vennero confrontati la prima volta nel 1989 tra il VAX 8700 e il MIPS M2000. **MIPS era tre volte più veloce del VAX!**
+
+Di conseguenza dagli anni '90 tutti i produttori adottarono l'architettura RISC, tranne la INTEL che usa una variante di CISC.
+
+**ILP** -> anni '90 (Instruction Level Parallelism)
+
+Sfruttamento del parallelismo delle istruzioni in esecuzione:
+* **Scheduling dinamico della pipeline**: le istruzioni indipendenti vengono eseguite in qualsiasi ordine
+* **Branch prediction dinamico**: l'esito dei salti condizionati viene predetto in base alle esecuzioni precedenti
+* **Speculazione hardware**: l'esecuzione di istruzioni prima di sapere se effettivamente dovranno essere eseguite
+* **Multiple issue**: avvio all' esecuzione più istruzioni in parallelo
+* **Ottimizzazione del compilatore**: produrre codice più "sfruttabile" dalla CPU per l'esecuzione parallela
+
+**CPU MULTITHREAD e MULTICORE** -> anni 2000
+* I processori **multithread** eseguono in parallelo istruzioni appartenenti a più peer thread
+* I processori **multicore** permettono di eseguire in parallelo più processi
+
+    **Si combinano le due tecniche in modo che ogni core implementi il multithread**
+
+**GPU** -> anni 2000
+* Le GPU possono elaborare in parallelo grandi quantità di dati in virgola mobile
+* I supercomputer di oggi sono composti da milioni di core e combinano CPU multi-core e GPU per poter computare migliaia di **TeraFLOPS** (FLoating OPeration per Second).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
