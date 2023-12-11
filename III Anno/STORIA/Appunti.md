@@ -507,6 +507,107 @@ Sfruttamento del parallelismo delle istruzioni in esecuzione:
 * Le GPU possono elaborare in parallelo grandi quantità di dati in virgola mobile
 * I supercomputer di oggi sono composti da milioni di core e combinano CPU multi-core e GPU per poter computare migliaia di **TeraFLOPS** (FLoating OPeration per Second).
 
+**STORIA DEI LINGUAGGI DI PROGRAMMAZIONE**
+
+Non è possibile stabilire una data precisa in cui comincia la storia dei linguaggi di programmazione.
+
+**Charles Babbage** derivò l'idea di pilotare l'Analytical Engine tramite le schede perforate (come nel telaio di Jaquard)
+
+**Ada Lovelace** -> 1943 elaborò una specifica per calcolare i numeri di Bernoulli, per questo verrà considerata la **prima programmatrice della storia**
+
+**Zuse** -> 1943/45 concepì per lo Z3 il **Plankalkul**, una sorta di linguaggio ad alto livello
+
+**Mark I** -> (1943, Haiken) le istruzione erano codificate su nastro perforato e i loop erano ottenuti incollando insieme l'inizio e la fine del nastro.
+
+**Goldstine e Von Neumann** sviluppano l'idea di Flow Diagrams, adesso meglio noti come **Flowchart** e inizia a diffondersi il concetto informatico di **assegnamento**
+
+**SSEM** i dati venivano inseriti a mano, utilizzando 32 switch per stabilire il valore di ogni bit.
+
+**EDVAC** i bit che componevamo il programma, erano inseriti singolarmente nella MDL (Mercury Delay Lines).
+
+**EDSAC** (1949, Renwick, Wilkes)
+Fu il secondo computer a programma memorizzato, ma il primo ad essere usato per scopi commerciali
+E' formato da:
+* Tubi catodici
+* MDL da 512 words
+* 2 registri
+* Un lettore di nastro perforato per l'input
+* Telescrivente per l'output
+
+Viene introdotta per la prima volta l'idea di dare alle istruzioni macchina (**Initial Orders**) una forma mnemonica, quindi più utilizzabile dagli essere umani
+
+Al codice operativo era associato un numero a due cifre che indicava l'indirizzo in memoria dell'operando.
+
+Il programma andava codificato sul nastro usando un perforatore manuale
+
+In sostanza, gli Initial Orders rappresentavano una **forma primitiva di Assembler**
+
+Nasce anche il concetto di **subroutine** che erano porzioni di codice richiamabili. Furono ideate da **Wheeler**
+
+**ShortCode di Mauchly**
+
+Mauchly concepisce il primo linguaggio di programmazione ad alto livello lo Short Order Code
+
+Viene **implementato da Shmitt**, un lavoratore della Eckert-Mauchly Computer Corporation (EMCC)
+
+Inizialmento fu concepito per il BINAC, ma fu usato sull'**UNIVAC I**
+
+Il **primo corso di programmazione** fu tenuto da Grace Hopper e i suoi collaboratori intorno al 1949.
+
+**Shmitt** lavorò anche alla scrittura del programma che interpretava le equazioni da calcolare, questo fu il **primo interprete della storia**
+
+**Haskell Curry** sviluppa alcune idee di programmazione strutturata, illustra alcuni algoritmi ricorsivi per convertire la notazione matematica in linguaggio macchina.
+Questi algoritmi sono considerabili come il primo esempio di descrizione della fase di **generazione del codice di un compilatore**.
+
+**Rutishauer** (1949/1951) inventa il **ciclo FOR**
+Egli usava codici numerici specifici per ogni carattere alfanumerico, questo era **rilocabile**
+
+**Corrado Bohm** (1950) definisce un linguaggio ad alto livello e un metodo di traduzione da livello alto a linguaggio macchina
+Introduce:
+* il **goto**
+* **if-then-else**
+* **assegnamento**
+* **subroutine**
+* La definizione completa di un **compilatore scritto nello stesso linguaggio dei programmi da compilare**
+
+Il compilatore di Bohm si dimostro più efficace di quello di Rutishauer, ed egli dimostro anche che **il suo linguaggio è universale, ovvero capace di calcolare qualsiasi funzione computabile**
+
+**AUTOCODE** (1952, Glennie) fu il primo compilatore effettivamente operativo (fu sviluppato per il Mark I)
+
+Glennie era consapevole che **si potesse usare lo stesso computer per tradurre il codice ad alto livello e far girare il programma tradotto**
+
+Glennie era però troppo "avanti" perchè prima c'erano diversi problemi da risolvere ad esempio:
+* Capire perchè l'esecuzione di un programma fallisse
+* Risolvere i problemi di scarsa memoria
+
+Il termine linguaggio di programmazione non era ancora in uso, si parlava di **pseudo code**
+
+Grace Hopper sviluppa un sistema in cui alcune pseudo istruzioni possono essere tradotte in linguaggio macchina, lei lo chiama **compiling routine**
+
+Anni 1954-1956:
+* Viene sviluppato il primo assembler chiamato **SOAP**
+* Viene sviluppato il **BACAIC**, per tradurre espressioni algebriche il linguaggio macchina
+* **Elsworth** lavora alla traduzione di equazioni in linguaggio macchina e lo chiama **Kompiler**
+* **Blum** presenta **ADES** il primo linguaggio dichiarativo fondato sulla teoria della ricorsione di **Kleene**
+* **Perils e Smith** sviluppano un linguaggio e compilatore chiamato **IT**:
+    * Il primo linguaggio potente ed espressivo e con una implementazione efficiente
+    * Grazie a esso era possibile sviluppare compilatori anche per computer poco potenti (IBM 650)
+
+**FORTRAN** (1957, Backus, Herrick, Ziller)
+
+Esce il linguaggio più famoso e celebrato di quegli anni il FORTRAN.
+Permetteva di utilizzare nomi di variabili composti da due lettere.
+Il report del FORTRAN era il primo tentativo di specifica rigoroso la sintassi di un linguaggio, in esso iniziò a manifestarsi il concetto di **BNF**
+
+Inizialmente era pieno di errori e parti incomplete, ma quasi un anno dopo fu utilizzato per un buon numero di programmi.
+
+Fu il primo linguaggio di programmazine ad alto livello dotato di un compilatore efficiente e influenzò i linguaggi successivamente creati.
+
+
+
+
+
+
 
 
 
