@@ -648,7 +648,66 @@ L'ALGOL è il primo linguaggio a richiedere la dichiarazione del tipo delle vari
 * INTEGER, BOOLEAN, REAL, DOUBLE, LONG, ARRAY
 * Compare per la prima volta l'**if then else**
 * Compaiono i blocchi di istruzioni delimitati da begin--end in cui è possibile dichiarare funzioni e variabili locali
-  
+
+Un'altra innovazione introdotta con l'ALGOL è l'uso di una notazione formale per descrivere il linguaggio, la **Backus Naur Form** (BNF). Di fatto è una notazione per grammatiche **context free**, infatti è usata sia per la descrizione della sintassi, sia per il formato dei documenti e protocolli di comunicazione.
+
+Fu sviluppata da **Backus** per descrivere l' ALGOL 58, poi **Naur** la modificò per adattarla all' ALGOL 60 proponendo il cambio nome in **Backus Normal Form**.
+
+Le **grammatiche context free** furono definite da **Chomsky** nella metà degli anni '50.
+
+Il progetto dell'ALGOL portò alla ricerca di tecniche di parsificazione e allo sviluppo del concetto di **parsificatore LL**, in grado di parsificare linguaggi generati da un sottoinsieme delle grammatiche context free.
+
+Nel 1965 **Knuth** definì il **parsificatore LR** in grado di parsificare i linguaggi da qualsiasi grammatica context free.
+
+**BASIC** -> (1964, Kemeny e Kurtz) -> Beginner's All-purpose Symbolic Instruction Code
+
+In realtà furono un gruppo di studenti guidati da Kemeny e Kurtz a sviluppare il compilatore.
+
+Lo scopo del BASIC era di permettere a studenti non esperti o specializzati di utilizzare i computer e scrivere programmi complessi.
+
+Nello stesso periodo iniziarono a diffondersi i sistemi **time sharing**, accessibili tramite **telescriventi remoti**, questo permetteva l'aumentare di utenti.
+
+La vera esplosione del linguaggio avvenne intorno agli anni '70, con la diffusione dei **microcomputer** (computer con microprocessori, economici e quindi alla portata di molti).
+
+Così dalla metà degli anni '70, qualsiasi computer forniva un compilatore BASIC. In alcuni casi, l'interprete dei comandi era BASIC, poteva ricevere istruzioni BASIC direttamente da terminale.
+
+Funzionavano così **APPLE II e il Commodore PET 2001**.
+
+Il BASIC era **sufficientemente leggero** da poter girare su computer scarsi, ma allo stesso tempo ad alto livello e semplice.
+
+Il **BASIC COMPUTER GAME di Ahl** (1978) fu il primo libro libro di informatica a superare il milione di copie vendute.
+
+Ovviamente al linguaggio furono applicate varie migliorie, soprattutto all'ingresso dei PC IBM sul mercato. Il culmine di questo processo si ebbe probabilmente con il **Visual BASIC** (1991) sebbene si trovasse già a competere con linguaggi più avanzati come C e C++.
+
+**Altair 8800** -> (1974, MITS) -> **Home Computer**
+
+Bill Gates e Paul Allen contattano l'azienda per offrire un interprete BASIC.
+
+Allen e Gates fondano la **Micro-Soft** (4 aprile 1975) il cui primo prodotto sarà l'**Altair Basic**.
+
+All'inizio degli anni '70, Wozniak utilizzava il BASIC per scrivere videogiochi. Il suo **GAME BASIC** fu poi ridenominato **Integer BASIC**.
+
+Esso fu adottato come interprete e ambiente di sviluppo nell' Apple I e II, fino a quando la Apple non acquistò una versione completa che chiamerà **Applesoft BASIC**.
+
+**Spaghetti Code**
+
+Sebbene l'ALGOL contenesse primitive di controllo per il flusso, il GOTO permetteva uno stile di **programmazione non strutturata**
+
+Il codice non strutturato prende il nome di **Spaghetti Code**
+
+**Teorema di Bohm Jacopini** (1966)
+
+Dimostrano un teorema che asserisce che qualsiasi funzione computabile può essere calcolata da un programma costituito esclusivamente da:
+* **Sequenze** di istruzioni eseguite una dopo l'altra
+* Istruzioni di **selezione** (if then else)
+* Istruzioni di **iterazione** (while do)
+
+Sostanzialmente il teorema dimostra che si possono scrivere programmi senza il GOTO, ovvero evitando di saltare dentro e fuori a blocchi di istruzione in modo disordinato. Anche Dijkstra critica l'uso del GOTO e dice che dovrebbe essere abolito.
+
+Per molti il GOTO resta comuqnue utile ad esempio:
+* In un articolo, Structured Programming with Go To Statement, Knuth mostra che il costrutto è ideale in alcuni casi.
+* Nel manuale sul C, Kernighan e Ritchie osservano che il costrutto è fondamentale per gestire condizioni di errore e uscire rapidamente da cicli.
+
 
 
 
