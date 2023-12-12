@@ -22,7 +22,6 @@ Pascalina -> 1641, Blaise Pascal
     - prima macchina calcolatrice
     - sviluppa il sistema di numerazione binario
 
-
 1725, Basile Bouchon:
     - ideò l'utilizzo di rotoli di carta perforata su telai
 1801, Joseph Jacquard:
@@ -507,6 +506,10 @@ Sfruttamento del parallelismo delle istruzioni in esecuzione:
 * Le GPU possono elaborare in parallelo grandi quantità di dati in virgola mobile
 * I supercomputer di oggi sono composti da milioni di core e combinano CPU multi-core e GPU per poter computare migliaia di **TeraFLOPS** (FLoating OPeration per Second).
 
+
+-------------------------------------------------------------------------------------------------
+
+
 **STORIA DEI LINGUAGGI DI PROGRAMMAZIONE**
 
 Non è possibile stabilire una data precisa in cui comincia la storia dei linguaggi di programmazione.
@@ -597,13 +600,55 @@ Anni 1954-1956:
 
 Esce il linguaggio più famoso e celebrato di quegli anni il FORTRAN.
 Permetteva di utilizzare nomi di variabili composti da due lettere.
-Il report del FORTRAN era il primo tentativo di specifica rigoroso la sintassi di un linguaggio, in esso iniziò a manifestarsi il concetto di **BNF**
+Il report del FORTRAN era il primo tentativo di specificare in modo rigoroso la sintassi di un linguaggio, in esso iniziò a manifestarsi il concetto di **BNF**
 
 Inizialmente era pieno di errori e parti incomplete, ma quasi un anno dopo fu utilizzato per un buon numero di programmi.
 
-Fu il primo linguaggio di programmazine ad alto livello dotato di un compilatore efficiente e influenzò i linguaggi successivamente creati.
+Fu il primo linguaggio di programmazione ad alto livello dotato di un compilatore efficiente e influenzò i linguaggi successivamente creati.
 
+**LISP** (1958, John McCarty)
 
+E' il linguaggio di programmazione più vecchio ancora in uso, dopo il FORTRAN.
+
+E' quello che oggi chiameremmo linguaggio di programmazione funzionale, con molte idee innovative
+* uso della ricorsione
+* uso di liste concatenate e alberi
+* allocazione dinamica della memoria
+* possibilità di comporre funzioni in funzioni complesse
+
+La scelta di adottare la notazione (+ 20 30) rendeva i programmi LIPS sorprendentemente efficienti
+
+Ebbe enorme successo in ambiente accedemico e divenne il linguaggio di riferimento per l'AI. Ne sono state sviluppate diverse varianti
+* Franz LISP
+* Common LISP
+* Scheme
+
+**Il COBOL** (1959, consorzio CODASYL)
+
+Linguaggio concepito per applicazioni in campo amministrativo e commerciale. 
+Il department of Defense USA obbligò le compagnie di computer a fornire il cobol nelle loro installazioni, cosi questo si diffuse velocemente.
+
+* buona efficienza
+* facilità d'uso
+* portabilità dei programmi su sistemi diversi
+
+Negli anni '70 era di gran lunga il linguaggio più usato al mondo, ma il futuro non sembra molto promettente.
+
+**L'ALGOL 60** (1960)
+ L'algol 58 è ricordato principalmente per la sua influenza sull'Algol 60
+ **TONY HOARE**, inventore del QuickSort, osservò che l'Algol era un linguaggio molto avanzato..
+
+ Non era però particolarmente adatto per le applicazioni commerciali.
+ Vengono definite per la prima volta le modalità di passaggio dei parametri
+ * call by value: l'espressione passata come argomento viene valutata e il risultato viene legato al parametro formale corrispondente nella procedura
+ * call by name: una variante del call by reference, poi abbandonata
+ * call by reference: si passa un riferimento alla variabile usata come argomento (il suo indirizzo)
+
+L'ALGOL è il primo linguaggio a richiedere la dichiarazione del tipo delle variabili usate nei programmi con parole riservate: 
+* INTEGER, BOOLEAN, REAL, DOUBLE, LONG, ARRAY
+* Compare per la prima volta l'**if then else**
+* Compaiono i blocchi di istruzioni delimitati da begin--end in cui è possibile dichiarare funzioni e variabili locali
+  
 
 
 
