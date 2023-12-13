@@ -704,9 +704,29 @@ Dimostrano un teorema che asserisce che qualsiasi funzione computabile può esse
 
 Sostanzialmente il teorema dimostra che si possono scrivere programmi senza il GOTO, ovvero evitando di saltare dentro e fuori a blocchi di istruzione in modo disordinato. Anche Dijkstra critica l'uso del GOTO e dice che dovrebbe essere abolito.
 
-Per molti il GOTO resta comuqnue utile ad esempio:
+Per molti il GOTO resta comunque utile ad esempio:
 * In un articolo, Structured Programming with Go To Statement, Knuth mostra che il costrutto è ideale in alcuni casi.
 * Nel manuale sul C, Kernighan e Ritchie osservano che il costrutto è fondamentale per gestire condizioni di errore e uscire rapidamente da cicli.
+
+**SIMULA I e SIMULA 67** (1962 - 1965 -> Dahl, Nygaard)
+
+E' l'antesignano dei linguaggi di programmazione object oriented.  
+Si dimostrò particolarmente adatto per modellare il funzionamento di sistemi ad eventi discreti come protocolli di comunicazione.
+
+Dahl e Nygaard si ispirarono al concetto di record class proposto da Hoare. Riescono a definire un modello di classi e sottoclassi sufficientemente chiaro e facile da implementare mediante una gerarchia.
+
+Le istanze di una classe erano gli oggetti, e l'operazione new creava una nuova istanza di una classe. 
+
+* In Simula una classe è implementata come una procedura che restituisce il puntatore al suo record di attivazione
+* Un oggetto è un record di attivazione prodotto dalla chiamata di una classe, ed è anche detto istanza di una classe
+* Vengono introdotti i puntatori, chiamati **REF**  
+* Era necessario un meccanismo di garbage collection
+  
+Con Simula nascono i concetti di 
+* Classe, SottoClasse, Tipo, SottoTipo, Oggetti e Ereditarietà
+Va ricordati anche per la sua capacità di modellare la concorrenza
+
+
 
 
 
