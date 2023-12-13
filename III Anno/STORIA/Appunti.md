@@ -726,6 +726,91 @@ Con Simula nascono i concetti di
 * Classe, SottoClasse, Tipo, SottoTipo, Oggetti e Ereditarietà
 Va ricordati anche per la sua capacità di modellare la concorrenza
 
+**Pascal** (1971, Niklaus Wirth)
+
+Viene considerato il successore dell'ALGOL, fu progettato negli anni '60 e aveva l'ambizione di essere efficiente da compilare ed eseguire, permettere la scrittura di programmi ben strutturati e organizzati.
+
+Il progetto del Pascal era quello di migliorare i difetti dell'ALGOL e furono introdotte: 
+* la defizione di **procedure e funzioni anche nidificate**
+* l'uso di **strutture dati dinamiche**
+* uso di **puntatori**
+* il **call by value**
+* il **call by reference**
+
+In più aveva un sistema molto ricco ma rigido, con un **meccanismo di type checking** a compile time che evitava gli errori di tipo.
+
+Il compilatore del Pascal non generava codice macchina, ma codice oggetto per una virtual machine, il **P-Code**. Esso veniva trasformato in codice macchina successivamente.
+
+Nel 1983 viene progettato il **Turbo Pascal**, un compilatore in grado di ridurre i tempi di compilazione e di produrre eseguibili efficienti.
+
+Le versioni successive del **Turbo Pascal** includevano ad esempio la possibilità di scomporre programmi in **moduli compilabili separatamente**, una **interfaccia per Windows**, una versione **object oriented**
+
+**Prolog** -> (1972, Colmerauer, Roussel, Kowalsky)
+
+Ha diritto a un suo posto nella storia perchè iniziatore del **paradigma di programmazione logica** e alla base del progetto dei **calcolatori della quinta generazione**
+
+E' un dimostratore **automatico di teoremi che usa come inferenza la regola di risoluzione**
+
+Un programma Prolog è un elenco di clausole, in cui è vero l'atomo di testa se sono veri tutti gli atomi del corpo.
+
+**Nel Prolog tutti i programmi sono ricorsivi**
+
+**FGCS** -> (5th Generation Computer Systems) -> 1981
+
+Il governo giapponese lanciò un programma per la progettazione di supercomputer che sfruttavano il **parallelismo, linguaggio naturale, AI**, aree in cui il Prolog era adatto.
+
+5th Generation indica il salto rispetto alle precedenti tecnologie:
+* valvole termoioniche
+* transistor
+* circuiti integrati
+* microprocessori
+
+Nel 1982, Shapiro inventò il **Concurrent Prolog** che integrava programmazione logica e concorrente.
+
+Le macchine della 5th generation venivano valutate in **LIPS**.
+
+In sostanza, il progetto si rivelò un **FALLIMENTO**
+
+**Smalltalk** (Alan Kay, anni '60/'70)
+
+Fu cocepito allo Xerox Parc, dove nel 1972 descrive l'idea del **Dynabook**, un dispositivo portatile per favorire l'apprendimento dei bambini.
+
+Era in tutto e per tutto simile a un tablet di oggi, ma era un'idea rivoluzionaria per quei tempi. 
+
+Lo **Smalltalk** era l'interfaccia del SO e il linguaggio del Dynabook. Successivamente si passò dallo Smalltalk-72 allo Smalltalk-80 grazie a **Ingalls e Goldberg**
+
+Il primo ambiente di programmazione ad interfaccia, fu sviluppato per lo Smalltalk e fu implementato sullo Xerox Alto.
+
+Nello Smalltalk esistono **solo oggetti**: anche le **classi sono oggetti**. Quindi **tutte le operazioni sono messaggi inviati agli oggetti**
+
+I programmi sono costituiti **solo da classi e oggetti**.
+
+Gli oggetti hanno **dati privati** e comunicano con i **metodi**
+
+Un **sistema di tipi dinamico e flessibile** permetteva di adattare facilmente vecchi programmi a nuove applicazioni.
+
+**ADA** (1977, Jean Ichbiah)
+
+Nasce per l'esigenza di voler unificare tutti i linguaggi di programazione. In seguito a diverse candidature venne giudicato come migliore il progetto di Jean Ichbiah.
+
+Al linguaggio venne dato questo nome in onore di **Ada Lovelace**.
+
+Derivava le sue caratteristiche:
+* Dall'ALGOL -> per la struttura generale e la sintassi
+* Dal Pascal -> per il sistema di tipi
+* Dal Simula -> per la concorrenza e parallelismo
+
+Nel 1985 era il terzo linguaggio più usato, ma nel 2015 venne posizionato circa alla trentesima posizione.
+
+
+
+
+
+
+
+
+
+
 
 
 
