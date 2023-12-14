@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 /**
  * @file Interfaccia.h
  * @brief Declarations and definitions for managing a dictionary implemented with a SkipList.
@@ -11,6 +7,10 @@
  *
  * @author Lucrezio Del Ponte, Simone Bergesio, Mario Corrao
  */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #ifndef DICTIONARY_H_laokjsdnbudjllvfidkfmqm
 #define DICTIONARY_H_laokjsdnbudjllvfidkfmqm

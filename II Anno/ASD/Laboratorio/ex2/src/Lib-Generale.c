@@ -43,7 +43,7 @@ typedef enum { FALSE,
 
 struct Node {
     struct Node** next;
-    size_t size;
+    size_t;
     void* item;
 };
 
@@ -115,7 +115,6 @@ void clear_skiplist(struct SkipList** list)
 
     clear_skiplist_ric(next);
 
-    free((*list)->next);
     free((*list)->next);
     free(*list);
 }
