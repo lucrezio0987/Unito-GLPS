@@ -22,7 +22,6 @@ Pascalina -> 1641, Blaise Pascal
     - prima macchina calcolatrice
     - sviluppa il sistema di numerazione binario
 
-
 1725, Basile Bouchon:
     - ideò l'utilizzo di rotoli di carta perforata su telai
 1801, Joseph Jacquard:
@@ -506,6 +505,317 @@ Sfruttamento del parallelismo delle istruzioni in esecuzione:
 **GPU** -> anni 2000
 * Le GPU possono elaborare in parallelo grandi quantità di dati in virgola mobile
 * I supercomputer di oggi sono composti da milioni di core e combinano CPU multi-core e GPU per poter computare migliaia di **TeraFLOPS** (FLoating OPeration per Second).
+
+
+-------------------------------------------------------------------------------------------------
+
+
+**STORIA DEI LINGUAGGI DI PROGRAMMAZIONE**
+
+Non è possibile stabilire una data precisa in cui comincia la storia dei linguaggi di programmazione.
+
+**Charles Babbage** derivò l'idea di pilotare l'Analytical Engine tramite le schede perforate (come nel telaio di Jaquard)
+
+**Ada Lovelace** -> 1943 elaborò una specifica per calcolare i numeri di Bernoulli, per questo verrà considerata la **prima programmatrice della storia**
+
+**Zuse** -> 1943/45 concepì per lo Z3 il **Plankalkul**, una sorta di linguaggio ad alto livello
+
+**Mark I** -> (1943, Haiken) le istruzione erano codificate su nastro perforato e i loop erano ottenuti incollando insieme l'inizio e la fine del nastro.
+
+**Goldstine e Von Neumann** sviluppano l'idea di Flow Diagrams, adesso meglio noti come **Flowchart** e inizia a diffondersi il concetto informatico di **assegnamento**
+
+**SSEM** i dati venivano inseriti a mano, utilizzando 32 switch per stabilire il valore di ogni bit.
+
+**EDVAC** i bit che componevamo il programma, erano inseriti singolarmente nella MDL (Mercury Delay Lines).
+
+**EDSAC** (1949, Renwick, Wilkes)
+Fu il secondo computer a programma memorizzato, ma il primo ad essere usato per scopi commerciali
+E' formato da:
+* Tubi catodici
+* MDL da 512 words
+* 2 registri
+* Un lettore di nastro perforato per l'input
+* Telescrivente per l'output
+
+Viene introdotta per la prima volta l'idea di dare alle istruzioni macchina (**Initial Orders**) una forma mnemonica, quindi più utilizzabile dagli essere umani
+
+Al codice operativo era associato un numero a due cifre che indicava l'indirizzo in memoria dell'operando.
+
+Il programma andava codificato sul nastro usando un perforatore manuale
+
+In sostanza, gli Initial Orders rappresentavano una **forma primitiva di Assembler**
+
+Nasce anche il concetto di **subroutine** che erano porzioni di codice richiamabili. Furono ideate da **Wheeler**
+
+**ShortCode di Mauchly**
+
+Mauchly concepisce il primo linguaggio di programmazione ad alto livello lo Short Order Code
+
+Viene **implementato da Shmitt**, un lavoratore della Eckert-Mauchly Computer Corporation (EMCC)
+
+Inizialmento fu concepito per il BINAC, ma fu usato sull'**UNIVAC I**
+
+Il **primo corso di programmazione** fu tenuto da Grace Hopper e i suoi collaboratori intorno al 1949.
+
+**Shmitt** lavorò anche alla scrittura del programma che interpretava le equazioni da calcolare, questo fu il **primo interprete della storia**
+
+**Haskell Curry** sviluppa alcune idee di programmazione strutturata, illustra alcuni algoritmi ricorsivi per convertire la notazione matematica in linguaggio macchina.
+Questi algoritmi sono considerabili come il primo esempio di descrizione della fase di **generazione del codice di un compilatore**.
+
+**Rutishauer** (1949/1951) inventa il **ciclo FOR**
+Egli usava codici numerici specifici per ogni carattere alfanumerico, questo era **rilocabile**
+
+**Corrado Bohm** (1950) definisce un linguaggio ad alto livello e un metodo di traduzione da livello alto a linguaggio macchina
+Introduce:
+* il **goto**
+* **if-then-else**
+* **assegnamento**
+* **subroutine**
+* La definizione completa di un **compilatore scritto nello stesso linguaggio dei programmi da compilare**
+
+Il compilatore di Bohm si dimostro più efficace di quello di Rutishauer, ed egli dimostro anche che **il suo linguaggio è universale, ovvero capace di calcolare qualsiasi funzione computabile**
+
+**AUTOCODE** (1952, Glennie) fu il primo compilatore effettivamente operativo (fu sviluppato per il Mark I)
+
+Glennie era consapevole che **si potesse usare lo stesso computer per tradurre il codice ad alto livello e far girare il programma tradotto**
+
+Glennie era però troppo "avanti" perchè prima c'erano diversi problemi da risolvere ad esempio:
+* Capire perchè l'esecuzione di un programma fallisse
+* Risolvere i problemi di scarsa memoria
+
+Il termine linguaggio di programmazione non era ancora in uso, si parlava di **pseudo code**
+
+Grace Hopper sviluppa un sistema in cui alcune pseudo istruzioni possono essere tradotte in linguaggio macchina, lei lo chiama **compiling routine**
+
+Anni 1954-1956:
+* Viene sviluppato il primo assembler chiamato **SOAP**
+* Viene sviluppato il **BACAIC**, per tradurre espressioni algebriche il linguaggio macchina
+* **Elsworth** lavora alla traduzione di equazioni in linguaggio macchina e lo chiama **Kompiler**
+* **Blum** presenta **ADES** il primo linguaggio dichiarativo fondato sulla teoria della ricorsione di **Kleene**
+* **Perils e Smith** sviluppano un linguaggio e compilatore chiamato **IT**:
+    * Il primo linguaggio potente ed espressivo e con una implementazione efficiente
+    * Grazie a esso era possibile sviluppare compilatori anche per computer poco potenti (IBM 650)
+
+**FORTRAN** (1957, Backus, Herrick, Ziller)
+
+Esce il linguaggio più famoso e celebrato di quegli anni il FORTRAN.
+Permetteva di utilizzare nomi di variabili composti da due lettere.
+Il report del FORTRAN era il primo tentativo di specificare in modo rigoroso la sintassi di un linguaggio, in esso iniziò a manifestarsi il concetto di **BNF**
+
+Inizialmente era pieno di errori e parti incomplete, ma quasi un anno dopo fu utilizzato per un buon numero di programmi.
+
+Fu il primo linguaggio di programmazione ad alto livello dotato di un compilatore efficiente e influenzò i linguaggi successivamente creati.
+
+**LISP** (1958, John McCarty)
+
+E' il linguaggio di programmazione più vecchio ancora in uso, dopo il FORTRAN.
+
+E' quello che oggi chiameremmo linguaggio di programmazione funzionale, con molte idee innovative
+* uso della ricorsione
+* uso di liste concatenate e alberi
+* allocazione dinamica della memoria
+* possibilità di comporre funzioni in funzioni complesse
+
+La scelta di adottare la notazione (+ 20 30) rendeva i programmi LIPS sorprendentemente efficienti
+
+Ebbe enorme successo in ambiente accedemico e divenne il linguaggio di riferimento per l'AI. Ne sono state sviluppate diverse varianti
+* Franz LISP
+* Common LISP
+* Scheme
+
+**Il COBOL** (1959, consorzio CODASYL)
+
+Linguaggio concepito per applicazioni in campo amministrativo e commerciale. 
+Il department of Defense USA obbligò le compagnie di computer a fornire il cobol nelle loro installazioni, cosi questo si diffuse velocemente.
+
+* buona efficienza
+* facilità d'uso
+* portabilità dei programmi su sistemi diversi
+
+Negli anni '70 era di gran lunga il linguaggio più usato al mondo, ma il futuro non sembra molto promettente.
+
+**L'ALGOL 60** (1960)
+ L'algol 58 è ricordato principalmente per la sua influenza sull'Algol 60
+ **TONY HOARE**, inventore del QuickSort, osservò che l'Algol era un linguaggio molto avanzato..
+
+ Non era però particolarmente adatto per le applicazioni commerciali.
+ Vengono definite per la prima volta le modalità di passaggio dei parametri
+ * call by value: l'espressione passata come argomento viene valutata e il risultato viene legato al parametro formale corrispondente nella procedura
+ * call by name: una variante del call by reference, poi abbandonata
+ * call by reference: si passa un riferimento alla variabile usata come argomento (il suo indirizzo)
+
+L'ALGOL è il primo linguaggio a richiedere la dichiarazione del tipo delle variabili usate nei programmi con parole riservate: 
+* INTEGER, BOOLEAN, REAL, DOUBLE, LONG, ARRAY
+* Compare per la prima volta l'**if then else**
+* Compaiono i blocchi di istruzioni delimitati da begin--end in cui è possibile dichiarare funzioni e variabili locali
+
+Un'altra innovazione introdotta con l'ALGOL è l'uso di una notazione formale per descrivere il linguaggio, la **Backus Naur Form** (BNF). Di fatto è una notazione per grammatiche **context free**, infatti è usata sia per la descrizione della sintassi, sia per il formato dei documenti e protocolli di comunicazione.
+
+Fu sviluppata da **Backus** per descrivere l' ALGOL 58, poi **Naur** la modificò per adattarla all' ALGOL 60 proponendo il cambio nome in **Backus Normal Form**.
+
+Le **grammatiche context free** furono definite da **Chomsky** nella metà degli anni '50.
+
+Il progetto dell'ALGOL portò alla ricerca di tecniche di parsificazione e allo sviluppo del concetto di **parsificatore LL**, in grado di parsificare linguaggi generati da un sottoinsieme delle grammatiche context free.
+
+Nel 1965 **Knuth** definì il **parsificatore LR** in grado di parsificare i linguaggi da qualsiasi grammatica context free.
+
+**BASIC** -> (1964, Kemeny e Kurtz) -> Beginner's All-purpose Symbolic Instruction Code
+
+In realtà furono un gruppo di studenti guidati da Kemeny e Kurtz a sviluppare il compilatore.
+
+Lo scopo del BASIC era di permettere a studenti non esperti o specializzati di utilizzare i computer e scrivere programmi complessi.
+
+Nello stesso periodo iniziarono a diffondersi i sistemi **time sharing**, accessibili tramite **telescriventi remoti**, questo permetteva l'aumentare di utenti.
+
+La vera esplosione del linguaggio avvenne intorno agli anni '70, con la diffusione dei **microcomputer** (computer con microprocessori, economici e quindi alla portata di molti).
+
+Così dalla metà degli anni '70, qualsiasi computer forniva un compilatore BASIC. In alcuni casi, l'interprete dei comandi era BASIC, poteva ricevere istruzioni BASIC direttamente da terminale.
+
+Funzionavano così **APPLE II e il Commodore PET 2001**.
+
+Il BASIC era **sufficientemente leggero** da poter girare su computer scarsi, ma allo stesso tempo ad alto livello e semplice.
+
+Il **BASIC COMPUTER GAME di Ahl** (1978) fu il primo libro libro di informatica a superare il milione di copie vendute.
+
+Ovviamente al linguaggio furono applicate varie migliorie, soprattutto all'ingresso dei PC IBM sul mercato. Il culmine di questo processo si ebbe probabilmente con il **Visual BASIC** (1991) sebbene si trovasse già a competere con linguaggi più avanzati come C e C++.
+
+**Altair 8800** -> (1974, MITS) -> **Home Computer**
+
+Bill Gates e Paul Allen contattano l'azienda per offrire un interprete BASIC.
+
+Allen e Gates fondano la **Micro-Soft** (4 aprile 1975) il cui primo prodotto sarà l'**Altair Basic**.
+
+All'inizio degli anni '70, Wozniak utilizzava il BASIC per scrivere videogiochi. Il suo **GAME BASIC** fu poi ridenominato **Integer BASIC**.
+
+Esso fu adottato come interprete e ambiente di sviluppo nell' Apple I e II, fino a quando la Apple non acquistò una versione completa che chiamerà **Applesoft BASIC**.
+
+**Spaghetti Code**
+
+Sebbene l'ALGOL contenesse primitive di controllo per il flusso, il GOTO permetteva uno stile di **programmazione non strutturata**
+
+Il codice non strutturato prende il nome di **Spaghetti Code**
+
+**Teorema di Bohm Jacopini** (1966)
+
+Dimostrano un teorema che asserisce che qualsiasi funzione computabile può essere calcolata da un programma costituito esclusivamente da:
+* **Sequenze** di istruzioni eseguite una dopo l'altra
+* Istruzioni di **selezione** (if then else)
+* Istruzioni di **iterazione** (while do)
+
+Sostanzialmente il teorema dimostra che si possono scrivere programmi senza il GOTO, ovvero evitando di saltare dentro e fuori a blocchi di istruzione in modo disordinato. Anche Dijkstra critica l'uso del GOTO e dice che dovrebbe essere abolito.
+
+Per molti il GOTO resta comunque utile ad esempio:
+* In un articolo, Structured Programming with Go To Statement, Knuth mostra che il costrutto è ideale in alcuni casi.
+* Nel manuale sul C, Kernighan e Ritchie osservano che il costrutto è fondamentale per gestire condizioni di errore e uscire rapidamente da cicli.
+
+**SIMULA I e SIMULA 67** (1962 - 1965 -> Dahl, Nygaard)
+
+E' l'antesignano dei linguaggi di programmazione object oriented.  
+Si dimostrò particolarmente adatto per modellare il funzionamento di sistemi ad eventi discreti come protocolli di comunicazione.
+
+Dahl e Nygaard si ispirarono al concetto di record class proposto da Hoare. Riescono a definire un modello di classi e sottoclassi sufficientemente chiaro e facile da implementare mediante una gerarchia.
+
+Le istanze di una classe erano gli oggetti, e l'operazione new creava una nuova istanza di una classe. 
+
+* In Simula una classe è implementata come una procedura che restituisce il puntatore al suo record di attivazione
+* Un oggetto è un record di attivazione prodotto dalla chiamata di una classe, ed è anche detto istanza di una classe
+* Vengono introdotti i puntatori, chiamati **REF**  
+* Era necessario un meccanismo di garbage collection
+  
+Con Simula nascono i concetti di 
+* Classe, SottoClasse, Tipo, SottoTipo, Oggetti e Ereditarietà
+Va ricordati anche per la sua capacità di modellare la concorrenza
+
+**Pascal** (1971, Niklaus Wirth)
+
+Viene considerato il successore dell'ALGOL, fu progettato negli anni '60 e aveva l'ambizione di essere efficiente da compilare ed eseguire, permettere la scrittura di programmi ben strutturati e organizzati.
+
+Il progetto del Pascal era quello di migliorare i difetti dell'ALGOL e furono introdotte: 
+* la defizione di **procedure e funzioni anche nidificate**
+* l'uso di **strutture dati dinamiche**
+* uso di **puntatori**
+* il **call by value**
+* il **call by reference**
+
+In più aveva un sistema molto ricco ma rigido, con un **meccanismo di type checking** a compile time che evitava gli errori di tipo.
+
+Il compilatore del Pascal non generava codice macchina, ma codice oggetto per una virtual machine, il **P-Code**. Esso veniva trasformato in codice macchina successivamente.
+
+Nel 1983 viene progettato il **Turbo Pascal**, un compilatore in grado di ridurre i tempi di compilazione e di produrre eseguibili efficienti.
+
+Le versioni successive del **Turbo Pascal** includevano ad esempio la possibilità di scomporre programmi in **moduli compilabili separatamente**, una **interfaccia per Windows**, una versione **object oriented**
+
+**Prolog** -> (1972, Colmerauer, Roussel, Kowalsky)
+
+Ha diritto a un suo posto nella storia perchè iniziatore del **paradigma di programmazione logica** e alla base del progetto dei **calcolatori della quinta generazione**
+
+E' un dimostratore **automatico di teoremi che usa come inferenza la regola di risoluzione**
+
+Un programma Prolog è un elenco di clausole, in cui è vero l'atomo di testa se sono veri tutti gli atomi del corpo.
+
+**Nel Prolog tutti i programmi sono ricorsivi**
+
+**FGCS** -> (5th Generation Computer Systems) -> 1981
+
+Il governo giapponese lanciò un programma per la progettazione di supercomputer che sfruttavano il **parallelismo, linguaggio naturale, AI**, aree in cui il Prolog era adatto.
+
+5th Generation indica il salto rispetto alle precedenti tecnologie:
+* valvole termoioniche
+* transistor
+* circuiti integrati
+* microprocessori
+
+Nel 1982, Shapiro inventò il **Concurrent Prolog** che integrava programmazione logica e concorrente.
+
+Le macchine della 5th generation venivano valutate in **LIPS**.
+
+In sostanza, il progetto si rivelò un **FALLIMENTO**
+
+**Smalltalk** (Alan Kay, anni '60/'70)
+
+Fu cocepito allo Xerox Parc, dove nel 1972 descrive l'idea del **Dynabook**, un dispositivo portatile per favorire l'apprendimento dei bambini.
+
+Era in tutto e per tutto simile a un tablet di oggi, ma era un'idea rivoluzionaria per quei tempi. 
+
+Lo **Smalltalk** era l'interfaccia del SO e il linguaggio del Dynabook. Successivamente si passò dallo Smalltalk-72 allo Smalltalk-80 grazie a **Ingalls e Goldberg**
+
+Il primo ambiente di programmazione ad interfaccia, fu sviluppato per lo Smalltalk e fu implementato sullo Xerox Alto.
+
+Nello Smalltalk esistono **solo oggetti**: anche le **classi sono oggetti**. Quindi **tutte le operazioni sono messaggi inviati agli oggetti**
+
+I programmi sono costituiti **solo da classi e oggetti**.
+
+Gli oggetti hanno **dati privati** e comunicano con i **metodi**
+
+Un **sistema di tipi dinamico e flessibile** permetteva di adattare facilmente vecchi programmi a nuove applicazioni.
+
+**ADA** (1977, Jean Ichbiah)
+
+Nasce per l'esigenza di voler unificare tutti i linguaggi di programazione. In seguito a diverse candidature venne giudicato come migliore il progetto di Jean Ichbiah.
+
+Al linguaggio venne dato questo nome in onore di **Ada Lovelace**.
+
+Derivava le sue caratteristiche:
+* Dall'ALGOL -> per la struttura generale e la sintassi
+* Dal Pascal -> per il sistema di tipi
+* Dal Simula -> per la concorrenza e parallelismo
+
+Nel 1985 era il terzo linguaggio più usato, ma nel 2015 venne posizionato circa alla trentesima posizione.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
