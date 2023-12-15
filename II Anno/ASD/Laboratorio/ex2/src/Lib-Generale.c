@@ -10,7 +10,6 @@
 #include <string.h>
 #include <time.h>
 
-#define MAX_RECORDS 50
 #define MAX_STRING 30
 #define TEST(text) printf("\033[4;36m%s\033[0;31m\n", text);
 
@@ -43,7 +42,7 @@ typedef enum { FALSE,
 
 struct Node {
     struct Node** next;
-    size_t;
+    size_t size;
     void* item;
 };
 
@@ -245,7 +244,6 @@ void find_errors(const char* dictfile, const char* textfile, size_t max_height)
     LoadData(Dict, dictfile);
     printf("\033[0;32m[ Caricato ]\033[0;31m\n");
 
-    int i = 0;
     char string[MAX_STRING];
 
     FILE* fp_textfile;
@@ -256,7 +254,7 @@ void find_errors(const char* dictfile, const char* textfile, size_t max_height)
     }
     printf("\033[0;32m[ File Aperto ]\033[0;31m\n");
 
-    while (fscanf(fp_textfile, "%s", string) == 1 && ++i != MAX_RECORDS) {
+    while (fscanf(fp_textfile, "%s", string) == 1) {
         clean_string(string);
         printf("\033[0;34m%20s:\033[0;31m", string);
         if (search_skiplist(Dict, string) == NULL)
