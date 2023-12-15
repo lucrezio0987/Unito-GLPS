@@ -1,2 +1,3 @@
 *.csv
 ASD/Laboratorio/*.csv
+.DS_store
