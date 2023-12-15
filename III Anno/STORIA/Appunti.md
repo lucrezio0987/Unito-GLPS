@@ -802,6 +802,107 @@ Derivava le sue caratteristiche:
 
 Nel 1985 era il terzo linguaggio più usato, ma nel 2015 venne posizionato circa alla trentesima posizione.
 
+**Linguaggio C** (metà anni '60, Bell Labs, MITS e General Electric)
+
+Linguaggio di maggior successo nella storia dell'informatica grazie all'elevata **portabilità ed efficienza**. Sono stati implementati **sistemi operativi e applicazioni embedded**.
+
+Anche **compilatori e interpreti** sono scritti in C.
+
+Ritchie, Thompson e Kernighan erano coinvolti nel progetto MULTICS, mentre Thompson lavorava sul file system arrivò a sviluppare un sistema operativo completo chiamato **Unix**
+
+Avevano anche scritto un nuovo linguaggio per il SO, che venne chiamato **B**. Era derivato dal BCPL che ricordiamo per l'introduzione delle parentesi graffe.
+
+Introdussero nel B notazioni come "x++, ++x, ==, ecc.."
+
+Essendo non tipato, Ritchie lo modificò e creò il **C**.
+
+Negli anni 80' lo sviluppo del **C++** compatibile con C, e la decisione di Microsoft di utilizzarlo come linguaggio standard decretarono l'affermazione di esso.
+
+Qualità ottime:
+
+* **Portabilità** : eseguibile su qualsiasi piattaforma
+* **Modularità** : diviso in sotto-programmi
+* **Efficienza** : programmi più veloci
+* **Compattezza** : programmi molto sintetici
+* **Tipi flessibili** : combinazione di variabili di diverso tipo
+* **Gestione ottima della memoria** : attraverso i puntatori
+* **Bitwise programming** : lavorare su singoli bit
+
+
+**C++** --> anni '80, Stroustrup --> evoluzione del C che incontrava gli **oggetti**
+
+Dopo poco anni diventò esso il linguaggio più usato grazie all'implementazione degli oggetti.
+
+**Objective-C** anni '80, Cox --> estensione object-oriented del C
+
+Fu usato da Apple per lo sviluppo di sistemi operativi come OS X e iOS.
+
+**C-Sharp** 1999-2000, Microsoft --> mix tra C, C++ e Java
+
+**Java** 1995, Gosling (Sun Microsystem)
+
+L'azienda è ricordata per lo sviluppo del sistema operativo **Solaris** e l'architettura software **NFS**
+
+Nel 2010 fu assorbita da **Oracle**
+
+Tutto nacque da un progetto basato sullo sviluppo di un dispositivo per la TV via cavo, era necessario un linguaggio per scaricare dati dalla rete che fosse abbastanza efficiente da girare sul processore del dispositivo.
+
+Successivamente con la nascita del **World Wide Web**, il progetto risultò inutile.
+
+**Anni '90** --> Internet diventa popolare
+
+Sviluppo di linguaggi come **HTML**, protocollo **HTTP** e i primi **Browser**
+
+Nel 1993 viene sviluppato **Mosaic** il primo browser capace di combinare immagini e testo.
+
+Alla Sun, furono capaci di convertire un progetto apparentemente fallimentare in un successo, scaricare applicazioni dalla rete e eseguirle su un browser per **aggiungere capacità interattive** tramite le **Applet**.
+
+Oltre al linguaggio veniva fornito anche **HotJava** un browser scritto in Java. Successivamente tutti i browser vennero aggiornati aggiungendo una JVM (Java Virtual Machine).
+
+I programmi Java erano meno efficienti del C++, ma negli anni la storia cambiò.
+
+La sua portabilità determinò un grande successo grazie al suo modo di essere compilato, viene generato codice in **bytecode** che viene poi interpretato dalla Java Virtual Machine fornita da loro stessi.
+
+**Linguaggi di scripting**
+
+Negli ultimi anni è avvenuta un enorme diffusione di **linguaggi di scripting general purpose** in grado di coniugare:
+* caratteristiche dei classici linguaggi
+* caratteristiche dei classici linguaggi di scripting
+
+Attualmente i più famosi sono **Perl, Python, PHP, JS e Ruby**
+
+**PERL** 1987, Wallk
+
+Usato nei sistemi UNIX e basato sul C.
+
+Eè soprattuto usato per scrivere **script CGI** ossia programmi eseguiti su WebServer.
+
+**Python** 1991, von Rossum
+
+Possiede caratteristiche object oriented e sintassi semplice, l'implementazione più diffusa è **CPython** scritta in C.
+
+Python viene usato per sviluppo di applicazioni web in campo scientifico.
+
+**PHP** 1994, Lerdorf
+
+Fu concepito per la scrittura di pagine Web dinamiche e linguaggio di scripting lato server.
+
+**JavaScript** 1995, Eich
+
+Linguaggio strutturato con caratteristiche object based e funzionali, usato per applicazioni lato client per pagine Web.
+
+**Ruby** 1995, Mastumoto
+
+Semplice come il LISP, orientato agli oggeti come lo smalltalk e pratico come il Perl.
+
+E' particolarmente adatto per lo sviluppo di WebApp e viene considerato da molti il successore di PHP.
+
+La sua popolarità è dovuta alla piattaforma **rails** usata per scrivere applicazioni web.
+
+
+
+
+
 
 
 
