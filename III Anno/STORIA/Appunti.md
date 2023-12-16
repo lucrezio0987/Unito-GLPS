@@ -679,7 +679,7 @@ Il **BASIC COMPUTER GAME di Ahl** (1978) fu il primo libro libro di informatica 
 
 Ovviamente al linguaggio furono applicate varie migliorie, soprattutto all'ingresso dei PC IBM sul mercato. Il culmine di questo processo si ebbe probabilmente con il **Visual BASIC** (1991) sebbene si trovasse già a competere con linguaggi più avanzati come C e C++.
 
-**Altair 8800** -> (1974, MITS) -> **Home Computer**
+**Altair 8800** -> (1974, MIT) -> **Home Computer**
 
 Bill Gates e Paul Allen contattano l'azienda per offrire un interprete BASIC.
 
@@ -802,7 +802,7 @@ Derivava le sue caratteristiche:
 
 Nel 1985 era il terzo linguaggio più usato, ma nel 2015 venne posizionato circa alla trentesima posizione.
 
-**Linguaggio C** (metà anni '60, Bell Labs, MITS e General Electric)
+**Linguaggio C** (metà anni '60, Bell Labs, MIT e General Electric)
 
 Linguaggio di maggior successo nella storia dell'informatica grazie all'elevata **portabilità ed efficienza**. Sono stati implementati **sistemi operativi e applicazioni embedded**.
 
@@ -899,9 +899,92 @@ E' particolarmente adatto per lo sviluppo di WebApp e viene considerato da molti
 
 La sua popolarità è dovuta alla piattaforma **rails** usata per scrivere applicazioni web.
 
+------------------------------------------------------------------------
+**Terzo file**
 
+Fino al 1950, non si era mai parlato di **sistemi operativi**
 
+A partire dall'EDVAC costruito con l'architettura Von Neumann si introduce il concetto di **istruzioni macchina**
 
+**Fase 1** --> fino al 1955, **Job by Job** 
+
+In questa fase non c'era interfaccia tra la macchina e i programmi degli utenti :
+* Ogni indirizzo in memoria, e dunque ogni cella di memoria erano raggiungibili
+* Non esisteva alcun File System, e nemmeno il concetto di file:
+le informazioni venivano caricati direttamente da schede perforate o da nastro magnetico.
+* nella memoria veniva caricato e eseguito un solo programma
+
+**Fase 2** 1955, **Sistemi Batch**
+
+Consiste nel **permettere al computer di pianificare il lavoro attraverso un rogramma apposito**
+
+Le schede di controllo erano eseguite da un programma salvato in memoria chiamato **Resident Monitor**
+
+Rispetto alla fase 1, emerge la distinzione tra programma e dati
+
+Il Resident Monitor permetteva di automatizzare l'esecuzione di un gruppo di programmi, indicati come **batch jobs**
+
+Si indica con **batch processing** il lavoro del Resident Monitor e **batch system** i computer su cui girava.
+
+I pacchetti di schede dei vari programmi venivano raccolti e inseriti nel lettore di schede, e i job venivano trasferiti su nastro magnetico.
+
+**BKS** 1957
+
+ Era un sistema batch sviluppato per Philco Transac 2000 che era in grado di prendere l'input dal nastro magnetico o direttamente dal lettore di schede.
+
+ **Fase 3** anni '60 --> Multiprogrammazione
+
+ Introduzione fondamentale fu la **memoria ad accesso diretto** (MDM) e la **creazione di canali tra la memoria primaria e secondaria**
+
+ Tutto ciò permetteva la: **multiprogrammazione**
+
+ E' possibile grazie all'uso degli **hard disk**
+
+Sostanzialmente il caricamento del programma e la stampa potevano avvenire "contemporaneamente".
+
+Questa modalità di eseguire e gestire input/output veniva chiamata **spooling**
+
+Se un programa doveva fermarsi per eseguire operazioni input/output, un altro programma poteva essere mandato in esecuzione. Questo concetto veniva chiamato **multitasking cooperativo**
+
+**Atlas** 1961 Kilburn, Payne, Howard
+
+Fu il primo sistema operativo moderno, conteneva due elementi fondamentali come:
+* System call
+* memoria virtuale con paginazione
+
+Dunque si vede emergere una sofisticata gestione della memoeria, utilizzando una gerarchia valida ancora oggi.
+
+La **core store** veniva usata come cache, contenente una porzione o tutto il programma in esecuzione
+
+La **drum store** svolgeva il ruolo di memoria principale
+
+**B5000** 1961, Burroghs Corp.
+
+Fu il primo computer in grado di gestire uno **stack**, un' innovazione architetturale. (memoria virtuale)
+
+Il **Master Control Program (MCP)** fu il primo sistema operativo ad implementare una memoria virtuale segmentata e il primo a soffrire di **trashing** ovvero il superamento delle capacità della RAM.
+Va ricordato perch+ **fu il primo linguaggio ad alto livello e il primo ad utilizzare un timer hardware**.
+
+**Fase 4** --> metà anni '60 --> Timesharing
+
+**CTSS** 1961, MIT
+
+Fu il primo sistema timesharing che alternava l'esecuzione di vari programmi, un breve burst di CPU per ciacuno
+
+Il sistema CTSS cercava di garantire che ogni utente ricevesse risposta dal computer in tempi ragionevoli. I progettisti i trovarono a dover risolvere una serie di problemi:
++ I programmi in esecuzione dovevano essere tenuti tutti contemporaneamente in memoria primaria
++ Il programma in esecuzione doveva poter essere interrotto temporaneamente alla fine del suo quanto di tempo, e ovviamente riprendere dal punto in cui era stato fermato.
++ Le operazioni di I/O dovevano essere eseguite sotto il controllo del sistema
+
+Il CTSS era dotato di **accesso controllato degli utenti** attraverso una fase di login e password.
+
+Nel 1965 fu scritto un programma **“MAIL"** per automatizzare lo scambio di mail tra gli utenti.
+
+Il CTSS fu la base del progetto **MULTICS** il sistema operativo più ambizioso e controverso
+
+Il MULTICS non ebbe un gran successo commerciale, probabilmente proprio perché era decisamente un sistema esagerato.
+
+Il sistema fu sviluppato in **PL/1**, un linguaggio pesante e inefficiente
 
 
 
