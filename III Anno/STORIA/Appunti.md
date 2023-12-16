@@ -916,7 +916,7 @@ le informazioni venivano caricati direttamente da schede perforate o da nastro m
 
 **Fase 2** 1955, **Sistemi Batch**
 
-Consiste nel **permettere al computer di pianificare il lavoro attraverso un rogramma apposito**
+Consiste nel **permettere al computer di pianificare il lavoro attraverso un programma apposito**
 
 Le schede di controllo erano eseguite da un programma salvato in memoria chiamato **Resident Monitor**
 
@@ -952,7 +952,7 @@ Fu il primo sistema operativo moderno, conteneva due elementi fondamentali come:
 * System call
 * memoria virtuale con paginazione
 
-Dunque si vede emergere una sofisticata gestione della memoeria, utilizzando una gerarchia valida ancora oggi.
+Dunque si vede emergere una sofisticata gestione della memoria, utilizzando una gerarchia valida ancora oggi.
 
 La **core store** veniva usata come cache, contenente una porzione o tutto il programma in esecuzione
 
@@ -965,7 +965,7 @@ Fu il primo computer in grado di gestire uno **stack**, un' innovazione architet
 Il **Master Control Program (MCP)** fu il primo sistema operativo ad implementare una memoria virtuale segmentata e il primo a soffrire di **trashing** ovvero il superamento delle capacità della RAM.
 Va ricordato perch+ **fu il primo linguaggio ad alto livello e il primo ad utilizzare un timer hardware**.
 
-**Fase 4** --> metà anni '60 --> Timesharing
+**Fase 4** --> metà anni '60 --> **Timesharing**
 
 **CTSS** 1961, MIT
 
@@ -986,15 +986,45 @@ Il MULTICS non ebbe un gran successo commerciale, probabilmente proprio perché 
 
 Il sistema fu sviluppato in **PL/1**, un linguaggio pesante e inefficiente
 
+**File system moderno**
 
+Il MULTICS va ricordato perchè:
++ ispirò lo sviluppo dello Unix
++ fu proposta l'idea di file system gerarchico
 
+**File System Gerarchico** 1965, Daley, Neumann
 
+Pubblicarono un articolo che contiene l'essenza di ciò che ad oggi chiamiamo ancora file system gerarchico
 
+L'implementazione effettiva fu attuata sul sistema Titan
 
+I file devono essere organizzati in una struttura ad albero con i nodi interni che costituiscono le directory che possono contenere sotto-directory in una struttura espandibile chiamata **pathname di un file**
 
+**Titan**
 
+Fu il primo a contenere il file system moderno, su cui venivano memorizzati file tramite la **File Allocation Table**
 
+**OS/360** IBM
 
+Va ricordato perchè negli anni '60 dominò la scena a livello commerciale.
+
+Nel 1964 la IBM lancia la linea di mainframe System/360 con l'idea che tutti questi computer dovessero usare un unico sistema operativo, **OS/360**
+
+Sebbene l’idea di sistema time sharing fosse ormai nota, l’OS/360 era ancora un **sistema multiprogrammato**
+
+**Unix**
+
+Nessun altro sistema operativo ha avuto tanta influenza come lo Unix.
+
+**Ken Thompson**, che aveva lavorato al MULTICS trovò in uno dei laboratori un PDP-7 poco usato, e decise di svilupparci sopra un sistema più facile da usare del MULTICS. Insieme a Ritchie svilupparono un file system gerarchico, un interprete e un gestore dei processi.
+
+Brian Kernighan propose il definitivo nome Unix.
+
+Nel 1973 lo Unix viene riscritto in C. **La nuova versione è un terzo più lunga di quella scritta direttamente in assembler, ma infinitamente più facile da capire, modificare e, soprattutto, installare su hardware diversi**
+
+Dal MULTICS presero la struttura del file system e il funzionamento della **Shell**, e da un sistema timesharing del 1965 sviluppato a Berkeley la **fork**
+
+**Fase 5** Sistemi concorrenti
 
 
 
