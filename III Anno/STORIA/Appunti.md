@@ -1026,23 +1026,119 @@ Dal MULTICS presero la struttura del file system e il funzionamento della **Shel
 
 **Fase 5** Sistemi concorrenti
 
+Si scoprirono i **principi fondamentali della programmazione concorrente**
 
+**THE** 1968, Dijkstra
 
+Sistema innovativo costruito a **strati sovrapposti** che trasformano la macchina fisica in **macchina virtuale** e usa i **semafori** per la sincronizzazione e comunicazione tra processi.
 
+**RC 4000** 1969, Hansen
 
+Non era un sistema operativo completo, ma il primo esperimento di sviluppo di **kernel** attorno al quale sviluppare un sistema
 
+Hansen è anche il padre del **Concurrent Pascal** un linguaggio contenente primitive del Pascal per la sincronizzazione e comunicazione tra processi.
 
+La potenzialità del linguaggio fu mostrata con lo sviluppo di **Solo**, un sistema operativo facile da comprendere e modificare.
 
+**Fase 6** 
 
+**Sistema OS 6** 1969-1972 Stoy, Strachey
 
+Sistema operativo per personal computer scritto in BCPL, è importante storicamente per il file system e del maccanismo di input/output e fu adottato nello sviluppo dello Xerox Alto.
 
+**Alto**
 
+Sistema operativo sviluppato anch'esso in BCPL, lo ricordiamo per la sua rivoluzionaria interfaccia grafica 
 
+**Pilot** --> 1980 --> multiprogrammato
 
+**Xerox Star** --> 1981 --> primo sistema dotato di mouse e interfaccia
 
+**CP/M** 1973, Kildall
 
+Sistema operativo per controllare il drive di un floppy disk
 
+Fonda la **Digital Research** per commercializzare il sistema operativo, che divenne popolarissimo.
 
+Dunque fu il primo sistema operativo per personal computer a larghissima diffusione. 
 
+Kildall fu anche l'ideatore del **BIOS**, la logica per interfacciare il sistema operativo con lo specifico hardware.
 
+Il **CP/M** era diviso in 3 parti:
++ **CCP** --> interprete di comandi
++ **BDOS** --> routine di base necessarie ad implementare i comandi del CCP
++ **BIOS** --> conteneva le funzioni di base *machine dependent* come il posizionamento delle testine del disco e la lettura di uno specifico settore
+
+**Portare il CP/M da un hardware ad un altro consisteva nella riscrittura del BIOS.**
+
+Allen e Gates fobdano la Micro-Soft e scrivono per il CP/M un compilatore BASIC.
+
+La IBM contatta Gates per una versione CP/M che però non era di proprietà Microsoft. Gates indirizza la IBM verso Kildall, ma la IBM chiede a Gates di trovare una soluzione.
+
+Gates acquista la licenza del 86-DOS e lo rinomina come MS-DOS. Successivamente vende la licenza alla IBM che lo rinominerà PC-DOS ma Microsoft continua a poter usare il sistema. 
+
+Kildall si accorge che il PC-DOS era sostanzialmente uguale al suo CP/M e minaccia di far causa alla IBM. La IBM accetta di vendere i loro PC con la versione CP/M di Kildall, ma ad un costo nettamente superiore. Quindi in sostanza tutti continueranno a usare la versione PC-DOS.
+
+**Windows** 1985, Microsoft
+
+Esce l'interfaccia del MS-DOS chiamata **Windows**. 
+
+Windows diventa un sistema operativo completo nel 1990
+
+Nel 1995 viene rilasciato **Windows 95** che segnerà la fine dell'era DOS.
+
+**Apple**
+
+Il loro computer venduto su larga scala fu l'Apple II che aveva un sistema operativo più performante del DOS.
+
+**Apple-DOS** Wozniak
+
+Apple rilasciò tutte le caratteristiche software in modo che programmatori terzi potessero svillupare software per quel SO.
+
+Il **Macintosh** era dotato del sistema operativo **System** che successivamente cambierà nome in **Mac OS**
+
+**Linux** 1992, Torvalds
+
+Nasce da un progetto chiamato **GNU** che aveva l'obiettivo di dare agli utilizzatori la libertà di usare, condividere e modificare.
+
+Inizialmente il nome era Freax e successivamente prese il definitivo nome **Linux**
+
+Linux gode immediatamente di un enorme successo, esistono più varianti:
++ **Fedora**
++ **Ubuntu**
++ **RedHat**
++ **SUSE**
+
+**Fase 7** Sistemi distribuiti
+
+Negli anni '80 iniziarono a diffondersi le prime architteture distribute
+
+Nella maggior parte di questi sistemi, la comunicazione fra processi remoti era basata sul **Remote Prodecure Call**
+
+Fu la **Sun** ad implementare le prime RPC in ambiente Unix e costituirono la base per lo sviluppo del **Network File System** (NFS), un file system distribuito su una rete di computer vista come un'unica macchina
+
+I sistemi distribuiti non sono mai riusciti ad andare oltre una fase sperimentale, **tranne NFS** che è l’unico loro aspetto che ormai è diffuso e
+utilizzato a livello commerciale su tutti i principali sistemi operativi.
+
+Ricordiamo tra i sistemi operativi più importanti:
++ **Unix United System** 
++ **Amoeba**
+
+**Fase 8** Sistemi per dispositivi mobili
+
+Con il **Nokia 9000** 1996 --> la telefonia mobile entra nel campo dei computer
+
+Il primo dispositivo palmare fu il **MessagePad** sviluppato dalla Apple
+
+Dall'unione di questi due nascono i veri e propri **smartphone**
+
+Nei primi anni 2000 compaiono sul mercato i primi **tablet**
+
+**I sistemi operativi sviluppati per questi dispositivi sono molti: Android, Apple iOS, Windows Mobile, Symbian e Blackberry i più famosi**
+
+**Android** 2003, Google
+
+Sistema operativo open-source e multitasking scritto in Java. Sono state sviluppate tantissime app per Android che risulta il più usato.
+
+**iOS** 2007, Apple --> spetta tra il 15% e il 25% del mercato
 
