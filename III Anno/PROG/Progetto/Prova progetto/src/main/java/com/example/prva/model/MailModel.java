@@ -50,8 +50,8 @@ public class MailModel {
 
         server = new Server();
 
-        setMailSent();
-        setMailReceived();
+        //setMailSent();
+        //setMailReceived();
     }
 
     public SimpleStringProperty getTextMailSendProperty(){ return this.textMailSendProperty; }
@@ -183,6 +183,14 @@ public class MailModel {
         textMailSendProperty.set(mailSent.get(activeMailSent).getText() + " \n\n"
                 + "[ Mail Forwarded, original recipient:  " + mailSent.get(activeMailSent).getRecipients() + " ]"
         );
+    }
+
+    public void reconnect() {
+        deleteMailSentList();
+        deleteMailReceivedList();
+        server.setAddress(localAddressProperty.get());
+        setMailSent();
+        setMailReceived();
     }
 
 }

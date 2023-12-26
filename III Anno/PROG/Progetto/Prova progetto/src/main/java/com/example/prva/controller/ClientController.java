@@ -21,7 +21,8 @@ public class ClientController {
     @FXML
     private Button      Cancella_Tutto_Ricevuta, Cancella_Tutto_Inviata,
                         forwardBtnSent, forwardBtnReceived,sendBtnClear,
-                        deleteBtnSent, replyBtnReceived, deleteBtnRecived, sendBtn;
+                        deleteBtnSent, replyBtnReceived, deleteBtnRecived, sendBtn,
+                        reconnectBtnSent, reconnectBtnReceived, reconnectBtnSend;
     @FXML
     private Label       addressLabelSent, objectLabelSent, addressLabelReceived, objectLabelReceived,
                         countMailSent, countMailReceived;
@@ -44,6 +45,10 @@ public class ClientController {
     //TODO: AGGIUNGERE COMMENTI!!!!!!
 
     //TODO: inserire le mail dalla più recente.
+
+    //TODO: implementare correttamente la connessione con il server
+
+    //TODO: salvare in locale le mail
 
     public void initModel(String localAddressMail) {
         mailModel = new MailModel();
@@ -69,34 +74,19 @@ public class ClientController {
         mailModel.getLocalAddressProperty().bindBidirectional(localAddressSend.textProperty());
 
         localAddressSend.textProperty().set(localAddressMail);
+        mailModel.reconnect();
 
-        setCountMailSent();
-        mailModel.getListMailSent().forEach((mail) -> {
-                    VBox card = mailCardModel.buildCard("Destinatari:", mail);
-                    Lista_posta_inviata.getChildren().add(card);
-                });
-
-        setCountMailReceived();
-        mailModel.getListMailReceived().forEach((mail) -> {
-                    VBox card = mailCardModel.buildCard("Mittente:",mail);
-                    Lista_posta_ricevuta.getChildren().add(card);
-                });
+        loadMail();
 
         Cancella_Tutto_Inviata.setOnAction(event -> {
             System.out.println("MailReceivedList: Prima della cancellazione ( " + mailModel.getListMailReceived().toString() + " )");
-            mailModel.deleteMailSentList();
-            Lista_posta_inviata.getChildren().clear();
-            showMailPanelSent(false);
-            setCountMailSent();
+            deleteMailSent();
             System.out.println("MailSentList: Cancellata ( " + mailModel.getListMailSent().toString() + " )\n");
         });
 
         Cancella_Tutto_Ricevuta.setOnAction(event -> {
             System.out.println("MailReceivedList: Prima della cancellazione ( " + mailModel.getListMailReceived().toString() + " )");
-            mailModel.deleteMailReceivedList();
-            Lista_posta_ricevuta.getChildren().clear();
-            showMailPanelReceived(false);
-            setCountMailReceived();
+            deleteMailReceived();
             System.out.println("MailReceivedList: Cancellata ( " + mailModel.getListMailReceived().toString() + " )\n");
         });
 
@@ -132,10 +122,46 @@ public class ClientController {
             tabPanel.getSelectionModel().select(tabSend);
             mailModel.forward();
         });
+
+        reconnectBtnSent.setOnAction(event ->       { deleteMail(); mailModel.reconnect(); loadMail(); });
+        reconnectBtnReceived.setOnAction(event ->   { deleteMail(); mailModel.reconnect(); loadMail(); });
+        reconnectBtnSend.setOnAction(event ->       { deleteMail(); mailModel.reconnect(); loadMail(); });
     }
 
     private void setCountMailSent() { countMailSent.setText(String.valueOf(mailModel.getListMailSent().size())); }
     private void setCountMailReceived() { countMailReceived.setText(String.valueOf(mailModel.getListMailReceived().size())); }
+
+    private void deleteMail() {
+        deleteMailSent();
+        deleteMailReceived();
+    }
+    private void deleteMailSent(){
+        mailModel.deleteMailSentList();
+        Lista_posta_inviata.getChildren().clear();
+        showMailPanelSent(false);
+        setCountMailSent();
+    }
+
+    private void deleteMailReceived(){
+        mailModel.deleteMailReceivedList();
+        Lista_posta_ricevuta.getChildren().clear();
+        showMailPanelReceived(false);
+        setCountMailReceived();
+    }
+
+    private void loadMail() {
+        setCountMailSent();
+        mailModel.getListMailSent().forEach((mail) -> {
+            VBox card = mailCardModel.buildCard("Destinatari:", mail);
+            Lista_posta_inviata.getChildren().add(card);
+        });
+
+        setCountMailReceived();
+        mailModel.getListMailReceived().forEach((mail) -> {
+            VBox card = mailCardModel.buildCard("Mittente:",mail);
+            Lista_posta_ricevuta.getChildren().add(card);
+        });
+    }
 
     private void showMailPanelReceived(boolean bool) {
         if(bool) {

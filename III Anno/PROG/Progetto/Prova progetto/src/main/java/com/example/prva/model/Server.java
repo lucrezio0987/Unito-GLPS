@@ -12,6 +12,8 @@ public class Server {
     private List<Mail> mailSent;
     private List<Mail> mailReceived;
 
+    private String localAddress;
+
     ObjectOutputStream outputStream;
     ObjectInputStream inputStream;
     Socket socket;
@@ -24,6 +26,12 @@ public class Server {
 
         connectToServer();
         startListening();
+
+    }
+
+    void setAddress(String localAddress) {
+        //TODO: fare in modo che questo client venga associato all'indirizzo
+        this.localAddress = localAddress;
 
         setMailSent();
         setMailReceived();
