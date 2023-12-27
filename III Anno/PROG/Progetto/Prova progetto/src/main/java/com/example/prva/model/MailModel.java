@@ -1,6 +1,6 @@
 package com.example.prva.model;
 
-import java.io.IOException;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -10,7 +10,6 @@ import com.google.gson.Gson;
 
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 
 public class MailModel {
 
@@ -21,7 +20,7 @@ public class MailModel {
     private SimpleStringProperty textMailSendProperty = null; // testo mail da inviare
     private SimpleStringProperty textMailReceivedProperty = null; //testo mail ricevuta
     private SimpleStringProperty textMailSentProperty = null; // testo mail inviata
-    private SimpleStringProperty textLogProperty = null;
+    private static SimpleStringProperty textLogProperty = null;
 
     private SimpleStringProperty addressMailSendProperty = null; // address mail da inviare
     private SimpleStringProperty addressMailReceivedProperty = null; // address mail ricevuta
@@ -190,7 +189,7 @@ public class MailModel {
 
 
         if(!syntaxControll()) {
-            addLog("Client", "ERRORE: Indirizzo inserito non valido, email NON inviata\n");
+            addLog("Client", "ERRORE: Indirizzo inserito non valido, email NON inviata");
             return null;
         }
         String sender       = localAddressProperty.get();
@@ -233,14 +232,15 @@ public class MailModel {
 
     public void reconnect() {
         if(syntaxControll()) {
+            addLog("Client", "Connessione: " + localAddressProperty.get());
             deleteMailSentList();
             deleteMailReceivedList();
             server.setAddress(localAddressProperty.get());
             setMailSent();
             setMailReceived();
-            addLog("Client", "Riconnessione effettuata:" + localAddressProperty.get() + "\n");
+
         } else {
-            addLog("Client", "ERRORE: Indirizzo inserito non valido, riconnessione NON eseguita\n");
+            addLog("Client", "ERRORE: Indirizzo inserito non valido, connessione NON eseguita");
         }
     }
 
@@ -253,18 +253,24 @@ public class MailModel {
     public void addLog(String type, String msg) {
         switch (type) {
             case "Server":
-                textLogProperty.set(textLogProperty.getValue() + msg);
-                System.out.println(msg);
+                appendToTextArea(type + ": "+ msg);
                 break;
             case "Client":
-                textLogProperty.set(textLogProperty.getValue() + msg);
-                System.out.println(msg);
+                appendToTextArea(type + ": " + msg);
                 break;
             default:
-                textLogProperty.set(textLogProperty.getValue() + msg);
-                System.out.println(msg);
+                appendToTextArea(type + ": " + msg);
                 break;
         }
+    }
+
+    private static void appendToTextArea(String newLine) {
+            String currentText = textLogProperty.getValue();
+            if(currentText == null)
+                textLogProperty.set(newLine);
+            else
+                textLogProperty.set(currentText + "\n" + newLine);
+            System.out.println(newLine);
     }
 
 }

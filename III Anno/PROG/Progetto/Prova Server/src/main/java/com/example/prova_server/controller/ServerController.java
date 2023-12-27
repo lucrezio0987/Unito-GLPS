@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class ServerController {
 
-    ServerModel model;
+    ServerModel_2 model;
     @FXML
     private TextArea textArea;
     @FXML
@@ -23,7 +23,7 @@ public class ServerController {
 
 
     public void initModel() {
-        model = new ServerModel();
+        model = new ServerModel_2();
 
         textArea.textProperty().bind(model.getTextAreaProperty());
 

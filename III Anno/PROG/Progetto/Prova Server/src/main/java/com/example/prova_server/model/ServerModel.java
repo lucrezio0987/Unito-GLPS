@@ -67,6 +67,7 @@ public class ServerModel extends Thread{
 
         @Override
         public void run() {
+
             try (ObjectOutputStream outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
                  ObjectInputStream inputStream = new ObjectInputStream(clientSocket.getInputStream())) {
                 try{
