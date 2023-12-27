@@ -12,7 +12,7 @@ public class Server {
     private List<Mail> mailSent;
     private List<Mail> mailReceived;
 
-    private String localAddress;
+    private String localAddress = null;
 
     ObjectOutputStream outputStream;
     ObjectInputStream inputStream;
@@ -67,7 +67,12 @@ public class Server {
     public List<Mail> getMailReceived() { return mailReceived; }
 
     public void addMailSent(Mail mail){
+
+        //TODO: aggiunta mail
+
         mailSent.add(mail);
+
+        //TODO: invio mail al server
 
         try {
             String jsonString = gson.toJson(mail);
@@ -84,6 +89,7 @@ public class Server {
         }
         System.out.println("Server: " + response);
 
+        //TODO: salvataggio in locale della mail
 
     }
     public void addMailReceived(Mail mail) {
@@ -97,6 +103,8 @@ public class Server {
     public void deleteMailReceivedList() { mailReceived.clear(); }
 
     public void setMailSent() {
+        //TODO: richeista al server della lista (localAddress)
+
         mailSent.add(new Mail(null, "alice@example.com", "Oggetto 1", "Contenuto della mail 1", "28/03/2022", "11:30", false));
         mailSent.add(new Mail(null, "bob@example.com", "Oggetto 2", "Contenuto della mail 2", "28/03/2022", "12:30", false));
         mailSent.add(new Mail(null, "charlie@example.com", "Oggetto 3", "Contenuto della mail 3", "28/03/2022", "13:30", false));
@@ -106,9 +114,13 @@ public class Server {
         mailSent.add(new Mail(null, "hannah@example.com", "Oggetto 7", "Contenuto della mail 7", "28/03/2022", "17:30", true));
         mailSent.add(new Mail(null, "irene@example.com", "Oggetto 8", "Contenuto della mail 8", "28/03/2022", "18:30", true));
         mailSent.add(new Mail(null, "jack@example.com", "Oggetto 9", "Contenuto della mail 9", "28/03/2022", "19:30", true));
+
+        //TODO: salvataggio in locale della lsita
     }
 
     public void setMailReceived() {
+        //TODO: richeista al server della lista (localAddress)
+
         mailReceived.add(new Mail("kevin@example.com", null, "Oggetto 1", "Contenuto della mail 1", "28/03/2022", "11:30", false));
         mailReceived.add(new Mail("mary@example.com", null, "Oggetto 2", "Contenuto della mail 2", "28/03/2022", "11:30", false));
         mailReceived.add(new Mail("peter@example.com", null, "Oggetto 3", "Contenuto della mail 3", "28/03/2022", "12:30", false));
@@ -119,6 +131,8 @@ public class Server {
         mailReceived.add(new Mail("natalie@example.com", null, "Oggetto 8", "Contenuto della mail 8", "28/03/2022", "17:30", true));
         mailReceived.add(new Mail("alex@example.com", null, "Oggetto 9", "Contenuto della mail 9", "28/03/2022", "18:30", true));
         mailReceived.add(new Mail("olivia@example.com", null, "Oggetto 10", "Contenuto della mail 10", "28/03/2022", "19:30", true));
+
+        //TODO: salvataggio in locale della lsita
     }
 
     public void setMailSentRead(String uuid, boolean read) {
