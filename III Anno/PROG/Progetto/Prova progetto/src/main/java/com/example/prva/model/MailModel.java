@@ -3,10 +3,14 @@ package com.example.prva.model;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.google.gson.Gson;
 
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 
 public class MailModel {
 
@@ -17,6 +21,7 @@ public class MailModel {
     private SimpleStringProperty textMailSendProperty = null; // testo mail da inviare
     private SimpleStringProperty textMailReceivedProperty = null; //testo mail ricevuta
     private SimpleStringProperty textMailSentProperty = null; // testo mail inviata
+    private SimpleStringProperty textLogProperty = null;
 
     private SimpleStringProperty addressMailSendProperty = null; // address mail da inviare
     private SimpleStringProperty addressMailReceivedProperty = null; // address mail ricevuta
@@ -40,6 +45,7 @@ public class MailModel {
         textMailSendProperty = new SimpleStringProperty();
         textMailReceivedProperty = new SimpleStringProperty();
         textMailSentProperty = new SimpleStringProperty();
+        textLogProperty =  new SimpleStringProperty();
 
         addressMailSendProperty = new SimpleStringProperty();
         addressMailReceivedProperty = new SimpleStringProperty();
@@ -60,6 +66,7 @@ public class MailModel {
     public SimpleStringProperty getTextMailSendProperty(){ return this.textMailSendProperty; }
     public SimpleStringProperty getTextMailReceivedProperty(){ return this.textMailReceivedProperty; }
     public SimpleStringProperty getTextMailSentProperty(){ return this.textMailSentProperty; }
+    public SimpleStringProperty getTextLogProperty() { return this.textLogProperty; }
 
     public SimpleStringProperty getAddressMailSendProperty(){ return this.addressMailSendProperty; }
     public SimpleStringProperty getAddressMailReceivedProperty(){ return this.addressMailReceivedProperty; }
@@ -181,12 +188,15 @@ public class MailModel {
         String data = formatDate.format(now);
         String time = formatTime.format(now);
 
-        // localAddressProperty
 
-        String sender = localAddressProperty.get();
-        String recipients = addressMailSendProperty.get();
-        String object = objectMailSendProperty.get();
-        String text = textMailSendProperty.get();
+        if(!syntaxControll()) {
+            addLog("Client", "ERRORE: Indirizzo inserito non valido, email NON inviata\n");
+            return null;
+        }
+        String sender       = localAddressProperty.get();
+        String recipients   = addressMailSendProperty.get();
+        String object       = objectMailSendProperty.get();
+        String text         = textMailSendProperty.get();
 
         Mail mailSend = new Mail(sender ,recipients, object, text, data, time, false);
         mailSent.add(mailSend);
@@ -222,11 +232,36 @@ public class MailModel {
     }
 
     public void reconnect() {
-        deleteMailSentList();
-        deleteMailReceivedList();
-        server.setAddress(localAddressProperty.get());
-        setMailSent();
-        setMailReceived();
+        if(syntaxControll()) {
+            deleteMailSentList();
+            deleteMailReceivedList();
+            server.setAddress(localAddressProperty.get());
+            setMailSent();
+            setMailReceived();
+            addLog("Client", "Riconnessione effettuata:" + localAddressProperty.get() + "\n");
+        } else {
+            addLog("Client", "ERRORE: Indirizzo inserito non valido, riconnessione NON eseguita\n");
+        }
+    }
+
+    private boolean syntaxControll() {
+        Pattern pattern = Pattern.compile("^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,6}$");
+        Matcher matcher = pattern.matcher(localAddressProperty.get());
+        return matcher.matches();
+    }
+
+    public void addLog(String type, String msg) {
+        switch (type) {
+            case "Server":
+                textLogProperty.set(textLogProperty.getValue() + msg);
+                break;
+            case "Client":
+                textLogProperty.set(textLogProperty.getValue() + msg);
+                break;
+            default:
+                textLogProperty.set(textLogProperty.getValue() + msg);
+                break;
+        }
     }
 
 }

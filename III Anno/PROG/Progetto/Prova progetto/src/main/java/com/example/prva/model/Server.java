@@ -67,7 +67,6 @@ public class Server {
     public List<Mail> getMailReceived() { return mailReceived; }
 
     public void addMailSent(Mail mail){
-
         //TODO: aggiunta mail
 
         mailSent.add(mail);

@@ -15,19 +15,20 @@ import javafx.scene.text.Text;
 
 public class ClientController {
     @FXML
-    private TextField   localAddressReceived, localAddressSent, localAddressSend,
+    private TextField   localAddressReceived, localAddressSent, localAddressSend, localAddressLog,
                         addressMailSent, addressMailRecived, addressMailSend,
                         objectMailSent, objectMailRecived, objectMailSend;
     @FXML
     private Button      Cancella_Tutto_Ricevuta, Cancella_Tutto_Inviata,
                         forwardBtnSent, forwardBtnReceived,sendBtnClear,
                         deleteBtnSent, replyBtnReceived, deleteBtnRecived, sendBtn,
-                        reconnectBtnSent, reconnectBtnReceived, reconnectBtnSend;
+                        reconnectBtnSent, reconnectBtnReceived, reconnectBtnSend,
+                        reconnectServerBtnLog, connectServerBtnLog, disconnectServerBtnLog, reconnectBtnLog;
     @FXML
     private Label       addressLabelSent, objectLabelSent, addressLabelReceived, objectLabelReceived,
                         countMailSent, countMailReceived;
     @FXML
-    private TextArea    textMailSent, textMailReceived, textMailSend;
+    private TextArea    textMailSent, textMailReceived, textMailSend, textLog;
     @FXML
     private ImageView   imgEmailReceived, imgEmailSent;
     @FXML
@@ -65,9 +66,12 @@ public class ClientController {
         mailModel.getAddressMailSendProperty().bindBidirectional(addressMailSend.textProperty());
         mailModel.getObjectMailSendProperty().bindBidirectional(objectMailSend.textProperty());
 
+        textLog.textProperty().bind(mailModel.getTextLogProperty());
+
         mailModel.getLocalAddressProperty().bindBidirectional(localAddressReceived.textProperty());
         mailModel.getLocalAddressProperty().bindBidirectional(localAddressSent.textProperty());
         mailModel.getLocalAddressProperty().bindBidirectional(localAddressSend.textProperty());
+        mailModel.getLocalAddressProperty().bindBidirectional(localAddressLog.textProperty());
 
         localAddressSend.textProperty().set(localAddressMail);
         mailModel.reconnect();
@@ -75,6 +79,7 @@ public class ClientController {
         loadMail();
 
         Cancella_Tutto_Inviata.setOnAction(event -> {
+            // mailModel.addLog("null", "MailReceivedList: Prima della cancellazione ( " + mailModel.getListMailReceived().toString() + " )");
             System.out.println("MailReceivedList: Prima della cancellazione ( " + mailModel.getListMailReceived().toString() + " )");
             deleteMailSent();
             System.out.println("MailSentList: Cancellata ( " + mailModel.getListMailSent().toString() + " )\n");
@@ -122,6 +127,7 @@ public class ClientController {
         reconnectBtnSent.setOnAction(event ->       { deleteMail(); mailModel.reconnect(); loadMail(); });
         reconnectBtnReceived.setOnAction(event ->   { deleteMail(); mailModel.reconnect(); loadMail(); });
         reconnectBtnSend.setOnAction(event ->       { deleteMail(); mailModel.reconnect(); loadMail(); });
+        reconnectBtnLog.setOnAction(event ->        { deleteMail(); mailModel.reconnect(); loadMail(); });
     }
 
     private void setCountMailSent() { countMailSent.setText(String.valueOf(mailModel.getListMailSent().size())); }
