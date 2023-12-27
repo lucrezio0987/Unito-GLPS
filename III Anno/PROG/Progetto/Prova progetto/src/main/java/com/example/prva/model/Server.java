@@ -12,6 +12,7 @@ public class Server {
     private List<Mail> mailSent;
     private List<Mail> mailReceived;
 
+    private boolean connected = false;
     private String localAddress = null;
 
     ObjectOutputStream outputStream;
@@ -58,6 +59,7 @@ public class Server {
             socket = new Socket(serverAddress, port);
             outputStream = new ObjectOutputStream(socket.getOutputStream());
             inputStream = new ObjectInputStream(socket.getInputStream());
+            connected = true;
         } catch (IOException e) {
             System.out.println("Connessione al Server Fallita");
         }
@@ -72,22 +74,24 @@ public class Server {
         mailSent.add(mail);
 
         //TODO: invio mail al server
+        if(connected) {
+            try {
+                String jsonString = gson.toJson(mail);
+                outputStream.writeObject(jsonString);
+            } catch (IOException e) {
+                System.out.println("invio server fallita");
+            }
 
-        try {
-            String jsonString = gson.toJson(mail);
-            outputStream.writeObject(jsonString);
-        } catch (IOException e) {
-            System.out.println("invio server fallita");
+            Object response = null;
+            try {
+                response = inputStream.readObject();
+            } catch (IOException | ClassNotFoundException e) {
+                System.out.println("Risposta server fallita");
+            }
+            System.out.println("Server: " + response);
+        } else {
+            System.out.println("Client: Server non connesso");
         }
-
-        Object response = null;
-        try {
-            response = inputStream.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Risposta server fallita");
-        }
-        System.out.println("Server: " + response);
-
         //TODO: salvataggio in locale della mail
 
     }

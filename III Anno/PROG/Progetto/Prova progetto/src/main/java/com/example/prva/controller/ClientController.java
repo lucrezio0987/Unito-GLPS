@@ -93,9 +93,11 @@ public class ClientController {
 
         sendBtn.setOnAction(event -> {
             Mail mail = mailModel.sendMail();
-            VBox card = mailCardModel.buildCard("Destinatari:",mail);
-            Lista_posta_inviata.getChildren().add(card);
-            setCountMailSent();
+            if(mail != null) {
+                VBox card = mailCardModel.buildCard("Destinatari:", mail);
+                Lista_posta_inviata.getChildren().add(card);
+                setCountMailSent();
+            }
         });
 
         deleteBtnSent.setOnAction(event -> {

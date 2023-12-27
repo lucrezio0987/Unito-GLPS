@@ -254,12 +254,15 @@ public class MailModel {
         switch (type) {
             case "Server":
                 textLogProperty.set(textLogProperty.getValue() + msg);
+                System.out.println(msg);
                 break;
             case "Client":
                 textLogProperty.set(textLogProperty.getValue() + msg);
+                System.out.println(msg);
                 break;
             default:
                 textLogProperty.set(textLogProperty.getValue() + msg);
+                System.out.println(msg);
                 break;
         }
     }
