@@ -109,6 +109,7 @@ public class Server {
     }
 
     public void setMailReceived() {
+        mailReceived.add(new Mail("kevin@example.com", null, "Oggetto 1", "Contenuto della mail 1", "28/03/2022", "11:30", false));
         mailReceived.add(new Mail("mary@example.com", null, "Oggetto 2", "Contenuto della mail 2", "28/03/2022", "11:30", false));
         mailReceived.add(new Mail("peter@example.com", null, "Oggetto 3", "Contenuto della mail 3", "28/03/2022", "12:30", false));
         mailReceived.add(new Mail("susan@example.com", null, "Oggetto 4", "Contenuto della mail 4", "28/03/2022", "13:30", false));

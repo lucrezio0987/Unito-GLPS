@@ -40,11 +40,7 @@ public class ClientController {
     MailModel mailModel;
     MailCardModel mailCardModel;
 
-    //TODO: cambiare il metodo di memorizzare le mail, no hasmap ma qualcosa hce permetta di mantenere l'ordine di arrivo.
-
     //TODO: AGGIUNGERE COMMENTI!!!!!!
-
-    //TODO: inserire le mail dalla più recente.
 
     //TODO: implementare correttamente la connessione con il server
 

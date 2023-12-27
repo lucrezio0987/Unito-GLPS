@@ -10,8 +10,8 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class MailModel {
 
-    private final Map<String, Mail> mailSent = new HashMap<>();
-    private final Map<String, Mail> mailReceived = new HashMap<>();
+    private final ArrayList<Mail> mailSent;
+    private final ArrayList<Mail> mailReceived;
    // private Mail mail;
 
     private SimpleStringProperty textMailSendProperty = null; // testo mail da inviare
@@ -28,12 +28,15 @@ public class MailModel {
 
     private SimpleStringProperty localAddressProperty = null;
 
-    private String activeMailSent = null;
-    private String activeMailReceived = null;
+    private Mail activeMailSent = null;
+    private Mail activeMailReceived = null;
 
     private Server server = null;
 
     public MailModel() {
+        mailSent = new ArrayList<>();
+        mailReceived = new ArrayList<>();
+
         textMailSendProperty = new SimpleStringProperty();
         textMailReceivedProperty = new SimpleStringProperty();
         textMailSentProperty = new SimpleStringProperty();
@@ -68,26 +71,32 @@ public class MailModel {
 
     public SimpleStringProperty getLocalAddressProperty(){ return this.localAddressProperty; }
 
-    public ArrayList<Mail> getListMailSent(){
-        return new ArrayList<Mail>(mailSent.values());
-    }
+    public ArrayList<Mail> getListMailSent(){ return mailSent; }
     public ArrayList<Mail> getListMailReceived(){
-        return new ArrayList<Mail>(mailReceived.values());
+        return mailReceived;
     }
 
-    public void setMailSent(){ server.getMailSent().forEach( mail -> mailSent.put(mail.getUuid(), mail)); }
-    public void setMailReceived(){ server.getMailReceived().forEach(mail -> mailReceived.put(mail.getUuid(), mail));}
+    public void setMailSent(){
+        mailSent.addAll(server.getMailSent());
+    }
+    public void setMailReceived(){
+        mailReceived.addAll(server.getMailReceived());
+    }
 
 
     public void openMailReceived(String uuid){
         Mail mail;
 
+        //TODO: capire cosa fa uuid.isEmpty()
         if(uuid.isEmpty() || mailReceived.isEmpty())
             mail = new Mail("","", "", "", "", "", false);
         else
-            mail = mailReceived.get(uuid);
+            mail = mailReceived.stream()
+                    .filter(m -> m.getUuid().equals(uuid))
+                    .findFirst()
+                    .orElse(null);
 
-        activeMailReceived = uuid;
+        activeMailReceived = mail;
         addressMailReceivedProperty.set(mail.getSender());
         objectMailReceivedProperty.set(mail.getObject());
         textMailReceivedProperty.set(mail.getText());
@@ -99,9 +108,12 @@ public class MailModel {
         if(uuid.isEmpty() || mailSent.isEmpty())
             mail = new Mail("", "", "", "", "", "", false);
         else
-            mail = mailSent.get(uuid);
+            mail =  mailSent.stream()
+                    .filter(m -> m.getUuid().equals(uuid))
+                    .findFirst()
+                    .orElse(null);
 
-        activeMailSent = uuid;
+        activeMailSent = mail;
         addressMailSentProperty.set(mail.getRecipients());
         objectMailSentProperty.set(mail.getObject());
         textMailSentProperty.set(mail.getText());
@@ -109,30 +121,54 @@ public class MailModel {
     }
 
     public void setMailRead(String uuid, boolean read){
-        if(mailSent.containsKey(uuid)) {
-            mailSent.get(uuid).setRead(read);
-            server.setMailSentRead(uuid, read);
-        }
-        if(mailReceived.containsKey(uuid)) {
-            mailReceived.get(uuid).setRead(read);
-            server.setMailReceivedRead(uuid, read);
-        }
+
+        mailSent.stream()
+                .filter(m -> m.getUuid().equals(uuid))
+                .findFirst()
+                .ifPresent(mail -> {
+                    mail.setRead(read);
+                    server.setMailSentRead(uuid, read);
+                });
+
+        mailReceived.stream()
+                .filter(m -> m.getUuid().equals(uuid))
+                .findFirst()
+                .ifPresent(mail -> {
+                    mail.setRead(read);
+                    server.setMailSentRead(uuid, read);
+                });
     }
 
     public void deleteMailSentList(){ server.deleteMailSentList(); mailSent.clear(); }
     public void deleteMailReceivedList(){ server.deleteMailReceivedList(); mailReceived.clear(); }
 
-    public void deleteMailSent(String uuid){ server.deleteMailSent(mailSent.remove(uuid));}
-    public void deleteMailReceived(String uuid){ server.deleteMailReceived(mailReceived.remove(uuid)); }
+    public void deleteMailSent(String uuid){
+        mailSent.stream()
+                .filter(mail -> mail.getUuid().equals(uuid))
+                .findFirst()
+                .ifPresent(mail -> {
+                    mailSent.remove(mail);
+                    server.deleteMailSent(mail);
+                });
+    }
+    public void deleteMailReceived(String uuid) {
+        mailReceived.stream()
+                .filter(mail -> mail.getUuid().equals(uuid))
+                .findFirst()
+                .ifPresent(mail -> {
+                    mailReceived.remove(mail);
+                    server.deleteMailReceived(mail);
+                });
+    }
 
     public String deleteActualMailSent(){
-        String actual = activeMailSent;
+        String actual = activeMailSent.getUuid();
         deleteMailSent(actual);
         openMailSent("");
         return actual;
     }
     public String deleteActualMailReceived(){
-        String actual = activeMailReceived;
+        String actual = activeMailReceived.getUuid();
         deleteMailReceived(actual);
         openMailReceived("");
         return actual;
@@ -153,7 +189,7 @@ public class MailModel {
         String text = textMailSendProperty.get();
 
         Mail mailSend = new Mail(sender ,recipients, object, text, data, time, false);
-        mailSent.put(mailSend.getUuid(), mailSend);
+        mailSent.add(mailSend);
 
         textMailSendProperty.set("");
         addressMailSendProperty.set("");
@@ -171,17 +207,17 @@ public class MailModel {
     }
 
     public void reply() {
-        addressMailSendProperty.set(mailReceived.get(activeMailReceived).getSender());
-        objectMailSendProperty.set(mailReceived.get(activeMailReceived).getObject());
+        addressMailSendProperty.set(activeMailReceived.getSender());
+        objectMailSendProperty.set(activeMailReceived.getObject());
         textMailSendProperty.set("\n\n----------------------- Last Mail: -----------------------\n"
-                + mailReceived.get(activeMailReceived).getText());
+                + activeMailReceived.getText());
     }
 
     public void forward() {
         addressMailSendProperty.set("");
-        objectMailSendProperty.set(mailSent.get(activeMailSent).getObject());
-        textMailSendProperty.set(mailSent.get(activeMailSent).getText() + " \n\n"
-                + "[ Mail Forwarded, original recipient:  " + mailSent.get(activeMailSent).getRecipients() + " ]"
+        objectMailSendProperty.set(activeMailSent.getObject());
+        textMailSendProperty.set(activeMailSent.getText() + " \n\n"
+                + "[ Mail Forwarded, original recipient:  " + activeMailSent.getRecipients() + " ]"
         );
     }
 
