@@ -28,11 +28,11 @@ public class ServerModel_2 {
         new Thread(() -> {
             try {
                 ServerSocket serverSocket = new ServerSocket(8000);
-                appendToTextArea("Server in ascolto sulla porta 8000 per le connessioni...");
+                log("Server in ascolto sulla porta 8000 per le connessioni...");
 
                 while (true) {
                     Socket socket = serverSocket.accept();
-                    appendToTextArea("\nSocket connessione ricevuto (8000): " + socket.toString());
+                    log("\nSocket connessione ricevuto (8000): " + socket.toString());
                     executorService.submit(new ConnectionHandler(socket));
                 }
             } catch (IOException e) {
@@ -44,11 +44,11 @@ public class ServerModel_2 {
         new Thread(() -> {
             try {
                 ServerSocket serverSocket = new ServerSocket(8001);
-                appendToTextArea("Server in ascolto sulla porta 8001 per le mail...");
+                log("Server in ascolto sulla porta 8001 per le mail...");
 
                 while (true) {
                     Socket socket = serverSocket.accept();
-                    appendToTextArea("\nSocket mail ricevuto (8001): " + socket.toString());
+                    log("\nSocket mail ricevuto (8001): " + socket.toString());
                     executorService.submit(new MessageHandler(socket));
 
                 }
@@ -75,9 +75,9 @@ public class ServerModel_2 {
             try {
                 ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
                 String jsonConnectionInfo = (String) inputStream.readObject();
-                appendToTextArea("JSON serializzato: " + jsonConnectionInfo);
+                log("JSON serializzato: " + jsonConnectionInfo);
                 ConnectionInfo connectionInfo = new Gson().fromJson(jsonConnectionInfo, ConnectionInfo.class);
-                appendToTextArea("JSON deserializzato: " + connectionInfo.getUsername() + ", " + connectionInfo.isConnected());
+                log("JSON deserializzato: " + connectionInfo.getUsername() + ", " + connectionInfo.isConnected());
 
                 if (connectionInfo.isConnected()) {
                     addUser(connectionInfo.getUsername(), socket.getInetAddress().getHostAddress());
@@ -89,7 +89,7 @@ public class ServerModel_2 {
                     removeUser(connectionInfo.getUsername());
                 }
 
-                appendToTextArea("Socket connessione chiuso (8000): " + socket.toString());
+                log("Socket connessione chiuso (8000): " + socket.toString());
                 socket.close();
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
@@ -108,7 +108,7 @@ public class ServerModel_2 {
 
         @Override
         public void run() {
-            appendToTextArea("Socket mail avviato (8001): " + socket.toString());
+            log("Socket mail avviato (8001): " + socket.toString());
             try {
                 ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
                 String jsonMail = (String) inputStream.readObject();
@@ -122,7 +122,7 @@ public class ServerModel_2 {
                     }
                 });
 
-                appendToTextArea("Socket mail chiuso (8001): " + socket.toString());
+                log("Socket mail chiuso (8001): " + socket.toString());
                 socket.close();
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
@@ -147,19 +147,19 @@ public class ServerModel_2 {
 
     public static synchronized void addUser(String username, String address) {
         clients.put(username, address);
-        appendToTextArea("Client " + username + " connesso da " + address);
+        log("Client " + username + " connesso da " + address);
     }
 
     public static synchronized void removeUser(String username) {
         clients.put(username, null);
-        appendToTextArea("Client " + username + " disconnesso.");
+        log("Client " + username + " disconnesso.");
     }
 
     public static synchronized String getAddressForUser(String username) {
         return clients.get(username);
     }
 
-    private static void appendToTextArea(String newLine) {
+    private static void log(String newLine) {
         if (newLine == null)
             newLine = "ALLERT: String is NULL";
 
