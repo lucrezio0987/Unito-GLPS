@@ -227,7 +227,14 @@ public class MailModel implements Observer {
                 + activeMailReceived.getText());
     }
 
-    public void forward() {
+    public void forwardReceived() {
+        addressMailSendProperty.set("");
+        objectMailSendProperty.set(activeMailReceived.getObject());
+        textMailSendProperty.set(activeMailReceived.getText() + " \n\n"
+                + "[ Mail Forwarded, original recipient:  " + localAddressProperty.getValue() + " ]"
+        );
+    }
+    public void forwardSent() {
         addressMailSendProperty.set("");
         objectMailSendProperty.set(activeMailSent.getObject());
         textMailSendProperty.set(activeMailSent.getText() + " \n\n"

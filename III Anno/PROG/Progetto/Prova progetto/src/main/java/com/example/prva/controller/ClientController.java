@@ -127,7 +127,12 @@ public class ClientController implements Observer {
 
         forwardBtnSent.setOnAction(event ->{
             tabPanel.getSelectionModel().select(tabSend);
-            mailModel.forward();
+            mailModel.forwardSent();
+        });
+
+        forwardBtnReceived.setOnAction(event ->{
+            tabPanel.getSelectionModel().select(tabSend);
+            mailModel.forwardReceived();
         });
 
         reconnectBtnSent.setOnAction(event ->       { deleteMail(); mailModel.reconnect(); loadMail(); });
@@ -183,7 +188,7 @@ public class ClientController implements Observer {
             replyBtnReceived.setVisible(true);
             deleteBtnRecived.setVisible(true);
 
-            forwardBtnReceived.setVisible(false);
+            forwardBtnReceived.setVisible(true);
         } else {
             imgEmailReceived.setVisible(true);
 
