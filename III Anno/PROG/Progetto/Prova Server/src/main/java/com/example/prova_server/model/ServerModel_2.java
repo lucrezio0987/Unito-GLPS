@@ -71,7 +71,7 @@ public class ServerModel_2 {
 
         @Override
         public void run() {
-            appendToTextArea("Socket connessione avviato (8000): " + socket.toString());
+            log("Socket connessione avviato (8000): " + socket.toString());
             try {
                 ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
                 String jsonConnectionInfo = (String) inputStream.readObject();
