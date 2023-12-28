@@ -1,6 +1,7 @@
 package com.example.prva.controller;
 
 import com.example.prva.model.*;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -13,7 +14,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class ClientController {
+import java.util.Observable;
+import java.util.Observer;
+
+public class ClientController implements Observer {
     @FXML
     private TextField   localAddressReceived, localAddressSent, localAddressSend, localAddressLog,
                         addressMailSent, addressMailRecived, addressMailSend,
@@ -48,7 +52,7 @@ public class ClientController {
     //TODO: salvare in locale le mail
 
     public void initModel(String localAddressMail) {
-        mailModel = new MailModel();
+        mailModel = new MailModel(this);
         mailCardModel = new MailCardModel(mailModel);
 
         showMailPanelReceived(false);
@@ -216,6 +220,17 @@ public class ClientController {
             objectLabelSent.setVisible(false);
             deleteBtnSent.setVisible(false);
             forwardBtnSent.setVisible(false);
+        }
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+        if (observable instanceof Server) {
+            Platform.runLater(() -> {
+                Mail mail = ((Server) observable).getLastMail();
+                VBox card = mailCardModel.buildCard("Mittente:", mail);
+                Lista_posta_ricevuta.getChildren().add(card);
+            });
         }
     }
 

@@ -132,6 +132,7 @@ public class ServerModel_2 {
     private static void sendMail(String destAddress, Mail mail) throws IOException {
 
         if (destAddress != null) {
+            log("Inoltro a: " + destAddress);
             Socket socket = new Socket(destAddress, 8002);
 
             ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());

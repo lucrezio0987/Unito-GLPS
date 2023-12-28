@@ -6,12 +6,15 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.example.prva.controller.ClientController;
 import com.google.gson.Gson;
 
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.layout.VBox;
 
-public class MailModel {
+public class MailModel implements Observer {
 
     private final ArrayList<Mail> mailSent;
     private final ArrayList<Mail> mailReceived;
@@ -37,7 +40,7 @@ public class MailModel {
 
     private Server server = null;
 
-    public MailModel() {
+    public MailModel(ClientController controller) {
         mailSent = new ArrayList<>();
         mailReceived = new ArrayList<>();
 
@@ -57,6 +60,8 @@ public class MailModel {
         localAddressProperty = new SimpleStringProperty();
 
         server = new Server();
+        server.addObserver(controller);
+        server.addObserver(this);
 
         //setMailSent();
         //setMailReceived();
@@ -273,4 +278,11 @@ public class MailModel {
             System.out.println(newLine);
     }
 
+    @Override
+    public void update(Observable observable, Object o) {
+        if (observable instanceof Server) {
+            Mail mail = ((Server) observable).getLastMail();
+            mailReceived.add(mail);
+        }
+    }
 }

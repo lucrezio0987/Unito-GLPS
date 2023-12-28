@@ -5,11 +5,12 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 import com.google.gson.Gson;
 
 
-public class Server {
+public class Server extends Observable {
     private static final String SERVER_ADDRESS = "localhost";
     private static final int SERVER_PORT_CONNECTION = 8000;
     private static final int SERVER_PORT_MESSAGES = 8001;
@@ -17,6 +18,8 @@ public class Server {
 
     private List<Mail> mailSent;
     private List<Mail> mailReceived;
+
+    private Mail lastMail = null;
 
     private boolean connected = false;
     private String localAddress = null;
@@ -127,6 +130,14 @@ public class Server {
     }
     public void addMailReceived(Mail mail) {
         mailReceived.add(mail);
+        System.out.println("MESAGGI: " + mail.getText());
+        lastMail = mail;
+        setChanged();
+        notifyObservers();
+    }
+
+    public Mail getLastMail() {
+        return lastMail;
     }
 
     public void deleteMailSent(Mail mail) { mailSent.remove(mail); }
