@@ -1,6 +1,7 @@
 package com.example.prova_server.model;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.io.*;
@@ -24,6 +25,7 @@ public class ServerModel_2 {
     }
 
     public void start() {
+
         // Thread per gestire la connessione dei client
         new Thread(() -> {
             try {
@@ -71,13 +73,10 @@ public class ServerModel_2 {
 
         @Override
         public void run() {
-            log("Socket connessione avviato (8000): " + socket.toString());
             try {
                 ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
                 String jsonConnectionInfo = (String) inputStream.readObject();
-                log("JSON serializzato: " + jsonConnectionInfo);
                 ConnectionInfo connectionInfo = new Gson().fromJson(jsonConnectionInfo, ConnectionInfo.class);
-                log("JSON deserializzato: " + connectionInfo.getUsername() + ", " + connectionInfo.isConnected());
 
                 if (connectionInfo.isConnected()) {
                     addUser(connectionInfo.getUsername(), socket.getInetAddress().getHostAddress());
@@ -91,7 +90,7 @@ public class ServerModel_2 {
 
                 log("Socket connessione chiuso (8000): " + socket.toString());
                 socket.close();
-            } catch (IOException | ClassNotFoundException e) {
+            } catch ( JsonSyntaxException | IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
@@ -108,7 +107,6 @@ public class ServerModel_2 {
 
         @Override
         public void run() {
-            log("Socket mail avviato (8001): " + socket.toString());
             try {
                 ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
                 String jsonMail = (String) inputStream.readObject();

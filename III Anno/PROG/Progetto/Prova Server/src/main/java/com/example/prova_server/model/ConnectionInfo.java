@@ -7,7 +7,7 @@ public class ConnectionInfo implements Serializable {
     private boolean connected;
     private String username;
 
-    public ConnectionInfo(String username, boolean connected){
+    public ConnectionInfo(boolean connected, String username){
         this.connected = connected;
         this.username = username;
     }

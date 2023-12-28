@@ -75,13 +75,15 @@ public class Server {
     private void connectToServer(String username) {
         // Connessione al server per notificare la connessione
         try {
-        Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_CONNECTION);
-            ConnectionInfo connectionInfo = new ConnectionInfo(username, true);
+            Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_CONNECTION);
+            ConnectionInfo connectionInfo = new ConnectionInfo(true, username);
 
             try {
                 ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
                 String jsonConnectionInfo = new Gson().toJson(connectionInfo);
+
                 outputStream.writeObject(jsonConnectionInfo);
+
                 outputStream.flush();
                 connected = true;
                 socket.close();
