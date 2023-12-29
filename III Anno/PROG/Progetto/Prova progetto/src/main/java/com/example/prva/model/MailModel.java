@@ -200,7 +200,10 @@ public class MailModel implements Observer {
         String sender       = localAddressProperty.get();
         String recipients   = addressMailSendProperty.get();
         String object       = objectMailSendProperty.get();
-        String text         = textMailSendProperty.get();
+        String text         =   "------------------ All Recipients: ----------------\n" +
+                                addressMailSendProperty.get() +
+                                "\n\n----------------------- Text: -----------------------\n" +
+                                textMailSendProperty.get();
 
         Mail mailSend = new Mail(sender ,recipients, object, text, data, time, false);
         mailSent.add(mailSend);
@@ -222,6 +225,21 @@ public class MailModel implements Observer {
 
     public void reply() {
         addressMailSendProperty.set(activeMailReceived.getSender());
+        objectMailSendProperty.set(activeMailReceived.getObject());
+        textMailSendProperty.set("\n\n----------------------- Last Mail: -----------------------\n"
+                + activeMailReceived.getText());
+    }
+
+    public void replyAll() {
+        StringBuilder addressList = new StringBuilder();
+        addressList.append(activeMailReceived.getSender());
+
+        activeMailReceived.getRecipientsList().forEach(el -> {
+            if(!el.equals(activeMailReceived.getSender()))
+                addressList.append(", " + el);
+        });
+
+        addressMailSendProperty.set(addressList.toString());
         objectMailSendProperty.set(activeMailReceived.getObject());
         textMailSendProperty.set("\n\n----------------------- Last Mail: -----------------------\n"
                 + activeMailReceived.getText());

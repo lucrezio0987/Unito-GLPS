@@ -25,7 +25,7 @@ public class ClientController implements Observer {
     @FXML
     private Button      Cancella_Tutto_Ricevuta, Cancella_Tutto_Inviata,
                         forwardBtnSent, forwardBtnReceived,sendBtnClear,
-                        deleteBtnSent, replyBtnReceived, deleteBtnRecived, sendBtn,
+                        deleteBtnSent, replyBtnReceived, deleteBtnRecived, sendBtn, replyAllBtnReceived,
                         reconnectBtnSent, reconnectBtnReceived, reconnectBtnSend,
                         reconnectServerBtnLog, connectServerBtnLog, disconnectServerBtnLog, reconnectBtnLog;
     @FXML
@@ -123,6 +123,11 @@ public class ClientController implements Observer {
         replyBtnReceived.setOnAction(event ->{
             tabPanel.getSelectionModel().select(tabSend);
             mailModel.reply();
+        });
+
+        replyAllBtnReceived.setOnAction(event ->{
+            tabPanel.getSelectionModel().select(tabSend);
+            mailModel.replyAll();
         });
 
         forwardBtnSent.setOnAction(event ->{

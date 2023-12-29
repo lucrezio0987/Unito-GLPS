@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b545aa37-8307-4738-b698-f55b798e1538" name="Changes" comment="" />
+    <list default="true" id="b545aa37-8307-4738-b698-f55b798e1538" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Prova progetto/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova progetto/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Prova progetto/src/main/java/com/example/prva/controller/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova progetto/src/main/java/com/example/prva/controller/ClientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Prova progetto/src/main/java/com/example/prva/model/MailModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova progetto/src/main/java/com/example/prva/model/MailModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Prova progetto/src/main/resources/com/example/prva/Client-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova progetto/src/main/resources/com/example/prva/Client-view.fxml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,6 +23,23 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;lucrezio0987&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="1064a26f-b63b-4361-8afe-20a275dcc484" />
+        <option name="url" value="https://github.com/lucrezio0987/Unito-GLPS.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -25,21 +48,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.ServerApplication.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.ServerApplication.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.example.prova_server.model" />
@@ -86,7 +110,10 @@
       <workItem from="1701175246554" duration="5000" />
       <workItem from="1703686863968" duration="4395000" />
       <workItem from="1703701959527" duration="13300000" />
-      <workItem from="1703754976347" duration="6424000" />
+      <workItem from="1703754976347" duration="6426000" />
+      <workItem from="1703773999531" duration="8000" />
+      <workItem from="1703774015645" duration="83000" />
+      <workItem from="1703845856584" duration="1927000" />
     </task>
     <servers />
   </component>
