@@ -36,7 +36,6 @@ public class Server extends Observable {
     }
 
     void setAddress(String localAddress) {
-        //TODO: fare in modo che questo client venga associato all'indirizzo
         this.localAddress = localAddress;
 
         connectToServer(localAddress);
