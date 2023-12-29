@@ -91,6 +91,8 @@
                         <Font size="15.0" />
                      </font>
                   </Button>
+                  <Circle fx:id="ConnectLedSent" fill="#1fff29" layoutX="257.0" layoutY="29.0" radius="5.0" stroke="#0fab17" strokeType="INSIDE" />
+                  <Circle fx:id="DisconnectLedSent" fill="#ff2121" layoutX="257.0" layoutY="29.0" radius="5.0" stroke="#ab0f0f" strokeType="INSIDE" />
                </children>
             </AnchorPane>
          </content>
@@ -107,13 +109,15 @@
                   <TextField fx:id="objectMailSend" layoutX="116.0" layoutY="110.0" prefHeight="26.0" prefWidth="726.0" />
                   <Label layoutX="902.0" layoutY="130.0" prefHeight="28.0" prefWidth="79.0" text="1024 / 1024" textFill="#656565" />
                   <Button fx:id="sendBtnClear" layoutX="876.0" layoutY="77.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="81.0" text="Clear" />
-                  <TextField fx:id="localAddressSend" layoutX="116.0" layoutY="21.0" prefHeight="26.0" prefWidth="670.0" />
+                  <TextField fx:id="localAddressSend" layoutX="116.0" layoutY="21.0" prefHeight="26.0" prefWidth="657.0" />
                   <Label layoutX="13.0" layoutY="20.0" prefHeight="28.0" prefWidth="98.0" text="Local Address" />
                   <Button fx:id="reconnectBtnSend" layoutX="800.0" layoutY="18.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="35.0" text="⟳">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Button>
+                  <Circle fx:id="ConnectLedSend" fill="#1fff29" layoutX="785.0" layoutY="34.0" radius="5.0" stroke="#0fab17" strokeType="INSIDE" />
+                  <Circle fx:id="DisconnectLedSend" fill="#ff2121" layoutX="785.0" layoutY="34.0" radius="5.0" stroke="#ab0f0f" strokeType="INSIDE" />
                </children>
             </AnchorPane>
          </content>
@@ -140,7 +144,7 @@
                         <Font size="15.0" />
                      </font>
                   </Button>
-                  <Label layoutX="403.0" layoutY="64.0" prefHeight="28.0" prefWidth="227.0" text="[ ✓| 𐄂 ] Connect to Server">
+                  <Label layoutX="426.0" layoutY="64.0" prefHeight="28.0" prefWidth="227.0" text="Server Status">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -150,6 +154,8 @@
                         <Font size="15.0" />
                      </font>
                   </Button>
+                  <Circle fx:id="ConnectLedLog" fill="#1fff29" layoutX="414.0" layoutY="78.0" radius="5.0" stroke="#0fab17" strokeType="INSIDE" />
+                  <Circle fx:id="DisconnectLedLog" fill="#ff2121" layoutX="414.0" layoutY="78.0" radius="5.0" stroke="#ab0f0f" strokeType="INSIDE" />
                </children>
             </AnchorPane>
          </content>

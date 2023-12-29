@@ -31,6 +31,10 @@ public class Server extends Observable {
         startListening();
     }
 
+    public boolean isConnected() {
+        return connected;
+    }
+
     void setAddress(String localAddress) {
         //TODO: fare in modo che questo client venga associato all'indirizzo
         this.localAddress = localAddress;

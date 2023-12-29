@@ -260,7 +260,7 @@ public class MailModel implements Observer {
         );
     }
 
-    public void reconnect() {
+    public boolean connect() {
         if(syntaxControll()) {
             addLog("Client", "Connessione: " + localAddressProperty.get());
             deleteMailSentList();
@@ -272,6 +272,7 @@ public class MailModel implements Observer {
         } else {
             addLog("Client", "ERRORE: Indirizzo inserito non valido, connessione NON eseguita");
         }
+        return server.isConnected();
     }
 
     private boolean syntaxControll() {

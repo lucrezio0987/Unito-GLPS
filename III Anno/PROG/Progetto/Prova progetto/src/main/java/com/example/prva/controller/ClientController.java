@@ -7,12 +7,11 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
+import javafx.scene.image.*;
+import javafx.scene.input.*;
+import javafx.scene.layout.*;
+import javafx.scene.shape.*;
+import javafx.scene.text.*;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -41,6 +40,10 @@ public class ClientController implements Observer {
     private TabPane     tabPanel;
     @FXML
     private Tab         tabSend;
+
+    @FXML
+    private Circle      ConnectLedReceived, ConnectLedSend, ConnectLedSent, ConnectLedLog,
+                        DisconnectLedReceived, DisconnectLedSend, DisconnectLedSent, DisconnectLedLog;
 
     MailModel mailModel;
     MailCardModel mailCardModel;
@@ -78,7 +81,7 @@ public class ClientController implements Observer {
         mailModel.getLocalAddressProperty().bindBidirectional(localAddressLog.textProperty());
 
         localAddressSend.textProperty().set(localAddressMail);
-        mailModel.reconnect();
+        setConnection(mailModel.connect());
 
         loadMail();
 
@@ -140,10 +143,35 @@ public class ClientController implements Observer {
             mailModel.forwardReceived();
         });
 
-        reconnectBtnSent.setOnAction(event ->       { deleteMail(); mailModel.reconnect(); loadMail(); });
-        reconnectBtnReceived.setOnAction(event ->   { deleteMail(); mailModel.reconnect(); loadMail(); });
-        reconnectBtnSend.setOnAction(event ->       { deleteMail(); mailModel.reconnect(); loadMail(); });
-        reconnectBtnLog.setOnAction(event ->        { deleteMail(); mailModel.reconnect(); loadMail(); });
+        reconnectBtnSent.setOnAction(event ->       { deleteMail(); setConnection(mailModel.connect()); loadMail(); });
+        reconnectBtnReceived.setOnAction(event ->   { deleteMail(); setConnection(mailModel.connect()); loadMail(); });
+        reconnectBtnSend.setOnAction(event ->       { deleteMail(); setConnection(mailModel.connect()); loadMail(); });
+        reconnectBtnLog.setOnAction(event ->        { deleteMail(); setConnection(mailModel.connect()); loadMail(); });
+    }
+
+    private void setConnection(boolean connect) {
+        if(connect){
+            ConnectLedReceived.setVisible(true);
+            ConnectLedSend.setVisible(true);
+            ConnectLedSent.setVisible(true);
+            ConnectLedLog.setVisible(true);
+
+            DisconnectLedReceived.setVisible(false);
+            DisconnectLedSend.setVisible(false);
+            DisconnectLedSent.setVisible(false);
+            DisconnectLedLog.setVisible(false);
+        } else {
+            ConnectLedReceived.setVisible(false);
+            ConnectLedSend.setVisible(false);
+            ConnectLedSent.setVisible(false);
+            ConnectLedLog.setVisible(false);
+
+            DisconnectLedReceived.setVisible(true);
+            DisconnectLedSend.setVisible(true);
+            DisconnectLedSent.setVisible(true);
+            DisconnectLedLog.setVisible(true);
+
+        }
     }
 
     private void setCountMailSent() { countMailSent.setText(String.valueOf(mailModel.getListMailSent().size())); }
