@@ -82,15 +82,16 @@ public class MailModel implements Observer {
 
     public SimpleStringProperty getLocalAddressProperty(){ return this.localAddressProperty; }
 
-    public ArrayList<Mail> getListMailSent(){ return mailSent; }
-    public ArrayList<Mail> getListMailReceived(){
-        return mailReceived;
+    public ArrayList<Mail> getListMailSent(){ setMailSent(); return mailSent; }
+    public ArrayList<Mail> getListMailReceived(){ setMailReceived(); return mailReceived;
     }
 
     public void setMailSent(){
+        mailSent.clear();
         mailSent.addAll(server.getMailSent());
     }
     public void setMailReceived(){
+        mailReceived.clear();
         mailReceived.addAll(server.getMailReceived());
     }
 

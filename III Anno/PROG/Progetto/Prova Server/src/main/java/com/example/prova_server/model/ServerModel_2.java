@@ -6,10 +6,19 @@ import javafx.beans.property.SimpleStringProperty;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVPrinter;
+import org.apache.commons.csv.CSVRecord;
+
+import java.io.FileReader;
+import java.io.FileWriter;
 
 public class ServerModel_2 {
     private static SimpleStringProperty textAreaProperty = null;
@@ -81,21 +90,21 @@ public class ServerModel_2 {
                 if (connectionInfo.isConnected()) {
                     addUser(connectionInfo.getUsername(), socket.getInetAddress().getHostAddress());
                     //TODO: Invia conferma di connessione al client
-                    //ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-                    //outputStream.writeObject("Connessione riuscita");
-                    //outputStream.flush();
+                    ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+                    String jsonList = new Gson().toJson(sendCSV(pathCostructor(connectionInfo.getUsername(), "sender")));
+                    outputStream.writeObject(jsonList);
+                    outputStream.flush();
                 } else {
                     removeUser(connectionInfo.getUsername());
                 }
 
                 log("Socket connessione chiuso (8000): " + socket.toString());
                 socket.close();
-            } catch ( JsonSyntaxException | IOException | ClassNotFoundException e) {
+            } catch (JsonSyntaxException | IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
     }
-
 
 
     private static class MessageHandler implements Runnable {
@@ -111,6 +120,7 @@ public class ServerModel_2 {
                 ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
                 String jsonMail = (String) inputStream.readObject();
                 Mail mail = new Gson().fromJson(jsonMail, Mail.class);
+                WriterSender(mail);
 
                 mail.getRecipientsList().forEach(recipient -> {
                     try {
@@ -170,4 +180,74 @@ public class ServerModel_2 {
         System.out.println(newLine);
     }
 
+    private static void WriterSender(Mail mail) {
+        String path = pathCostructor(mail.getSender(), "sender");
+
+        ArrayList<Mail> mailList = new ArrayList<>();
+
+        try {
+            boolean exist = FileExist(path);
+            if (exist)
+                mailList = readCSV(path);
+            mailList.add(mail);
+            WriteCSV(mailList, path);
+        } catch (IOException e) {
+            System.err.println(e);
+        }
+    }
+
+    private static boolean FileExist(String path) {
+        return new java.io.File(path).exists();
+    }
+
+    private static ArrayList<Mail> readCSV(String path) throws IOException {
+        ArrayList<Mail> mailList = new ArrayList<>();
+
+        try (CSVParser csvParser = CSVParser.parse(new FileReader(path), CSVFormat.DEFAULT.withFirstRecordAsHeader())) {
+            for (CSVRecord csvRecord : csvParser) {
+                String sender = csvRecord.get("Sender");
+                String recipients = csvRecord.get("Recipients");
+                String object = csvRecord.get("Object");
+                String text = csvRecord.get("Text");
+                String date = csvRecord.get("Date");
+                String time = csvRecord.get("Time");
+                boolean read = Boolean.parseBoolean(csvRecord.get("Read"));
+
+                mailList.add(new Mail(sender, recipients, object, text, date, time, read));
+            }
+        }
+        return mailList;
+    }
+
+    private static void WriteCSV(ArrayList<Mail> mailList, String path) throws IOException {
+        try (FileWriter fileWriter = new FileWriter(path);
+             CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT)) {
+
+            // Intestazioni del CSV
+            csvPrinter.printRecord("Sender", "Recipients", "Text", "Object", "Date", "Time", "Read");
+
+            // Scrivi i dati nel CSV
+            for (Mail mail : mailList)
+                csvPrinter.printRecord(mail.getSender(),
+                        mail.getRecipients(), mail.getText(),
+                        mail.getObject(), mail.getDate(), mail.getTime(), mail.getRead());
+        }
+    }
+
+    private static ArrayList<Mail> sendCSV(String path){
+        ArrayList<Mail> mailList = new ArrayList<>();
+
+        try{
+            boolean exist = FileExist(path);
+            if(exist)
+                mailList = readCSV(path);
+        } catch(IOException e){
+            System.err.println(e);
+        }
+        return mailList;
+    }
+
+    private static String pathCostructor(String username, String type){
+        return "/Users/mariocorrao/Desktop/Git/Unito-GLPS/III Anno/PROG/Progetto/Prova Server/src/backup/" + username + "-" + type + ".csv";
+    }
 }

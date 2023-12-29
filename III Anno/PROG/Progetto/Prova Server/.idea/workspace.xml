@@ -61,6 +61,9 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.example.prova_server.model" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.example.prova_server.model" />
     </key>
@@ -110,7 +113,7 @@
       <workItem from="1703773999531" duration="8000" />
       <workItem from="1703774015645" duration="83000" />
       <workItem from="1703845856584" duration="2984000" />
-      <workItem from="1703856307825" duration="1647000" />
+      <workItem from="1703856307825" duration="10806000" />
     </task>
     <servers />
   </component>

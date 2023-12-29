@@ -1,6 +1,7 @@
 package com.example.prva.model;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Observable;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 
 public class Server extends Observable {
@@ -80,6 +82,7 @@ public class Server extends Observable {
 
     private void connectToServer(String username) {
         // Connessione al server per notificare la connessione
+        connected  = false;
         try {
             Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_CONNECTION);
             ConnectionInfo connectionInfo = new ConnectionInfo(true, username);
@@ -92,13 +95,21 @@ public class Server extends Observable {
 
                 outputStream.flush();
                 connected = true;
+
+                ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+                String jsonSenderCSV = (String) inputStream.readObject();
+                mailSent.clear();
+                Type listType = new TypeToken<ArrayList<Mail>>() {}.getType();
+                mailSent = new Gson().fromJson(jsonSenderCSV, listType);
+                System.out.println(mailSent.size());
+
+
                 socket.close();
 
-            } catch (IOException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         } catch (IOException e) {
-            connected  = false;
             System.out.println("Connessione al Server Fallita");
         }
     }
