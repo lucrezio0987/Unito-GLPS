@@ -98,6 +98,7 @@ public class Server extends Observable {
                 e.printStackTrace();
             }
         } catch (IOException e) {
+            connected  = false;
             System.out.println("Connessione al Server Fallita");
         }
     }
