@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleStringProperty;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -90,10 +91,14 @@ public class ServerModel_2 {
                 if (connectionInfo.isConnected()) {
                     addUser(connectionInfo.getUsername(), socket.getInetAddress().getHostAddress());
                     //TODO: Invia conferma di connessione al client
+                    HashMap<String, ArrayList<Mail>> map = new HashMap<>();
+                    map.put("sent", sendCSV(pathCostructor(connectionInfo.getUsername(), "sender")));
+                    map.put("received", sendCSV(pathCostructor(connectionInfo.getUsername(), "received")));
                     ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-                    String jsonList = new Gson().toJson(sendCSV(pathCostructor(connectionInfo.getUsername(), "sender")));
+                    String jsonList = new Gson().toJson(map);
                     outputStream.writeObject(jsonList);
                     outputStream.flush();
+
                 } else {
                     removeUser(connectionInfo.getUsername());
                 }
@@ -121,6 +126,7 @@ public class ServerModel_2 {
                 String jsonMail = (String) inputStream.readObject();
                 Mail mail = new Gson().fromJson(jsonMail, Mail.class);
                 WriterSender(mail);
+                WriterReceiver(mail);
 
                 mail.getRecipientsList().forEach(recipient -> {
                     try {
@@ -182,6 +188,22 @@ public class ServerModel_2 {
 
     private static void WriterSender(Mail mail) {
         String path = pathCostructor(mail.getSender(), "sender");
+
+        ArrayList<Mail> mailList = new ArrayList<>();
+
+        try {
+            boolean exist = FileExist(path);
+            if (exist)
+                mailList = readCSV(path);
+            mailList.add(mail);
+            WriteCSV(mailList, path);
+        } catch (IOException e) {
+            System.err.println(e);
+        }
+    }
+
+    private static void WriterReceiver(Mail mail) {
+        String path = pathCostructor(mail.getRecipients(), "received");
 
         ArrayList<Mail> mailList = new ArrayList<>();
 

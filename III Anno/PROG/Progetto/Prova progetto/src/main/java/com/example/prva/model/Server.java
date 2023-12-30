@@ -5,6 +5,7 @@ import java.lang.reflect.Type;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Observable;
 
@@ -99,11 +100,11 @@ public class Server extends Observable {
                 ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
                 String jsonSenderCSV = (String) inputStream.readObject();
                 mailSent.clear();
-                Type listType = new TypeToken<ArrayList<Mail>>() {}.getType();
-                mailSent = new Gson().fromJson(jsonSenderCSV, listType);
-                System.out.println(mailSent.size());
-
-
+                mailReceived.clear();
+                Type type = new TypeToken<HashMap<String, ArrayList<Mail>>>() {}.getType();
+                HashMap<String, ArrayList<Mail>> map = new Gson().fromJson(jsonSenderCSV, type);
+                mailSent = map.get("sent");
+                mailReceived = map.get("received");
                 socket.close();
 
             } catch (IOException | ClassNotFoundException e) {
