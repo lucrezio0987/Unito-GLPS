@@ -248,6 +248,7 @@ public class ServerModel_2 {
     }
 
     private static String pathCostructor(String username, String type){
-        return "/Users/mariocorrao/Desktop/Git/Unito-GLPS/III Anno/PROG/Progetto/Prova Server/src/backup/" + username + "-" + type + ".csv";
+        return System.getProperty("user.dir") + File.separator + "src" + File.separator + "backup" +
+                File.separator + username + "-" + type + ".csv";
     }
 }
