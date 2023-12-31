@@ -10,9 +10,7 @@ import com.example.prva.controller.ClientController;
 import com.google.gson.Gson;
 
 
-import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.scene.layout.VBox;
 
 public class MailModel implements Observer {
 
@@ -311,5 +309,9 @@ public class MailModel implements Observer {
             Mail mail = ((Server) observable).getLastMail();
             mailReceived.add(mail);
         }
+    }
+
+    public void stop() {
+        server.stop();
     }
 }

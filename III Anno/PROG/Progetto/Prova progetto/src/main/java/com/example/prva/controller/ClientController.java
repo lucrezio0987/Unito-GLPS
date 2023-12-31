@@ -82,9 +82,6 @@ public class ClientController implements Observer {
      */
 
 
-
-
-
     public void initModel(String localAddressMail) {
         mailModel = new MailModel(this);
         mailCardModel = new MailCardModel(mailModel);
@@ -301,6 +298,10 @@ public class ClientController implements Observer {
                 Lista_posta_ricevuta.getChildren().add(card);
             });
         }
+    }
+
+    public void termModel() {
+        mailModel.stop();
     }
 
     public class MailCardModel {

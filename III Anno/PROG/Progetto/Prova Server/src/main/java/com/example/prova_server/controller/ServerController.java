@@ -6,8 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
-import java.io.IOException;
-
 public class ServerController {
 
     ServerModel_2 model;
@@ -26,11 +24,30 @@ public class ServerController {
         model = new ServerModel_2();
 
         textArea.textProperty().bind(model.getTextAreaProperty());
+        countLabel.textProperty().bind(model.getCountProperty());
 
         model.start();
 
-        System.out.println("Server Avviato");
+        startBtn.setOnAction(event -> { model.start();});
+        stopBtn.setOnAction(event -> { model.stop();});
+        resetBtn.setOnAction(event -> {
+            model.stop();
+            try {
+                wait(1050);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            model.start();
+        });
+
+        startBtn.setDisable(true);
+        stopBtn.setDisable(true);
+        resetBtn.setDisable(true);
+
+    }
 
 
+    public void termModel() {
+        model.stop();
     }
 }

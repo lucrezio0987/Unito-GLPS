@@ -4,6 +4,7 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +27,7 @@ public class Server extends Observable {
 
     private boolean connected = false;
     private String localAddress = null;
+    Thread clientMessageServerThread = null;
 
     public Server(){
         mailSent = new ArrayList<>();
@@ -49,34 +51,40 @@ public class Server extends Observable {
 
     private void startListening() {
 
-        new Thread(() -> {
+        clientMessageServerThread = new Thread(() -> {
             try {
                 ServerSocket clientMessageServerSocket = new ServerSocket(CLIENT_PORT_MESSAGES);
                 System.out.println("Client in ascolto sulla porta " + CLIENT_PORT_MESSAGES + " per i messaggi...");
+                clientMessageServerSocket.setSoTimeout(1000);
 
-                while (true) {
-                    Socket socket = clientMessageServerSocket.accept();
+                while (!Thread.interrupted()) {
                     try {
-                        ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-                        String jsonMail = (String) inputStream.readObject();
-                        Mail mail = new Gson().fromJson(jsonMail, Mail.class);
+                        Socket socket = clientMessageServerSocket.accept();
+                        try {
+                            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+                            String jsonMail = (String) inputStream.readObject();
+                            Mail mail = new Gson().fromJson(jsonMail, Mail.class);
 
-                        //ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-                        //Mail mail = (Mail) inputStream.readObject();
+                            //ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+                            //Mail mail = (Mail) inputStream.readObject();
 
-                        System.out.println("Messaggio ricevuto da " + mail.getSender() + ": " + mail.getText());
-                        addMailReceived(mail);
+                            System.out.println("Messaggio ricevuto da " + mail.getSender() + ": " + mail.getText());
+                            addMailReceived(mail);
 
-                        socket.close();
-                    } catch (IOException | ClassNotFoundException e) {
-                        e.printStackTrace();
-                        System.out.println("Errore durante la lettura del messaggio dal Server");
+                            socket.close();
+                        } catch (IOException | ClassNotFoundException e) {
+                            e.printStackTrace();
+                            System.out.println("Errore durante la lettura del messaggio dal Server");
+                        }
+                    } catch (SocketTimeoutException e) {
+                        continue;
                     }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }).start();
+        });
+        clientMessageServerThread.start();
 
     }
 
@@ -84,35 +92,35 @@ public class Server extends Observable {
     private void connectToServer(String username) {
         // Connessione al server per notificare la connessione
         connected  = false;
-        try {
-            Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_CONNECTION);
+        try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_CONNECTION)) {
             ConnectionInfo connectionInfo = new ConnectionInfo(true, username);
 
-            try {
-                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+            try (ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream())) {
                 String jsonConnectionInfo = new Gson().toJson(connectionInfo);
-
                 outputStream.writeObject(jsonConnectionInfo);
-
                 outputStream.flush();
                 connected = true;
 
-                ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-                String jsonSenderCSV = (String) inputStream.readObject();
-                mailSent.clear();
-                mailReceived.clear();
-                Type type = new TypeToken<HashMap<String, ArrayList<Mail>>>() {}.getType();
-                HashMap<String, ArrayList<Mail>> map = new Gson().fromJson(jsonSenderCSV, type);
-                mailSent = map.get("sent");
-                mailReceived = map.get("received");
-                socket.close();
-
-            } catch (IOException | ClassNotFoundException e) {
+                try (ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream())) {
+                    while (inputStream.available() > 0) {
+                        String jsonSenderCSV = (String) inputStream.readObject();
+                        mailSent.clear();
+                        mailReceived.clear();
+                        Type type = new TypeToken<HashMap<String, ArrayList<Mail>>>() {}.getType();
+                        HashMap<String, ArrayList<Mail>> map = new Gson().fromJson(jsonSenderCSV, type);
+                        mailSent = map.get("sent");
+                        mailReceived = map.get("received");
+                    }
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         } catch (IOException e) {
             System.out.println("Connessione al Server Fallita");
         }
+
     }
 
     public List<Mail> getMailSent() { return mailSent; }
@@ -204,4 +212,7 @@ public class Server extends Observable {
     }
 
 
+    public void stop() {
+        clientMessageServerThread.interrupt();
+    }
 }

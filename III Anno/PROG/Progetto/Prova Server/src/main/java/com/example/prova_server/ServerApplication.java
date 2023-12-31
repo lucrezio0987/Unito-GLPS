@@ -9,6 +9,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class ServerApplication extends Application {
+
+    ServerController contr;
+
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(ServerApplication.class.getResource("hello-view.fxml"));
@@ -17,8 +20,14 @@ public class ServerApplication extends Application {
         stage.setScene(scene);
         stage.show();
 
-        ServerController contr = fxmlLoader.getController();
-                         contr.initModel();
+        contr = fxmlLoader.getController();
+        contr.initModel();
+    }
+
+    @Override
+    public void stop() throws Exception {
+        contr.termModel();
+        super.stop();
     }
 
     public static void main(String[] args) {

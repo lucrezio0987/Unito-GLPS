@@ -2,6 +2,7 @@ package com.example.prova_server.model;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.io.*;
@@ -9,6 +10,7 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -23,56 +25,133 @@ import java.io.FileWriter;
 
 public class ServerModel_2 {
     private static SimpleStringProperty textAreaProperty = null;
+    private static SimpleStringProperty countProperty = null;
+
+    private static ServerSocket clientServerSocket = null;
+    private static ServerSocket mailServerSocket  = null;
+
     private static final int THREAD_POOL_SIZE = 10;
     private static ExecutorService executorService;
 
     private static Map<String, String> clients;
 
+
+    private static boolean isStarted = false;
+
     public ServerModel_2() {
         textAreaProperty = new SimpleStringProperty();
+        countProperty = new SimpleStringProperty();
+        countProperty.set(Integer.toString(0));
+
         executorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
         clients = new ConcurrentHashMap<>();
+
     }
 
+    private Thread clientThread;
+    private Thread mailThread;
+
     public void start() {
-
-        // Thread per gestire la connessione dei client
-        new Thread(() -> {
+        if(isStarted)
+            return;
+            // Thread per gestire la connessione dei client
+        clientThread = new Thread(() -> {
             try {
-                ServerSocket serverSocket = new ServerSocket(8000);
-                log("Server in ascolto sulla porta 8000 per le connessioni...");
+                clientServerSocket = new ServerSocket(8000);
+                clientServerSocket.setSoTimeout(2000);
+                log("Socket: clientServerSocket OPENED (8000)");
 
-                while (true) {
-                    Socket socket = serverSocket.accept();
-                    log("\nSocket connessione ricevuto (8000): " + socket.toString());
-                    executorService.submit(new ConnectionHandler(socket));
+                while (!Thread.interrupted()) {
+                    try (Socket socket = clientServerSocket.accept()) {
+                        log("Connection: Connessione Client (8000):  " + socket.toString());
+                        executorService.submit(new ConnectionHandler(socket));
+                    } catch (SocketTimeoutException e) {
+                        continue;
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+            } finally {
+                try {
+                    if (clientServerSocket != null && !clientServerSocket.isClosed()) {
+                        clientServerSocket.close();
+                        log("Socket: clientServerSocket CLOSED");
+                    } else {
+                        log("ERROR: clientServerSocket already CLOSED");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }).start();
+        });
+
+        clientThread.start();
 
         // Thread per gestire i messaggi dei client
-        new Thread(() -> {
+        mailThread = new Thread(() -> {
             try {
-                ServerSocket serverSocket = new ServerSocket(8001);
-                log("Server in ascolto sulla porta 8001 per le mail...");
+                ServerSocket mailServerSocket = new ServerSocket(8001);
+                mailServerSocket.setSoTimeout(2000);
+                log("Socket: mailServerSocket OPENED (8001)");
 
-                while (true) {
-                    Socket socket = serverSocket.accept();
-                    log("\nSocket mail ricevuto (8001): " + socket.toString());
-                    executorService.submit(new MessageHandler(socket));
-
+                while (!Thread.interrupted()) {
+                    try (Socket socket = mailServerSocket.accept()) {
+                        log("Mail: Ricevuta Mail (8001): " + socket.toString());
+                        executorService.submit(new MessageHandler(socket));
+                    } catch (SocketTimeoutException e) {
+                        continue;
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+            } finally {
+                try {
+                    if (mailServerSocket != null && !mailServerSocket.isClosed()) {
+                        mailServerSocket.close();
+                        log("Socket: mailServerSocket CLOSED");
+                    } else {
+                        log("ERROR: mailServerSocket already CLOSED");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }).start();
+        });
+
+        mailThread.start();
+
+        if(clientThread.isAlive() && mailThread.isAlive()) {
+            isStarted = true;
+            log("Server: STARTED");
+        } else {
+            log("ERRORE: Server not started");
+        }
+    }
+
+    public void stop() {
+        if(isStarted)
+            try {
+                clientThread.interrupt();
+                mailThread.interrupt();
+
+                executorService.shutdownNow();
+
+                while (!executorService.isTerminated())
+                    Thread.sleep(1);
+
+                log("Server: STOPED");
+                isStarted = false;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                log("ERROR: Errore durante l'interruzione del server");
+            }
     }
 
     public SimpleStringProperty getTextAreaProperty() {
         return textAreaProperty;
     }
+
+    public SimpleStringProperty getCountProperty() { return countProperty; }
 
     private static class ConnectionHandler implements Runnable {
         private Socket socket;
@@ -83,6 +162,11 @@ public class ServerModel_2 {
 
         @Override
         public void run() {
+            if (socket.isClosed()) {
+                log("ERROR: Il socket è chiuso. Impossibile leggere dall'input stream.");
+                return;
+            }
+
             try {
                 ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
                 String jsonConnectionInfo = (String) inputStream.readObject();
@@ -102,8 +186,6 @@ public class ServerModel_2 {
                 } else {
                     removeUser(connectionInfo.getUsername());
                 }
-
-                log("Socket connessione chiuso (8000): " + socket.toString());
                 socket.close();
             } catch (JsonSyntaxException | IOException | ClassNotFoundException e) {
                 e.printStackTrace();
@@ -111,6 +193,12 @@ public class ServerModel_2 {
         }
     }
 
+
+    private static int getClientNumber() {
+        return (int) clients.values().stream()
+                .filter(Objects::nonNull)
+                .count();
+    }
 
     private static class MessageHandler implements Runnable {
         private Socket socket;
@@ -136,7 +224,6 @@ public class ServerModel_2 {
                     }
                 });
 
-                log("Socket mail chiuso (8001): " + socket.toString());
                 socket.close();
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
@@ -162,20 +249,21 @@ public class ServerModel_2 {
 
     public static synchronized void addUser(String username, String address) {
         clients.put(username, address);
-        log("Client " + username + " connesso da " + address);
+        log("Client: " + username + " connesso da " + address);
+        Platform.runLater(() -> { countProperty.set(Integer.toString(getClientNumber()));});
     }
 
     public static synchronized void removeUser(String username) {
         clients.put(username, null);
-        log("Client " + username + " disconnesso.");
+        log("Client:  " + username + " disconnesso.");
     }
 
     public static synchronized String getAddressForUser(String username) {
         return clients.get(username);
     }
 
-    private static void log(String newLine) {
-        if (newLine == null)
+    private static synchronized void log(String newLine) {
+        if (newLine.isEmpty())
             newLine = "ALLERT: String is NULL";
 
         String currentText = textAreaProperty.getValue();
@@ -219,7 +307,7 @@ public class ServerModel_2 {
     }
 
     private static boolean FileExist(String path) {
-        return new java.io.File(path).exists();
+        return new File(path).exists();
     }
 
     private static ArrayList<Mail> readCSV(String path) throws IOException {

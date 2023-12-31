@@ -10,6 +10,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class ClientApplication extends Application {
+    ClientController contr;
+
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(ClientApplication.class.getResource("Client-view.fxml"));
@@ -20,8 +22,14 @@ public class ClientApplication extends Application {
         stage.getIcons().add(new Image(ClientApplication.class.getResourceAsStream("email-img.png")));
         stage.show();
 
-        ClientController contr = fxmlLoader.getController();
-                         contr.initModel("client.mail@example.com");
+        contr = fxmlLoader.getController();
+        contr.initModel("client.mail@example.com");
+    }
+
+    @Override
+    public void stop() throws Exception {
+        contr.termModel();
+        super.stop();
     }
 
     public static void main(String[] args) {
