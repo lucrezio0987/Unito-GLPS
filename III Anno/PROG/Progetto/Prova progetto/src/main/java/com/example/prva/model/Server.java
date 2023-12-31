@@ -65,7 +65,7 @@ public class Server {
         clientMessageServerThread = new Thread(() -> {
             try {
                 ServerSocket clientMessageServerSocket = new ServerSocket(CLIENT_PORT_MESSAGES);
-                System.out.println("Client in ascolto sulla porta " + CLIENT_PORT_MESSAGES + " per i messaggi...");
+                System.out.println("Client in ascolto sulla porta " + CLIENT_PORT_MESSAGES + " per le mail...");
                 clientMessageServerSocket.setSoTimeout(1000);
 
                 while (!Thread.interrupted()) {
@@ -79,13 +79,13 @@ public class Server {
                             //ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
                             //Mail mail = (Mail) inputStream.readObject();
 
-                            System.out.println("Messaggio ricevuto da " + mail.getSender() + ": " + mail.getText());
+                            System.out.println("MAIL ricevuta da " + mail.getSender() + ": " + mail.getText());
                             addMailReceived(mail);
 
                             socket.close();
                         } catch (IOException | ClassNotFoundException e) {
                             e.printStackTrace();
-                            System.out.println("Errore durante la lettura del messaggio dal Server");
+                            System.out.println("Errore durante la lettura della mail dal Server");
                         }
                     } catch (SocketTimeoutException e) {
                         continue;
@@ -100,7 +100,7 @@ public class Server {
         serverConnectionThread = new Thread(() -> {
             try {
                 ServerSocket serverConnectionSocket = new ServerSocket(CLIENT_PORT_CONNECTION);
-                System.out.println("Client in ascolto sulla porta " + CLIENT_PORT_CONNECTION + " per i messaggi...");
+                System.out.println("Client in ascolto sulla porta " + CLIENT_PORT_CONNECTION + " per i messaggi di disconnessione del server...");
                 serverConnectionSocket.setSoTimeout(1000);
 
                 while (!Thread.interrupted()) {
