@@ -4,18 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b545aa37-8307-4738-b698-f55b798e1538" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/prova_server/ServerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/prova_server/ServerApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/prova_server/controller/ServerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/prova_server/controller/ServerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/prova_server/model/ServerModel_2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/prova_server/model/ServerModel_2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Prova progetto/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova progetto/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Prova progetto/src/main/java/com/example/prva/ClientApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova progetto/src/main/java/com/example/prva/ClientApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Prova progetto/src/main/java/com/example/prva/controller/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova progetto/src/main/java/com/example/prva/controller/ClientController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Prova progetto/src/main/java/com/example/prva/model/MailModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova progetto/src/main/java/com/example/prva/model/MailModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Prova progetto/src/main/java/com/example/prva/model/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova progetto/src/main/java/com/example/prva/model/Server.java" afterDir="false" />
-    </list>
+    <list default="true" id="b545aa37-8307-4738-b698-f55b798e1538" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -125,7 +114,7 @@
       <workItem from="1703856307825" duration="10806000" />
       <workItem from="1703933331905" duration="1278000" />
       <workItem from="1703934790999" duration="2525000" />
-      <workItem from="1704013570677" duration="12612000" />
+      <workItem from="1704013570677" duration="13219000" />
     </task>
     <servers />
   </component>

@@ -58,7 +58,7 @@ public class ServerModel_2 {
         clientThread = new Thread(() -> {
             try {
                 clientServerSocket = new ServerSocket(8000);
-                clientServerSocket.setSoTimeout(2000);
+                clientServerSocket.setSoTimeout(1000);
                 log("Socket: clientServerSocket OPENED (8000)");
 
                 while (!Thread.interrupted()) {
@@ -91,7 +91,7 @@ public class ServerModel_2 {
         mailThread = new Thread(() -> {
             try {
                 ServerSocket mailServerSocket = new ServerSocket(8001);
-                mailServerSocket.setSoTimeout(2000);
+                mailServerSocket.setSoTimeout(1000);
                 log("Socket: mailServerSocket OPENED (8001)");
 
                 while (!Thread.interrupted()) {
