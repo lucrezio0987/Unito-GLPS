@@ -31,11 +31,13 @@ public class ServerModel_2 {
 
     private static ServerSocket clientServerSocket = null;
     private static ServerSocket mailServerSocket  = null;
+    private static ServerSocket modifySocket  = null;
 
     private static final int THREAD_POOL_SIZE = 10;
     private static ExecutorService executorService;
 
     private static Map<String, String> clients;
+    private static Map<String, UserData> userDataList;
 
 
     private static boolean isStarted = false;
@@ -47,11 +49,13 @@ public class ServerModel_2 {
 
         executorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
         clients = new ConcurrentHashMap<>();
+        userDataList = new ConcurrentHashMap<>();
 
     }
 
     private Thread clientThread;
     private Thread mailThread;
+    private Thread modifyThread;
 
     public void start() {
         if(isStarted)
@@ -93,7 +97,7 @@ public class ServerModel_2 {
         // Thread per gestire i messaggi dei client
         mailThread = new Thread(() -> {
             try {
-                ServerSocket mailServerSocket = new ServerSocket(8001);
+                mailServerSocket = new ServerSocket(8001);
                 mailServerSocket.setSoTimeout(1000);
                 log("Socket: mailServerSocket OPENED (8001)");
 
@@ -124,6 +128,39 @@ public class ServerModel_2 {
 
         mailThread.start();
 
+        modifyThread = new Thread(() -> {
+            try {
+                ServerSocket modifySocket = new ServerSocket(8001);
+                modifySocket.setSoTimeout(1000);
+                log("Socket: modifySocket OPENED (8002)");
+
+                while (!Thread.interrupted()) {
+                    try {
+                        Socket socket = modifySocket.accept();
+                        log("Mail: Ricevuta ModifyMail (8002): " + socket.toString());
+                        executorService.submit(new ModifyHandler(socket));
+                    } catch (SocketTimeoutException e) {
+                        continue;
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (modifySocket != null && !modifySocket.isClosed()) {
+                        modifySocket.close();
+                        log("Socket: modifySocket CLOSED");
+                    } else {
+                        log("ERROR: modifySocket already CLOSED");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        modifyThread.start();
+
         if(clientThread.isAlive() && mailThread.isAlive()) {
             isStarted = true;
             log("Server: STARTED");
@@ -137,6 +174,7 @@ public class ServerModel_2 {
             try {
                 clientThread.interrupt();
                 mailThread.interrupt();
+                modifyThread.interrupt();
 
                 executorService.shutdownNow();
 
@@ -208,6 +246,19 @@ public class ServerModel_2 {
             } catch (JsonSyntaxException | IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private static class ModifyHandler implements Runnable {
+        private Socket socket;
+
+        public ModifyHandler(Socket modifySocket) {
+            this.socket = modifySocket;
+        }
+
+        @Override
+        public void run() {
+            //TODO: Deve fare cose
         }
     }
 
