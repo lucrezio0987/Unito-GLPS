@@ -50,13 +50,9 @@ public class ClientController {
 
     //TODO: AGGIUNGERE COMMENTI!!!!!!
 
-    //TODO: aggiugere una connessione Server -> client (brodcast) su un altra porta che notifica quando il server viene avviato/fermato
-
     //TODO: far funzionare i pulsati del server
 
     //TODO: aggiungere una connessione Client -> Server su un altra porta che invia un oggetto MailModifyInfo che notifica la lettura o la cancelazione di una mail
-
-    //TODO: le mail che il server deve mandare al client quanvo si collega non sono solo quelle ricevute ma anche quelle inviate
 
     /* TODO: fare in modo che il Server quando un client si connette non gli invii tutti i messaggi ma solo quelli che non ha gia
           IDEE:

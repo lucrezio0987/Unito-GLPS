@@ -27,6 +27,9 @@ public class Server {
     private List<Mail> mailSent;
     private List<Mail> mailReceived;
 
+    private List<MailModifyInfo> mailSentOfflineModify;
+    private List<MailModifyInfo> mailReceivedOfflineModify;
+
     private Mail lastMail = null;
 
     private boolean connected = false;
@@ -39,6 +42,8 @@ public class Server {
 
         mailSent = new ArrayList<>();
         mailReceived = new ArrayList<>();
+        mailSentOfflineModify = new ArrayList<>();
+        mailReceivedOfflineModify = new ArrayList<>();
 
         startListening();
     }
@@ -135,13 +140,16 @@ public class Server {
         // Connessione al server per notificare la connessione
         setConnected(false);
         try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_CONNECTION)) {
-            ConnectionInfo connectionInfo = new ConnectionInfo(true, username);
+            ConnectionInfo connectionInfo = new ConnectionInfo(true, username, mailSentOfflineModify, mailReceivedOfflineModify);
 
             try (ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream())) {
                 String jsonConnectionInfo = new Gson().toJson(connectionInfo);
                 outputStream.writeObject(jsonConnectionInfo);
                 outputStream.flush();
                 setConnected(true);
+
+                mailSentOfflineModify.clear();
+                mailReceivedOfflineModify.clear();
 
                 try (ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream())) {
                     while (inputStream.available() > 0) {
@@ -169,9 +177,8 @@ public class Server {
     public List<Mail> getMailReceived() { return mailReceived; }
 
     public void addMailSent(Mail mail){
-        mailSent.add(mail);
-
         if(isConnected()) {
+            mailSent.add(mail);
             try {
                 Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_MESSAGES);
 
@@ -191,7 +198,7 @@ public class Server {
                 System.out.println("invio server fallita");
             }
         } else {
-            System.out.println("Client: Server non connesso");
+            mailSentOfflineModify.add(new MailModifyInfo(mail).setCreated());
         }
         //TODO: salvataggio in locale della mail
 
@@ -207,11 +214,38 @@ public class Server {
         return lastMail;
     }
 
-    public void deleteMailSent(Mail mail) { mailSent.remove(mail); }
-    public void deleteMailReceived(Mail mail) { mailReceived.remove(mail); }
+    public void deleteMailSent(Mail mail) {
+        mailSent.remove(mail);
+        if(isConnected()) {
+            //TODO: inviare la modifica di cancellazione al server
+        } else {
+            mailSentOfflineModify.add(new MailModifyInfo(mail).setDeleate());
+        }
+    }
+    public void deleteMailReceived(Mail mail) {
+        mailReceived.remove(mail);
+        if(isConnected()) {
+            //TODO: inviare la modifica di cancellazione al server
+        } else {
+            mailReceivedOfflineModify.add(new MailModifyInfo(mail).setDeleate());
+        }}
 
-    public void deleteMailSentList() { mailSent.clear(); }
-    public void deleteMailReceivedList() { mailReceived.clear(); }
+    public void deleteMailSentList() {
+        if(isConnected()) {
+            //TODO: inviare la modifica di cancellazione al server
+        } else {
+            mailSent.forEach(mail -> mailSentOfflineModify.add(new MailModifyInfo(mail).setDeleate()));
+        }
+        mailSent.clear();
+    }
+    public void deleteMailReceivedList() {
+        if(isConnected()) {
+            //TODO: inviare la modifica di cancellazione al server
+        } else {
+            mailReceived.forEach(mail -> mailReceivedOfflineModify.add(new MailModifyInfo(mail).setDeleate()));
+        }
+        mailReceived.clear();
+    }
 
     public void setMailSent() {
         //TODO: richeista al server della lista (localAddress)
@@ -247,11 +281,23 @@ public class Server {
     }
 
     public void setMailSentRead(String uuid, boolean read) {
-        mailSent.forEach(email -> {if(email.getUuid().equals(uuid)) email.setRead(read);});
+        Mail mail = mailReceived.stream().filter(m -> m.getUuid().equals(uuid)).findFirst().orElse(null);
+        if(isConnected()) {
+            //TODO: inviare la modifica di cancellazione al server
+        } else {
+            mailSentOfflineModify.add(new MailModifyInfo(mail).setReaded());
+        }
+        mailSent.forEach(m -> {if(m.getUuid().equals(uuid)) m.setRead(read);});
     }
 
     public void setMailReceivedRead(String uuid, boolean read) {
-        mailReceived.forEach(email -> {if(email.getUuid().equals(uuid)) email.setRead(read);});
+        Mail mail = mailReceived.stream().filter(m -> m.getUuid().equals(uuid)).findFirst().orElse(null);
+        if(isConnected()) {
+            //TODO: inviare la modifica di cancellazione al server
+        } else {
+            mailReceivedOfflineModify.add(new MailModifyInfo(mail).setReaded());
+        }
+        mailReceived.forEach(m -> {if(m.getUuid().equals(uuid)) m.setRead(read);});
     }
 
     public void stop() {
