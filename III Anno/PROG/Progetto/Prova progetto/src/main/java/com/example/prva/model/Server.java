@@ -10,15 +10,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Observable;
 
+import com.example.prva.controller.ClientController;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import javafx.application.Platform;
 
 
-public class Server extends Observable {
+public class Server {
     private static final String SERVER_ADDRESS = "localhost";
     private static final int SERVER_PORT_CONNECTION = 8000;
     private static final int SERVER_PORT_MESSAGES = 8001;
     private static final int CLIENT_PORT_MESSAGES = 8002;
+    private static final int CLIENT_PORT_CONNECTION = 8003;
+    private ClientController controller;
 
     private List<Mail> mailSent;
     private List<Mail> mailReceived;
@@ -28,8 +32,11 @@ public class Server extends Observable {
     private boolean connected = false;
     private String localAddress = null;
     Thread clientMessageServerThread = null;
+    Thread serverConnectionThread = null;
 
-    public Server(){
+    public Server(ClientController controller){
+        this.controller = controller;
+
         mailSent = new ArrayList<>();
         mailReceived = new ArrayList<>();
 
@@ -38,6 +45,10 @@ public class Server extends Observable {
 
     public boolean isConnected() {
         return connected;
+    }
+    private void setConnected(boolean connected) {
+        this.connected = connected;
+        controller.setConnection(connected);
     }
 
     void setAddress(String localAddress) {
@@ -86,12 +97,43 @@ public class Server extends Observable {
         });
         clientMessageServerThread.start();
 
+        serverConnectionThread = new Thread(() -> {
+            try {
+                ServerSocket serverConnectionSocket = new ServerSocket(CLIENT_PORT_CONNECTION);
+                System.out.println("Client in ascolto sulla porta " + CLIENT_PORT_CONNECTION + " per i messaggi...");
+                serverConnectionSocket.setSoTimeout(1000);
+
+                while (!Thread.interrupted()) {
+                    try {
+                        Socket socket = serverConnectionSocket.accept();
+                        try {
+                            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+                            String jsonMail = (String) inputStream.readObject();
+                            boolean connected = new Gson().fromJson(jsonMail, boolean.class);
+
+                            setConnected(connected);
+
+                            socket.close();
+                        } catch (IOException | ClassNotFoundException e) {
+                            e.printStackTrace();
+                            System.out.println("Errore durante la lettura del messaggio dal Server");
+                        }
+                    } catch (SocketTimeoutException e) {
+                        continue;
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        serverConnectionThread.start();
+
     }
 
 
     private void connectToServer(String username) {
         // Connessione al server per notificare la connessione
-        connected  = false;
+        setConnected(false);
         try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_CONNECTION)) {
             ConnectionInfo connectionInfo = new ConnectionInfo(true, username);
 
@@ -99,7 +141,7 @@ public class Server extends Observable {
                 String jsonConnectionInfo = new Gson().toJson(connectionInfo);
                 outputStream.writeObject(jsonConnectionInfo);
                 outputStream.flush();
-                connected = true;
+                setConnected(true);
 
                 try (ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream())) {
                     while (inputStream.available() > 0) {
@@ -129,7 +171,7 @@ public class Server extends Observable {
     public void addMailSent(Mail mail){
         mailSent.add(mail);
 
-        if(connected) {
+        if(isConnected()) {
             try {
                 Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_MESSAGES);
 
@@ -140,6 +182,8 @@ public class Server extends Observable {
                 //TODO: gestionre risposta dal server
 
                 socket.close();
+
+                Platform.runLater(() -> controller.createCardSent(mail));
 
                 System.out.println("Email inviata a: " + mail.getRecipients());
             } catch (IOException e) {
@@ -156,8 +200,7 @@ public class Server extends Observable {
         mailReceived.add(mail);
         System.out.println("MESAGGI: " + mail.getText());
         lastMail = mail;
-        setChanged();
-        notifyObservers();
+        Platform.runLater(() -> controller.createCardReceived(mail));
     }
 
     public Mail getLastMail() {
@@ -211,8 +254,8 @@ public class Server extends Observable {
         mailReceived.forEach(email -> {if(email.getUuid().equals(uuid)) email.setRead(read);});
     }
 
-
     public void stop() {
         clientMessageServerThread.interrupt();
+        serverConnectionThread.interrupt();
     }
 }

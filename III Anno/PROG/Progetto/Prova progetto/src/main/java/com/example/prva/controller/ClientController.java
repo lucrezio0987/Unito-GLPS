@@ -16,7 +16,7 @@ import javafx.scene.text.*;
 import java.util.Observable;
 import java.util.Observer;
 
-public class ClientController implements Observer {
+public class ClientController {
     @FXML
     private TextField   localAddressReceived, localAddressSent, localAddressSend, localAddressLog,
                         addressMailSent, addressMailRecived, addressMailSend,
@@ -128,11 +128,6 @@ public class ClientController implements Observer {
 
         sendBtn.setOnAction(event -> {
             Mail mail = mailModel.sendMail();
-            if(mail != null) {
-                VBox card = mailCardModel.buildCard("Destinatari:", mail);
-                Lista_posta_inviata.getChildren().add(card);
-                setCountMailSent();
-            }
         });
 
         deleteBtnSent.setOnAction(event -> {
@@ -171,13 +166,13 @@ public class ClientController implements Observer {
             mailModel.forwardReceived();
         });
 
-        reconnectBtnSent.setOnAction(event ->       { deleteMail(); setConnection(mailModel.connect()); loadMail(); });
-        reconnectBtnReceived.setOnAction(event ->   { deleteMail(); setConnection(mailModel.connect()); loadMail(); });
-        reconnectBtnSend.setOnAction(event ->       { deleteMail(); setConnection(mailModel.connect()); loadMail(); });
-        reconnectBtnLog.setOnAction(event ->        { deleteMail(); setConnection(mailModel.connect()); loadMail(); });
+        reconnectBtnSent.setOnAction(event ->       { deleteMail(); mailModel.connect(); loadMail(); });
+        reconnectBtnReceived.setOnAction(event ->   { deleteMail(); mailModel.connect(); loadMail(); });
+        reconnectBtnSend.setOnAction(event ->       { deleteMail(); mailModel.connect(); loadMail(); });
+        reconnectBtnLog.setOnAction(event ->        { deleteMail(); mailModel.connect(); loadMail(); });
     }
 
-    private void setConnection(boolean connect) {
+    public void setConnection(boolean connect) {
         if(connect){
             ConnectLedReceived.setVisible(true);
             ConnectLedSend.setVisible(true);
@@ -225,16 +220,10 @@ public class ClientController implements Observer {
 
     private void loadMail() {
         setCountMailSent();
-        mailModel.getListMailSent().forEach((mail) -> {
-            VBox card = mailCardModel.buildCard("Destinatari:", mail);
-            Lista_posta_inviata.getChildren().add(card);
-        });
+        mailModel.getListMailSent().forEach(this::createCardSent);
 
         setCountMailReceived();
-        mailModel.getListMailReceived().forEach((mail) -> {
-            VBox card = mailCardModel.buildCard("Mittente:",mail);
-            Lista_posta_ricevuta.getChildren().add(card);
-        });
+        mailModel.getListMailReceived().forEach(this::createCardReceived);
     }
 
     private void showMailPanelReceived(boolean bool) {
@@ -248,6 +237,7 @@ public class ClientController implements Observer {
             objectLabelReceived.setVisible(true);
             replyBtnReceived.setVisible(true);
             deleteBtnRecived.setVisible(true);
+            replyAllBtnReceived.setVisible(true);
 
             forwardBtnReceived.setVisible(true);
         } else {
@@ -260,6 +250,7 @@ public class ClientController implements Observer {
             objectLabelReceived.setVisible(false);
             replyBtnReceived.setVisible(false);
             deleteBtnRecived.setVisible(false);
+            replyAllBtnReceived.setVisible(false);
 
             forwardBtnReceived.setVisible(false);
         }
@@ -289,15 +280,16 @@ public class ClientController implements Observer {
         }
     }
 
-    @Override
-    public void update(Observable observable, Object o) {
-        if (observable instanceof Server) {
-            Platform.runLater(() -> {
-                Mail mail = ((Server) observable).getLastMail();
-                VBox card = mailCardModel.buildCard("Mittente:", mail);
-                Lista_posta_ricevuta.getChildren().add(card);
-            });
-        }
+    public void createCardReceived(Mail mail){
+        VBox card = mailCardModel.buildCard("Mittente:", mail);
+        Lista_posta_ricevuta.getChildren().add(0, card);
+        setCountMailReceived();
+    }
+
+    public void createCardSent(Mail mail){
+        VBox card = mailCardModel.buildCard("Destinatari:", mail);
+        Lista_posta_inviata.getChildren().add(0, card);
+        setCountMailSent();
     }
 
     public void termModel() {
@@ -306,7 +298,7 @@ public class ClientController implements Observer {
 
     public class MailCardModel {
 
-        private final MailModel mailModel;
+        private MailModel mailModel = null;
 
         public MailCardModel(MailModel mailModel) { this.mailModel = mailModel;}
 

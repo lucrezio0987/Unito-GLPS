@@ -12,8 +12,9 @@ import com.google.gson.Gson;
 
 import javafx.beans.property.SimpleStringProperty;
 
-public class MailModel implements Observer {
+public class MailModel {
 
+    private ClientController controller;
     private final ArrayList<Mail> mailSent;
     private final ArrayList<Mail> mailReceived;
    // private Mail mail;
@@ -39,6 +40,7 @@ public class MailModel implements Observer {
     private Server server = null;
 
     public MailModel(ClientController controller) {
+        this.controller = controller;
         mailSent = new ArrayList<>();
         mailReceived = new ArrayList<>();
 
@@ -57,10 +59,7 @@ public class MailModel implements Observer {
 
         localAddressProperty = new SimpleStringProperty();
 
-        server = new Server();
-        server.addObserver(controller);
-        server.addObserver(this);
-
+        server = new Server(controller);
         //setMailSent();
         //setMailReceived();
     }
@@ -115,9 +114,9 @@ public class MailModel implements Observer {
     public void openMailSent(String uuid){
         Mail mail;
 
-        if(uuid.isEmpty() || mailSent.isEmpty())
+        if(uuid.isEmpty() || mailSent.isEmpty()) {
             mail = new Mail("", "", "", "", "", "", false);
-        else
+        } else
             mail =  mailSent.stream()
                     .filter(m -> m.getUuid().equals(uuid))
                     .findFirst()
@@ -303,15 +302,15 @@ public class MailModel implements Observer {
             System.out.println(newLine);
     }
 
-    @Override
-    public void update(Observable observable, Object o) {
-        if (observable instanceof Server) {
-            Mail mail = ((Server) observable).getLastMail();
-            mailReceived.add(mail);
-        }
-    }
-
     public void stop() {
         server.stop();
+    }
+
+    public boolean addMailSent(Mail mail) {
+        if(!mailSent.contains(mail))
+            mailSent.add(mail);
+        else
+            return false;
+        return true;
     }
 }

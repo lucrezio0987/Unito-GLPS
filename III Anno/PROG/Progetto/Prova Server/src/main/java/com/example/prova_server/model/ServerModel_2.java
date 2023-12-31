@@ -62,7 +62,8 @@ public class ServerModel_2 {
                 log("Socket: clientServerSocket OPENED (8000)");
 
                 while (!Thread.interrupted()) {
-                    try (Socket socket = clientServerSocket.accept()) {
+                    try {
+                        Socket socket = clientServerSocket.accept();
                         log("Connection: Connessione Client (8000):  " + socket.toString());
                         executorService.submit(new ConnectionHandler(socket));
                     } catch (SocketTimeoutException e) {
@@ -95,7 +96,8 @@ public class ServerModel_2 {
                 log("Socket: mailServerSocket OPENED (8001)");
 
                 while (!Thread.interrupted()) {
-                    try (Socket socket = mailServerSocket.accept()) {
+                    try {
+                        Socket socket = mailServerSocket.accept();
                         log("Mail: Ricevuta Mail (8001): " + socket.toString());
                         executorService.submit(new MessageHandler(socket));
                     } catch (SocketTimeoutException e) {
@@ -162,11 +164,6 @@ public class ServerModel_2 {
 
         @Override
         public void run() {
-            if (socket.isClosed()) {
-                log("ERROR: Il socket è chiuso. Impossibile leggere dall'input stream.");
-                return;
-            }
-
             try {
                 ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
                 String jsonConnectionInfo = (String) inputStream.readObject();
