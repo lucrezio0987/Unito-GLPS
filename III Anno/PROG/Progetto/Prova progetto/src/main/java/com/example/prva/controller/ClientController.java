@@ -52,7 +52,7 @@ public class ClientController {
 
     //TODO: aggiugere una connessione Server -> client (brodcast) su un altra porta che notifica quando il server viene avviato/fermato
 
-    //TODO: far funzionare i pulsati del server (faccio io)
+    //TODO: far funzionare i pulsati del server
 
     //TODO: aggiungere una connessione Client -> Server su un altra porta che invia un oggetto MailModifyInfo che notifica la lettura o la cancelazione di una mail
 

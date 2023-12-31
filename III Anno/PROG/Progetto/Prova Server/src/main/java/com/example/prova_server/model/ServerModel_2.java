@@ -2,10 +2,12 @@ package com.example.prova_server.model;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -143,10 +145,29 @@ public class ServerModel_2 {
 
                 log("Server: STOPED");
                 isStarted = false;
+
+                clients.values().stream()
+                        .filter(Objects::nonNull)
+                        .forEach(this::clientBrodcastStopMessage);
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 log("ERROR: Errore durante l'interruzione del server");
             }
+    }
+
+    private void clientBrodcastStopMessage(String address) {
+        try (Socket socket = new Socket(address, 8003)) {
+            try (ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream())) {
+                String jsonStartedInfo = new Gson().toJson(isStarted);
+                outputStream.writeObject(jsonStartedInfo);
+                outputStream.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            System.out.println("Invio fallito del messaggio di disattivazione del server");
+        }
     }
 
     public SimpleStringProperty getTextAreaProperty() {
