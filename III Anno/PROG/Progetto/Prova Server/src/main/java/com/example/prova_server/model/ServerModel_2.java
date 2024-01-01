@@ -2,12 +2,10 @@ package com.example.prova_server.model;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.io.*;
-import java.lang.reflect.Type;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,10 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVPrinter;
-import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.csv.*;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -238,10 +233,13 @@ public class ServerModel_2 {
 
                 if (connectionInfo.isConnected()) {
                     addUser(connectionInfo.getUsername(), socket.getInetAddress().getHostAddress());
+
                     //TODO: Invia conferma di connessione al client
-                    HashMap<String, ArrayList<Mail>> map = new HashMap<>();
-                    map.put("sent", sendCSV(pathCostructor(connectionInfo.getUsername(), "sender")));
-                    map.put("received", sendCSV(pathCostructor(connectionInfo.getUsername(), "received")));
+
+                    Map<String, String> map = new HashMap<>();
+                    map.put("sent", stringCSV(pathCostructor(connectionInfo.getUsername(), "sender")));
+                    map.put("received", stringCSV(pathCostructor(connectionInfo.getUsername(), "received")));
+
                     ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
                     String jsonList = new Gson().toJson(map);
                     outputStream.writeObject(jsonList);
@@ -343,7 +341,6 @@ public class ServerModel_2 {
         }
     }
 
-
     private static void sendMail(String destAddress, Mail mail) throws IOException {
 
         if (destAddress != null) {
@@ -392,8 +389,7 @@ public class ServerModel_2 {
         ArrayList<Mail> mailList = new ArrayList<>();
 
         try {
-            boolean exist = FileExist(path);
-            if (exist)
+            if (FileExist(path))
                 mailList = readCSV(path);
             mailList.add(mail);
             WriteCSV(mailList, path);
@@ -408,8 +404,7 @@ public class ServerModel_2 {
         ArrayList<Mail> mailList = new ArrayList<>();
 
         try {
-            boolean exist = FileExist(path);
-            if (exist)
+            if (FileExist(path))
                 mailList = readCSV(path);
             mailList.add(mail);
             WriteCSV(mailList, path);
@@ -441,7 +436,27 @@ public class ServerModel_2 {
         return mailList;
     }
 
+    public static String stringCSV(String path) {
+        StringBuilder content = new StringBuilder();
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(path));
+            String line;
+
+            while ((line = reader.readLine()) != null)
+                content.append(line).append(System.lineSeparator());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return content.toString();
+    }
+
     private static void WriteCSV(ArrayList<Mail> mailList, String path) throws IOException {
+
+        if (!FileExist(path))
+            new File(path).createNewFile();
+
         try (FileWriter fileWriter = new FileWriter(path);
              CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT)) {
 
@@ -470,7 +485,14 @@ public class ServerModel_2 {
     }
 
     private static String pathCostructor(String username, String type){
-        return System.getProperty("user.dir") + File.separator + "src" + File.separator + "backup" +
-                File.separator + username + "-" + type + ".csv";
+        String directoryPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "backup";
+        File directory = new File(directoryPath);
+        if (!directory.exists())
+            directory.mkdirs();
+
+        return directoryPath + File.separator + username + "-" + type + ".csv";
+
+//        return System.getProperty("user.dir") + File.separator + "src" + File.separator + "backup" +
+//                File.separator + username + "-" + type + ".csv";
     }
 }

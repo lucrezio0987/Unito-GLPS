@@ -1,5 +1,6 @@
 package com.example.prva.model;
 
+import org.apache.commons.csv.*;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.net.ServerSocket;
@@ -157,9 +158,10 @@ public class Server {
                         mailSent.clear();
                         mailReceived.clear();
                         Type type = new TypeToken<HashMap<String, ArrayList<Mail>>>() {}.getType();
-                        HashMap<String, ArrayList<Mail>> map = new Gson().fromJson(jsonSenderCSV, type);
-                        mailSent = map.get("sent");
-                        mailReceived = map.get("received");
+                        HashMap<String, String> map = new Gson().fromJson(jsonSenderCSV, type);
+
+                        mailSent = readCSV(map.get("sent"));
+                        mailReceived = readCSV(map.get("received"));
                     }
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
@@ -171,6 +173,25 @@ public class Server {
             System.out.println("Connessione al Server Fallita");
         }
 
+    }
+
+    private static ArrayList<Mail> readCSV(String csvContent) throws IOException {
+        ArrayList<Mail> mailList = new ArrayList<>();
+
+        try (CSVParser csvParser = CSVParser.parse(new StringReader(csvContent), CSVFormat.DEFAULT.withFirstRecordAsHeader())) {
+            for (CSVRecord csvRecord : csvParser) {
+                String sender = csvRecord.get("Sender");
+                String recipients = csvRecord.get("Recipients");
+                String object = csvRecord.get("Object");
+                String text = csvRecord.get("Text");
+                String date = csvRecord.get("Date");
+                String time = csvRecord.get("Time");
+                boolean read = Boolean.parseBoolean(csvRecord.get("Read"));
+
+                mailList.add(new Mail(sender, recipients, object, text, date, time, read));
+            }
+        }
+        return mailList;
     }
 
     public List<Mail> getMailSent() { return mailSent; }
