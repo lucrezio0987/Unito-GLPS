@@ -26,6 +26,15 @@ import java.io.FileReader;
 import java.io.FileWriter;
 
 public class ServerModel_2 {
+
+    private static final String SERVER_ADDRESS = "localhost";
+    private static final int SERVER_PORT_CONNECTION = 8000;
+    private static final int SERVER_PORT_MESSAGES = 8001;
+    private static final int SERVER_PORT_MODIFY = 8002;
+    private static final int CLIENT_PORT_MAIL = 8003;
+    private static final int CLIENT_PORT_CONNECTION = 8004;
+    private static final int THREAD_POOL_SIZE = 10;
+
     private static SimpleStringProperty textAreaProperty = null;
     private static SimpleStringProperty countProperty = null;
 
@@ -33,7 +42,6 @@ public class ServerModel_2 {
     private static ServerSocket mailServerSocket  = null;
     private static ServerSocket modifySocket  = null;
 
-    private static final int THREAD_POOL_SIZE = 10;
     private static ExecutorService executorService;
 
     private static Map<String, String> clients;
@@ -63,14 +71,14 @@ public class ServerModel_2 {
             // Thread per gestire la connessione dei client
         clientThread = new Thread(() -> {
             try {
-                clientServerSocket = new ServerSocket(8000);
+                clientServerSocket = new ServerSocket(SERVER_PORT_CONNECTION);
                 clientServerSocket.setSoTimeout(1000);
-                log("Socket: clientServerSocket OPENED (8000)");
+                log("Socket: clientServerSocket OPENED ("+ SERVER_PORT_CONNECTION +")");
 
                 while (!Thread.interrupted()) {
                     try {
                         Socket socket = clientServerSocket.accept();
-                        log("Connection: Connessione Client (8000):  " + socket.toString());
+                        log("Connection: Connessione Client ("+SERVER_PORT_CONNECTION+"):  " + socket.toString());
                         executorService.submit(new ConnectionHandler(socket));
                     } catch (SocketTimeoutException e) {
                         continue;
@@ -97,14 +105,14 @@ public class ServerModel_2 {
         // Thread per gestire i messaggi dei client
         mailThread = new Thread(() -> {
             try {
-                mailServerSocket = new ServerSocket(8001);
+                mailServerSocket = new ServerSocket(SERVER_PORT_MESSAGES);
                 mailServerSocket.setSoTimeout(1000);
-                log("Socket: mailServerSocket OPENED (8001)");
+                log("Socket: mailServerSocket OPENED ("+ SERVER_PORT_MESSAGES +")");
 
                 while (!Thread.interrupted()) {
                     try {
                         Socket socket = mailServerSocket.accept();
-                        log("Mail: Ricevuta Mail (8001): " + socket.toString());
+                        log("Mail: Ricevuta Mail ("+ SERVER_PORT_MESSAGES +"): " + socket.toString());
                         executorService.submit(new MessageHandler(socket));
                     } catch (SocketTimeoutException e) {
                         continue;
@@ -130,14 +138,14 @@ public class ServerModel_2 {
 
         modifyThread = new Thread(() -> {
             try {
-                ServerSocket modifySocket = new ServerSocket(8001);
+                ServerSocket modifySocket = new ServerSocket(SERVER_PORT_MODIFY);
                 modifySocket.setSoTimeout(1000);
-                log("Socket: modifySocket OPENED (8002)");
+                log("Socket: modifySocket OPENED ("+ SERVER_PORT_MODIFY +")");
 
                 while (!Thread.interrupted()) {
                     try {
                         Socket socket = modifySocket.accept();
-                        log("Mail: Ricevuta ModifyMail (8002): " + socket.toString());
+                        log("Mail: Ricevuta ModifyMail (" + SERVER_PORT_MODIFY + "): " + socket.toString());
                         executorService.submit(new ModifyHandler(socket));
                     } catch (SocketTimeoutException e) {
                         continue;
@@ -195,7 +203,7 @@ public class ServerModel_2 {
     }
 
     private void clientBrodcastStopMessage(String address) {
-        try (Socket socket = new Socket(address, 8003)) {
+        try (Socket socket = new Socket(address, CLIENT_PORT_CONNECTION)) {
             try (ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream())) {
                 String jsonStartedInfo = new Gson().toJson(isStarted);
                 outputStream.writeObject(jsonStartedInfo);
@@ -258,7 +266,42 @@ public class ServerModel_2 {
 
         @Override
         public void run() {
-            //TODO: Deve fare cose
+            try {
+                ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+                String jsonModifyInfo = (String) inputStream.readObject();
+                MailModifyInfo modifyInfo = new Gson().fromJson(jsonModifyInfo, MailModifyInfo.class);
+                Mail mail = modifyInfo.getMail();
+                String username = modifyInfo.getUsername();
+
+                if(modifyInfo.getSent()) {
+                    if (modifyInfo.isDeleate())
+                        userDataList.get(username).removeMailSent(mail);
+                    if (modifyInfo.isRead())
+                        userDataList.get(username).setReadMailSent(mail);
+                    if (modifyInfo.isCreate())
+                        userDataList.get(username).addMailSent(mail);
+                } else {
+                    if (modifyInfo.isDeleate())
+                        userDataList.get(username).removeMailRecived(mail);
+                    if (modifyInfo.isRead())
+                        userDataList.get(username).setReadMailRecived(mail);
+                    if (modifyInfo.isCreate())
+                        userDataList.get(username).addMailReceived(mail);
+                }
+
+                if (modifyInfo.isDeleate())
+                    log("MODIFY: ("+username+") deleate");
+                if (modifyInfo.isRead())
+                    log("MODIFY: ("+username+") read");
+                if (modifyInfo.isCreate())
+                    log("MODIFY: ("+username+") created");
+
+
+
+                socket.close();
+            } catch (JsonSyntaxException | IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -305,7 +348,7 @@ public class ServerModel_2 {
 
         if (destAddress != null) {
             log("Inoltro a: " + destAddress);
-            Socket socket = new Socket(destAddress, 8002);
+            Socket socket = new Socket(destAddress, CLIENT_PORT_MAIL);
 
             ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
             String jsonMail = new Gson().toJson(mail);

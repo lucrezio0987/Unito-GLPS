@@ -8,7 +8,6 @@ import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Observable;
 
 import com.example.prva.controller.ClientController;
 import com.google.gson.Gson;
@@ -19,9 +18,10 @@ import javafx.application.Platform;
 public class Server {
     private static final String SERVER_ADDRESS = "localhost";
     private static final int SERVER_PORT_CONNECTION = 8000;
-    private static final int SERVER_PORT_MESSAGES = 8001;
-    private static final int CLIENT_PORT_MESSAGES = 8002;
-    private static final int CLIENT_PORT_CONNECTION = 8003;
+    private static final int SERVER_PORT_MAIL = 8001;
+    private static final int SERVER_PORT_MODIFY = 8002;
+    private static final int CLIENT_PORT_MAIL = 8003;
+    private static final int CLIENT_PORT_CONNECTION = 8004;
     private ClientController controller;
 
     private List<Mail> mailSent;
@@ -69,8 +69,8 @@ public class Server {
 
         clientMessageServerThread = new Thread(() -> {
             try {
-                ServerSocket clientMessageServerSocket = new ServerSocket(CLIENT_PORT_MESSAGES);
-                System.out.println("Client in ascolto sulla porta " + CLIENT_PORT_MESSAGES + " per le mail...");
+                ServerSocket clientMessageServerSocket = new ServerSocket(CLIENT_PORT_MAIL);
+                System.out.println("Client in ascolto sulla porta " + CLIENT_PORT_MAIL + " per le mail...");
                 clientMessageServerSocket.setSoTimeout(1000);
 
                 while (!Thread.interrupted()) {
@@ -180,7 +180,7 @@ public class Server {
         if(isConnected()) {
             mailSent.add(mail);
             try {
-                Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_MESSAGES);
+                Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_MAIL);
 
                 ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
                 String jsonMail = new Gson().toJson(mail);
@@ -198,7 +198,7 @@ public class Server {
                 System.out.println("invio server fallita");
             }
         } else {
-            mailSentOfflineModify.add(new MailModifyInfo(mail).setCreated());
+            mailSentOfflineModify.add(new MailModifyInfo(mail, localAddress, true).setCreated());
         }
         //TODO: salvataggio in locale della mail
 
@@ -216,33 +216,51 @@ public class Server {
 
     public void deleteMailSent(Mail mail) {
         mailSent.remove(mail);
+        MailModifyInfo MailModifyInfo = new MailModifyInfo(mail, localAddress, true).setDeleate();
         if(isConnected()) {
-            //TODO: inviare la modifica di cancellazione al server
+            notifyModifyToServer(MailModifyInfo);
         } else {
-            mailSentOfflineModify.add(new MailModifyInfo(mail).setDeleate());
+            mailSentOfflineModify.add(MailModifyInfo);
         }
     }
+
+    private void notifyModifyToServer(MailModifyInfo mailModifyInfo) {
+        try {
+            Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_MODIFY);
+
+            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+            String jsonModifyInfo = new Gson().toJson(mailModifyInfo);
+            outputStream.writeObject(jsonModifyInfo);
+            outputStream.flush();
+
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void deleteMailReceived(Mail mail) {
         mailReceived.remove(mail);
+        MailModifyInfo MailModifyInfo = new MailModifyInfo(mail, localAddress, false).setDeleate();
         if(isConnected()) {
-            //TODO: inviare la modifica di cancellazione al server
+            notifyModifyToServer(MailModifyInfo);
         } else {
-            mailReceivedOfflineModify.add(new MailModifyInfo(mail).setDeleate());
+            mailReceivedOfflineModify.add(MailModifyInfo);
         }}
 
     public void deleteMailSentList() {
         if(isConnected()) {
-            //TODO: inviare la modifica di cancellazione al server
+            mailSent.forEach(mail -> notifyModifyToServer(new MailModifyInfo(mail, localAddress, true).setDeleate()));
         } else {
-            mailSent.forEach(mail -> mailSentOfflineModify.add(new MailModifyInfo(mail).setDeleate()));
+            mailSent.forEach(mail -> mailSentOfflineModify.add(new MailModifyInfo(mail, localAddress, true).setDeleate()));
         }
         mailSent.clear();
     }
     public void deleteMailReceivedList() {
         if(isConnected()) {
-            //TODO: inviare la modifica di cancellazione al server
+            mailReceived.forEach(mail -> notifyModifyToServer(new MailModifyInfo(mail, localAddress, false).setDeleate()));
         } else {
-            mailReceived.forEach(mail -> mailReceivedOfflineModify.add(new MailModifyInfo(mail).setDeleate()));
+            mailReceived.forEach(mail -> mailReceivedOfflineModify.add(new MailModifyInfo(mail, localAddress, false).setDeleate()));
         }
         mailReceived.clear();
     }
@@ -282,20 +300,22 @@ public class Server {
 
     public void setMailSentRead(String uuid, boolean read) {
         Mail mail = mailReceived.stream().filter(m -> m.getUuid().equals(uuid)).findFirst().orElse(null);
+        MailModifyInfo MailModifyInfo = new MailModifyInfo(mail, localAddress, true).setReaded();
         if(isConnected()) {
-            //TODO: inviare la modifica di cancellazione al server
+            notifyModifyToServer(MailModifyInfo);
         } else {
-            mailSentOfflineModify.add(new MailModifyInfo(mail).setReaded());
+            mailSentOfflineModify.add(new MailModifyInfo(mail, localAddress, true).setReaded());
         }
         mailSent.forEach(m -> {if(m.getUuid().equals(uuid)) m.setRead(read);});
     }
 
     public void setMailReceivedRead(String uuid, boolean read) {
         Mail mail = mailReceived.stream().filter(m -> m.getUuid().equals(uuid)).findFirst().orElse(null);
+        MailModifyInfo MailModifyInfo = new MailModifyInfo(mail, localAddress, false).setReaded();
         if(isConnected()) {
-            //TODO: inviare la modifica di cancellazione al server
+            notifyModifyToServer(MailModifyInfo);
         } else {
-            mailReceivedOfflineModify.add(new MailModifyInfo(mail).setReaded());
+            mailReceivedOfflineModify.add(new MailModifyInfo(mail, localAddress, false).setReaded());
         }
         mailReceived.forEach(m -> {if(m.getUuid().equals(uuid)) m.setRead(read);});
     }

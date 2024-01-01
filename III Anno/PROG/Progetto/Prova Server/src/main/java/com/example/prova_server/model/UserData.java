@@ -5,10 +5,10 @@ import java.util.List;
 
 public class UserData {
     String address;
-    private List<Mail> mailSent;
-    private List<Mail> mailReceived;
-    private List<MailModifyInfo> mailSentOfflineModify;
-    private List<MailModifyInfo> mailReceivedOfflineModify;
+    private ArrayList<Mail> mailSent;
+    private ArrayList<Mail> mailReceived;
+    private ArrayList<MailModifyInfo> mailSentOfflineModify;
+    private ArrayList<MailModifyInfo> mailReceivedOfflineModify;
 
     public UserData(String address) {
         this.address = address;
@@ -33,6 +33,13 @@ public class UserData {
     public List<Mail> getMailReceived() {
         return mailReceived;
     }
+
+    public void removeMailRecived(Mail mail) {mailReceived.remove(mail);}
+    public void removeMailSent(Mail mail) {mailSent.remove(mail);}
+
+    public void setReadMailRecived(Mail mail) {mailReceived.stream().filter(m -> m.equals(mail)).forEach(m -> m.setRead(true));}
+    public void setReadMailSent(Mail mail) {mailSent.stream().filter(m -> m.equals(mail)).forEach(m -> m.setRead(true));}
+
 
     public void addMailReceived(Mail mail) {
         this.mailReceived.add(mail);

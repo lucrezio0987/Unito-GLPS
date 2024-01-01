@@ -4,13 +4,17 @@ import java.io.Serializable;
 
 public class MailModifyInfo implements Serializable {
 
+    private String username;
     private Mail mail;
+    private boolean sent = false;
     private boolean create = false;
     private boolean deleate = false;
     private boolean read = false;
 
-    public MailModifyInfo(Mail mail){
+    public MailModifyInfo(Mail mail, String username, boolean sent){
         this.mail = mail;
+        this.username = username;
+        this.sent = sent;
     }
 
     public Mail getMail() {
@@ -39,5 +43,13 @@ public class MailModifyInfo implements Serializable {
 
     public boolean isRead() {
         return read;
+    }
+    
+    public String getUsername(){
+        return username;
+    }
+
+    public boolean getSent() {
+        return sent;
     }
 }
