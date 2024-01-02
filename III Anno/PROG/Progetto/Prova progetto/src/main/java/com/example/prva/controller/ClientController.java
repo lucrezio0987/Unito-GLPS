@@ -77,6 +77,8 @@ public class ClientController {
                ma un altra idea potrebbe essere fare in modo che il client si metta su "una porta libera" (causerebbe più problemi e renderebbe il sistema poco scalabile a parer mio)
      */
 
+    //TODO: IN SERVER_MODEL_2 CHIAMI IL METODO readCSV NELL'INVIO DELL'ARRAY AL CLIENT SENZA CONTROLLARE CHE ESISTA, ABBIAMO RICHIAMATO sendCSV
+
 
     public void initModel(String localAddressMail) {
         mailModel = new MailModel(this);

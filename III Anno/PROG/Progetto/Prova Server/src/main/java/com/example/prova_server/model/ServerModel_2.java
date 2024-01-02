@@ -237,8 +237,8 @@ public class ServerModel_2 {
                     //TODO: Invia conferma di connessione al client
 
                     Map<String, ArrayList<Mail>> map = new HashMap<>();
-                    map.put("sent", readCSV(pathCostructor(connectionInfo.getUsername(), "sender")));
-                    map.put("received", readCSV(pathCostructor(connectionInfo.getUsername(), "received")));
+                    map.put("sent", sendCSV(pathCostructor(connectionInfo.getUsername(), "sender")));
+                    map.put("received", sendCSV(pathCostructor(connectionInfo.getUsername(), "received")));
 
                     ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
                     String jsonList = new Gson().toJson(map);
@@ -461,13 +461,13 @@ public class ServerModel_2 {
              CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT)) {
 
             // Intestazioni del CSV
-            csvPrinter.printRecord("Sender", "Recipients", "Text", "Object", "Date", "Time", "Read");
+            csvPrinter.printRecord("Sender", "Recipients", "Text", "Object", "Date", "Time", "Read", "Uuid");
 
             // Scrivi i dati nel CSV
             for (Mail mail : mailList)
                 csvPrinter.printRecord(mail.getSender(),
                         mail.getRecipients(), mail.getText(),
-                        mail.getObject(), mail.getDate(), mail.getTime(), mail.getRead());
+                        mail.getObject(), mail.getDate(), mail.getTime(), mail.getRead(), mail.getUuid());
         }
     }
 

@@ -162,7 +162,7 @@ public class Server {
                     Type type = new TypeToken<HashMap<String, ArrayList<Mail>>>() {}.getType();
                     HashMap<String, ArrayList<Mail>> map = new Gson().fromJson(jsonSenderCSV, type);
 
-                        mailSent.addAll(map.get("sent"));
+                    mailSent.addAll(map.get("sent"));
                     mailReceived.addAll(map.get("received"));
 
                 } catch (ClassNotFoundException e) {
@@ -228,7 +228,7 @@ public class Server {
     }
     public void addMailReceived(Mail mail) {
         mailReceived.add(mail);
-        System.out.println("MESAGGI: " + mail.getText());
+        System.out.println("MESSAGGI: " + mail.getText());
         lastMail = mail;
         Platform.runLater(() -> controller.createCardReceived(mail));
     }
