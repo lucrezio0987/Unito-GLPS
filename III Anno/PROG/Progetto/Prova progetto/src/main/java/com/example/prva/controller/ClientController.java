@@ -193,8 +193,8 @@ public class ClientController {
         }
     }
 
-    private void setCountMailSent() { countMailSent.setText(String.valueOf(mailModel.getListMailSent().size())); }
-    private void setCountMailReceived() { countMailReceived.setText(String.valueOf(mailModel.getListMailReceived().size())); }
+    public void setCountMailSent() { countMailSent.setText(String.valueOf(mailModel.getListMailSent().size())); }
+    public void setCountMailReceived() { countMailReceived.setText(String.valueOf(mailModel.getListMailReceived().size())); }
 
     private void deleteMail() {
         deleteMailSent();
@@ -215,11 +215,11 @@ public class ClientController {
     }
 
     private void loadMail() {
-        setCountMailSent();
-        mailModel.getListMailSent().forEach(this::createCardSent);
-
-        setCountMailReceived();
-        mailModel.getListMailReceived().forEach(this::createCardReceived);
+//        setCountMailSent();
+//        mailModel.getListMailSent().forEach(this::createCardSent);
+//
+//        setCountMailReceived();
+//        mailModel.getListMailReceived().forEach(this::createCardReceived);
     }
 
     private void showMailPanelReceived(boolean bool) {
@@ -276,13 +276,13 @@ public class ClientController {
         }
     }
 
-    public void createCardReceived(Mail mail){
+    public synchronized void createCardReceived(Mail mail){
         VBox card = mailCardModel.buildCard("Mittente:", mail);
         Lista_posta_ricevuta.getChildren().add(0, card);
         setCountMailReceived();
     }
 
-    public void createCardSent(Mail mail){
+    public synchronized void createCardSent(Mail mail){
         VBox card = mailCardModel.buildCard("Destinatari:", mail);
         Lista_posta_inviata.getChildren().add(0, card);
         setCountMailSent();

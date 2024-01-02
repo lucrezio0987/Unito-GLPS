@@ -3,6 +3,7 @@ package com.example.prva.model;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,8 +16,8 @@ import javafx.beans.property.SimpleStringProperty;
 public class MailModel {
 
     private ClientController controller;
-    private final ArrayList<Mail> mailSent;
-    private final ArrayList<Mail> mailReceived;
+    private final List<Mail> mailSent;
+    private final List<Mail> mailReceived;
    // private Mail mail;
 
     private SimpleStringProperty textMailSendProperty = null; // testo mail da inviare
@@ -41,8 +42,8 @@ public class MailModel {
 
     public MailModel(ClientController controller) {
         this.controller = controller;
-        mailSent = new ArrayList<>();
-        mailReceived = new ArrayList<>();
+        mailSent = new CopyOnWriteArrayList<>();
+        mailReceived = new CopyOnWriteArrayList<>();
 
         textMailSendProperty = new SimpleStringProperty();
         textMailReceivedProperty = new SimpleStringProperty();
@@ -79,8 +80,8 @@ public class MailModel {
 
     public SimpleStringProperty getLocalAddressProperty(){ return this.localAddressProperty; }
 
-    public ArrayList<Mail> getListMailSent(){ setMailSent(); return mailSent; }
-    public ArrayList<Mail> getListMailReceived(){ setMailReceived(); return mailReceived;
+    public ArrayList<Mail> getListMailSent(){ setMailSent(); return new ArrayList<>(mailSent); }
+    public ArrayList<Mail> getListMailReceived(){ setMailReceived(); return new ArrayList<>(mailReceived);
     }
 
     public void setMailSent(){
@@ -266,6 +267,12 @@ public class MailModel {
             server.setAddress(localAddressProperty.get());
             setMailSent();
             setMailReceived();
+
+            controller.setCountMailSent();
+            getListMailSent().forEach(controller::createCardSent);
+
+            controller.setCountMailReceived();
+            getListMailReceived().forEach(controller::createCardReceived);
 
         } else {
             addLog("Client", "ERRORE: Indirizzo inserito non valido, connessione NON eseguita");

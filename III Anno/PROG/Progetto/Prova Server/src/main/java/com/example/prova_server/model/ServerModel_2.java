@@ -236,9 +236,9 @@ public class ServerModel_2 {
 
                     //TODO: Invia conferma di connessione al client
 
-                    Map<String, String> map = new HashMap<>();
-                    map.put("sent", stringCSV(pathCostructor(connectionInfo.getUsername(), "sender")));
-                    map.put("received", stringCSV(pathCostructor(connectionInfo.getUsername(), "received")));
+                    Map<String, ArrayList<Mail>> map = new HashMap<>();
+                    map.put("sent", readCSV(pathCostructor(connectionInfo.getUsername(), "sender")));
+                    map.put("received", readCSV(pathCostructor(connectionInfo.getUsername(), "received")));
 
                     ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
                     String jsonList = new Gson().toJson(map);

@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import java.util.concurrent.*;
+
 import com.example.prva.controller.ClientController;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -41,10 +43,10 @@ public class Server {
     public Server(ClientController controller){
         this.controller = controller;
 
-        mailSent = new ArrayList<>();
-        mailReceived = new ArrayList<>();
-        mailSentOfflineModify = new ArrayList<>();
-        mailReceivedOfflineModify = new ArrayList<>();
+        mailSent = new CopyOnWriteArrayList<>();
+        mailReceived = new CopyOnWriteArrayList<>();
+        mailSentOfflineModify = new CopyOnWriteArrayList<>();
+        mailReceivedOfflineModify = new CopyOnWriteArrayList<>();
 
         startListening();
     }
@@ -152,17 +154,17 @@ public class Server {
                 mailSentOfflineModify.clear();
                 mailReceivedOfflineModify.clear();
 
-                try (ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream())) {
-                    while (inputStream.available() > 0) {
-                        String jsonSenderCSV = (String) inputStream.readObject();
-                        mailSent.clear();
-                        mailReceived.clear();
-                        Type type = new TypeToken<HashMap<String, ArrayList<Mail>>>() {}.getType();
-                        HashMap<String, String> map = new Gson().fromJson(jsonSenderCSV, type);
+                try {
+                    ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+                    String jsonSenderCSV = (String) inputStream.readObject();
+                    mailSent.clear();
+                    mailReceived.clear();
+                    Type type = new TypeToken<HashMap<String, ArrayList<Mail>>>() {}.getType();
+                    HashMap<String, ArrayList<Mail>> map = new Gson().fromJson(jsonSenderCSV, type);
 
-                        mailSent = readCSV(map.get("sent"));
-                        mailReceived = readCSV(map.get("received"));
-                    }
+                        mailSent.addAll(map.get("sent"));
+                    mailReceived.addAll(map.get("received"));
+
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
