@@ -1,6 +1,8 @@
 package com.example.prova_server.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class ConnectionInfo implements Serializable {
@@ -9,11 +11,22 @@ public class ConnectionInfo implements Serializable {
     private String lastConnectionDate;
     private String lastConnectionTime;
 
+    SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
+    SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm");
+
     public ConnectionInfo(boolean connected, String username, String lastConnectionDate, String lastConnectionTime){
         this.connected = connected;
         this.username = username;
         this.lastConnectionDate = lastConnectionDate;
         this.lastConnectionTime = lastConnectionTime;
+    }
+
+    public ConnectionInfo(boolean connected, String username){
+        Date now = new Date();
+        this.connected = connected;
+        this.username = username;
+        this.lastConnectionDate = formatDate.format(now);
+        this.lastConnectionTime = formatTime.format(now);
     }
 
     public boolean isConnected() {

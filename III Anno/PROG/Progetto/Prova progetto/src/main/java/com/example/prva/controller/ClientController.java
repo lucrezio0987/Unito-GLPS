@@ -304,7 +304,7 @@ public class ClientController {
                     public void handle(MouseEvent e) {
                         mailModel.openMailReceived(mail.getUuid());
                         showMailPanelReceived(true);
-                        mailModel.setMailRead(mail.getUuid(), true);
+                        mailModel.setMailRead(mail.getUuid());
                         ((Node) e.getSource()).getStyleClass().add("read");
                     }
                 });
@@ -314,7 +314,7 @@ public class ClientController {
                     public void handle(MouseEvent e) {
                         mailModel.openMailSent(mail.getUuid());
                         showMailPanelSent(true);
-                        mailModel.setMailRead(mail.getUuid(), true);
+                        mailModel.setMailRead(mail.getUuid());
                         ((Node) e.getSource()).getStyleClass().add("read");
                     }
                 });

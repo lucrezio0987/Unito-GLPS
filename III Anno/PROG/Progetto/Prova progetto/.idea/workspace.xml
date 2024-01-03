@@ -6,15 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="1cbb55e0-871d-4be9-bc5a-7bd8e3cae843" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../Prova Server/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova Server/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Prova Server/src/main/java/com/example/prova_server/model/Client.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Prova Server/src/main/java/com/example/prova_server/model/ConnectionInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova Server/src/main/java/com/example/prova_server/model/ConnectionInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Prova Server/src/main/java/com/example/prova_server/model/Mail.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova Server/src/main/java/com/example/prova_server/model/Mail.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Prova Server/src/main/java/com/example/prova_server/model/MailModifyInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova Server/src/main/java/com/example/prova_server/model/MailModifyInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Prova Server/src/main/java/com/example/prova_server/model/ServerModel_2.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova Server/src/main/java/com/example/prova_server/model/ServerModel_2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Prova Server/src/main/java/com/example/prova_server/model/UserData.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova Server/src/main/java/com/example/prova_server/model/UserData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Prova Server/src/main/java/com/example/prova_server/model/ServerModel.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/prva/controller/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/prva/controller/ClientController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/prva/model/ConnectionInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/prva/model/ConnectionInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/prva/model/Mail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/prva/model/Mail.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/prva/model/MailModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/prva/model/MailModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/prva/model/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/prva/model/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -135,7 +132,8 @@
       <workItem from="1704106230325" duration="411000" />
       <workItem from="1704188212323" duration="3049000" />
       <workItem from="1704191394465" duration="199000" />
-      <workItem from="1704288649706" duration="5419000" />
+      <workItem from="1704288649706" duration="6387000" />
+      <workItem from="1704296930789" duration="646000" />
     </task>
     <servers />
   </component>
