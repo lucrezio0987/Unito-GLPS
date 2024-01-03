@@ -1,42 +1,51 @@
 package com.example.prva.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class ConnectionInfo implements Serializable {
     private boolean connected;
     private String username;
+    private String lastModifyDate;
+    private String lastModifyTime;
 
-    private List<MailModifyInfo> mailSentOfflineModify;
-    private List<MailModifyInfo> mailReceivedOfflineModify;
+    SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
+    SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm");
 
-    public ConnectionInfo(boolean connected, String username, List<MailModifyInfo> mailSentOfflineModify, List<MailModifyInfo> mailReceivedOfflineModify){
+    public ConnectionInfo(boolean connected, String username, String lastModifyDate, String lastModifyTime){
         this.connected = connected;
         this.username = username;
-        this.mailSentOfflineModify = mailSentOfflineModify;
-        this.mailReceivedOfflineModify = mailReceivedOfflineModify;
+        this.lastModifyDate = lastModifyDate;
+        this.lastModifyTime = lastModifyTime;
+    }
+
+    public ConnectionInfo(boolean connected, String username){
+        Date now = new Date();
+        this.connected = connected;
+        this.username = username;
+        this.lastModifyDate = formatDate.format(now);
+        this.lastModifyTime = formatTime.format(now);
     }
 
     public boolean isConnected() {
         return connected;
     }
-
-    public String getUsername() {
-        return username;
-    }
-
     public void setConnected(boolean connected) {
         this.connected = connected;
     }
-
     public void setUsername(String username) {
         this.username = username;
     }
 
-    public List<MailModifyInfo> getMailSentOfflineModify() {
-        return mailSentOfflineModify;
+    public String getUsername() {
+        return username;
     }
-    public List<MailModifyInfo> getMailReceivedOfflineModify() {
-        return mailReceivedOfflineModify;
+    public String getLastModifyDate() {
+        return lastModifyDate;
+    }
+    public String getLastModifyTime() {
+        return lastModifyTime;
     }
 }

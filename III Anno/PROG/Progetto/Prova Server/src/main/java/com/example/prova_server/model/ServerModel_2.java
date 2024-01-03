@@ -21,7 +21,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 
 public class ServerModel_2 {
-
     private static final String SERVER_ADDRESS = "localhost";
     private static final int SERVER_PORT_CONNECTION = 8000;
     private static final int SERVER_PORT_MESSAGES = 8001;
@@ -37,13 +36,26 @@ public class ServerModel_2 {
     private static ServerSocket mailServerSocket  = null;
     private static ServerSocket modifySocket  = null;
 
+    private Thread clientThread;
+    private Thread mailThread;
+    private Thread modifyThread;
+
     private static ExecutorService executorService;
 
     private static Map<String, String> clients;
     private static Map<String, UserData> userDataList;
 
-
     private static boolean isStarted = false;
+
+    public SimpleStringProperty getTextAreaProperty() {
+        return textAreaProperty;
+    }
+    public SimpleStringProperty getCountProperty() { return countProperty; }
+    private static int getClientNumber() {
+        return (int) clients.values().stream()
+                .filter(Objects::nonNull)
+                .count();
+    }
 
     public ServerModel_2() {
         textAreaProperty = new SimpleStringProperty();
@@ -55,11 +67,6 @@ public class ServerModel_2 {
         userDataList = new ConcurrentHashMap<>();
 
     }
-
-    private Thread clientThread;
-    private Thread mailThread;
-    private Thread modifyThread;
-
     public void start() {
         if(isStarted)
             return;
@@ -171,7 +178,6 @@ public class ServerModel_2 {
             log("ERRORE: Server not started");
         }
     }
-
     public void stop() {
         if(isStarted)
             try {
@@ -197,26 +203,6 @@ public class ServerModel_2 {
             }
     }
 
-    private void clientBrodcastStopMessage(String address) {
-        try (Socket socket = new Socket(address, CLIENT_PORT_CONNECTION)) {
-            try (ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream())) {
-                String jsonStartedInfo = new Gson().toJson(isStarted);
-                outputStream.writeObject(jsonStartedInfo);
-                outputStream.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } catch (IOException e) {
-            System.out.println("Invio fallito del messaggio di disattivazione del server");
-        }
-    }
-
-    public SimpleStringProperty getTextAreaProperty() {
-        return textAreaProperty;
-    }
-
-    public SimpleStringProperty getCountProperty() { return countProperty; }
-
     private static class ConnectionHandler implements Runnable {
         private Socket socket;
 
@@ -232,6 +218,9 @@ public class ServerModel_2 {
                 ConnectionInfo connectionInfo = new Gson().fromJson(jsonConnectionInfo, ConnectionInfo.class);
                 String username = connectionInfo.getUsername();
 
+                String LastConnectionData = connectionInfo.getLastConnectionDate();
+                String LastConnectionTime = connectionInfo.getLastConnectionTime();
+
 
                 if (connectionInfo.isConnected()) {
                     addUser(username, socket.getInetAddress().getHostAddress());
@@ -239,8 +228,8 @@ public class ServerModel_2 {
                     loadBackup(username);
 
                     Map<String, ArrayList<Mail>> map = new HashMap<>();
-                    map.put("sent", userDataList.get(username).getMailSent());
-                    map.put("received", userDataList.get(username).getMailReceived());
+                    map.put("sent", userDataList.get(username).getMailSent(LastConnectionData, LastConnectionTime));
+                    map.put("received", userDataList.get(username).getMailReceived(LastConnectionData, LastConnectionTime));
 
                     ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
                     String jsonList = new Gson().toJson(map);
@@ -262,23 +251,39 @@ public class ServerModel_2 {
         }
 
     }
+    private static class MessageHandler implements Runnable {
+        private Socket socket;
 
-    private static synchronized void backup(String username) {
-        userDataList.putIfAbsent(username, new UserData(username));
-        try {
-            WriteCSV(userDataList.get(username).getMailReceived(), pathCostructor(username, "received"));
-            WriteCSV(userDataList.get(username).getMailSent(), pathCostructor(username, "sender"));
-        } catch (IOException e) {
-            e.printStackTrace();
+        public MessageHandler(Socket clientSocket) {
+            this.socket = clientSocket;
+        }
+
+        @Override
+        public void run() {
+            try {
+                ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+                String jsonMail = (String) inputStream.readObject();
+                Mail mail = new Gson().fromJson(jsonMail, Mail.class);
+                String sender = mail.getSender();
+
+                loadBackup(sender);
+                userDataList.get(sender).addMailSent(mail);
+                backup(sender);
+
+                mail.getRecipientsList().forEach(recipient -> {
+                    try {
+                        sendMail(recipient, mail);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+
+                socket.close();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     }
-
-    private static synchronized void loadBackup(String username) {
-        userDataList.putIfAbsent(username, new UserData(username));
-        userDataList.get(username).loadSendMails(sendCSV(pathCostructor(username, "sender")));
-        userDataList.get(username).loadReceivedMails(sendCSV(pathCostructor(username, "received")));
-    }
-
     private static class ModifyHandler implements Runnable {
         private Socket socket;
 
@@ -333,47 +338,6 @@ public class ServerModel_2 {
         }
     }
 
-
-    private static int getClientNumber() {
-        return (int) clients.values().stream()
-                .filter(Objects::nonNull)
-                .count();
-    }
-
-    private static class MessageHandler implements Runnable {
-        private Socket socket;
-
-        public MessageHandler(Socket clientSocket) {
-            this.socket = clientSocket;
-        }
-
-        @Override
-        public void run() {
-            try {
-                ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-                String jsonMail = (String) inputStream.readObject();
-                Mail mail = new Gson().fromJson(jsonMail, Mail.class);
-                String sender = mail.getSender();
-
-                loadBackup(sender);
-                userDataList.get(sender).addMailSent(mail);
-                backup(sender);
-
-                mail.getRecipientsList().forEach(recipient -> {
-                    try {
-                        sendMail(recipient, mail);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-
-                socket.close();
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     private static void sendMail(String recipient, Mail mail) throws IOException {
 
         String destAddress = getAddressForUser(recipient);
@@ -394,6 +358,34 @@ public class ServerModel_2 {
             socket.close();
         }
     }
+    private void clientBrodcastStopMessage(String address) {
+        try (Socket socket = new Socket(address, CLIENT_PORT_CONNECTION)) {
+            try (ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream())) {
+                String jsonStartedInfo = new Gson().toJson(isStarted);
+                outputStream.writeObject(jsonStartedInfo);
+                outputStream.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            System.out.println("Invio fallito del messaggio di disattivazione del server");
+        }
+    }
+
+    private static synchronized void backup(String username) {
+        userDataList.putIfAbsent(username, new UserData(username));
+        try {
+            WriteCSV(userDataList.get(username).getMailReceived(), pathConstructor(username, "received"));
+            WriteCSV(userDataList.get(username).getMailSent(), pathConstructor(username, "sender"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private static synchronized void loadBackup(String username) {
+        userDataList.putIfAbsent(username, new UserData(username));
+        userDataList.get(username).loadSendMails(sendCSV(pathConstructor(username, "sender")));
+        userDataList.get(username).loadReceivedMails(sendCSV(pathConstructor(username, "received")));
+    }
 
     public static synchronized void addUser(String username, String address) {
         clients.put(username, address);
@@ -401,17 +393,14 @@ public class ServerModel_2 {
         log("Client: " + username + " connesso da " + address);
         Platform.runLater(() -> { countProperty.set(Integer.toString(getClientNumber()));});
     }
-
     public static synchronized void removeUser(String username) {
         clients.put(username, null);
         userDataList.get(username).setOn(false);
         log("Client:  " + username + " disconnesso.");
     }
-
     public static synchronized String getAddressForUser(String username) {
         return clients.get(username);
     }
-
     private static synchronized void log(String newLine) {
         if (newLine.isEmpty())
             newLine = "ALLERT: String is NULL";
@@ -425,7 +414,7 @@ public class ServerModel_2 {
     }
 
     private static void WriterSender(Mail mail) {
-        String path = pathCostructor(mail.getSender(), "sender");
+        String path = pathConstructor(mail.getSender(), "sender");
 
         ArrayList<Mail> mailList = new ArrayList<>();
 
@@ -438,9 +427,8 @@ public class ServerModel_2 {
             System.err.println(e);
         }
     }
-
     private static void WriterReceiver(Mail mail) {
-        String path = pathCostructor(mail.getRecipients(), "received");
+        String path = pathConstructor(mail.getRecipients(), "received");
 
         ArrayList<Mail> mailList = new ArrayList<>();
 
@@ -453,11 +441,9 @@ public class ServerModel_2 {
             System.err.println(e);
         }
     }
-
     private static boolean FileExist(String path) {
         return new File(path).exists();
     }
-
     private static ArrayList<Mail> readCSV(String path) throws IOException {
         ArrayList<Mail> mailList = new ArrayList<>();
 
@@ -467,17 +453,18 @@ public class ServerModel_2 {
                 String recipients = csvRecord.get("Recipients");
                 String object = csvRecord.get("Object");
                 String text = csvRecord.get("Text");
-                String date = csvRecord.get("Date");
-                String time = csvRecord.get("Time");
+                String creationDate = csvRecord.get("CreationDate");
+                String creationTime = csvRecord.get("CreationTime");
+                String lastModifyDate = csvRecord.get("LastModifyDate");
+                String lastModifyTime = csvRecord.get("LastModifyTime");
                 String uuid = csvRecord.get("Uuid");
                 boolean read = Boolean.parseBoolean(csvRecord.get("Read"));
 
-                mailList.add(new Mail(sender, recipients, object, text, date, time, read, uuid));
+                mailList.add(new Mail(sender, recipients, object, text, creationDate, creationTime, lastModifyDate, lastModifyTime, read, uuid));
             }
         }
         return mailList;
     }
-
     public static String stringCSV(String path) {
         StringBuilder content = new StringBuilder();
 
@@ -493,7 +480,6 @@ public class ServerModel_2 {
 
         return content.toString();
     }
-
     private static void WriteCSV(ArrayList<Mail> mailList, String path) throws IOException {
 
         if (!FileExist(path))
@@ -512,7 +498,6 @@ public class ServerModel_2 {
                         mail.getObject(), mail.getDate(), mail.getTime(), mail.getRead(), mail.getUuid());
         }
     }
-
     private static ArrayList<Mail> sendCSV(String path){
         ArrayList<Mail> mailList = new ArrayList<>();
 
@@ -525,8 +510,7 @@ public class ServerModel_2 {
         }
         return mailList;
     }
-
-    private static String pathCostructor(String username, String type){
+    private static String pathConstructor(String username, String type){
         String directoryPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "backup";
         File directory = new File(directoryPath);
         if (!directory.exists())

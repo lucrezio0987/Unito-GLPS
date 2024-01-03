@@ -6,16 +6,12 @@ public class UserData {
     String address;
     private ArrayList<Mail> mailSent;
     private ArrayList<Mail> mailReceived;
-    private ArrayList<MailModifyInfo> mailSentOfflineModify;
-    private ArrayList<MailModifyInfo> mailReceivedOfflineModify;
     private boolean connected;
 
     public UserData(String address) {
         this.address = address;
         this.mailSent = new ArrayList<>();
         this.mailReceived = new ArrayList<>();
-        this.mailSentOfflineModify = new ArrayList<>();
-        this.mailReceivedOfflineModify = new ArrayList<>();
     }
 
     public String getAddress() {
@@ -25,6 +21,9 @@ public class UserData {
     public ArrayList<Mail> getMailSent() {
         return mailSent;
     }
+    public ArrayList<Mail> getMailReceived() {
+        return mailReceived;
+    }
 
     public void addMailSent(Mail mail) {
         this.mailSent.add(mail);
@@ -33,38 +32,28 @@ public class UserData {
         this.mailReceived.add(mail);
     }
 
-    public ArrayList<Mail> getMailReceived() {
-        return mailReceived;
+    public void removeMailRecived(Mail mail) {
+        mailReceived.stream()
+                .filter(m -> m.getUuid().equals(mail.getUuid()))
+                .forEach(Mail::setDelete);
+    }
+    public void removeMailSent(Mail mail) {
+        mailSent.stream()
+            .filter(m -> m.getUuid().equals(mail.getUuid()))
+            .forEach(Mail::setDelete);
     }
 
-    public void removeMailRecived(Mail mail) {mailReceived.remove(mail);}
-    public void removeMailSent(Mail mail) {mailSent.remove(mail);}
-
-    public void setReadMailRecived(Mail mail) {mailReceived.stream().filter(m -> m.getUuid().equals(mail.getUuid())).forEach(m -> m.setRead(true));}
-    public void setReadMailSent(Mail mail) {mailSent.stream().filter(m -> m.getUuid().equals(mail.getUuid())).forEach(m -> m.setRead(true));}
-
-
-    public ArrayList<MailModifyInfo> getMailSentOfflineModify() {
-        return mailSentOfflineModify;
+    public void setReadMailRecived(Mail mail) {
+        mailReceived.stream().filter(m -> m.getUuid().equals(mail.getUuid())).forEach(Mail::setRead);
     }
-
-    public void addMailSentOfflineModify(MailModifyInfo modifyInfo) {
-        this.mailSentOfflineModify.add(modifyInfo);
-    }
-
-    public ArrayList<MailModifyInfo> getMailReceivedOfflineModify() {
-        return mailReceivedOfflineModify;
-    }
-
-    public void addMailReceivedOfflineModify(MailModifyInfo modifyInfo) {
-        this.mailReceivedOfflineModify.add(modifyInfo);
+    public void setReadMailSent(Mail mail) {
+        mailSent.stream().filter(m -> m.getUuid().equals(mail.getUuid())).forEach(Mail::setRead);
     }
 
     public void loadSendMails(ArrayList<Mail> sender) {
         mailSent.clear();
         mailSent.addAll(sender);
     }
-
     public void loadReceivedMails(ArrayList<Mail> received) {
         mailReceived.clear();
         mailReceived.addAll(received);
@@ -80,8 +69,15 @@ public class UserData {
     public void clearMailListRecived() {
         mailReceived.clear();
     }
-
     public void clearMailListSent() {
         mailSent.clear();
+    }
+
+    public ArrayList<Mail> getMailSent(String lastConnectionData, String lastConnectionTime) {
+        return new ArrayList<> (mailSent.stream().filter(m -> m.moreRecentlyOf(lastConnectionData, lastConnectionTime)).toList());
+    }
+
+    public ArrayList<Mail> getMailReceived(String lastConnectionData, String lastConnectionTime) {
+        return new ArrayList<> (mailReceived.stream().filter(m -> m.moreRecentlyOf(lastConnectionData, lastConnectionTime)).toList());
     }
 }

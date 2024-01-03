@@ -17,10 +17,6 @@ public class MailModifyInfo implements Serializable {
         this.sent = sent;
     }
 
-    public Mail getMail() {
-        return mail;
-    }
-
     public MailModifyInfo setCreated() {
         this.create = true;
         return this;
@@ -37,18 +33,16 @@ public class MailModifyInfo implements Serializable {
         this.deleateAll = true;
         return this;
     }
+
     public boolean isCreate() {
         return create;
     }
-
     public boolean isDeleate() {
         return deleate;
     }
-
     public boolean isDeleateAll() {
         return deleateAll;
     }
-
     public boolean isRead() {
         return read;
     }
@@ -56,7 +50,9 @@ public class MailModifyInfo implements Serializable {
     public String getUsername(){
         return username;
     }
-
+    public Mail getMail() {
+        return mail;
+    }
     public boolean getSent() {
         return sent;
     }

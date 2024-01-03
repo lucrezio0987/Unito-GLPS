@@ -1,42 +1,38 @@
 package com.example.prova_server.model;
 
 import java.io.Serializable;
-import java.util.List;
+
 
 public class ConnectionInfo implements Serializable {
     private boolean connected;
     private String username;
+    private String lastConnectionDate;
+    private String lastConnectionTime;
 
-    private List<MailModifyInfo> mailSentOfflineModify;
-    private List<MailModifyInfo> mailReceivedOfflineModify;
-
-    public ConnectionInfo(boolean connected, String username, List<MailModifyInfo> mailSentOfflineModify, List<MailModifyInfo> mailReceivedOfflineModify){
+    public ConnectionInfo(boolean connected, String username, String lastConnectionDate, String lastConnectionTime){
         this.connected = connected;
         this.username = username;
-        this.mailSentOfflineModify = mailSentOfflineModify;
-        this.mailReceivedOfflineModify = mailReceivedOfflineModify;
+        this.lastConnectionDate = lastConnectionDate;
+        this.lastConnectionTime = lastConnectionTime;
     }
 
     public boolean isConnected() {
         return connected;
     }
-
-    public String getUsername() {
-        return username;
-    }
-
     public void setConnected(boolean connected) {
         this.connected = connected;
     }
-
     public void setUsername(String username) {
         this.username = username;
     }
 
-    public List<MailModifyInfo> getMailSentOfflineModify() {
-        return mailSentOfflineModify;
+    public String getUsername() {
+        return username;
     }
-    public List<MailModifyInfo> getMailReceivedOfflineModify() {
-        return mailReceivedOfflineModify;
+    public String getLastConnectionDate() {
+        return lastConnectionDate;
+    }
+    public String getLastConnectionTime() {
+        return lastConnectionTime;
     }
 }

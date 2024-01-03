@@ -82,7 +82,7 @@ public class MailModel {
 
         //TODO: capire cosa fa uuid.isEmpty()
         if(uuid.isEmpty() || server.getMailReceived().isEmpty())
-            mail = new Mail("","", "", "", "", "", false);
+            mail = new Mail("","", "", "");
         else
             mail = server.getMailReceived().stream()
                     .filter(m -> m.getUuid().equals(uuid))
@@ -99,7 +99,7 @@ public class MailModel {
         Mail mail;
 
         if(uuid.isEmpty() || server.getMailSent().isEmpty()) {
-            mail = new Mail("", "", "", "", "", "", false);
+            mail = new Mail("","", "", "");
         } else
             mail =  server.getMailSent().stream()
                     .filter(m -> m.getUuid().equals(uuid))
@@ -113,10 +113,10 @@ public class MailModel {
 
     }
 
-    public void setMailRead(String uuid, boolean read){
+    public void setMailRead(String uuid){
 
-        server.setMailSentRead(uuid, read);
-        server.setMailReceivedRead(uuid, read);
+        server.setMailSentRead(uuid);
+        server.setMailReceivedRead(uuid);
 
         //mailSent.stream()
         //        .filter(m -> m.getUuid().equals(uuid))
@@ -170,12 +170,6 @@ public class MailModel {
     }
 
     public Mail sendMail(){
-        Date now = new Date();
-        SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm");
-        String data = formatDate.format(now);
-        String time = formatTime.format(now);
-
 
         if(!syntaxControll()) {
             addLog("Client", "ERRORE: Indirizzo inserito non valido, email NON inviata");
@@ -189,7 +183,7 @@ public class MailModel {
                                 "\n\n----------------------- Text: -----------------------\n" +
                                 textMailSendProperty.get();
 
-        Mail mailSend = new Mail(sender ,recipients, object, text, data, time, false);
+        Mail mailSend = new Mail(sender ,recipients, object, text);
 
         textMailSendProperty.set("");
         addressMailSendProperty.set("");

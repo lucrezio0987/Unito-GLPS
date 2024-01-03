@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import java.util.concurrent.*;
 
 import com.example.prva.controller.ClientController;
@@ -58,7 +61,6 @@ public class Server {
         this.connected = connected;
         controller.setConnection(connected);
     }
-
     void setAddress(String localAddress) {
 
         disconnectToServer(this.localAddress);
@@ -138,8 +140,6 @@ public class Server {
         serverConnectionThread.start();
 
     }
-
-
     private void disconnectToServer(String username) {
         setConnected(false);
         try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_CONNECTION)) {
@@ -173,7 +173,7 @@ public class Server {
         try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_CONNECTION)) {
             ConnectionInfo connectionInfo;
 
-            connectionInfo = new ConnectionInfo(true, username, mailSentOfflineModify, mailReceivedOfflineModify);
+            connectionInfo = new ConnectionInfo(true, username);
 
             try (ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream())) {
                 String jsonConnectionInfo = new Gson().toJson(connectionInfo);
@@ -208,27 +208,85 @@ public class Server {
 
     }
 
-    private static ArrayList<Mail> readCSV(String csvContent) throws IOException {
+    public static ArrayList<Mail> readCSV(String path) throws IOException {
         ArrayList<Mail> mailList = new ArrayList<>();
 
-        try (CSVParser csvParser = CSVParser.parse(new StringReader(csvContent), CSVFormat.DEFAULT.withFirstRecordAsHeader())) {
+        try (CSVParser csvParser = CSVParser.parse(new FileReader(path), CSVFormat.DEFAULT.withFirstRecordAsHeader())) {
             for (CSVRecord csvRecord : csvParser) {
                 String sender = csvRecord.get("Sender");
                 String recipients = csvRecord.get("Recipients");
                 String object = csvRecord.get("Object");
                 String text = csvRecord.get("Text");
-                String date = csvRecord.get("Date");
-                String time = csvRecord.get("Time");
+                String creationDate = csvRecord.get("CreationDate");
+                String creationTime = csvRecord.get("CreationTime");
+                String lastModifyDate = csvRecord.get("LastModifyDate");
+                String lastModifyTime = csvRecord.get("LastModifyTime");
+                String uuid = csvRecord.get("Uuid");
                 boolean read = Boolean.parseBoolean(csvRecord.get("Read"));
 
-                mailList.add(new Mail(sender, recipients, object, text, date, time, read));
+                mailList.add(new Mail(sender, recipients, object, text, creationDate, creationTime, lastModifyDate, lastModifyTime, read, uuid));
             }
         }
         return mailList;
     }
+    private static void writeOrUpdateCSVInfo(String username, String date, String time) throws IOException {
+        String path = pathConstructor(null, username);
+        File file = new File(path);
 
-    public List<Mail> getMailSent() { return mailSent; }
-    public List<Mail> getMailReceived() { return mailReceived; }
+        // Se il file non esiste, crea un nuovo file e scrivi le intestazioni
+        if (!file.exists()) {
+            try (FileWriter fileWriter = new FileWriter(path);
+                 CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT)) {
+                csvPrinter.printRecord("Username", "Date", "Time");
+            }
+        }
+
+        // Leggi tutte le righe dal file
+        List<String> lines = Files.readAllLines(Paths.get(path));
+
+        boolean found = false;
+
+        // Cerca e modifica la riga corrispondente all'username
+        for (int i = 1; i < lines.size(); i++) {  // Inizia da 1 per evitare l'intestazione
+            String[] parts = lines.get(i).split(",");
+            if (parts.length > 0 && parts[0].equals(username)) {
+                lines.set(i, username + "," + date + "," + time);
+                found = true;
+                break;
+            }
+        }
+
+        // Se l'username non è stato trovato, aggiungi una nuova riga
+        if (!found) {
+            lines.add(username + "," + date + "," + time);
+        }
+
+        // Scrivi tutte le righe nel file
+        try (FileWriter fileWriter = new FileWriter(path);
+             CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT)) {
+            for (String line : lines) {
+                csvPrinter.printRecord((Object) line.split(","));
+            }
+        }
+    }
+
+    public static String pathConstructor(String username, String type) {
+        String directoryPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "backup";
+        File directory = new File(directoryPath);
+        if (!directory.exists())
+            directory.mkdirs();
+        if(type.equals("data"))
+            return directoryPath + File.separator  + type + ".csv";
+        else
+            return directoryPath + File.separator + username + "-" + type + ".csv";
+    }
+    
+    public ArrayList<Mail> getMailSent() {
+        return new ArrayList<>(mailSent.stream().filter(m -> !m.isDelete()).toList());
+    }
+    public ArrayList<Mail> getMailReceived() {
+        return new ArrayList<>(mailReceived.stream().filter(m -> !m.isDelete()).toList());
+    }
 
     public void addMailSent(Mail mail){
         if(isConnected()) {
@@ -266,19 +324,6 @@ public class Server {
         return lastMail;
     }
 
-    public void deleteMailSent(String uuid) {
-        mailSent.removeIf(mail -> mail.getUuid().equals(uuid));
-        Mail mail = mailSent.stream().filter(m -> m.getUuid().equals(uuid)).findFirst().orElse(null);
-        mailSent.remove(mail);
-        MailModifyInfo MailModifyInfo = new MailModifyInfo(mail, localAddress, true).setDeleate();
-
-        if(isConnected()) {
-            notifyModifyToServer(MailModifyInfo);
-        } else {
-            mailSentOfflineModify.add(MailModifyInfo);
-        }
-    }
-
     private void notifyModifyToServer(MailModifyInfo mailModifyInfo) {
         try {
             Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_MODIFY);
@@ -305,7 +350,18 @@ public class Server {
         } else {
             mailReceivedOfflineModify.add(MailModifyInfo);
         }}
+    public void deleteMailSent(String uuid) {
+        mailSent.removeIf(mail -> mail.getUuid().equals(uuid));
+        Mail mail = mailSent.stream().filter(m -> m.getUuid().equals(uuid)).findFirst().orElse(null);
+        mailSent.remove(mail);
+        MailModifyInfo MailModifyInfo = new MailModifyInfo(mail, localAddress, true).setDeleate();
 
+        if(isConnected()) {
+            notifyModifyToServer(MailModifyInfo);
+        } else {
+            mailSentOfflineModify.add(MailModifyInfo);
+        }
+    }
     public void deleteMailSentList() {
         if(isConnected()) {
             notifyModifyToServer(new MailModifyInfo(null, localAddress, true).setDeleateAll());
@@ -338,7 +394,6 @@ public class Server {
 */
         //TODO: salvataggio in locale della lsita
     }
-
     public void setMailReceived() {
         //TODO: richeista al server della lista (localAddress)
 /*
@@ -355,29 +410,27 @@ public class Server {
 */
         //TODO: salvataggio in locale della lsita
     }
-
-    public void setMailSentRead(String uuid, boolean read) {
+    public void setMailSentRead(String uuid) {
         Mail mail = mailSent.stream().filter(m -> m.getUuid().equals(uuid)).findFirst().orElse(null);
-        mailSent.stream().filter(m -> m.getUuid().equals(uuid)).findFirst().ifPresent(m -> m.setRead(true));
+        mailSent.stream().filter(m -> m.getUuid().equals(uuid)).findFirst().ifPresent(m -> m.setRead());
         MailModifyInfo MailModifyInfo = new MailModifyInfo(mail, localAddress, true).setReaded();
         if(isConnected()) {
             notifyModifyToServer(MailModifyInfo);
         } else {
             mailSentOfflineModify.add(new MailModifyInfo(mail, localAddress, true).setReaded());
         }
-        mailSent.forEach(m -> {if(m.getUuid().equals(uuid)) m.setRead(read);});
+        mailSent.forEach(m -> {if(m.getUuid().equals(uuid)) m.setRead();});
     }
-
-    public void setMailReceivedRead(String uuid, boolean read) {
+    public void setMailReceivedRead(String uuid) {
         Mail mail = mailReceived.stream().filter(m -> m.getUuid().equals(uuid)).findFirst().orElse(null);
-        mailReceived.stream().filter(m -> m.getUuid().equals(uuid)).findFirst().ifPresent(m -> m.setRead(true));
+        mailReceived.stream().filter(m -> m.getUuid().equals(uuid)).findFirst().ifPresent(m -> m.setRead());
         MailModifyInfo MailModifyInfo = new MailModifyInfo(mail, localAddress, false).setReaded();
         if(isConnected()) {
             notifyModifyToServer(MailModifyInfo);
         } else {
             mailReceivedOfflineModify.add(new MailModifyInfo(mail, localAddress, false).setReaded());
         }
-        mailReceived.forEach(m -> {if(m.getUuid().equals(uuid)) m.setRead(read);});
+        mailReceived.forEach(m -> {if(m.getUuid().equals(uuid)) m.setRead();});
     }
 
     public void stop() {
