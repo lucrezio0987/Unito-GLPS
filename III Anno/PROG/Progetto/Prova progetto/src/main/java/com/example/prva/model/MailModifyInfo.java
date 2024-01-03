@@ -9,6 +9,7 @@ public class MailModifyInfo implements Serializable {
     private boolean create = false;
     private boolean deleate = false;
     private boolean read = false;
+    private boolean deleateAll = false;
 
     public MailModifyInfo(Mail mail, String username, boolean sent){
         this.mail = mail;
@@ -32,12 +33,20 @@ public class MailModifyInfo implements Serializable {
         this.deleate = true;
         return this;
     }
+    public MailModifyInfo setDeleateAll() {
+        this.deleateAll = true;
+        return this;
+    }
     public boolean isCreate() {
         return create;
     }
 
     public boolean isDeleate() {
         return deleate;
+    }
+
+    public boolean isDeleateAll() {
+        return deleateAll;
     }
 
     public boolean isRead() {

@@ -1,7 +1,6 @@
 package com.example.prva.controller;
 
 import com.example.prva.model.*;
-import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -12,9 +11,6 @@ import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.shape.*;
 import javafx.scene.text.*;
-
-import java.util.Observable;
-import java.util.Observer;
 
 public class ClientController {
     @FXML
@@ -109,8 +105,6 @@ public class ClientController {
         localAddressSend.textProperty().set(localAddressMail);
         setConnection(mailModel.connect());
 
-        loadMail();
-
         Cancella_Tutto_Inviata.setOnAction(event -> {
             // mailModel.addLog("null", "MailReceivedList: Prima della cancellazione ( " + mailModel.getListMailReceived().toString() + " )");
             System.out.println("MailReceivedList: Prima della cancellazione ( " + mailModel.getListMailReceived().toString() + " )");
@@ -164,10 +158,10 @@ public class ClientController {
             mailModel.forwardReceived();
         });
 
-        reconnectBtnSent.setOnAction(event ->       { deleteMail(); mailModel.connect(); loadMail(); });
-        reconnectBtnReceived.setOnAction(event ->   { deleteMail(); mailModel.connect(); loadMail(); });
-        reconnectBtnSend.setOnAction(event ->       { deleteMail(); mailModel.connect(); loadMail(); });
-        reconnectBtnLog.setOnAction(event ->        { deleteMail(); mailModel.connect(); loadMail(); });
+        reconnectBtnSent.setOnAction(event ->       { clearMail(); mailModel.connect();});
+        reconnectBtnReceived.setOnAction(event ->   { clearMail(); mailModel.connect();});
+        reconnectBtnSend.setOnAction(event ->       { clearMail(); mailModel.connect();});
+        reconnectBtnLog.setOnAction(event ->        { clearMail(); mailModel.connect();});
     }
 
     public void setConnection(boolean connect) {
@@ -198,9 +192,13 @@ public class ClientController {
     public void setCountMailSent() { countMailSent.setText(String.valueOf(mailModel.getListMailSent().size())); }
     public void setCountMailReceived() { countMailReceived.setText(String.valueOf(mailModel.getListMailReceived().size())); }
 
-    private void deleteMail() {
-        deleteMailSent();
-        deleteMailReceived();
+    private void clearMail() {
+        Lista_posta_inviata.getChildren().clear();
+        Lista_posta_ricevuta.getChildren().clear();
+        showMailPanelSent(false);
+        showMailPanelReceived(false);
+        setCountMailSent();
+        setCountMailReceived();
     }
     private void deleteMailSent(){
         mailModel.deleteMailSentList();
@@ -214,14 +212,6 @@ public class ClientController {
         Lista_posta_ricevuta.getChildren().clear();
         showMailPanelReceived(false);
         setCountMailReceived();
-    }
-
-    private void loadMail() {
-//        setCountMailSent();
-//        mailModel.getListMailSent().forEach(this::createCardSent);
-//
-//        setCountMailReceived();
-//        mailModel.getListMailReceived().forEach(this::createCardReceived);
     }
 
     private void showMailPanelReceived(boolean bool) {

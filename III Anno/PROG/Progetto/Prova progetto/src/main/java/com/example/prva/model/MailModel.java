@@ -16,8 +16,6 @@ import javafx.beans.property.SimpleStringProperty;
 public class MailModel {
 
     private ClientController controller;
-    private final List<Mail> mailSent;
-    private final List<Mail> mailReceived;
    // private Mail mail;
 
     private SimpleStringProperty textMailSendProperty = null; // testo mail da inviare
@@ -42,8 +40,6 @@ public class MailModel {
 
     public MailModel(ClientController controller) {
         this.controller = controller;
-        mailSent = new CopyOnWriteArrayList<>();
-        mailReceived = new CopyOnWriteArrayList<>();
 
         textMailSendProperty = new SimpleStringProperty();
         textMailReceivedProperty = new SimpleStringProperty();
@@ -80,17 +76,8 @@ public class MailModel {
 
     public SimpleStringProperty getLocalAddressProperty(){ return this.localAddressProperty; }
 
-    public ArrayList<Mail> getListMailSent(){ setMailSent(); return new ArrayList<>(mailSent); }
-    public ArrayList<Mail> getListMailReceived(){ setMailReceived(); return new ArrayList<>(mailReceived);
-    }
-
-    public void setMailSent(){
-        mailSent.clear();
-        mailSent.addAll(server.getMailSent());
-    }
-    public void setMailReceived(){
-        mailReceived.clear();
-        mailReceived.addAll(server.getMailReceived());
+    public ArrayList<Mail> getListMailSent(){ return new ArrayList<>(server.getMailSent()); }
+    public ArrayList<Mail> getListMailReceived(){ return new ArrayList<>(server.getMailReceived());
     }
 
 
@@ -98,10 +85,10 @@ public class MailModel {
         Mail mail;
 
         //TODO: capire cosa fa uuid.isEmpty()
-        if(uuid.isEmpty() || mailReceived.isEmpty())
+        if(uuid.isEmpty() || server.getMailReceived().isEmpty())
             mail = new Mail("","", "", "", "", "", false);
         else
-            mail = mailReceived.stream()
+            mail = server.getMailReceived().stream()
                     .filter(m -> m.getUuid().equals(uuid))
                     .findFirst()
                     .orElse(null);
@@ -115,10 +102,10 @@ public class MailModel {
     public void openMailSent(String uuid){
         Mail mail;
 
-        if(uuid.isEmpty() || mailSent.isEmpty()) {
+        if(uuid.isEmpty() || server.getMailSent().isEmpty()) {
             mail = new Mail("", "", "", "", "", "", false);
         } else
-            mail =  mailSent.stream()
+            mail =  server.getMailSent().stream()
                     .filter(m -> m.getUuid().equals(uuid))
                     .findFirst()
                     .orElse(null);
@@ -132,43 +119,45 @@ public class MailModel {
 
     public void setMailRead(String uuid, boolean read){
 
-        mailSent.stream()
-                .filter(m -> m.getUuid().equals(uuid))
-                .findFirst()
-                .ifPresent(mail -> {
-                    mail.setRead(read);
-                    server.setMailSentRead(uuid, read);
-                });
+        server.setMailSentRead(uuid, read);
+        server.setMailReceivedRead(uuid, read);
 
-        mailReceived.stream()
-                .filter(m -> m.getUuid().equals(uuid))
-                .findFirst()
-                .ifPresent(mail -> {
-                    mail.setRead(read);
-                    server.setMailSentRead(uuid, read);
-                });
+        //mailSent.stream()
+        //        .filter(m -> m.getUuid().equals(uuid))
+        //        .findFirst()
+        //        .ifPresent(mail -> {
+        //            mail.setRead(read);
+        //        });
+//
+        //mailReceived.stream()
+        //        .filter(m -> m.getUuid().equals(uuid))
+        //        .findFirst()
+        //        .ifPresent(mail -> {
+        //            mail.setRead(read);
+        //        });
     }
 
-    public void deleteMailSentList(){ server.deleteMailSentList(); mailSent.clear(); }
-    public void deleteMailReceivedList(){ server.deleteMailReceivedList(); mailReceived.clear(); }
+    public void deleteMailSentList(){ server.deleteMailSentList(); }
+    public void deleteMailReceivedList(){ server.deleteMailReceivedList(); }
 
     public void deleteMailSent(String uuid){
-        mailSent.stream()
-                .filter(mail -> mail.getUuid().equals(uuid))
-                .findFirst()
-                .ifPresent(mail -> {
-                    mailSent.remove(mail);
-                    server.deleteMailSent(mail);
-                });
+        //mailSent.stream()
+        //        .filter(mail -> mail.getUuid().equals(uuid))
+        //        .findFirst()
+        //        .ifPresent(mail -> {
+        //            mailSent.remove(mail);
+        //        });
+
+        server.deleteMailSent(uuid);
     }
     public void deleteMailReceived(String uuid) {
-        mailReceived.stream()
-                .filter(mail -> mail.getUuid().equals(uuid))
-                .findFirst()
-                .ifPresent(mail -> {
-                    mailReceived.remove(mail);
-                    server.deleteMailReceived(mail);
-                });
+        //mailReceived.stream()
+        //        .filter(mail -> mail.getUuid().equals(uuid))
+        //        .findFirst()
+        //        .ifPresent(mail -> {
+        //            mailReceived.remove(mail);
+        //        });
+        server.deleteMailReceived(uuid);
     }
 
     public String deleteActualMailSent(){
@@ -205,7 +194,6 @@ public class MailModel {
                                 textMailSendProperty.get();
 
         Mail mailSend = new Mail(sender ,recipients, object, text, data, time, false);
-        mailSent.add(mailSend);
 
         textMailSendProperty.set("");
         addressMailSendProperty.set("");
@@ -262,11 +250,8 @@ public class MailModel {
     public boolean connect() {
         if(syntaxControll()) {
             addLog("Client", "Connessione: " + localAddressProperty.get());
-            deleteMailSentList();
-            deleteMailReceivedList();
+
             server.setAddress(localAddressProperty.get());
-            setMailSent();
-            setMailReceived();
 
             controller.setCountMailSent();
             getListMailSent().forEach(controller::createCardSent);
@@ -313,11 +298,4 @@ public class MailModel {
         server.stop();
     }
 
-    public boolean addMailSent(Mail mail) {
-        if(!mailSent.contains(mail))
-            mailSent.add(mail);
-        else
-            return false;
-        return true;
-    }
 }

@@ -24,6 +24,17 @@ public class Mail implements Serializable {
         this.uuid = UUID.randomUUID().toString();
     }
 
+    Mail(String sender, String recipients, String object, String text, String date, String time, boolean read, String uuid){
+        this.sender = sender;
+        this.recipients = recipients;
+        this.object = object;
+        this.text = text;
+        this.date = date;
+        this.time = time;
+        this.read = read;
+        this.uuid = uuid;
+    }
+
     public String getSender()       { return sender;        }
     public String getRecipients()   { return recipients;    }
     public String getText()         { return text;          }

@@ -60,8 +60,9 @@ public class Server {
     }
 
     void setAddress(String localAddress) {
-        this.localAddress = localAddress;
 
+        disconnectToServer(this.localAddress);
+        this.localAddress = localAddress;
         connectToServer(localAddress);
 
         setMailSent();
@@ -139,11 +140,40 @@ public class Server {
     }
 
 
+    private void disconnectToServer(String username) {
+        setConnected(false);
+        try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_CONNECTION)) {
+            ConnectionInfo connectionInfo;
+                connectionInfo = new ConnectionInfo(false, username, null, null);
+
+            try (ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream())) {
+                String jsonConnectionInfo = new Gson().toJson(connectionInfo);
+                outputStream.writeObject(jsonConnectionInfo);
+                outputStream.flush();
+
+                try {
+                    ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+                    String jsonSenderCSV = (String) inputStream.readObject();
+                    if(jsonSenderCSV.equals("Null"))
+                        System.out.println("Disconnessione: " + username);
+
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            System.out.println("Disconnessione al Server Fallita");
+        }
+    }
     private void connectToServer(String username) {
         // Connessione al server per notificare la connessione
         setConnected(false);
         try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_CONNECTION)) {
-            ConnectionInfo connectionInfo = new ConnectionInfo(true, username, mailSentOfflineModify, mailReceivedOfflineModify);
+            ConnectionInfo connectionInfo;
+
+            connectionInfo = new ConnectionInfo(true, username, mailSentOfflineModify, mailReceivedOfflineModify);
 
             try (ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream())) {
                 String jsonConnectionInfo = new Gson().toJson(connectionInfo);
@@ -154,20 +184,21 @@ public class Server {
                 mailSentOfflineModify.clear();
                 mailReceivedOfflineModify.clear();
 
-                try {
-                    ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-                    String jsonSenderCSV = (String) inputStream.readObject();
-                    mailSent.clear();
-                    mailReceived.clear();
-                    Type type = new TypeToken<HashMap<String, ArrayList<Mail>>>() {}.getType();
-                    HashMap<String, ArrayList<Mail>> map = new Gson().fromJson(jsonSenderCSV, type);
+                    try {
+                        ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+                        String jsonSenderCSV = (String) inputStream.readObject();
+                        mailSent.clear();
+                        mailReceived.clear();
 
-                    mailSent.addAll(map.get("sent"));
-                    mailReceived.addAll(map.get("received"));
+                        Type type = new TypeToken<HashMap<String, ArrayList<Mail>>>() {}.getType();
+                        HashMap<String, ArrayList<Mail>> map = new Gson().fromJson(jsonSenderCSV, type);
 
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
+                        mailSent.addAll(map.get("sent"));
+                        mailReceived.addAll(map.get("received"));
+
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -209,7 +240,6 @@ public class Server {
                 String jsonMail = new Gson().toJson(mail);
                 outputStream.writeObject(jsonMail);
                 outputStream.flush();
-                //TODO: gestionre risposta dal server
 
                 socket.close();
 
@@ -223,7 +253,6 @@ public class Server {
         } else {
             mailSentOfflineModify.add(new MailModifyInfo(mail, localAddress, true).setCreated());
         }
-        //TODO: salvataggio in locale della mail
 
     }
     public void addMailReceived(Mail mail) {
@@ -237,9 +266,12 @@ public class Server {
         return lastMail;
     }
 
-    public void deleteMailSent(Mail mail) {
+    public void deleteMailSent(String uuid) {
+        mailSent.removeIf(mail -> mail.getUuid().equals(uuid));
+        Mail mail = mailSent.stream().filter(m -> m.getUuid().equals(uuid)).findFirst().orElse(null);
         mailSent.remove(mail);
         MailModifyInfo MailModifyInfo = new MailModifyInfo(mail, localAddress, true).setDeleate();
+
         if(isConnected()) {
             notifyModifyToServer(MailModifyInfo);
         } else {
@@ -262,9 +294,12 @@ public class Server {
         }
     }
 
-    public void deleteMailReceived(Mail mail) {
+    public void deleteMailReceived(String uuid) {
+        mailReceived.removeIf(mail -> mail.getUuid().equals(uuid));
+        Mail mail = mailReceived.stream().filter(m -> m.getUuid().equals(uuid)).findFirst().orElse(null);
         mailReceived.remove(mail);
         MailModifyInfo MailModifyInfo = new MailModifyInfo(mail, localAddress, false).setDeleate();
+
         if(isConnected()) {
             notifyModifyToServer(MailModifyInfo);
         } else {
@@ -273,7 +308,7 @@ public class Server {
 
     public void deleteMailSentList() {
         if(isConnected()) {
-            mailSent.forEach(mail -> notifyModifyToServer(new MailModifyInfo(mail, localAddress, true).setDeleate()));
+            notifyModifyToServer(new MailModifyInfo(null, localAddress, true).setDeleateAll());
         } else {
             mailSent.forEach(mail -> mailSentOfflineModify.add(new MailModifyInfo(mail, localAddress, true).setDeleate()));
         }
@@ -281,7 +316,7 @@ public class Server {
     }
     public void deleteMailReceivedList() {
         if(isConnected()) {
-            mailReceived.forEach(mail -> notifyModifyToServer(new MailModifyInfo(mail, localAddress, false).setDeleate()));
+            notifyModifyToServer(new MailModifyInfo(null, localAddress, false).setDeleateAll());
         } else {
             mailReceived.forEach(mail -> mailReceivedOfflineModify.add(new MailModifyInfo(mail, localAddress, false).setDeleate()));
         }
@@ -322,7 +357,8 @@ public class Server {
     }
 
     public void setMailSentRead(String uuid, boolean read) {
-        Mail mail = mailReceived.stream().filter(m -> m.getUuid().equals(uuid)).findFirst().orElse(null);
+        Mail mail = mailSent.stream().filter(m -> m.getUuid().equals(uuid)).findFirst().orElse(null);
+        mailSent.stream().filter(m -> m.getUuid().equals(uuid)).findFirst().ifPresent(m -> m.setRead(true));
         MailModifyInfo MailModifyInfo = new MailModifyInfo(mail, localAddress, true).setReaded();
         if(isConnected()) {
             notifyModifyToServer(MailModifyInfo);
@@ -334,6 +370,7 @@ public class Server {
 
     public void setMailReceivedRead(String uuid, boolean read) {
         Mail mail = mailReceived.stream().filter(m -> m.getUuid().equals(uuid)).findFirst().orElse(null);
+        mailReceived.stream().filter(m -> m.getUuid().equals(uuid)).findFirst().ifPresent(m -> m.setRead(true));
         MailModifyInfo MailModifyInfo = new MailModifyInfo(mail, localAddress, false).setReaded();
         if(isConnected()) {
             notifyModifyToServer(MailModifyInfo);
@@ -344,6 +381,7 @@ public class Server {
     }
 
     public void stop() {
+        disconnectToServer(localAddress);
         clientMessageServerThread.interrupt();
         serverConnectionThread.interrupt();
     }

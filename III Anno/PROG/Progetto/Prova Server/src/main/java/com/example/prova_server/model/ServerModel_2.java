@@ -230,15 +230,17 @@ public class ServerModel_2 {
                 ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
                 String jsonConnectionInfo = (String) inputStream.readObject();
                 ConnectionInfo connectionInfo = new Gson().fromJson(jsonConnectionInfo, ConnectionInfo.class);
+                String username = connectionInfo.getUsername();
+
 
                 if (connectionInfo.isConnected()) {
-                    addUser(connectionInfo.getUsername(), socket.getInetAddress().getHostAddress());
-
-                    //TODO: Invia conferma di connessione al client
+                    addUser(username, socket.getInetAddress().getHostAddress());
+                    userDataList.get(username).setOn(true);
+                    loadBackup(username);
 
                     Map<String, ArrayList<Mail>> map = new HashMap<>();
-                    map.put("sent", sendCSV(pathCostructor(connectionInfo.getUsername(), "sender")));
-                    map.put("received", sendCSV(pathCostructor(connectionInfo.getUsername(), "received")));
+                    map.put("sent", userDataList.get(username).getMailSent());
+                    map.put("received", userDataList.get(username).getMailReceived());
 
                     ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
                     String jsonList = new Gson().toJson(map);
@@ -246,13 +248,33 @@ public class ServerModel_2 {
                     outputStream.flush();
 
                 } else {
-                    removeUser(connectionInfo.getUsername());
+                    ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+                    outputStream.writeObject("Null");
+                    outputStream.flush();
+
+                    backup(username);
+                    removeUser(username);
                 }
                 socket.close();
             } catch (JsonSyntaxException | IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
+
+    }
+
+    private static synchronized void backup(String username) {
+        try {
+            WriteCSV(userDataList.get(username).getMailReceived(), pathCostructor(username, "received"));
+            WriteCSV(userDataList.get(username).getMailSent(), pathCostructor(username, "sender"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static synchronized void loadBackup(String username) {
+        userDataList.get(username).loadSendMails(sendCSV(pathCostructor(username, "sender")));
+        userDataList.get(username).loadReceivedMails(sendCSV(pathCostructor(username, "received")));
     }
 
     private static class ModifyHandler implements Runnable {
@@ -272,6 +294,8 @@ public class ServerModel_2 {
                 String username = modifyInfo.getUsername();
 
                 if(modifyInfo.getSent()) {
+                    if (modifyInfo.isDeleateAll())
+                        userDataList.get(username).clearMailListSent();
                     if (modifyInfo.isDeleate())
                         userDataList.get(username).removeMailSent(mail);
                     if (modifyInfo.isRead())
@@ -279,6 +303,8 @@ public class ServerModel_2 {
                     if (modifyInfo.isCreate())
                         userDataList.get(username).addMailSent(mail);
                 } else {
+                    if (modifyInfo.isDeleateAll())
+                        userDataList.get(username).clearMailListRecived();
                     if (modifyInfo.isDeleate())
                         userDataList.get(username).removeMailRecived(mail);
                     if (modifyInfo.isRead())
@@ -287,6 +313,8 @@ public class ServerModel_2 {
                         userDataList.get(username).addMailReceived(mail);
                 }
 
+                if (modifyInfo.isDeleateAll())
+                    log("MODIFY: ("+username+") deleate ALL");
                 if (modifyInfo.isDeleate())
                     log("MODIFY: ("+username+") deleate");
                 if (modifyInfo.isRead())
@@ -294,7 +322,7 @@ public class ServerModel_2 {
                 if (modifyInfo.isCreate())
                     log("MODIFY: ("+username+") created");
 
-
+                backup(username);
 
                 socket.close();
             } catch (JsonSyntaxException | IOException | ClassNotFoundException e) {
@@ -323,12 +351,15 @@ public class ServerModel_2 {
                 ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
                 String jsonMail = (String) inputStream.readObject();
                 Mail mail = new Gson().fromJson(jsonMail, Mail.class);
-                WriterSender(mail);
-                WriterReceiver(mail);
+
+                userDataList.get(mail.getSender()).addMailSent(mail);
+
+//                WriterSender(mail);
+//                WriterReceiver(mail);
 
                 mail.getRecipientsList().forEach(recipient -> {
                     try {
-                        sendMail(getAddressForUser(recipient), mail);
+                        sendMail(recipient, mail);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -341,10 +372,15 @@ public class ServerModel_2 {
         }
     }
 
-    private static void sendMail(String destAddress, Mail mail) throws IOException {
+    private static void sendMail(String recipient, Mail mail) throws IOException {
 
+        String destAddress = getAddressForUser(recipient);
         if (destAddress != null) {
             log("Inoltro a: " + destAddress);
+
+            userDataList.putIfAbsent(recipient, new UserData(recipient));
+            userDataList.get(recipient).addMailReceived(mail);
+
             Socket socket = new Socket(destAddress, CLIENT_PORT_MAIL);
 
             ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
@@ -352,18 +388,22 @@ public class ServerModel_2 {
             outputStream.writeObject(jsonMail);
             outputStream.flush();
 
+            backup(recipient);
+
             socket.close();
         }
     }
 
     public static synchronized void addUser(String username, String address) {
         clients.put(username, address);
+        userDataList.putIfAbsent(username, new UserData(username));
         log("Client: " + username + " connesso da " + address);
         Platform.runLater(() -> { countProperty.set(Integer.toString(getClientNumber()));});
     }
 
     public static synchronized void removeUser(String username) {
         clients.put(username, null);
+        userDataList.get(username).setOn(false);
         log("Client:  " + username + " disconnesso.");
     }
 
@@ -428,9 +468,10 @@ public class ServerModel_2 {
                 String text = csvRecord.get("Text");
                 String date = csvRecord.get("Date");
                 String time = csvRecord.get("Time");
+                String uuid = csvRecord.get("Uuid");
                 boolean read = Boolean.parseBoolean(csvRecord.get("Read"));
 
-                mailList.add(new Mail(sender, recipients, object, text, date, time, read));
+                mailList.add(new Mail(sender, recipients, object, text, date, time, read, uuid));
             }
         }
         return mailList;
@@ -491,8 +532,5 @@ public class ServerModel_2 {
             directory.mkdirs();
 
         return directoryPath + File.separator + username + "-" + type + ".csv";
-
-//        return System.getProperty("user.dir") + File.separator + "src" + File.separator + "backup" +
-//                File.separator + username + "-" + type + ".csv";
     }
 }

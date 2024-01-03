@@ -3,13 +3,13 @@ package com.example.prova_server.model;
 import java.io.Serializable;
 
 public class MailModifyInfo implements Serializable {
-
     private String username;
     private Mail mail;
     private boolean sent = false;
     private boolean create = false;
     private boolean deleate = false;
     private boolean read = false;
+    private boolean deleateAll = false;
 
     public MailModifyInfo(Mail mail, String username, boolean sent){
         this.mail = mail;
@@ -33,6 +33,10 @@ public class MailModifyInfo implements Serializable {
         this.deleate = true;
         return this;
     }
+    public MailModifyInfo setDeleateAll() {
+        this.deleateAll = true;
+        return this;
+    }
     public boolean isCreate() {
         return create;
     }
@@ -41,10 +45,14 @@ public class MailModifyInfo implements Serializable {
         return deleate;
     }
 
+    public boolean isDeleateAll() {
+        return deleateAll;
+    }
+
     public boolean isRead() {
         return read;
     }
-    
+
     public String getUsername(){
         return username;
     }

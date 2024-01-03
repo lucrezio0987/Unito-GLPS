@@ -1,7 +1,6 @@
 package com.example.prova_server.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class UserData {
     String address;
@@ -9,6 +8,7 @@ public class UserData {
     private ArrayList<Mail> mailReceived;
     private ArrayList<MailModifyInfo> mailSentOfflineModify;
     private ArrayList<MailModifyInfo> mailReceivedOfflineModify;
+    private boolean connected;
 
     public UserData(String address) {
         this.address = address;
@@ -22,30 +22,29 @@ public class UserData {
         return address;
     }
 
-    public List<Mail> getMailSent() {
+    public ArrayList<Mail> getMailSent() {
         return mailSent;
     }
 
     public void addMailSent(Mail mail) {
         this.mailSent.add(mail);
     }
+    public void addMailReceived(Mail mail) {
+        this.mailReceived.add(mail);
+    }
 
-    public List<Mail> getMailReceived() {
+    public ArrayList<Mail> getMailReceived() {
         return mailReceived;
     }
 
     public void removeMailRecived(Mail mail) {mailReceived.remove(mail);}
     public void removeMailSent(Mail mail) {mailSent.remove(mail);}
 
-    public void setReadMailRecived(Mail mail) {mailReceived.stream().filter(m -> m.equals(mail)).forEach(m -> m.setRead(true));}
-    public void setReadMailSent(Mail mail) {mailSent.stream().filter(m -> m.equals(mail)).forEach(m -> m.setRead(true));}
+    public void setReadMailRecived(Mail mail) {mailReceived.stream().filter(m -> m.getUuid().equals(mail.getUuid())).forEach(m -> m.setRead(true));}
+    public void setReadMailSent(Mail mail) {mailSent.stream().filter(m -> m.getUuid().equals(mail.getUuid())).forEach(m -> m.setRead(true));}
 
 
-    public void addMailReceived(Mail mail) {
-        this.mailReceived.add(mail);
-    }
-
-    public List<MailModifyInfo> getMailSentOfflineModify() {
+    public ArrayList<MailModifyInfo> getMailSentOfflineModify() {
         return mailSentOfflineModify;
     }
 
@@ -53,11 +52,36 @@ public class UserData {
         this.mailSentOfflineModify.add(modifyInfo);
     }
 
-    public List<MailModifyInfo> getMailReceivedOfflineModify() {
+    public ArrayList<MailModifyInfo> getMailReceivedOfflineModify() {
         return mailReceivedOfflineModify;
     }
 
     public void addMailReceivedOfflineModify(MailModifyInfo modifyInfo) {
         this.mailReceivedOfflineModify.add(modifyInfo);
+    }
+
+    public void loadSendMails(ArrayList<Mail> sender) {
+        mailSent.clear();
+        mailSent.addAll(sender);
+    }
+
+    public void loadReceivedMails(ArrayList<Mail> received) {
+        mailReceived.clear();
+        mailReceived.addAll(received);
+    }
+
+    public void setOn(boolean connected) {
+        this.connected = connected;
+    }
+    public boolean isOn() {
+        return connected;
+    }
+
+    public void clearMailListRecived() {
+        mailReceived.clear();
+    }
+
+    public void clearMailListSent() {
+        mailSent.clear();
     }
 }
