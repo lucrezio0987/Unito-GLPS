@@ -250,6 +250,7 @@ public class Server {
             mailSentOfflineModify.add(new MailModifyInfo(mail, localAddress, true).setCreated());
         }
         mailSent.add(mail);
+        WriterSender(mail);
 
 
     }
