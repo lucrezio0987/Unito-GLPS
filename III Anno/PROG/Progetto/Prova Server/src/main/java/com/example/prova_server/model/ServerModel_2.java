@@ -264,6 +264,7 @@ public class ServerModel_2 {
     }
 
     private static synchronized void backup(String username) {
+        userDataList.putIfAbsent(username, new UserData(username));
         try {
             WriteCSV(userDataList.get(username).getMailReceived(), pathCostructor(username, "received"));
             WriteCSV(userDataList.get(username).getMailSent(), pathCostructor(username, "sender"));
@@ -273,6 +274,7 @@ public class ServerModel_2 {
     }
 
     private static synchronized void loadBackup(String username) {
+        userDataList.putIfAbsent(username, new UserData(username));
         userDataList.get(username).loadSendMails(sendCSV(pathCostructor(username, "sender")));
         userDataList.get(username).loadReceivedMails(sendCSV(pathCostructor(username, "received")));
     }
@@ -351,11 +353,11 @@ public class ServerModel_2 {
                 ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
                 String jsonMail = (String) inputStream.readObject();
                 Mail mail = new Gson().fromJson(jsonMail, Mail.class);
+                String sender = mail.getSender();
 
-                userDataList.get(mail.getSender()).addMailSent(mail);
-
-//                WriterSender(mail);
-//                WriterReceiver(mail);
+                loadBackup(sender);
+                userDataList.get(sender).addMailSent(mail);
+                backup(sender);
 
                 mail.getRecipientsList().forEach(recipient -> {
                     try {
@@ -378,8 +380,9 @@ public class ServerModel_2 {
         if (destAddress != null) {
             log("Inoltro a: " + destAddress);
 
-            userDataList.putIfAbsent(recipient, new UserData(recipient));
+            loadBackup(recipient);
             userDataList.get(recipient).addMailReceived(mail);
+            backup(recipient);
 
             Socket socket = new Socket(destAddress, CLIENT_PORT_MAIL);
 
@@ -387,8 +390,6 @@ public class ServerModel_2 {
             String jsonMail = new Gson().toJson(mail);
             outputStream.writeObject(jsonMail);
             outputStream.flush();
-
-            backup(recipient);
 
             socket.close();
         }

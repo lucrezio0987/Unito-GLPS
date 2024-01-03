@@ -1,15 +1,11 @@
 package com.example.prva.model;
 
-import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.example.prva.controller.ClientController;
-import com.google.gson.Gson;
-
 
 import javafx.beans.property.SimpleStringProperty;
 
