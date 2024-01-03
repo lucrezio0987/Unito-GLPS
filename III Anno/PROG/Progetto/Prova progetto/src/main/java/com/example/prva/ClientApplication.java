@@ -23,7 +23,7 @@ public class ClientApplication extends Application {
         stage.show();
 
         contr = fxmlLoader.getController();
-        contr.initModel("client.mail@example.com");
+        contr.initModel("client2.mail@example.com");
     }
 
     @Override

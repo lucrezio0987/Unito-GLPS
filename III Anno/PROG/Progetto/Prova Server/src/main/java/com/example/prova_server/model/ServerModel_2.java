@@ -34,8 +34,8 @@ public class ServerModel_2 {
     private static SimpleStringProperty countProperty = null;
 
     private static ServerSocket clientServerSocket = null;
-    private static ServerSocket mailServerSocket  = null;
-    private static ServerSocket modifySocket  = null;
+    private static ServerSocket mailServerSocket = null;
+    private static ServerSocket modifySocket = null;
 
     private static ExecutorService executorService;
 
@@ -61,19 +61,19 @@ public class ServerModel_2 {
     private Thread modifyThread;
 
     public void start() {
-        if(isStarted)
+        if (isStarted)
             return;
-            // Thread per gestire la connessione dei client
+        // Thread per gestire la connessione dei client
         clientThread = new Thread(() -> {
             try {
                 clientServerSocket = new ServerSocket(SERVER_PORT_CONNECTION);
                 clientServerSocket.setSoTimeout(1000);
-                log("Socket: clientServerSocket OPENED ("+ SERVER_PORT_CONNECTION +")");
+                log("Socket: clientServerSocket OPENED (" + SERVER_PORT_CONNECTION + ")");
 
                 while (!Thread.interrupted()) {
                     try {
                         Socket socket = clientServerSocket.accept();
-                        log("Connection: Connessione Client ("+SERVER_PORT_CONNECTION+"):  " + socket.toString());
+                        log("Connection: Connessione Client (" + SERVER_PORT_CONNECTION + "):  " + socket.toString());
                         executorService.submit(new ConnectionHandler(socket));
                     } catch (SocketTimeoutException e) {
                         continue;
@@ -102,12 +102,12 @@ public class ServerModel_2 {
             try {
                 mailServerSocket = new ServerSocket(SERVER_PORT_MESSAGES);
                 mailServerSocket.setSoTimeout(1000);
-                log("Socket: mailServerSocket OPENED ("+ SERVER_PORT_MESSAGES +")");
+                log("Socket: mailServerSocket OPENED (" + SERVER_PORT_MESSAGES + ")");
 
                 while (!Thread.interrupted()) {
                     try {
                         Socket socket = mailServerSocket.accept();
-                        log("Mail: Ricevuta Mail ("+ SERVER_PORT_MESSAGES +"): " + socket.toString());
+                        log("Mail: Ricevuta Mail (" + SERVER_PORT_MESSAGES + "): " + socket.toString());
                         executorService.submit(new MessageHandler(socket));
                     } catch (SocketTimeoutException e) {
                         continue;
@@ -135,7 +135,7 @@ public class ServerModel_2 {
             try {
                 ServerSocket modifySocket = new ServerSocket(SERVER_PORT_MODIFY);
                 modifySocket.setSoTimeout(1000);
-                log("Socket: modifySocket OPENED ("+ SERVER_PORT_MODIFY +")");
+                log("Socket: modifySocket OPENED (" + SERVER_PORT_MODIFY + ")");
 
                 while (!Thread.interrupted()) {
                     try {
@@ -164,7 +164,7 @@ public class ServerModel_2 {
 
         modifyThread.start();
 
-        if(clientThread.isAlive() && mailThread.isAlive()) {
+        if (clientThread.isAlive() && mailThread.isAlive()) {
             isStarted = true;
             log("Server: STARTED");
         } else {
@@ -173,7 +173,7 @@ public class ServerModel_2 {
     }
 
     public void stop() {
-        if(isStarted)
+        if (isStarted)
             try {
                 clientThread.interrupt();
                 mailThread.interrupt();
@@ -215,7 +215,9 @@ public class ServerModel_2 {
         return textAreaProperty;
     }
 
-    public SimpleStringProperty getCountProperty() { return countProperty; }
+    public SimpleStringProperty getCountProperty() {
+        return countProperty;
+    }
 
     private static class ConnectionHandler implements Runnable {
         private Socket socket;
@@ -237,8 +239,15 @@ public class ServerModel_2 {
                     //TODO: Invia conferma di connessione al client
 
                     Map<String, ArrayList<Mail>> map = new HashMap<>();
-                    map.put("sent", sendCSV(pathCostructor(connectionInfo.getUsername(), "sender")));
-                    map.put("received", sendCSV(pathCostructor(connectionInfo.getUsername(), "received")));
+                    if(connectionInfo.getLastUuidSent().isEmpty())
+                        map.put("sent", sendCSV(pathCostructor(connectionInfo.getUsername(), "sender")));
+                    else
+                        map.put("sent", sendNotAll(pathCostructor(connectionInfo.getUsername(), "sender"), connectionInfo.getLastUuidSent()));
+
+                    if(connectionInfo.getLastUuidReceived().isEmpty())
+                        map.put("received", sendCSV(pathCostructor(connectionInfo.getUsername(), "received")));
+                    else
+                        map.put("received", sendNotAll(pathCostructor(connectionInfo.getUsername(), "received"), connectionInfo.getLastUuidReceived()));
 
                     ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
                     String jsonList = new Gson().toJson(map);
@@ -271,15 +280,15 @@ public class ServerModel_2 {
                 Mail mail = modifyInfo.getMail();
                 String username = modifyInfo.getUsername();
 
-                if(modifyInfo.getSent()) {
-                    if (modifyInfo.isDeleate())
+                if (modifyInfo.getSent()) {
+                    if (modifyInfo.isDelete())
                         userDataList.get(username).removeMailSent(mail);
                     if (modifyInfo.isRead())
                         userDataList.get(username).setReadMailSent(mail);
                     if (modifyInfo.isCreate())
                         userDataList.get(username).addMailSent(mail);
                 } else {
-                    if (modifyInfo.isDeleate())
+                    if (modifyInfo.isDelete())
                         userDataList.get(username).removeMailRecived(mail);
                     if (modifyInfo.isRead())
                         userDataList.get(username).setReadMailRecived(mail);
@@ -287,13 +296,12 @@ public class ServerModel_2 {
                         userDataList.get(username).addMailReceived(mail);
                 }
 
-                if (modifyInfo.isDeleate())
-                    log("MODIFY: ("+username+") deleate");
+                if (modifyInfo.isDelete())
+                    log("MODIFY: (" + username + ") deleate");
                 if (modifyInfo.isRead())
-                    log("MODIFY: ("+username+") read");
+                    log("MODIFY: (" + username + ") read");
                 if (modifyInfo.isCreate())
-                    log("MODIFY: ("+username+") created");
-
+                    log("MODIFY: (" + username + ") created");
 
 
                 socket.close();
@@ -359,7 +367,9 @@ public class ServerModel_2 {
     public static synchronized void addUser(String username, String address) {
         clients.put(username, address);
         log("Client: " + username + " connesso da " + address);
-        Platform.runLater(() -> { countProperty.set(Integer.toString(getClientNumber()));});
+        Platform.runLater(() -> {
+            countProperty.set(Integer.toString(getClientNumber()));
+        });
     }
 
     public static synchronized void removeUser(String username) {
@@ -471,20 +481,20 @@ public class ServerModel_2 {
         }
     }
 
-    private static ArrayList<Mail> sendCSV(String path){
+    private static ArrayList<Mail> sendCSV(String path) {
         ArrayList<Mail> mailList = new ArrayList<>();
 
-        try{
+        try {
             boolean exist = FileExist(path);
-            if(exist)
+            if (exist)
                 mailList = readCSV(path);
-        } catch(IOException e){
+        } catch (IOException e) {
             System.err.println(e);
         }
         return mailList;
     }
 
-    private static String pathCostructor(String username, String type){
+    private static String pathCostructor(String username, String type) {
         String directoryPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "backup";
         File directory = new File(directoryPath);
         if (!directory.exists())
@@ -495,4 +505,39 @@ public class ServerModel_2 {
 //        return System.getProperty("user.dir") + File.separator + "src" + File.separator + "backup" +
 //                File.separator + username + "-" + type + ".csv";
     }
+
+    private static ArrayList<Mail> sendNotAll(String path, String lastUuid) throws IOException {
+        ArrayList<Mail> mailList = new ArrayList<>();
+        boolean foundId = false;
+        try {
+            boolean exist = FileExist(path);
+            if (exist) {
+                try (CSVParser csvParser = CSVParser.parse(new FileReader(path), CSVFormat.DEFAULT.withFirstRecordAsHeader())) {
+                    for (CSVRecord csvRecord : csvParser) {
+                        String uuid = csvRecord.get("Uuid");
+                        if (foundId) {
+                            String sender = csvRecord.get("Sender");
+                            String recipients = csvRecord.get("Recipients");
+                            String object = csvRecord.get("Object");
+                            String text = csvRecord.get("Text");
+                            String date = csvRecord.get("Date");
+                            String time = csvRecord.get("Time");
+                            boolean read = Boolean.parseBoolean(csvRecord.get("Read"));
+                            mailList.add(new Mail(sender, recipients, object, text, date, time, read));
+                        } else {
+                            if (lastUuid.equals(uuid))
+                                foundId = true;
+                        }
+                    }
+                }
+            }
+         /*   else {
+                new File(path).createNewFile();
+            }*/
+        } catch(IOException e){
+            System.err.println(e);
+        }
+        return mailList;
+    }
 }
+

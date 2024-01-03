@@ -130,6 +130,8 @@
       <workItem from="1704106230325" duration="411000" />
       <workItem from="1704188212323" duration="3049000" />
       <workItem from="1704191394465" duration="199000" />
+      <workItem from="1704212061459" duration="4099000" />
+      <workItem from="1704274444134" duration="5642000" />
     </task>
     <servers />
   </component>
@@ -147,6 +149,11 @@
           <properties class="java.lang.reflect.InvocationTargetException" package="java.lang.reflect" />
           <option name="timeStamp" value="2" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/prva/model/Server.java</url>
+          <line>146</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

@@ -109,8 +109,6 @@ public class ClientController {
         localAddressSend.textProperty().set(localAddressMail);
         setConnection(mailModel.connect());
 
-        loadMail();
-
         Cancella_Tutto_Inviata.setOnAction(event -> {
             // mailModel.addLog("null", "MailReceivedList: Prima della cancellazione ( " + mailModel.getListMailReceived().toString() + " )");
             System.out.println("MailReceivedList: Prima della cancellazione ( " + mailModel.getListMailReceived().toString() + " )");
@@ -164,10 +162,10 @@ public class ClientController {
             mailModel.forwardReceived();
         });
 
-        reconnectBtnSent.setOnAction(event ->       { deleteMail(); mailModel.connect(); loadMail(); });
-        reconnectBtnReceived.setOnAction(event ->   { deleteMail(); mailModel.connect(); loadMail(); });
-        reconnectBtnSend.setOnAction(event ->       { deleteMail(); mailModel.connect(); loadMail(); });
-        reconnectBtnLog.setOnAction(event ->        { deleteMail(); mailModel.connect(); loadMail(); });
+        reconnectBtnSent.setOnAction(event ->       { deleteMail(); mailModel.connect(); });
+        reconnectBtnReceived.setOnAction(event ->   { deleteMail(); mailModel.connect(); });
+        reconnectBtnSend.setOnAction(event ->       { deleteMail(); mailModel.connect(); });
+        reconnectBtnLog.setOnAction(event ->        { deleteMail(); mailModel.connect(); });
     }
 
     public void setConnection(boolean connect) {
@@ -217,11 +215,12 @@ public class ClientController {
     }
 
     private void loadMail() {
-//        setCountMailSent();
-//        mailModel.getListMailSent().forEach(this::createCardSent);
-//
-//        setCountMailReceived();
-//        mailModel.getListMailReceived().forEach(this::createCardReceived);
+    /*    setCountMailSent();
+        mailModel.getListMailSent().forEach(this::createCardSent);
+
+       setCountMailReceived();
+        mailModel.getListMailReceived().forEach(this::createCardReceived);
+     */
     }
 
     private void showMailPanelReceived(boolean bool) {

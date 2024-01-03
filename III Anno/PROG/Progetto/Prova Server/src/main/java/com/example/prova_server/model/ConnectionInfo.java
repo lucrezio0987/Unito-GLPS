@@ -9,12 +9,16 @@ public class ConnectionInfo implements Serializable {
 
     private List<MailModifyInfo> mailSentOfflineModify;
     private List<MailModifyInfo> mailReceivedOfflineModify;
+    private String lastUuidSent;
+    private String lastUuidReceived;
 
-    public ConnectionInfo(boolean connected, String username, List<MailModifyInfo> mailSentOfflineModify, List<MailModifyInfo> mailReceivedOfflineModify){
+    public ConnectionInfo(boolean connected, String username, List<MailModifyInfo> mailSentOfflineModify, List<MailModifyInfo> mailReceivedOfflineModify, String lastUuidSent, String lastUuidReceived){
         this.connected = connected;
         this.username = username;
         this.mailSentOfflineModify = mailSentOfflineModify;
         this.mailReceivedOfflineModify = mailReceivedOfflineModify;
+        this.lastUuidSent = lastUuidSent;
+        this.lastUuidReceived = lastUuidReceived;
     }
 
     public boolean isConnected() {
@@ -39,4 +43,8 @@ public class ConnectionInfo implements Serializable {
     public List<MailModifyInfo> getMailReceivedOfflineModify() {
         return mailReceivedOfflineModify;
     }
+
+    public String getLastUuidSent() { return lastUuidSent; }
+
+    public String getLastUuidReceived() { return lastUuidReceived; }
 }

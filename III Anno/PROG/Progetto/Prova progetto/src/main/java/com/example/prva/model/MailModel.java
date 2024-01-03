@@ -12,6 +12,9 @@ import com.google.gson.Gson;
 
 
 import javafx.beans.property.SimpleStringProperty;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 
 public class MailModel {
 
@@ -262,8 +265,8 @@ public class MailModel {
     public boolean connect() {
         if(syntaxControll()) {
             addLog("Client", "Connessione: " + localAddressProperty.get());
-            deleteMailSentList();
-            deleteMailReceivedList();
+            mailSent.clear();
+            mailReceived.clear();
             server.setAddress(localAddressProperty.get());
             setMailSent();
             setMailReceived();
@@ -308,7 +311,6 @@ public class MailModel {
                 textLogProperty.set(currentText + "\n" + newLine);
             System.out.println(newLine);
     }
-
     public void stop() {
         server.stop();
     }
