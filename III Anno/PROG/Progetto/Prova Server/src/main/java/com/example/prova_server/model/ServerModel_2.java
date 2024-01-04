@@ -488,13 +488,31 @@ public class ServerModel_2 {
              CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT)) {
 
             // Intestazioni del CSV
-            csvPrinter.printRecord("Sender", "Recipients", "Text", "Object", "Date", "Time", "Read", "Uuid");
+            csvPrinter.printRecord(
+                    "Sender",
+                    "Recipients",
+                    "Object",
+                    "Text",
+                    "CreationDate",
+                    "CreationTime",
+                    "LastModifyDate",
+                    "LastModifyTime",
+                    "Uuid",
+                    "Read");
 
             // Scrivi i dati nel CSV
             for (Mail mail : mailList)
-                csvPrinter.printRecord(mail.getSender(),
-                        mail.getRecipients(), mail.getText(),
-                        mail.getObject(), mail.getDate(), mail.getTime(), mail.getRead(), mail.getUuid());
+                csvPrinter.printRecord(
+                        mail.getSender(),
+                        mail.getRecipients(),
+                        mail.getObject(),
+                        mail.getText(),
+                        mail.getDate(),
+                        mail.getTime(),
+                        mail.getLastModifyDate(),
+                        mail.getLastModifyTime(),
+                        mail.getUuid(),
+                        mail.getRead());
         }
     }
     private static ArrayList<Mail> sendCSV(String path){
