@@ -6,9 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b545aa37-8307-4738-b698-f55b798e1538" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/prova_server/controller/ServerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/prova_server/controller/ServerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/prova_server/model/ServerModel_2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/prova_server/model/ServerModel_2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/prova_server/model/UserData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/prova_server/model/UserData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Prova progetto/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova progetto/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/prova_server/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/prova_server/hello-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,6 +123,7 @@
       <workItem from="1704288659994" duration="7949000" />
       <workItem from="1704296924290" duration="657000" />
       <workItem from="1704363797696" duration="9088000" />
+      <workItem from="1704373116091" duration="458000" />
     </task>
     <servers />
   </component>

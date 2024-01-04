@@ -10,6 +10,7 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -524,5 +525,17 @@ public class ServerModel_2 {
             directory.mkdirs();
 
         return directoryPath + File.separator + username + "-" + type + ".csv";
+    }
+    public void clearBackup() {
+        String directoryPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "backup";
+        File directory = new File(directoryPath);
+
+        if (directory.exists() && directory.isDirectory())
+            for (File file : Objects.requireNonNull(directory.listFiles()))
+                if (file.isFile())
+                    file.delete();
+
+
+        log("BACKUP: cartella di backup svuotata");
     }
 }

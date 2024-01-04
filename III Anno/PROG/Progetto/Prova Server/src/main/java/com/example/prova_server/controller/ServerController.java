@@ -12,7 +12,7 @@ public class ServerController {
     @FXML
     private TextArea textArea;
     @FXML
-    private Button stopBtn, resetBtn, startBtn;
+    private Button stopBtn, resetBtn, startBtn, clearBackupButton;
     @FXML
     private Label countLabel;
 
@@ -27,6 +27,8 @@ public class ServerController {
         countLabel.textProperty().bind(model.getCountProperty());
 
         model.start();
+
+        clearBackupButton.setOnAction( event -> model.clearBackup());
 
         startBtn.setOnAction(event -> { model.start();});
         stopBtn.setOnAction(event -> { model.stop();});
