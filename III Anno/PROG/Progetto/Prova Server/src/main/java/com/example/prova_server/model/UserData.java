@@ -3,19 +3,29 @@ package com.example.prova_server.model;
 import java.util.ArrayList;
 
 public class UserData {
-    String address;
+    String username;
     private ArrayList<Mail> mailSent;
     private ArrayList<Mail> mailReceived;
     private boolean connected;
+    private String clientAddress;
 
-    public UserData(String address) {
-        this.address = address;
+    public UserData(String username) {
+        this.username = username;
         this.mailSent = new ArrayList<>();
         this.mailReceived = new ArrayList<>();
+        this.connected = false;
     }
 
-    public String getAddress() {
-        return address;
+    public UserData(String username, String clientAddress) {
+        this.username = username;
+        this.mailSent = new ArrayList<>();
+        this.mailReceived = new ArrayList<>();
+        this.connected = true;
+        this.clientAddress = clientAddress;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public ArrayList<Mail> getMailSent() {
@@ -78,5 +88,9 @@ public class UserData {
     }
     public ArrayList<Mail> getMailReceived(String lastConnectionData, String lastConnectionTime) {
         return new ArrayList<> (mailReceived.stream().filter(m -> m.moreRecentlyOf(lastConnectionData, lastConnectionTime)).toList());
+    }
+
+    public String getClientAddress() {
+        return clientAddress;
     }
 }

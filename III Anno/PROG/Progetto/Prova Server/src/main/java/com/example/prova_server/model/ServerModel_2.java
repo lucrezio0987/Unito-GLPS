@@ -10,7 +10,6 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -42,7 +41,6 @@ public class ServerModel_2 {
 
     private static ExecutorService executorService;
 
-    private static Map<String, String> clients;
     private static Map<String, UserData> userDataList;
 
     private static boolean isStarted = false;
@@ -52,8 +50,8 @@ public class ServerModel_2 {
     }
     public SimpleStringProperty getCountProperty() { return countProperty; }
     private static int getClientNumber() {
-        return (int) clients.values().stream()
-                .filter(Objects::nonNull)
+        return (int) userDataList.values().stream()
+                .filter(UserData::isOn)
                 .count();
     }
 
@@ -63,7 +61,6 @@ public class ServerModel_2 {
         countProperty.set(Integer.toString(0));
 
         executorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
-        clients = new ConcurrentHashMap<>();
         userDataList = new ConcurrentHashMap<>();
 
     }
@@ -193,9 +190,9 @@ public class ServerModel_2 {
                 log("Server: STOPED");
                 isStarted = false;
 
-                clients.values().stream()
-                        .filter(Objects::nonNull)
-                        .forEach(this::clientBrodcastStopMessage);
+                userDataList.values().stream()
+                        .filter(UserData::isOn)
+                        .forEach( u -> clientBrodcastStopMessage(u.getClientAddress()));
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -223,7 +220,6 @@ public class ServerModel_2 {
 
                 if (connectionInfo.isConnected()) {
                     addUser(username, socket.getInetAddress().getHostAddress());
-                    userDataList.get(username).setOn(true);
                     loadBackup(username);
 
                     Map<String, ArrayList<Mail>> map = new HashMap<>();
@@ -235,13 +231,17 @@ public class ServerModel_2 {
                     outputStream.writeObject(jsonList);
                     outputStream.flush();
 
+                    log("Client: " + username + " connesso da " + userDataList.get(username).getClientAddress());
+
                 } else {
                     ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
                     outputStream.writeObject("Null");
                     outputStream.flush();
 
+                    userDataList.get(username).setOn(false);
                     backup(username);
-                    removeUser(username);
+
+                    log("Client:  " + username + " disconnesso. (" + userDataList.get(username).getClientAddress()+ ")");
                 }
                 socket.close();
             } catch (JsonSyntaxException | IOException | ClassNotFoundException e) {
@@ -337,24 +337,21 @@ public class ServerModel_2 {
 
     private static void sendMail(String recipient, Mail mail) throws IOException {
 
-        String destAddress = getAddressForUser(recipient);
-
         loadBackup(recipient);
         userDataList.get(recipient).addMailReceived(mail);
         backup(recipient);
 
-        if (destAddress != null) {
-            log("Inoltro a: " + destAddress);
-
-            Socket socket = new Socket(destAddress, CLIENT_PORT_MAIL);
+        if (userDataList.get(recipient).isOn()) {
+            Socket socket = new Socket(getAddressForUser(recipient), CLIENT_PORT_MAIL);
 
             ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
             String jsonMail = new Gson().toJson(mail);
             outputStream.writeObject(jsonMail);
             outputStream.flush();
-
             socket.close();
         }
+
+        log("Inoltro a: " + recipient + " (" + getAddressForUser(recipient) + ") - ON:" + userDataList.get(recipient).isOn());
     }
     private void clientBrodcastStopMessage(String address) {
         try (Socket socket = new Socket(address, CLIENT_PORT_CONNECTION)) {
@@ -386,18 +383,12 @@ public class ServerModel_2 {
     }
 
     public static synchronized void addUser(String username, String address) {
-        clients.put(username, address);
-        userDataList.putIfAbsent(username, new UserData(username));
-        log("Client: " + username + " connesso da " + address);
+        userDataList.putIfAbsent(username, new UserData(username, address));
+        userDataList.get(username).setOn(true);
         Platform.runLater(() -> { countProperty.set(Integer.toString(getClientNumber()));});
     }
-    public static synchronized void removeUser(String username) {
-        clients.put(username, null);
-        userDataList.get(username).setOn(false);
-        log("Client:  " + username + " disconnesso.");
-    }
     public static synchronized String getAddressForUser(String username) {
-        return clients.get(username);
+        return userDataList.get(username).getClientAddress();
     }
     private static synchronized void log(String newLine) {
         if (newLine.isEmpty())
