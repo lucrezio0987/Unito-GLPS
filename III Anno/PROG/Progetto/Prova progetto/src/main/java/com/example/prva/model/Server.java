@@ -202,6 +202,7 @@ public class Server {
 
                         mailSent.addAll(map.get("sent"));
                         mailReceived.addAll(map.get("received"));
+                        mailReceived.forEach(Server::WriterReceiver);
 
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
@@ -347,17 +348,6 @@ public class Server {
 */
         //TODO: salvataggio in locale della lsita
     }
-    public void setMailSentRead(String uuid) {
-        Mail mail = mailSent.stream().filter(m -> m.getUuid().equals(uuid)).findFirst().orElse(null);
-        mailSent.stream().filter(m -> m.getUuid().equals(uuid)).findFirst().ifPresent(m -> m.setRead());
-        MailModifyInfo MailModifyInfo = new MailModifyInfo(mail, localAddress, true).setReaded();
-        if(isConnected()) {
-            notifyModifyToServer(MailModifyInfo);
-        } else {
-            mailSentOfflineModify.add(new MailModifyInfo(mail, localAddress, true).setReaded());
-        }
-        mailSent.forEach(m -> {if(m.getUuid().equals(uuid)) m.setRead();});
-    }
     public void setMailReceivedRead(String uuid) {
         Mail mail = mailReceived.stream().filter(m -> m.getUuid().equals(uuid)).findFirst().orElse(null);
         mailReceived.stream().filter(m -> m.getUuid().equals(uuid)).findFirst().ifPresent(m -> m.setRead());
@@ -446,12 +436,25 @@ public class Server {
             System.err.println(e);
         }
     }
+    private static void WriterReceiver(Mail mail) {
+        String path = pathConstructor(mail.getRecipients(), "received");
+
+        ArrayList<Mail> mailList = new ArrayList<>();
+
+        try {
+            if (FileExist(path))
+                mailList = readCSV(path);
+            mailList.add(mail);
+            WriteCSV(mailList, path);
+        } catch (IOException e) {
+            System.err.println(e);
+        }
+    }
     private static boolean FileExist(String path) {
         return new File(path).exists();
     }
     private static void WriteCSV(ArrayList<Mail> mailList, String path) throws IOException {
-
-        if (!FileExist(path))
+        if (!FileExist(path) && !mailList.isEmpty())
             new File(path).createNewFile();
 
         try (FileWriter fileWriter = new FileWriter(path);

@@ -3,6 +3,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Mail implements Serializable {
@@ -92,5 +93,13 @@ public class Mail implements Serializable {
     public boolean moreRecentlyOf(String lastConnectionData, String lastConnectionTime) {
         // TODO far funzionare questo metodo
         return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Mail mail = (Mail) o;
+        return this.uuid.equals(mail.getUuid());
     }
 }

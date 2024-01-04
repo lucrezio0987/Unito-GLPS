@@ -44,10 +44,10 @@ public class UserData {
     }
 
     public void setReadMailRecived(Mail mail) {
-        mailReceived.stream().filter(m -> m.getUuid().equals(mail.getUuid())).forEach(Mail::setRead);
+        mailReceived.stream().filter(m -> m.equals(mail)).forEach(Mail::setRead);
     }
     public void setReadMailSent(Mail mail) {
-        mailSent.stream().filter(m -> m.getUuid().equals(mail.getUuid())).forEach(Mail::setRead);
+        mailSent.stream().filter(m -> m.equals(mail)).forEach(Mail::setRead);
     }
 
     public void loadSendMails(ArrayList<Mail> sender) {
@@ -76,7 +76,6 @@ public class UserData {
     public ArrayList<Mail> getMailSent(String lastConnectionData, String lastConnectionTime) {
         return new ArrayList<> (mailSent.stream().filter(m -> m.moreRecentlyOf(lastConnectionData, lastConnectionTime)).toList());
     }
-
     public ArrayList<Mail> getMailReceived(String lastConnectionData, String lastConnectionTime) {
         return new ArrayList<> (mailReceived.stream().filter(m -> m.moreRecentlyOf(lastConnectionData, lastConnectionTime)).toList());
     }

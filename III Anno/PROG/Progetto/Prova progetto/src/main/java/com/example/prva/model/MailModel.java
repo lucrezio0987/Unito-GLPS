@@ -114,45 +114,15 @@ public class MailModel {
     }
 
     public void setMailRead(String uuid){
-
-        server.setMailSentRead(uuid);
         server.setMailReceivedRead(uuid);
-
-        //mailSent.stream()
-        //        .filter(m -> m.getUuid().equals(uuid))
-        //        .findFirst()
-        //        .ifPresent(mail -> {
-        //            mail.setRead(read);
-        //        });
-//
-        //mailReceived.stream()
-        //        .filter(m -> m.getUuid().equals(uuid))
-        //        .findFirst()
-        //        .ifPresent(mail -> {
-        //            mail.setRead(read);
-        //        });
     }
-
     public void deleteMailSentList(){ server.deleteMailSentList(); }
     public void deleteMailReceivedList(){ server.deleteMailReceivedList(); }
 
     public void deleteMailSent(String uuid){
-        //mailSent.stream()
-        //        .filter(mail -> mail.getUuid().equals(uuid))
-        //        .findFirst()
-        //        .ifPresent(mail -> {
-        //            mailSent.remove(mail);
-        //        });
-
         server.deleteMailSent(uuid);
     }
     public void deleteMailReceived(String uuid) {
-        //mailReceived.stream()
-        //        .filter(mail -> mail.getUuid().equals(uuid))
-        //        .findFirst()
-        //        .ifPresent(mail -> {
-        //            mailReceived.remove(mail);
-        //        });
         server.deleteMailReceived(uuid);
     }
 

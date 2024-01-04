@@ -300,18 +300,16 @@ public class ServerModel_2 {
                 String username = modifyInfo.getUsername();
 
                 if(modifyInfo.getSent()) {
-                    if (modifyInfo.isDeleateAll())
+                    if (modifyInfo.isDeleteAll())
                         userDataList.get(username).clearMailListSent();
-                    if (modifyInfo.isDeleate())
+                    if (modifyInfo.isDelete())
                         userDataList.get(username).removeMailSent(mail);
-                    if (modifyInfo.isRead())
-                        userDataList.get(username).setReadMailSent(mail);
                     if (modifyInfo.isCreate())
                         userDataList.get(username).addMailSent(mail);
                 } else {
-                    if (modifyInfo.isDeleateAll())
+                    if (modifyInfo.isDeleteAll())
                         userDataList.get(username).clearMailListRecived();
-                    if (modifyInfo.isDeleate())
+                    if (modifyInfo.isDelete())
                         userDataList.get(username).removeMailRecived(mail);
                     if (modifyInfo.isRead())
                         userDataList.get(username).setReadMailRecived(mail);
@@ -319,9 +317,9 @@ public class ServerModel_2 {
                         userDataList.get(username).addMailReceived(mail);
                 }
 
-                if (modifyInfo.isDeleateAll())
+                if (modifyInfo.isDeleteAll())
                     log("MODIFY: ("+username+") deleate ALL");
-                if (modifyInfo.isDeleate())
+                if (modifyInfo.isDelete())
                     log("MODIFY: ("+username+") deleate");
                 if (modifyInfo.isRead())
                     log("MODIFY: ("+username+") read");
@@ -340,12 +338,13 @@ public class ServerModel_2 {
     private static void sendMail(String recipient, Mail mail) throws IOException {
 
         String destAddress = getAddressForUser(recipient);
+
+        loadBackup(recipient);
+        userDataList.get(recipient).addMailReceived(mail);
+        backup(recipient);
+
         if (destAddress != null) {
             log("Inoltro a: " + destAddress);
-
-            loadBackup(recipient);
-            userDataList.get(recipient).addMailReceived(mail);
-            backup(recipient);
 
             Socket socket = new Socket(destAddress, CLIENT_PORT_MAIL);
 

@@ -93,4 +93,12 @@ public class Mail implements Serializable {
         // TODO far funzionare questo metodo
         return true;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Mail mail = (Mail) o;
+        return this.uuid.equals(mail.getUuid());
+    }
 }

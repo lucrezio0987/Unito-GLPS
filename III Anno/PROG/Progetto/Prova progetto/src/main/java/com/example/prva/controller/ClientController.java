@@ -314,8 +314,8 @@ public class ClientController {
                     public void handle(MouseEvent e) {
                         mailModel.openMailSent(mail.getUuid());
                         showMailPanelSent(true);
-                        mailModel.setMailRead(mail.getUuid());
-                        ((Node) e.getSource()).getStyleClass().add("read");
+                        //mailModel.setMailRead(mail.getUuid());
+                        //((Node) e.getSource()).getStyleClass().add("read");
                     }
                 });
                 hbox1 = createHBox(soggetto, mail.getRecipients());
