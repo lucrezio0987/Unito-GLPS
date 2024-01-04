@@ -21,7 +21,7 @@ public class Mail implements Serializable {
 
     Mail(String sender, String recipients, String object, String text){
         SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm:ss");
         SimpleDateFormat formatDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date now = new Date();
         this.sender = sender;
