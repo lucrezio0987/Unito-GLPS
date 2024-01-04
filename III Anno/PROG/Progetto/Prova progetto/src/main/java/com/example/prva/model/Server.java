@@ -145,6 +145,8 @@ public class Server {
     }
     private void disconnectToServer(String username) {
         setConnected(false);
+        mailSent.forEach(Server::WriterSender);
+        mailReceived.forEach(Server::WriterReceiver);
         try {
             Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_CONNECTION);
             ConnectionInfo connectionInfo = new ConnectionInfo(false, username);
@@ -175,7 +177,6 @@ public class Server {
         }
     }
     private void connectToServer(String username) {
-        // Connessione al server per notificare la connessione
         setConnected(false);
         try {
             Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_CONNECTION);
@@ -194,14 +195,37 @@ public class Server {
                     try {
                         ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
                         String jsonSenderCSV = (String) inputStream.readObject();
-                        mailSent.clear();
-                        mailReceived.clear();
+
+                        setMailSent();
+                        setMailReceived();
 
                         Type type = new TypeToken<HashMap<String, ArrayList<Mail>>>() {}.getType();
                         HashMap<String, ArrayList<Mail>> map = new Gson().fromJson(jsonSenderCSV, type);
 
-                        mailSent.addAll(map.get("sent"));
-                        mailReceived.addAll(map.get("received"));
+                        System.out.println("Server: (" + mailSent.size()+ ") mailSent nuove: " + map.get("sent").size());
+                        System.out.println("Server: (" + mailReceived.size() + ") mailReceived nuove: " + map.get("received").size());
+
+                        map.get("sent").forEach(remoteM -> {
+                            if(mailSent.contains(remoteM)) {
+                                mailSent = mailSent.stream()
+                                        .map(localM -> localM.equals(remoteM) && localM.moreRecentlyOf(remoteM.getLastModify()) ? localM : remoteM)
+                                        .toList();
+                            } else {
+                                mailSent.add(remoteM);
+                            }
+                        });
+
+                        map.get("received").forEach(remoteM -> {
+                            if(mailReceived.contains(remoteM)) {
+                                mailReceived = mailReceived.stream()
+                                        .map(localM -> localM.equals(remoteM) && localM.moreRecentlyOf(remoteM.getLastModify()) ? localM : remoteM)
+                                        .toList();
+                            } else {
+                                mailReceived.add(remoteM);
+                            }
+                        });
+
+                        mailSent.forEach(Server::WriterSender);
                         mailReceived.forEach(Server::WriterReceiver);
 
                     } catch (ClassNotFoundException e) {
@@ -319,33 +343,24 @@ public class Server {
 
     public void setMailSent() {
         String path = pathConstructor(localAddress, "sent");
-        if(!isConnected()) {
-            mailSent.clear();
-            if(FileExist(path)) {
-                try {
-                    mailSent.addAll(readCSV(path));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        mailSent.clear();
+        if(FileExist(path))
+            try {
+                mailSent.addAll(readCSV(path));
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        }/*else{
-
-        }*/
     }
     public void setMailReceived() {
         String path = pathConstructor(localAddress, "received");
-        if(!isConnected()) {
-            mailReceived.clear();
-            if(FileExist(path)) {
-                try {
-                    mailReceived.addAll(readCSV(path));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        mailReceived.clear();
+        if(FileExist(path))
+            try {
+                mailReceived.addAll(readCSV(path));
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        }/*else{
 
-        }*/
 
     }
     public void setMailReceivedRead(String uuid) {

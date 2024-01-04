@@ -18,7 +18,7 @@ public class ConnectionInfo implements Serializable {
     public ConnectionInfo(boolean connected, String username){
         this.connected = connected;
         this.username = username;
-        SimpleDateFormat formatDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        SimpleDateFormat formatDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         this.lastConnectionDateTime = formatDateTime.format(new Date());
     }
 

@@ -226,6 +226,10 @@ public class ServerModel_2 {
                     map.put("sent", userDataList.get(username).getMailSent(LastConnectionDatatime));
                     map.put("received", userDataList.get(username).getMailReceived(LastConnectionDatatime));
 
+                    log("Updates for Client: lastConn: " + LastConnectionDatatime);
+                    log("Updates for Client: mailSent nuove: " + map.get("sent").size());
+                    log("Updates for Client: mailReceived nuove: " + map.get("received").size());
+
                     ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
                     String jsonList = new Gson().toJson(map);
                     outputStream.writeObject(jsonList);

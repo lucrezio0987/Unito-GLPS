@@ -23,7 +23,7 @@ public class Mail implements Serializable {
     Mail(String sender, String recipients, String object, String text){
         SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm");
-        SimpleDateFormat formatDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        SimpleDateFormat formatDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date now = new Date();
         this.sender = sender;
         this.recipients = recipients;
@@ -77,7 +77,7 @@ public class Mail implements Serializable {
         setLastModify();
     }
     public void setLastModify() {
-        SimpleDateFormat formatDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        SimpleDateFormat formatDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         this.lastModifyDateTime = formatDateTime.format(new Date());
     }
 
@@ -86,7 +86,7 @@ public class Mail implements Serializable {
     }
 
     public boolean moreRecentlyOf(String DateTime) {
-        SimpleDateFormat formatDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        SimpleDateFormat formatDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         try {
             Date lastConnectionDateTime = formatDateTime.parse(DateTime);
             Date currentDateTime = formatDateTime.parse(this.lastModifyDateTime);
