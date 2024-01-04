@@ -18,10 +18,10 @@ public class Mail implements Serializable {
 
     private boolean delete;
     private boolean read;
-    SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
-    SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm");
 
     Mail(String sender, String recipients, String object, String text){
+        SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm");
         Date now = new Date();
         String date = formatDate.format(now);
         String time = formatTime.format(now);
@@ -82,6 +82,8 @@ public class Mail implements Serializable {
     }
 
     public void setLastModify() {
+        SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm");
         Date now = new Date();
         this.lastModifyDate = formatDate.format(now);
         this.lastModifyTime = formatTime.format(now);

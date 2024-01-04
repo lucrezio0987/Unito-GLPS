@@ -4,15 +4,11 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
 public class ConnectionInfo implements Serializable {
     private boolean connected;
     private String username;
     private String lastConnectionDate;
     private String lastConnectionTime;
-
-    SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
-    SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm");
 
     public ConnectionInfo(boolean connected, String username, String lastConnectionDate, String lastConnectionTime){
         this.connected = connected;
@@ -22,6 +18,8 @@ public class ConnectionInfo implements Serializable {
     }
 
     public ConnectionInfo(boolean connected, String username){
+        SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm");
         Date now = new Date();
         this.connected = connected;
         this.username = username;

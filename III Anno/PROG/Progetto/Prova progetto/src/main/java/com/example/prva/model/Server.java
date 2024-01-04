@@ -147,8 +147,7 @@ public class Server {
         setConnected(false);
         try {
             Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_CONNECTION);
-            ConnectionInfo connectionInfo;
-                connectionInfo = new ConnectionInfo(false, username);
+            ConnectionInfo connectionInfo = new ConnectionInfo(false, username);
 
             try {
                 ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
@@ -180,9 +179,7 @@ public class Server {
         setConnected(false);
         try {
             Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_CONNECTION);
-            ConnectionInfo connectionInfo;
-
-            connectionInfo = new ConnectionInfo(true, username);
+            ConnectionInfo connectionInfo = new ConnectionInfo(true, username);
 
             try {
                 ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
@@ -239,8 +236,6 @@ public class Server {
 
                 socket.close();
 
-                Platform.runLater(() -> controller.createCardSent(mail));
-
                 System.out.println("Email inviata a: " + mail.getRecipients());
             } catch (IOException e) {
                 e.printStackTrace();
@@ -250,6 +245,7 @@ public class Server {
             mailSentOfflineModify.add(new MailModifyInfo(mail, localAddress, true).setCreated());
         }
         mailSent.add(mail);
+        controller.createCardSent(mail);
         WriterSender(mail);
 
 
@@ -462,13 +458,13 @@ public class Server {
              CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT)) {
 
             // Intestazioni del CSV
-            csvPrinter.printRecord("Sender", "Recipients", "Text", "Object", "Date", "Time", "Read", "Uuid");
+            csvPrinter.printRecord("Sender", "Recipients", "Object", "Text", "CreationDate", "CreationTime", "LastModifyDate", "LastModifyTime", "Uuid", "Read");
 
             // Scrivi i dati nel CSV
             for (Mail mail : mailList)
                 csvPrinter.printRecord(mail.getSender(),
-                        mail.getRecipients(), mail.getText(),
-                        mail.getObject(), mail.getDate(), mail.getTime(), mail.getRead(), mail.getUuid());
+                        mail.getRecipients(),
+                        mail.getObject(), mail.getText(), mail.getDate(), mail.getTime(), mail.getLastModifyDate(), mail.getLastModifyTime(), mail.getUuid(), mail.getRead());
         }
     }
 

@@ -216,11 +216,10 @@ public class ServerModel_2 {
                 ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
                 String jsonConnectionInfo = (String) inputStream.readObject();
                 ConnectionInfo connectionInfo = new Gson().fromJson(jsonConnectionInfo, ConnectionInfo.class);
-                String username = connectionInfo.getUsername();
 
+                String username = connectionInfo.getUsername();
                 String LastConnectionData = connectionInfo.getLastConnectionDate();
                 String LastConnectionTime = connectionInfo.getLastConnectionTime();
-
 
                 if (connectionInfo.isConnected()) {
                     addUser(username, socket.getInetAddress().getHostAddress());

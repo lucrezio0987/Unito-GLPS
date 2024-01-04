@@ -119,7 +119,7 @@ public class ClientController {
         });
 
         sendBtn.setOnAction(event -> {
-            Mail mail = mailModel.sendMail();
+            mailModel.sendMail();
         });
 
         deleteBtnSent.setOnAction(event -> {

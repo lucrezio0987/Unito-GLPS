@@ -169,11 +169,11 @@ public class MailModel {
         return actual;
     }
 
-    public Mail sendMail(){
+    public void sendMail(){
 
         if(!syntaxControll()) {
             addLog("Client", "ERRORE: Indirizzo inserito non valido, email NON inviata");
-            return null;
+            return;
         }
         String sender       = localAddressProperty.get();
         String recipients   = addressMailSendProperty.get();
@@ -190,8 +190,6 @@ public class MailModel {
         objectMailSendProperty.set("");
 
         server.addMailSent(mailSend);
-
-        return mailSend;
     }
 
     public void sendMailClear() {
