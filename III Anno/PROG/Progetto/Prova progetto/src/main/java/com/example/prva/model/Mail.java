@@ -90,7 +90,8 @@ public class Mail implements Serializable {
     }
 
     public boolean moreRecentlyOf(String lastConnectionData, String lastConnectionTime) {
-        // TODO far funzionare questo metodo
+
+        // TODO: controlla se questo oggetto è più recente dei lastConnectionData e lastConnectionTime
         return true;
     }
 

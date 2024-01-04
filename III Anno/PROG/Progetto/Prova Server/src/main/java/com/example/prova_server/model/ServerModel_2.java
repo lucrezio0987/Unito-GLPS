@@ -472,39 +472,37 @@ public class ServerModel_2 {
     }
     private static void WriteCSV(ArrayList<Mail> mailList, String path) throws IOException {
 
-        if (!FileExist(path))
-            new File(path).createNewFile();
+        if (!mailList.isEmpty())
+            try (FileWriter fileWriter = new FileWriter(path);
+                 CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT)) {
 
-        try (FileWriter fileWriter = new FileWriter(path);
-             CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT)) {
-
-            // Intestazioni del CSV
-            csvPrinter.printRecord(
-                    "Sender",
-                    "Recipients",
-                    "Object",
-                    "Text",
-                    "CreationDate",
-                    "CreationTime",
-                    "LastModifyDate",
-                    "LastModifyTime",
-                    "Uuid",
-                    "Read");
-
-            // Scrivi i dati nel CSV
-            for (Mail mail : mailList)
+                // Intestazioni del CSV
                 csvPrinter.printRecord(
-                        mail.getSender(),
-                        mail.getRecipients(),
-                        mail.getObject(),
-                        mail.getText(),
-                        mail.getDate(),
-                        mail.getTime(),
-                        mail.getLastModifyDate(),
-                        mail.getLastModifyTime(),
-                        mail.getUuid(),
-                        mail.getRead());
-        }
+                        "Sender",
+                        "Recipients",
+                        "Object",
+                        "Text",
+                        "CreationDate",
+                        "CreationTime",
+                        "LastModifyDate",
+                        "LastModifyTime",
+                        "Uuid",
+                        "Read");
+
+                // Scrivi i dati nel CSV
+                for (Mail mail : mailList)
+                    csvPrinter.printRecord(
+                            mail.getSender(),
+                            mail.getRecipients(),
+                            mail.getObject(),
+                            mail.getText(),
+                            mail.getDate(),
+                            mail.getTime(),
+                            mail.getLastModifyDate(),
+                            mail.getLastModifyTime(),
+                            mail.getUuid(),
+                            mail.getRead());
+            }
     }
     private static ArrayList<Mail> sendCSV(String path){
         ArrayList<Mail> mailList = new ArrayList<>();
