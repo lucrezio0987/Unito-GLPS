@@ -1,5 +1,6 @@
 package com.example.prova_server.model;
 import java.io.Serializable;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -14,8 +15,7 @@ public class Mail implements Serializable {
     private String object;
     private String creationDate;
     private String creationTime;
-    private String lastModifyDate;
-    private String lastModifyTime;
+    private String lastModifyDateTime;
 
     private boolean delete;
     private boolean read;
@@ -23,29 +23,28 @@ public class Mail implements Serializable {
     Mail(String sender, String recipients, String object, String text){
         SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat formatDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         Date now = new Date();
-        String date = formatDate.format(now);
-        String time = formatTime.format(now);
         this.sender = sender;
         this.recipients = recipients;
         this.object = object;
         this.text = text;
-        this.creationDate = date;   this.lastModifyDate = date;
-        this.creationTime = time;   this.lastModifyTime = time;
+        this.creationDate = formatDate.format(now);;
+        this.creationTime = formatTime.format(now);;
+        this.lastModifyDateTime = formatDateTime.format(now);
         this.read = false;
         this.delete = false;
         this.uuid = UUID.randomUUID().toString();
     }
 
-    Mail(String sender, String recipients, String object, String text, String creationDate, String creationTime, String  lastModifyDate, String  lastModifyTime, boolean read, String uuid){
+    Mail(String sender, String recipients, String object, String text, String creationDate, String creationTime, String  lastModifyDateTime, boolean read, String uuid){
         this.sender = sender;
         this.recipients = recipients;
         this.object = object;
         this.text = text;
         this.creationDate = creationDate;
         this.creationTime = creationTime;
-        this.lastModifyDate = lastModifyDate;
-        this.lastModifyTime = lastModifyTime;
+        this.lastModifyDateTime = lastModifyDateTime;
         this.read = read;
         this.uuid = uuid;
     }
@@ -56,12 +55,12 @@ public class Mail implements Serializable {
     public String getObject()       { return object;        }
     public String getDate()         { return creationDate;          }
     public String getTime()         { return creationTime;          }
-    public String getLastModifyDate()         { return lastModifyDate;          }
-    public String getLastModifyTime()         { return lastModifyTime;          }
+    public String getLastModify()   { return lastModifyDateTime;    }
     public String getUuid()         { return uuid;          }
     public boolean getRead()        { return read;          }
-
-    public List<String> getRecipientsList()   { return List.of(recipients.split("\\s*,\\s*")); }
+    public List<String> getRecipientsList()   {
+        return List.of(recipients.split("\\s*,\\s*"));
+    }
 
     public void setRead() {
         this.read = false;
@@ -77,22 +76,25 @@ public class Mail implements Serializable {
         this.delete = true;
         setLastModify();
     }
+    public void setLastModify() {
+        SimpleDateFormat formatDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        this.lastModifyDateTime = formatDateTime.format(new Date());
+    }
 
     public boolean isDelete() {
         return delete;
     }
 
-    public void setLastModify() {
-        SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm");
-        Date now = new Date();
-        this.lastModifyDate = formatDate.format(now);
-        this.lastModifyTime = formatTime.format(now);
-    }
-
-    public boolean moreRecentlyOf(String lastConnectionData, String lastConnectionTime) {
-        // TODO far funzionare questo metodo
-        return true;
+    public boolean moreRecentlyOf(String DateTime) {
+        SimpleDateFormat formatDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        try {
+            Date lastConnectionDateTime = formatDateTime.parse(DateTime);
+            Date currentDateTime = formatDateTime.parse(this.lastModifyDateTime);
+            return currentDateTime.after(lastConnectionDateTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override

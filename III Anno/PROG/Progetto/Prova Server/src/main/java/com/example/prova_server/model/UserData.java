@@ -83,11 +83,11 @@ public class UserData {
         mailSent.clear();
     }
 
-    public ArrayList<Mail> getMailSent(String lastConnectionData, String lastConnectionTime) {
-        return new ArrayList<> (mailSent.stream().filter(m -> m.moreRecentlyOf(lastConnectionData, lastConnectionTime)).toList());
+    public ArrayList<Mail> getMailSent(String lastConnectionDatatime) {
+        return new ArrayList<> (mailSent.stream().filter(m -> m.moreRecentlyOf(lastConnectionDatatime)).toList());
     }
-    public ArrayList<Mail> getMailReceived(String lastConnectionData, String lastConnectionTime) {
-        return new ArrayList<> (mailReceived.stream().filter(m -> m.moreRecentlyOf(lastConnectionData, lastConnectionTime)).toList());
+    public ArrayList<Mail> getMailReceived(String lastConnectionDatatime) {
+        return new ArrayList<> (mailReceived.stream().filter(m -> m.moreRecentlyOf(lastConnectionDatatime)).toList());
     }
 
     public String getClientAddress() {

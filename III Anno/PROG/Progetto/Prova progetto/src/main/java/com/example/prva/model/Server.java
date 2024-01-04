@@ -318,35 +318,35 @@ public class Server {
     }
 
     public void setMailSent() {
-        //TODO: richeista al server della lista (localAddress)
-/*
-        mailSent.add(new Mail(null, "alice@example.com", "Oggetto 1", "Contenuto della mail 1", "28/03/2022", "11:30", false));
-        mailSent.add(new Mail(null, "bob@example.com", "Oggetto 2", "Contenuto della mail 2", "28/03/2022", "12:30", false));
-        mailSent.add(new Mail(null, "charlie@example.com", "Oggetto 3", "Contenuto della mail 3", "28/03/2022", "13:30", false));
-        mailSent.add(new Mail(null, "dave@example.com", "Oggetto 4", "Contenuto della mail 4", "28/03/2022", "14:30", false));
-        mailSent.add(new Mail(null, "emma@example.com", "Oggetto 5", "Contenuto della mail 5", "28/03/2022", "15:30", true));
-        mailSent.add(new Mail(null, "frank@example.com", "Oggetto 6", "Contenuto della mail 6", "28/03/2022", "16:30", true));
-        mailSent.add(new Mail(null, "hannah@example.com", "Oggetto 7", "Contenuto della mail 7", "28/03/2022", "17:30", true));
-        mailSent.add(new Mail(null, "irene@example.com", "Oggetto 8", "Contenuto della mail 8", "28/03/2022", "18:30", true));
-        mailSent.add(new Mail(null, "jack@example.com", "Oggetto 9", "Contenuto della mail 9", "28/03/2022", "19:30", true));
-*/
-        //TODO: salvataggio in locale della lsita
+        String path = pathConstructor(localAddress, "sent");
+        if(!isConnected()) {
+            mailSent.clear();
+            if(FileExist(path)) {
+                try {
+                    mailSent.addAll(readCSV(path));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }/*else{
+
+        }*/
     }
     public void setMailReceived() {
-        //TODO: richeista al server della lista (localAddress)
-/*
-        mailReceived.add(new Mail("kevin@example.com", null, "Oggetto 1", "Contenuto della mail 1", "28/03/2022", "11:30", false));
-        mailReceived.add(new Mail("mary@example.com", null, "Oggetto 2", "Contenuto della mail 2", "28/03/2022", "11:30", false));
-        mailReceived.add(new Mail("peter@example.com", null, "Oggetto 3", "Contenuto della mail 3", "28/03/2022", "12:30", false));
-        mailReceived.add(new Mail("susan@example.com", null, "Oggetto 4", "Contenuto della mail 4", "28/03/2022", "13:30", false));
-        mailReceived.add(new Mail("tom@example.com", null, "Oggetto 5", "Contenuto della mail 5", "28/03/2022", "14:30", false));
-        mailReceived.add(new Mail("linda@example.com", null, "Oggetto 6", "Contenuto della mail 6", "28/03/2022", "15:30", true));
-        mailReceived.add(new Mail("kevin@example.com", null, "Oggetto 7", "Contenuto della mail 7", "28/03/2022", "16:30", true));
-        mailReceived.add(new Mail("natalie@example.com", null, "Oggetto 8", "Contenuto della mail 8", "28/03/2022", "17:30", true));
-        mailReceived.add(new Mail("alex@example.com", null, "Oggetto 9", "Contenuto della mail 9", "28/03/2022", "18:30", true));
-        mailReceived.add(new Mail("olivia@example.com", null, "Oggetto 10", "Contenuto della mail 10", "28/03/2022", "19:30", true));
-*/
-        //TODO: salvataggio in locale della lsita
+        String path = pathConstructor(localAddress, "received");
+        if(!isConnected()) {
+            mailReceived.clear();
+            if(FileExist(path)) {
+                try {
+                    mailReceived.addAll(readCSV(path));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }/*else{
+
+        }*/
+
     }
     public void setMailReceivedRead(String uuid) {
         Mail mail = mailReceived.stream().filter(m -> m.getUuid().equals(uuid)).findFirst().orElse(null);
@@ -360,29 +360,7 @@ public class Server {
         mailReceived.forEach(m -> {if(m.getUuid().equals(uuid)) m.setRead();});
     }
 
-
-    public static ArrayList<Mail> readCSV(String path) throws IOException {
-        ArrayList<Mail> mailList = new ArrayList<>();
-
-        try (CSVParser csvParser = CSVParser.parse(new FileReader(path), CSVFormat.DEFAULT.withFirstRecordAsHeader())) {
-            for (CSVRecord csvRecord : csvParser) {
-                String sender = csvRecord.get("Sender");
-                String recipients = csvRecord.get("Recipients");
-                String object = csvRecord.get("Object");
-                String text = csvRecord.get("Text");
-                String creationDate = csvRecord.get("CreationDate");
-                String creationTime = csvRecord.get("CreationTime");
-                String lastModifyDate = csvRecord.get("LastModifyDate");
-                String lastModifyTime = csvRecord.get("LastModifyTime");
-                String uuid = csvRecord.get("Uuid");
-                boolean read = Boolean.parseBoolean(csvRecord.get("Read"));
-
-                mailList.add(new Mail(sender, recipients, object, text, creationDate, creationTime, lastModifyDate, lastModifyTime, read, uuid));
-            }
-        }
-        return mailList;
-    }
-    private static void writeOrUpdateCSVInfo(String username, String date, String time) throws IOException {
+    private static void writeOrUpdateCSVInfo(String username, String lastConnectionDataTime) throws IOException {
         String path = pathConstructor(null, username);
         File file = new File(path);
 
@@ -390,7 +368,7 @@ public class Server {
         if (!file.exists()) {
             try (FileWriter fileWriter = new FileWriter(path);
                  CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT)) {
-                csvPrinter.printRecord("Username", "Date", "Time");
+                csvPrinter.printRecord("Username", "LastConnectionDataTime");
             }
         }
 
@@ -403,7 +381,7 @@ public class Server {
         for (int i = 1; i < lines.size(); i++) {  // Inizia da 1 per evitare l'intestazione
             String[] parts = lines.get(i).split(",");
             if (parts.length > 0 && parts[0].equals(username)) {
-                lines.set(i, username + "," + date + "," + time);
+                lines.set(i, username + "," + lastConnectionDataTime);
                 found = true;
                 break;
             }
@@ -411,7 +389,7 @@ public class Server {
 
         // Se l'username non è stato trovato, aggiungi una nuova riga
         if (!found) {
-            lines.add(username + "," + date + "," + time);
+            lines.add(username + "," + lastConnectionDataTime);
         }
 
         // Scrivi tutte le righe nel file
@@ -422,8 +400,60 @@ public class Server {
             }
         }
     }
+    private static ArrayList<Mail> readCSV(String path) throws IOException {
+        ArrayList<Mail> mailList = new ArrayList<>();
+
+        try (CSVParser csvParser = CSVParser.parse(new FileReader(path), CSVFormat.DEFAULT.withFirstRecordAsHeader())) {
+            for (CSVRecord csvRecord : csvParser) {
+                String sender = csvRecord.get("Sender");
+                String recipients = csvRecord.get("Recipients");
+                String object = csvRecord.get("Object");
+                String text = csvRecord.get("Text");
+                String creationDate = csvRecord.get("CreationDate");
+                String creationTime = csvRecord.get("CreationTime");
+                String lastModifyDateTime = csvRecord.get("LastModifyDateTime");
+                String uuid = csvRecord.get("Uuid");
+                boolean read = Boolean.parseBoolean(csvRecord.get("Read"));
+
+                mailList.add(new Mail(sender, recipients, object, text, creationDate, creationTime, lastModifyDateTime, read, uuid));
+            }
+        }
+        return mailList;
+    }
+    private static void WriteCSV(ArrayList<Mail> mailList, String path) throws IOException {
+
+        if (!mailList.isEmpty())
+            try (FileWriter fileWriter = new FileWriter(path);
+                 CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT)) {
+
+                // Intestazioni del CSV
+                csvPrinter.printRecord(
+                        "Sender",
+                        "Recipients",
+                        "Object",
+                        "Text",
+                        "CreationDate",
+                        "CreationTime",
+                        "LastModifyDateTime",
+                        "Uuid",
+                        "Read");
+
+                // Scrivi i dati nel CSV
+                for (Mail mail : mailList)
+                    csvPrinter.printRecord(
+                            mail.getSender(),
+                            mail.getRecipients(),
+                            mail.getObject(),
+                            mail.getText(),
+                            mail.getDate(),
+                            mail.getTime(),
+                            mail.getLastModify(),
+                            mail.getUuid(),
+                            mail.getRead());
+            }
+    }
     private static void WriterSender(Mail mail) {
-        String path = pathConstructor(mail.getSender(), "sender");
+        String path = pathConstructor(mail.getSender(), "sent");
 
         ArrayList<Mail> mailList = new ArrayList<>();
 
@@ -452,40 +482,6 @@ public class Server {
     }
     private static boolean FileExist(String path) {
         return new File(path).exists();
-    }
-    private static void WriteCSV(ArrayList<Mail> mailList, String path) throws IOException {
-
-        if (!mailList.isEmpty())
-            try (FileWriter fileWriter = new FileWriter(path);
-                 CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT)) {
-
-                // Intestazioni del CSV
-                csvPrinter.printRecord(
-                        "Sender",
-                        "Recipients",
-                        "Object",
-                        "Text",
-                        "CreationDate",
-                        "CreationTime",
-                        "LastModifyDate",
-                        "LastModifyTime",
-                        "Uuid",
-                        "Read");
-
-                // Scrivi i dati nel CSV
-                for (Mail mail : mailList)
-                    csvPrinter.printRecord(
-                            mail.getSender(),
-                            mail.getRecipients(),
-                            mail.getObject(),
-                            mail.getText(),
-                            mail.getDate(),
-                            mail.getTime(),
-                            mail.getLastModifyDate(),
-                            mail.getLastModifyTime(),
-                            mail.getUuid(),
-                            mail.getRead());
-            }
     }
 
     public static String pathConstructor(String username, String type) {

@@ -216,16 +216,15 @@ public class ServerModel_2 {
                 ConnectionInfo connectionInfo = new Gson().fromJson(jsonConnectionInfo, ConnectionInfo.class);
 
                 String username = connectionInfo.getUsername();
-                String LastConnectionData = connectionInfo.getLastConnectionDate();
-                String LastConnectionTime = connectionInfo.getLastConnectionTime();
+                String LastConnectionDatatime = connectionInfo.getLastConnectionDateTime();
 
                 if (connectionInfo.isConnected()) {
                     addUser(username, socket.getInetAddress().getHostAddress());
                     loadBackup(username);
 
                     Map<String, ArrayList<Mail>> map = new HashMap<>();
-                    map.put("sent", userDataList.get(username).getMailSent(LastConnectionData, LastConnectionTime));
-                    map.put("received", userDataList.get(username).getMailReceived(LastConnectionData, LastConnectionTime));
+                    map.put("sent", userDataList.get(username).getMailSent(LastConnectionDatatime));
+                    map.put("received", userDataList.get(username).getMailReceived(LastConnectionDatatime));
 
                     ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
                     String jsonList = new Gson().toJson(map);
@@ -445,30 +444,14 @@ public class ServerModel_2 {
                 String text = csvRecord.get("Text");
                 String creationDate = csvRecord.get("CreationDate");
                 String creationTime = csvRecord.get("CreationTime");
-                String lastModifyDate = csvRecord.get("LastModifyDate");
-                String lastModifyTime = csvRecord.get("LastModifyTime");
+                String lastModifyDateTime = csvRecord.get("LastModifyDateTime");
                 String uuid = csvRecord.get("Uuid");
                 boolean read = Boolean.parseBoolean(csvRecord.get("Read"));
 
-                mailList.add(new Mail(sender, recipients, object, text, creationDate, creationTime, lastModifyDate, lastModifyTime, read, uuid));
+                mailList.add(new Mail(sender, recipients, object, text, creationDate, creationTime, lastModifyDateTime, read, uuid));
             }
         }
         return mailList;
-    }
-    public static String stringCSV(String path) {
-        StringBuilder content = new StringBuilder();
-
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(path));
-            String line;
-
-            while ((line = reader.readLine()) != null)
-                content.append(line).append(System.lineSeparator());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return content.toString();
     }
     private static void WriteCSV(ArrayList<Mail> mailList, String path) throws IOException {
 
@@ -484,8 +467,7 @@ public class ServerModel_2 {
                         "Text",
                         "CreationDate",
                         "CreationTime",
-                        "LastModifyDate",
-                        "LastModifyTime",
+                        "LastModifyDateTime",
                         "Uuid",
                         "Read");
 
@@ -498,8 +480,7 @@ public class ServerModel_2 {
                             mail.getText(),
                             mail.getDate(),
                             mail.getTime(),
-                            mail.getLastModifyDate(),
-                            mail.getLastModifyTime(),
+                            mail.getLastModify(),
                             mail.getUuid(),
                             mail.getRead());
             }
