@@ -207,9 +207,36 @@ public class MailModel {
 
     public boolean connect() {
         if(syntaxControll()) {
-            addLog("Client", "Connessione: " + localAddressProperty.get());
+            String localAddress = localAddressProperty.get();
+
+            addLog("Client", "Connessione: " + localAddress);
+
+            server.setAddress(localAddress);
+            server.connectToServer(localAddress);
 
             server.setAddress(localAddressProperty.get());
+
+            controller.setCountMailSent();
+            getListMailSent().forEach(controller::createCardSent);
+
+            controller.setCountMailReceived();
+            getListMailReceived().forEach(controller::createCardReceived);
+
+        } else {
+            addLog("Client", "ERRORE: Indirizzo inserito non valido, connessione NON eseguita");
+        }
+        return server.isConnected();
+    }
+
+    public boolean reconect() {
+        if(syntaxControll()) {
+            String localAddress = localAddressProperty.get();
+
+            addLog("Client", "Riconnessione: " + localAddress);
+
+            server.disconnectToServer();
+            server.setAddress(localAddress);
+            server.connectToServer(localAddress);
 
             controller.setCountMailSent();
             getListMailSent().forEach(controller::createCardSent);
@@ -242,7 +269,6 @@ public class MailModel {
                 break;
         }
     }
-
     private static void appendToTextArea(String newLine) {
             String currentText = textLogProperty.getValue();
             if(currentText == null)

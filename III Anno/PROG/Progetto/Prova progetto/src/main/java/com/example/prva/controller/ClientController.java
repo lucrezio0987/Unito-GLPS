@@ -111,7 +111,6 @@ public class ClientController {
             deleteMailSent();
             System.out.println("MailSentList: Cancellata ( " + mailModel.getListMailSent().toString() + " )\n");
         });
-
         Cancella_Tutto_Ricevuta.setOnAction(event -> {
             System.out.println("MailReceivedList: Prima della cancellazione ( " + mailModel.getListMailReceived().toString() + " )");
             deleteMailReceived();
@@ -121,47 +120,40 @@ public class ClientController {
         sendBtn.setOnAction(event -> {
             mailModel.sendMail();
         });
-
         deleteBtnSent.setOnAction(event -> {
             String idMail = mailModel.deleteActualMailSent();
             Lista_posta_inviata.getChildren().removeIf(card -> card.getId().equals(idMail));
             showMailPanelSent(false);
             setCountMailSent();
         });
-
         deleteBtnRecived.setOnAction(event -> {
             String idMail = mailModel.deleteActualMailReceived();
             Lista_posta_ricevuta.getChildren().removeIf(card -> card.getId().equals(idMail));
             showMailPanelReceived(false);
             setCountMailReceived();
         });
-
-        sendBtnClear.setOnAction( event -> { mailModel.sendMailClear(); });
-
+        sendBtnClear.setOnAction( event -> mailModel.sendMailClear());
         replyBtnReceived.setOnAction(event ->{
             tabPanel.getSelectionModel().select(tabSend);
             mailModel.reply();
         });
-
         replyAllBtnReceived.setOnAction(event ->{
             tabPanel.getSelectionModel().select(tabSend);
             mailModel.replyAll();
         });
-
         forwardBtnSent.setOnAction(event ->{
             tabPanel.getSelectionModel().select(tabSend);
             mailModel.forwardSent();
         });
-
         forwardBtnReceived.setOnAction(event ->{
             tabPanel.getSelectionModel().select(tabSend);
             mailModel.forwardReceived();
         });
 
-        reconnectBtnSent.setOnAction(event ->       { clearMail(); mailModel.connect();});
-        reconnectBtnReceived.setOnAction(event ->   { clearMail(); mailModel.connect();});
-        reconnectBtnSend.setOnAction(event ->       { clearMail(); mailModel.connect();});
-        reconnectBtnLog.setOnAction(event ->        { clearMail(); mailModel.connect();});
+        reconnectBtnSent.setOnAction(event ->       { clearMail(); setConnection(mailModel.reconect());});
+        reconnectBtnReceived.setOnAction(event ->   { clearMail(); setConnection(mailModel.reconect());});
+        reconnectBtnSend.setOnAction(event ->       { clearMail(); setConnection(mailModel.reconect());});
+        reconnectBtnLog.setOnAction(event ->        { clearMail(); setConnection(mailModel.reconect());});
     }
 
     public void setConnection(boolean connect) {
@@ -273,7 +265,6 @@ public class ClientController {
         Lista_posta_ricevuta.getChildren().add(0, card);
         setCountMailReceived();
     }
-
     public synchronized void createCardSent(Mail mail){
         VBox card = mailCardModel.buildCard("Destinatari:", mail);
         Lista_posta_inviata.getChildren().add(0, card);

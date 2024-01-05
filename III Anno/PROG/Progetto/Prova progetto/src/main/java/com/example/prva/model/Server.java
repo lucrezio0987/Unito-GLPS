@@ -22,6 +22,7 @@ import javafx.application.Platform;
 
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.stream.Collectors;
 
 
 public class Server {
@@ -38,8 +39,6 @@ public class Server {
 
     private List<MailModifyInfo> mailSentOfflineModify;
     private List<MailModifyInfo> mailReceivedOfflineModify;
-
-    private Mail lastMail = null;
 
     private boolean connected = false;
     private String localAddress = null;
@@ -65,11 +64,7 @@ public class Server {
         controller.setConnection(connected);
     }
     void setAddress(String localAddress) {
-
-        disconnectToServer(this.localAddress);
         this.localAddress = localAddress;
-        connectToServer(localAddress);
-
         setMailSent();
         setMailReceived();
     }
@@ -143,13 +138,14 @@ public class Server {
         serverConnectionThread.start();
 
     }
-    private void disconnectToServer(String username) {
+    void disconnectToServer() {
         setConnected(false);
         mailSent.forEach(Server::WriterSender);
         mailReceived.forEach(Server::WriterReceiver);
         try {
             Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_CONNECTION);
-            ConnectionInfo connectionInfo = new ConnectionInfo(false, username);
+            ConnectionInfo connectionInfo = new ConnectionInfo(false, localAddress);
+            writeOrUpdateCSVInfo(localAddress, connectionInfo.getLastConnectionDateTime());
 
             try {
                 ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
@@ -161,7 +157,7 @@ public class Server {
                     ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
                     String jsonSenderCSV = (String) inputStream.readObject();
                     if(jsonSenderCSV.equals("Null"))
-                        System.out.println("Disconnessione: " + username);
+                        System.out.println("Disconnessione: " + localAddress);
 
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
@@ -176,11 +172,11 @@ public class Server {
             System.out.println("Disconnessione al Server Fallita");
         }
     }
-    private void connectToServer(String username) {
+    void connectToServer(String username) {
         setConnected(false);
         try {
             Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_CONNECTION);
-            ConnectionInfo connectionInfo = new ConnectionInfo(true, username);
+            ConnectionInfo connectionInfo = new ConnectionInfo(true, username, readCSVInfo(username));
 
             try {
                 ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
@@ -278,12 +274,7 @@ public class Server {
     public void addMailReceived(Mail mail) {
         mailReceived.add(mail);
         System.out.println("MESSAGGI: " + mail.getText());
-        lastMail = mail;
         Platform.runLater(() -> controller.createCardReceived(mail));
-    }
-
-    public Mail getLastMail() {
-        return lastMail;
     }
 
     private void notifyModifyToServer(MailModifyInfo mailModifyInfo) {
@@ -375,44 +366,81 @@ public class Server {
         mailReceived.forEach(m -> {if(m.getUuid().equals(uuid)) m.setRead();});
     }
 
-    private static void writeOrUpdateCSVInfo(String username, String lastConnectionDataTime) throws IOException {
-        String path = pathConstructor(null, username);
-        File file = new File(path);
+    private static String readCSVInfo(String username) {
+        createFileIfNotExists(pathConstructor(null, "data"));
+        try (FileReader fileReader = new FileReader(pathConstructor(null, "data"));
+             CSVParser csvParser = new CSVParser(fileReader, CSVFormat.DEFAULT.withHeader())) {
 
-        // Se il file non esiste, crea un nuovo file e scrivi le intestazioni
-        if (!file.exists()) {
-            try (FileWriter fileWriter = new FileWriter(path);
-                 CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT)) {
-                csvPrinter.printRecord("Username", "LastConnectionDataTime");
-            }
+            return csvParser.getRecords().stream()
+                    .filter(r -> r.get("Username").equals(username))
+                    .findFirst()
+                    .map(r -> r.get("LastConnectionDataTime"))
+                    .orElse(null);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
+    }
+    private static void writeOrUpdateCSVInfo_2(String username, String lastConnectionDataTime) {
+        String path = pathConstructor(null, "data");
 
-        // Leggi tutte le righe dal file
-        List<String> lines = Files.readAllLines(Paths.get(path));
+        createFileIfNotExists(pathConstructor(null, "data"));
+
+        try(FileWriter fileWriter = new FileWriter(pathConstructor(null, "data"));
+            CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT)) {
+            csvPrinter.printRecord("Username", "LastConnectionDataTime");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         boolean found = false;
 
-        // Cerca e modifica la riga corrispondente all'username
-        for (int i = 1; i < lines.size(); i++) {  // Inizia da 1 per evitare l'intestazione
-            String[] parts = lines.get(i).split(",");
-            if (parts.length > 0 && parts[0].equals(username)) {
-                lines.set(i, username + "," + lastConnectionDataTime);
-                found = true;
-                break;
+        try {
+            List<String>  lines = Files.readAllLines(Paths.get(path));
+
+            for (int i = 1; i < lines.size(); i++) {  // Inizia da 1 per evitare l'intestazione
+                String[] parts = lines.get(i).split(",");
+                if (parts.length > 0 && parts[0].equals(username)) {
+                    lines.set(i, username + "," + lastConnectionDataTime);
+                    found = true;
+                    break;
+                }
             }
+
+            if (!found)
+                lines.add(username + "," + lastConnectionDataTime);
+
+            FileWriter fileWriter = new FileWriter(path);
+            CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT);
+            for (String line : lines)
+                csvPrinter.printRecord(line.split(","));
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
-        // Se l'username non è stato trovato, aggiungi una nuova riga
-        if (!found) {
-            lines.add(username + "," + lastConnectionDataTime);
-        }
+    }
+    private static void writeOrUpdateCSVInfo(String username, String lastConnectionDataTime) {
+        String filePath = pathConstructor(null, "data");
+        createFileIfNotExists(filePath);
 
-        // Scrivi tutte le righe nel file
-        try (FileWriter fileWriter = new FileWriter(path);
-             CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT)) {
-            for (String line : lines) {
-                csvPrinter.printRecord((Object) line.split(","));
-            }
+        try (FileWriter fileWriter = new FileWriter(filePath, true);
+             CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT);
+             CSVParser csvParser = new CSVParser(new FileReader(filePath), CSVFormat.DEFAULT.withHeader())) {
+
+            csvParser.getRecords().stream()
+                    .peek(r -> {
+                        try {
+                            if (r.get("Username").equals(username))
+                                csvPrinter.printRecord(username, lastConnectionDataTime);
+                            csvPrinter.printRecord(r.get("Username"), r.get("LastConnectionDataTime"));
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
     private static ArrayList<Mail> readCSV(String path) throws IOException {
@@ -499,6 +527,19 @@ public class Server {
         return new File(path).exists();
     }
 
+    private static void createFileIfNotExists(String filePath) {
+        File file = new File(filePath);
+
+        if (!file.exists()) {
+            try (FileWriter fileWriter = new FileWriter(filePath);
+                 CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT)) {
+                csvPrinter.printRecord("Username", "LastConnectionDataTime");
+            } catch (IOException e) {
+                throw new RuntimeException("Error creating file: " + filePath, e);
+            }
+        }
+    }
+
     public static String pathConstructor(String username, String type) {
         String directoryPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "backup";
         File directory = new File(directoryPath);
@@ -511,7 +552,7 @@ public class Server {
     }
 
     public void stop() {
-        disconnectToServer(localAddress);
+        disconnectToServer();
         clientMessageServerThread.interrupt();
         serverConnectionThread.interrupt();
     }

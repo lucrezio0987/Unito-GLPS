@@ -201,7 +201,7 @@ public class ServerModel_2 {
             }
     }
 
-    private static class ConnectionHandler implements Runnable {
+    private static class ConnectionHandler implements Runnable  {
         private Socket socket;
 
         public ConnectionHandler(Socket clientSocket) {
