@@ -322,6 +322,7 @@ public class Server {
                     mailSentOfflineModify.add(new MailModifyInfo(mail, localAddress, true).setDeleate())
             );
         mailSent.clear();
+        backup();
     }
     public void deleteMailReceivedList() {
         if(isConnected())
@@ -331,6 +332,8 @@ public class Server {
                     mailSentOfflineModify.add(new MailModifyInfo(mail, localAddress, false).setDeleate())
             );
         mailReceived.clear();
+
+        backup();
     }
 
     public void setMailReceivedRead(String uuid) {
@@ -346,8 +349,8 @@ public class Server {
     // -- CSV --
 
     private static synchronized void backup() {
-        writeCSVMailSender(new ArrayList<>(mailSent.values()));
-        writeCSVMailReceiver(new ArrayList<>(mailReceived.values()));
+        writeCSVMailSender(mailSent);
+        writeCSVMailReceiver(mailReceived);
     }
     private static synchronized void loadBackup() {
         mailSent = readCSVMailSender();
@@ -409,33 +412,33 @@ public class Server {
         return readCSVMail(CSV_MAIL_RECEIVED_PATH);
     }
 
-    private static void writeCSVMail(String path, ArrayList<Mail> mailList){
+    private static void writeCSVMail(String path, Map<String, Mail> mailList){
         createFileIfNotExists(path, MAIL_HEADER);
-        if(mailList != null) {
-            Map<String, Mail> mailMap = readCSVMail(path);
-            mailList.forEach(mail -> mailMap.put(mail.getUuid(), mail));
+        Map<String, Mail> mailMap = readCSVMail(path);
+        mailList.values().stream()
+                .filter(mail -> !mail.isDelete())
+                .forEach(mail -> mailMap.put(mail.getUuid(), mail));
 
-            try (Writer writer = new FileWriter(path, false);
-                 CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(MAIL_HEADER))) {
-                for (Mail mail : mailMap.values())
-                    csvPrinter.printRecord(
-                            mail.getUuid(),
-                            mail.getSender(),
-                            mail.getRecipients(),
-                            mail.getObject(),
-                            mail.getText(),
-                            mail.getCreationDateTime(),
-                            mail.getLastModify(),
-                            mail.getRead());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try (Writer writer = new FileWriter(path, false);
+             CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(MAIL_HEADER))) {
+            for (Mail mail : mailMap.values())
+                csvPrinter.printRecord(
+                        mail.getUuid(),
+                        mail.getSender(),
+                        mail.getRecipients(),
+                        mail.getObject(),
+                        mail.getText(),
+                        mail.getCreationDateTime(),
+                        mail.getLastModify(),
+                        mail.getRead());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
-    private static void writeCSVMailSender(ArrayList<Mail> mailList){
+    private static void writeCSVMailSender(Map<String, Mail> mailList){
         writeCSVMail(CSV_MAIL_SEND_PATH, mailList);
     }
-    private static void writeCSVMailReceiver(ArrayList<Mail> mailList){
+    private static void writeCSVMailReceiver(Map<String, Mail> mailList){
         writeCSVMail(CSV_MAIL_RECEIVED_PATH, mailList);
     }
 
@@ -467,4 +470,5 @@ public class Server {
         clientMessageServerThread.interrupt();
         serverConnectionThread.interrupt();
     }
+
 }
