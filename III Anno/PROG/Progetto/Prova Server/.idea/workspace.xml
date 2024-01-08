@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b545aa37-8307-4738-b698-f55b798e1538" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/prova_server/model/ServerModel_2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/prova_server/model/ServerModel_2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Prova progetto/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova progetto/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Prova progetto/src/main/java/com/example/prva/model/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova progetto/src/main/java/com/example/prva/model/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,7 +123,7 @@
       <workItem from="1704373116091" duration="458000" />
       <workItem from="1704377419822" duration="4603000" />
       <workItem from="1704704212153" duration="21000" />
-      <workItem from="1704704256966" duration="13774000" />
+      <workItem from="1704704256966" duration="14120000" />
     </task>
     <servers />
   </component>
