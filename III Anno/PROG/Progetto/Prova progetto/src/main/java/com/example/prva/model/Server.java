@@ -6,8 +6,6 @@ import java.lang.reflect.Type;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -30,7 +28,7 @@ public class Server {
     private static final int SERVER_PORT_MODIFY = 8002;
     private static final int CLIENT_PORT_MAIL = 8003;
     private static final int CLIENT_PORT_CONNECTION = 8004;
-    private static final String[] MAIL_HEADER = {"Uuid", "Sender", "Recipients", "Object", "Text", "CreationDateTime", "LastModifyDateTime"};
+    private static final String[] MAIL_HEADER = {"Uuid", "Sender", "Recipients", "Object", "Text", "CreationDateTime", "LastModifyDateTime", "read"};
     private static final String[] INF_HEADER = {"Username", "LastConnectionDataTime"};
 
     private static String CSV_MAIL_SEND_PATH = null;
@@ -388,14 +386,14 @@ public class Server {
         Map<String, Mail> mailMap = new HashMap<>();
         try (CSVParser csvParser = CSVParser.parse(new FileReader(path), CSVFormat.DEFAULT.withFirstRecordAsHeader())) {
             for (CSVRecord csvRecord : csvParser) {
-                String r0 = csvRecord.get(MAIL_HEADER[0]);
-                String r1 = csvRecord.get(MAIL_HEADER[1]);
-                String r2 = csvRecord.get(MAIL_HEADER[2]);
-                String r3 = csvRecord.get(MAIL_HEADER[3]);
-                String r4 = csvRecord.get(MAIL_HEADER[4]);
-                String r5 = csvRecord.get(MAIL_HEADER[5]);
-                String r6 = csvRecord.get(MAIL_HEADER[6]);
-                boolean r7 = Boolean.parseBoolean(csvRecord.get(MAIL_HEADER[7]));
+                String r0 = csvRecord.get(MAIL_HEADER[0]); // uuid
+                String r1 = csvRecord.get(MAIL_HEADER[1]); // sender
+                String r2 = csvRecord.get(MAIL_HEADER[2]); // recipients
+                String r3 = csvRecord.get(MAIL_HEADER[3]); // object
+                String r4 = csvRecord.get(MAIL_HEADER[4]); // text
+                String r5 = csvRecord.get(MAIL_HEADER[5]); // creationDateTime
+                String r6 = csvRecord.get(MAIL_HEADER[6]); // lastModifyDateTime
+                boolean r7 = Boolean.parseBoolean(csvRecord.get(MAIL_HEADER[7])); // read
 
                 mailMap.put(r0 , new Mail(r1, r2, r3, r4, r5, r6, r7, r0));
             }
@@ -441,13 +439,17 @@ public class Server {
         writeCSVMail(CSV_MAIL_RECEIVED_PATH, mailList);
     }
 
+    private static boolean FileExist(String path) {
+        return new File(path).exists();
+    }
     private static void createFileIfNotExists(String path, String[] headers) {
-        try (Writer writer = new FileWriter(path, false);
-             CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(headers))) {
-            csvPrinter.printRecord();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        if(!FileExist(path))
+            try (Writer writer = new FileWriter(path, false);
+                 CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(headers))) {
+                csvPrinter.printRecord();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
     }
     public static String pathConstructor(String username, String type) {
         String directoryPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "backup";

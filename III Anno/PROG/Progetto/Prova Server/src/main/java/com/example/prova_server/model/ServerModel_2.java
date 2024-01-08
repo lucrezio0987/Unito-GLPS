@@ -7,10 +7,10 @@ import javafx.beans.property.SimpleStringProperty;
 
 import java.io.*;
 import java.net.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -28,8 +28,7 @@ public class ServerModel_2 {
     private static final int CLIENT_PORT_MAIL = 8003;
     private static final int CLIENT_PORT_CONNECTION = 8004;
     private static final int THREAD_POOL_SIZE = 10;
-    private static final String[] MAIL_HEADER = {"Uuid", "Sender", "Recipients", "Object", "Text", "CreationDateTime", "LastModifyDateTime"};
-    private static final String[] INF_HEADER = {"Username", "LastConnectionDataTime"};
+    private static final String[] MAIL_HEADER = {"Uuid", "Sender", "Recipients", "Object", "Text", "CreationDateTime", "LastModifyDateTime", "read"};
 
     private static SimpleStringProperty textAreaProperty = null;
     private static SimpleStringProperty countProperty = null;
@@ -37,6 +36,8 @@ public class ServerModel_2 {
     private static ServerSocket clientServerSocket = null;
     private static ServerSocket mailServerSocket  = null;
     private static ServerSocket modifySocket  = null;
+
+    private static ArrayList<String> logList = null;
 
     private Thread clientThread;
     private Thread mailThread;
@@ -63,11 +64,15 @@ public class ServerModel_2 {
         countProperty = new SimpleStringProperty();
         countProperty.set(Integer.toString(0));
 
+        logList = new ArrayList<>();
+
         executorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
         userDataList = new ConcurrentHashMap<>();
 
     }
     public void start() {
+        loadBackupLog();
+
         if(isStarted)
             return;
             // Thread per gestire la connessione dei client
@@ -195,8 +200,9 @@ public class ServerModel_2 {
 
                 userDataList.values().stream()
                         .filter(UserData::isOn)
-                        .forEach( u -> clientBrodcastStopMessage(u.getClientAddress()));
+                        .forEach( u -> clientBroadcastStopMessage(u.getClientAddress()));
 
+                backupLog();
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 log("ERROR: Errore durante l'interruzione del server");
@@ -359,7 +365,7 @@ public class ServerModel_2 {
 
         log("Inoltro a: " + recipient + " (" + getAddressForUser(recipient) + ") - ON:" + userDataList.get(recipient).isOn());
     }
-    private void clientBrodcastStopMessage(String address) {
+    private void clientBroadcastStopMessage(String address) {
         try (Socket socket = new Socket(address, CLIENT_PORT_CONNECTION)) {
             try (ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream())) {
                 String jsonStartedInfo = new Gson().toJson(isStarted);
@@ -383,6 +389,37 @@ public class ServerModel_2 {
         userDataList.get(username).loadSendMails(readCSVMail(pathConstructor(username, "sender")));
         userDataList.get(username).loadReceivedMails(readCSVMail(pathConstructor(username, "received")));
     }
+    private void loadBackupLog() {
+        if(FileExist(pathConstructor(null, "log")))
+            try (Reader reader = new FileReader(pathConstructor(null, "log"));
+                 CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT)) {
+                for (CSVRecord csvRecord : csvParser){
+                    String currentText = textAreaProperty.getValue();
+                    if (currentText == null)
+                        textAreaProperty.set(csvRecord.get(0));
+                    else
+                        textAreaProperty.set(currentText + "\n" + csvRecord.get(0));
+                    logList.add(csvRecord.get(0));
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
+    private void backupLog() {
+        logList.add("------------------------------------------[ " +
+                new SimpleDateFormat("dd/MM/yy HH:mm:ss").format(new Date())
+                + " ]------------------------------------------");
+        if(!logList.isEmpty())
+            try (Writer writer = new FileWriter(pathConstructor(null, "log"), true);
+                 CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT)) {
+                for (String log : logList)
+                    csvPrinter.printRecord(log);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
 
     public static synchronized void addUser(String username, String address) {
         userDataList.putIfAbsent(username, new UserData(username, address));
@@ -395,6 +432,7 @@ public class ServerModel_2 {
     private static synchronized void log(String newLine) {
         if (newLine.isEmpty())
             newLine = "ALLERT: String is NULL";
+        newLine = "<" + new SimpleDateFormat("HH:mm:ss").format(new Date()) + ">  " + newLine;
 
         String currentText = textAreaProperty.getValue();
         if (currentText == null)
@@ -402,6 +440,8 @@ public class ServerModel_2 {
         else
             textAreaProperty.set(currentText + "\n" + newLine);
         System.out.println(newLine);
+
+        logList.add(newLine);
     }
 
     /*
@@ -502,29 +542,20 @@ public class ServerModel_2 {
     }
         */
 
-    private static String pathConstructor(String username, String type){
-        String directoryPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "backup";
-        File directory = new File(directoryPath);
-        if (!directory.exists())
-            directory.mkdirs();
-
-        return directoryPath + File.separator + username + "-" + type + ".csv";
-    }
-
     private static Map<String, Mail> readCSVMail(String path) {
         createFileIfNotExists(path, MAIL_HEADER);
 
         Map<String, Mail> mailMap = new HashMap<>();
         try (CSVParser csvParser = CSVParser.parse(new FileReader(path), CSVFormat.DEFAULT.withFirstRecordAsHeader())) {
             for (CSVRecord csvRecord : csvParser) {
-                String r0 = csvRecord.get(MAIL_HEADER[0]);
-                String r1 = csvRecord.get(MAIL_HEADER[1]);
-                String r2 = csvRecord.get(MAIL_HEADER[2]);
-                String r3 = csvRecord.get(MAIL_HEADER[3]);
-                String r4 = csvRecord.get(MAIL_HEADER[4]);
-                String r5 = csvRecord.get(MAIL_HEADER[5]);
-                String r6 = csvRecord.get(MAIL_HEADER[6]);
-                boolean r7 = Boolean.parseBoolean(csvRecord.get(MAIL_HEADER[7]));
+                String r0 = csvRecord.get(MAIL_HEADER[0]); // uuid
+                String r1 = csvRecord.get(MAIL_HEADER[1]); // sender
+                String r2 = csvRecord.get(MAIL_HEADER[2]); // recipients
+                String r3 = csvRecord.get(MAIL_HEADER[3]); // object
+                String r4 = csvRecord.get(MAIL_HEADER[4]); // text
+                String r5 = csvRecord.get(MAIL_HEADER[5]); // creationDateTime
+                String r6 = csvRecord.get(MAIL_HEADER[6]); // lastModifyDateTime
+                boolean r7 = Boolean.parseBoolean(csvRecord.get(MAIL_HEADER[7])); // read
 
                 mailMap.put(r0 , new Mail(r1, r2, r3, r4, r5, r6, r7, r0));
             }
@@ -556,16 +587,28 @@ public class ServerModel_2 {
             }
         }
     }
-
-    private static void createFileIfNotExists(String path, String[] headers) {
-        try (Writer writer = new FileWriter(path, false);
-             CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(headers))) {
-            csvPrinter.printRecord();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    private static boolean FileExist(String path) {
+        return Files.exists(Path.of(path));
     }
-
+    private static void createFileIfNotExists(String path, String[] headers) {
+        if(!FileExist(path))
+            try (Writer writer = new FileWriter(path, false);
+                 CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(headers))) {
+                csvPrinter.printRecord();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+    }
+    private static String pathConstructor(String username, String type){
+        String directoryPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "backup";
+        File directory = new File(directoryPath);
+        if (!directory.exists())
+            directory.mkdirs();
+        if(type.equals("log"))
+            return directoryPath + File.separator  + type + ".csv";
+        else
+            return directoryPath + File.separator + username + "-" + type + ".csv";
+    }
 
     public void clearBackup() {
         String directoryPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "backup";
