@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1cbb55e0-871d-4be9-bc5a-7bd8e3cae843" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Prova Server/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova Server/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Prova Server/src/main/java/com/example/prova_server/model/ServerModel_2.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova Server/src/main/java/com/example/prova_server/model/ServerModel_2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/prva/controller/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/prva/controller/ClientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/prva/model/MailModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/prva/model/MailModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/prva/model/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/prva/model/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -132,7 +131,7 @@
       <workItem from="1704296930789" duration="646000" />
       <workItem from="1704363790695" duration="8784000" />
       <workItem from="1704377416297" duration="6828000" />
-      <workItem from="1704704250143" duration="22154000" />
+      <workItem from="1704704250143" duration="23154000" />
     </task>
     <servers />
   </component>

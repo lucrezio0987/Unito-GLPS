@@ -40,9 +40,6 @@ public class Server {
     private static Map<String, Mail> mailSent;
     private static Map<String, Mail> mailReceived;
 
-    private  static List<MailModifyInfo> mailSentOfflineModify;
-    private  static List<MailModifyInfo> mailReceivedOfflineModify;
-
     private boolean connected = false;
     private static String localAddress = null;
     Thread clientMessageServerThread = null;
@@ -55,8 +52,6 @@ public class Server {
 
         mailSent = new HashMap<>();
         mailReceived = new HashMap<>();
-        mailSentOfflineModify = new CopyOnWriteArrayList<>();
-        mailReceivedOfflineModify = new CopyOnWriteArrayList<>();
 
         startListening();
     }
@@ -193,9 +188,6 @@ public class Server {
                 outputStream.flush();
                 setConnected(true);
 
-                mailSentOfflineModify.clear();
-                mailReceivedOfflineModify.clear();
-
                     try {
                         ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
                         String jsonSenderCSV = (String) inputStream.readObject();
@@ -225,31 +217,23 @@ public class Server {
         }
     }
 
-    public ArrayList<Mail> getMailSent() {
-        SimpleDateFormat formatDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        return new ArrayList<>(mailSent.values().stream()
+    public ArrayList<Mail> getMails(Map<String, Mail> mailMap) {
+        return new ArrayList<>(mailMap.values().stream()
                 .filter(mail -> !mail.isDelete())
                 .sorted(Comparator.comparing(mail -> {
                     try {
-                        return formatDateTime.parse(mail.getCreationDateTime());
+                        return new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(mail.getCreationDateTime());
                     } catch (ParseException e) {
                         throw new RuntimeException(e);
                     }
                 }))
                 .toList());
     }
-    public ArrayList<Mail> getMailReceived() {
-        SimpleDateFormat formatDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        return new ArrayList<>(mailReceived.values().stream()
-                .filter(mail -> !mail.isDelete())
-                .sorted(Comparator.comparing(mail -> {
-                    try {
-                        return formatDateTime.parse(mail.getCreationDateTime());
-                    } catch (ParseException e) {
-                        throw new RuntimeException(e);
-                    }
-                }))
-                .toList());
+    public ArrayList<Mail> getMailsSent() {
+        return getMails(mailSent);
+    }
+    public ArrayList<Mail> getMailsReceived() {
+        return getMails(mailReceived);
     }
 
     public void addMailSent(Mail mail){
@@ -269,8 +253,6 @@ public class Server {
                 e.printStackTrace();
                 System.out.println("invio server fallita");
             }
-        } else {
-            mailSentOfflineModify.add(new MailModifyInfo(mail, localAddress, true).setCreated());
         }
         mailSent.put(mail.getUuid(), mail);
         controller.createCardSent(mail);
@@ -297,53 +279,30 @@ public class Server {
     }
 
     public void deleteMailSent(String uuid) {
-        MailModifyInfo MailModifyInfo =
-                new MailModifyInfo(mailSent.remove(uuid), localAddress, true).setDeleate();
-
         if(isConnected())
-            notifyModifyToServer(MailModifyInfo);
-        else
-            mailReceivedOfflineModify.add(MailModifyInfo);
+            notifyModifyToServer(new MailModifyInfo(mailSent.get(uuid), localAddress, true).setDeleate());
+        mailSent.get(uuid).setDelete();
     }
     public void deleteMailReceived(String uuid) {
-        MailModifyInfo MailModifyInfo =
-                new MailModifyInfo(mailReceived.remove(uuid), localAddress, false).setDeleate();
-
         if(isConnected())
-            notifyModifyToServer(MailModifyInfo);
-        else
-            mailReceivedOfflineModify.add(MailModifyInfo);
+            notifyModifyToServer(new MailModifyInfo(mailReceived.get(uuid), localAddress, false).setDeleate());
+        mailReceived.get(uuid).setDelete();
     }
     public void deleteMailSentList() {
         if(isConnected())
             notifyModifyToServer(new MailModifyInfo(null, localAddress, true).setDeleateAll());
-        else
-            mailSent.values().forEach(mail ->
-                    mailSentOfflineModify.add(new MailModifyInfo(mail, localAddress, true).setDeleate())
-            );
-        mailSent.clear();
-        backup();
+        mailSent.values().forEach(Mail::setDelete);
     }
     public void deleteMailReceivedList() {
         if(isConnected())
             notifyModifyToServer(new MailModifyInfo(null, localAddress, false).setDeleateAll());
-        else
-            mailReceived.values().forEach(mail ->
-                    mailSentOfflineModify.add(new MailModifyInfo(mail, localAddress, false).setDeleate())
-            );
-        mailReceived.clear();
-
-        backup();
+        mailReceived.values().forEach(Mail::setDelete);
     }
 
     public void setMailReceivedRead(String uuid) {
-        mailReceived.get(uuid).setRead();
-
-        MailModifyInfo MailModifyInfo = new MailModifyInfo(mailReceived.get(uuid), localAddress, false).setReaded();
         if(isConnected())
-            notifyModifyToServer(MailModifyInfo);
-        else
-            mailReceivedOfflineModify.add(MailModifyInfo);
+            notifyModifyToServer(new MailModifyInfo(mailReceived.get(uuid), localAddress, false).setReaded());
+        mailReceived.get(uuid).setRead();
     }
 
     // -- CSV --

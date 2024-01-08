@@ -71,8 +71,8 @@ public class MailModel {
 
     public SimpleStringProperty getLocalAddressProperty(){ return this.localAddressProperty; }
 
-    public ArrayList<Mail> getListMailSent(){ return new ArrayList<>(server.getMailSent()); }
-    public ArrayList<Mail> getListMailReceived(){ return new ArrayList<>(server.getMailReceived());
+    public ArrayList<Mail> getListMailSent(){ return new ArrayList<>(server.getMailsSent()); }
+    public ArrayList<Mail> getListMailReceived(){ return new ArrayList<>(server.getMailsReceived());
     }
 
 
@@ -80,10 +80,10 @@ public class MailModel {
         Mail mail;
 
         //TODO: capire cosa fa uuid.isEmpty()
-        if(uuid.isEmpty() || server.getMailReceived().isEmpty())
+        if(uuid.isEmpty() || server.getMailsReceived().isEmpty())
             mail = new Mail("","", "", "");
         else
-            mail = server.getMailReceived().stream()
+            mail = server.getMailsReceived().stream()
                     .filter(m -> m.getUuid().equals(uuid))
                     .findFirst()
                     .orElse(null);
@@ -97,10 +97,10 @@ public class MailModel {
     public void openMailSent(String uuid){
         Mail mail;
 
-        if(uuid.isEmpty() || server.getMailSent().isEmpty()) {
+        if(uuid.isEmpty() || server.getMailsSent().isEmpty()) {
             mail = new Mail("","", "", "");
         } else
-            mail =  server.getMailSent().stream()
+            mail =  server.getMailsSent().stream()
                     .filter(m -> m.getUuid().equals(uuid))
                     .findFirst()
                     .orElse(null);
