@@ -6,12 +6,11 @@ import java.lang.reflect.Type;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import java.util.concurrent.*;
 
@@ -22,7 +21,6 @@ import javafx.application.Platform;
 
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.stream.Collectors;
 
 
 public class Server {
@@ -32,24 +30,33 @@ public class Server {
     private static final int SERVER_PORT_MODIFY = 8002;
     private static final int CLIENT_PORT_MAIL = 8003;
     private static final int CLIENT_PORT_CONNECTION = 8004;
-    private ClientController controller;
+    private static final String[] MAIL_HEADER = {"Uuid", "Sender", "Recipients", "Object", "Text", "CreationDateTime", "LastModifyDateTime"};
+    private static final String[] INF_HEADER = {"Username", "LastConnectionDataTime"};
 
-    private List<Mail> mailSent;
-    private List<Mail> mailReceived;
+    private static String CSV_MAIL_SEND_PATH = null;
+    private static String CSV_MAIL_RECEIVED_PATH = null;
+    private static String CSV_INFO_PATH = null;
 
-    private List<MailModifyInfo> mailSentOfflineModify;
-    private List<MailModifyInfo> mailReceivedOfflineModify;
+    private static ClientController controller;
+
+    private static Map<String, Mail> mailSent;
+    private static Map<String, Mail> mailReceived;
+
+    private  static List<MailModifyInfo> mailSentOfflineModify;
+    private  static List<MailModifyInfo> mailReceivedOfflineModify;
 
     private boolean connected = false;
-    private String localAddress = null;
+    private static String localAddress = null;
     Thread clientMessageServerThread = null;
     Thread serverConnectionThread = null;
 
     public Server(ClientController controller){
         this.controller = controller;
 
-        mailSent = new CopyOnWriteArrayList<>();
-        mailReceived = new CopyOnWriteArrayList<>();
+        CSV_INFO_PATH = pathConstructor(null, "data");
+
+        mailSent = new HashMap<>();
+        mailReceived = new HashMap<>();
         mailSentOfflineModify = new CopyOnWriteArrayList<>();
         mailReceivedOfflineModify = new CopyOnWriteArrayList<>();
 
@@ -65,8 +72,11 @@ public class Server {
     }
     void setAddress(String localAddress) {
         this.localAddress = localAddress;
-        setMailSent();
-        setMailReceived();
+
+        CSV_MAIL_SEND_PATH = pathConstructor(localAddress, "sender");
+        CSV_MAIL_RECEIVED_PATH = pathConstructor(localAddress, "received");
+
+        loadBackup();
     }
 
     private void startListening() {
@@ -140,12 +150,11 @@ public class Server {
     }
     void disconnectToServer() {
         setConnected(false);
-        mailSent.forEach(Server::WriterSender);
-        mailReceived.forEach(Server::WriterReceiver);
+        backup();
         try {
             Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_CONNECTION);
             ConnectionInfo connectionInfo = new ConnectionInfo(false, localAddress);
-            writeOrUpdateCSVInfo(localAddress, connectionInfo.getLastConnectionDateTime());
+            writeCSVInfo(localAddress, connectionInfo.getLastConnectionDateTime());
 
             try {
                 ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
@@ -172,11 +181,12 @@ public class Server {
             System.out.println("Disconnessione al Server Fallita");
         }
     }
-    void connectToServer(String username) {
+    void connectToServer() {
         setConnected(false);
+        loadBackup();
         try {
             Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_CONNECTION);
-            ConnectionInfo connectionInfo = new ConnectionInfo(true, username, readCSVInfo(username));
+            ConnectionInfo connectionInfo = new ConnectionInfo(true, localAddress, readCSVInfo().get(localAddress));
 
             try {
                 ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
@@ -192,37 +202,17 @@ public class Server {
                         ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
                         String jsonSenderCSV = (String) inputStream.readObject();
 
-                        setMailSent();
-                        setMailReceived();
-
-                        Type type = new TypeToken<HashMap<String, ArrayList<Mail>>>() {}.getType();
-                        HashMap<String, ArrayList<Mail>> map = new Gson().fromJson(jsonSenderCSV, type);
+                        Type type = new TypeToken<Map<String, Map<String, Mail>>>() {}.getType();
+                        Map<String, Map<String, Mail>> map = new Gson().fromJson(jsonSenderCSV, type);
 
                         System.out.println("Server: (" + mailSent.size()+ ") mailSent nuove: " + map.get("sent").size());
                         System.out.println("Server: (" + mailReceived.size() + ") mailReceived nuove: " + map.get("received").size());
 
-                        map.get("sent").forEach(remoteM -> {
-                            if(mailSent.contains(remoteM)) {
-                                mailSent = mailSent.stream()
-                                        .map(localM -> localM.equals(remoteM) && localM.moreRecentlyOf(remoteM.getLastModify()) ? localM : remoteM)
-                                        .toList();
-                            } else {
-                                mailSent.add(remoteM);
-                            }
-                        });
-
-                        map.get("received").forEach(remoteM -> {
-                            if(mailReceived.contains(remoteM)) {
-                                mailReceived = mailReceived.stream()
-                                        .map(localM -> localM.equals(remoteM) && localM.moreRecentlyOf(remoteM.getLastModify()) ? localM : remoteM)
-                                        .toList();
-                            } else {
-                                mailReceived.add(remoteM);
-                            }
-                        });
-
-                        mailSent.forEach(Server::WriterSender);
-                        mailReceived.forEach(Server::WriterReceiver);
+                        if(!map.get("sent").isEmpty() && !map.get("received").isEmpty()) {
+                            map.get("sent").values().forEach(mail -> mailSent.put(mail.getUuid(), mail));
+                            map.get("received").values().forEach(mail -> mailReceived.put(mail.getUuid(), mail));
+                            backup();
+                        }
 
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
@@ -235,14 +225,33 @@ public class Server {
         } catch (IOException e) {
             System.out.println("Connessione al Server Fallita");
         }
-
     }
 
     public ArrayList<Mail> getMailSent() {
-        return new ArrayList<>(mailSent.stream().filter(m -> !m.isDelete()).toList());
+        SimpleDateFormat formatDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        return new ArrayList<>(mailSent.values().stream()
+                .filter(mail -> !mail.isDelete())
+                .sorted(Comparator.comparing(mail -> {
+                    try {
+                        return formatDateTime.parse(mail.getCreationDateTime());
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                }))
+                .toList());
     }
     public ArrayList<Mail> getMailReceived() {
-        return new ArrayList<>(mailReceived.stream().filter(m -> !m.isDelete()).toList());
+        SimpleDateFormat formatDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        return new ArrayList<>(mailReceived.values().stream()
+                .filter(mail -> !mail.isDelete())
+                .sorted(Comparator.comparing(mail -> {
+                    try {
+                        return formatDateTime.parse(mail.getCreationDateTime());
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                }))
+                .toList());
     }
 
     public void addMailSent(Mail mail){
@@ -265,14 +274,11 @@ public class Server {
         } else {
             mailSentOfflineModify.add(new MailModifyInfo(mail, localAddress, true).setCreated());
         }
-        mailSent.add(mail);
+        mailSent.put(mail.getUuid(), mail);
         controller.createCardSent(mail);
-        WriterSender(mail);
-
-
     }
     public void addMailReceived(Mail mail) {
-        mailReceived.add(mail);
+        mailReceived.put(mail.getUuid(), mail);
         System.out.println("MESSAGGI: " + mail.getText());
         Platform.runLater(() -> controller.createCardReceived(mail));
     }
@@ -292,254 +298,157 @@ public class Server {
         }
     }
 
-    public void deleteMailReceived(String uuid) {
-        mailReceived.removeIf(mail -> mail.getUuid().equals(uuid));
-        Mail mail = mailReceived.stream().filter(m -> m.getUuid().equals(uuid)).findFirst().orElse(null);
-        mailReceived.remove(mail);
-        MailModifyInfo MailModifyInfo = new MailModifyInfo(mail, localAddress, false).setDeleate();
-
-        if(isConnected()) {
-            notifyModifyToServer(MailModifyInfo);
-        } else {
-            mailReceivedOfflineModify.add(MailModifyInfo);
-        }}
     public void deleteMailSent(String uuid) {
-        mailSent.removeIf(mail -> mail.getUuid().equals(uuid));
-        Mail mail = mailSent.stream().filter(m -> m.getUuid().equals(uuid)).findFirst().orElse(null);
-        mailSent.remove(mail);
-        MailModifyInfo MailModifyInfo = new MailModifyInfo(mail, localAddress, true).setDeleate();
+        MailModifyInfo MailModifyInfo =
+                new MailModifyInfo(mailSent.remove(uuid), localAddress, true).setDeleate();
 
-        if(isConnected()) {
+        if(isConnected())
             notifyModifyToServer(MailModifyInfo);
-        } else {
-            mailSentOfflineModify.add(MailModifyInfo);
-        }
+        else
+            mailReceivedOfflineModify.add(MailModifyInfo);
+    }
+    public void deleteMailReceived(String uuid) {
+        MailModifyInfo MailModifyInfo =
+                new MailModifyInfo(mailReceived.remove(uuid), localAddress, false).setDeleate();
+
+        if(isConnected())
+            notifyModifyToServer(MailModifyInfo);
+        else
+            mailReceivedOfflineModify.add(MailModifyInfo);
     }
     public void deleteMailSentList() {
-        if(isConnected()) {
+        if(isConnected())
             notifyModifyToServer(new MailModifyInfo(null, localAddress, true).setDeleateAll());
-        } else {
-            mailSent.forEach(mail -> mailSentOfflineModify.add(new MailModifyInfo(mail, localAddress, true).setDeleate()));
-        }
+        else
+            mailSent.values().forEach(mail ->
+                    mailSentOfflineModify.add(new MailModifyInfo(mail, localAddress, true).setDeleate())
+            );
         mailSent.clear();
     }
     public void deleteMailReceivedList() {
-        if(isConnected()) {
+        if(isConnected())
             notifyModifyToServer(new MailModifyInfo(null, localAddress, false).setDeleateAll());
-        } else {
-            mailReceived.forEach(mail -> mailReceivedOfflineModify.add(new MailModifyInfo(mail, localAddress, false).setDeleate()));
-        }
+        else
+            mailReceived.values().forEach(mail ->
+                    mailSentOfflineModify.add(new MailModifyInfo(mail, localAddress, false).setDeleate())
+            );
         mailReceived.clear();
     }
 
-    public void setMailSent() {
-        String path = pathConstructor(localAddress, "sent");
-        mailSent.clear();
-        if(FileExist(path))
-            try {
-                mailSent.addAll(readCSV(path));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-    }
-    public void setMailReceived() {
-        String path = pathConstructor(localAddress, "received");
-        mailReceived.clear();
-        if(FileExist(path))
-            try {
-                mailReceived.addAll(readCSV(path));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-
-    }
     public void setMailReceivedRead(String uuid) {
-        Mail mail = mailReceived.stream().filter(m -> m.getUuid().equals(uuid)).findFirst().orElse(null);
-        mailReceived.stream().filter(m -> m.getUuid().equals(uuid)).findFirst().ifPresent(m -> m.setRead());
-        MailModifyInfo MailModifyInfo = new MailModifyInfo(mail, localAddress, false).setReaded();
-        if(isConnected()) {
+        mailReceived.get(uuid).setRead();
+
+        MailModifyInfo MailModifyInfo = new MailModifyInfo(mailReceived.get(uuid), localAddress, false).setReaded();
+        if(isConnected())
             notifyModifyToServer(MailModifyInfo);
-        } else {
-            mailReceivedOfflineModify.add(new MailModifyInfo(mail, localAddress, false).setReaded());
-        }
-        mailReceived.forEach(m -> {if(m.getUuid().equals(uuid)) m.setRead();});
+        else
+            mailReceivedOfflineModify.add(MailModifyInfo);
     }
 
-    private static String readCSVInfo(String username) {
-        createFileIfNotExists(pathConstructor(null, "data"));
-        try (FileReader fileReader = new FileReader(pathConstructor(null, "data"));
-             CSVParser csvParser = new CSVParser(fileReader, CSVFormat.DEFAULT.withHeader())) {
+    // -- CSV --
 
-            return csvParser.getRecords().stream()
-                    .filter(r -> r.get("Username").equals(username))
-                    .findFirst()
-                    .map(r -> r.get("LastConnectionDataTime"))
-                    .orElse(null);
+    private static synchronized void backup() {
+        writeCSVMailSender(new ArrayList<>(mailSent.values()));
+        writeCSVMailReceiver(new ArrayList<>(mailReceived.values()));
+    }
+    private static synchronized void loadBackup() {
+        mailSent = readCSVMailSender();
+        mailReceived = readCSVMailReceiver();
+    }
+
+    private static Map<String, String> readCSVInfo() {
+        createFileIfNotExists(CSV_INFO_PATH, INF_HEADER);
+
+        Map<String, String> records = new HashMap<>();
+        try (Reader reader = new FileReader(CSV_INFO_PATH);
+             CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withHeader())) {
+            for (CSVRecord csvRecord : csvParser)
+                records.put(csvRecord.get("Username"), csvRecord.get("LastConnectionDataTime"));
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+        }
+        return records;
+    }
+    private static void writeCSVInfo(String username, String lastConnectionDataTime) {
+        Map<String, String> records = readCSVInfo();
+        records.put(username, lastConnectionDataTime);
+        try (Writer writer = new FileWriter(CSV_INFO_PATH, false);
+             CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(INF_HEADER))) {
+            for (Map.Entry<String, String> record : records.entrySet())
+                csvPrinter.printRecord(record.getKey(), record.getValue());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
-    private static void writeOrUpdateCSVInfo_2(String username, String lastConnectionDataTime) {
-        String path = pathConstructor(null, "data");
 
-        createFileIfNotExists(pathConstructor(null, "data"));
+    private static Map<String, Mail> readCSVMail(String path) {
+        createFileIfNotExists(path, MAIL_HEADER);
 
-        try(FileWriter fileWriter = new FileWriter(pathConstructor(null, "data"));
-            CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT)) {
-            csvPrinter.printRecord("Username", "LastConnectionDataTime");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        boolean found = false;
-
-        try {
-            List<String>  lines = Files.readAllLines(Paths.get(path));
-
-            for (int i = 1; i < lines.size(); i++) {  // Inizia da 1 per evitare l'intestazione
-                String[] parts = lines.get(i).split(",");
-                if (parts.length > 0 && parts[0].equals(username)) {
-                    lines.set(i, username + "," + lastConnectionDataTime);
-                    found = true;
-                    break;
-                }
-            }
-
-            if (!found)
-                lines.add(username + "," + lastConnectionDataTime);
-
-            FileWriter fileWriter = new FileWriter(path);
-            CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT);
-            for (String line : lines)
-                csvPrinter.printRecord(line.split(","));
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-    private static void writeOrUpdateCSVInfo(String username, String lastConnectionDataTime) {
-        String filePath = pathConstructor(null, "data");
-        createFileIfNotExists(filePath);
-
-        try (FileWriter fileWriter = new FileWriter(filePath, true);
-             CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT);
-             CSVParser csvParser = new CSVParser(new FileReader(filePath), CSVFormat.DEFAULT.withHeader())) {
-
-            csvParser.getRecords().stream()
-                    .peek(r -> {
-                        try {
-                            if (r.get("Username").equals(username))
-                                csvPrinter.printRecord(username, lastConnectionDataTime);
-                            csvPrinter.printRecord(r.get("Username"), r.get("LastConnectionDataTime"));
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    });
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    private static ArrayList<Mail> readCSV(String path) throws IOException {
-        ArrayList<Mail> mailList = new ArrayList<>();
-
+        Map<String, Mail> mailMap = new HashMap<>();
         try (CSVParser csvParser = CSVParser.parse(new FileReader(path), CSVFormat.DEFAULT.withFirstRecordAsHeader())) {
             for (CSVRecord csvRecord : csvParser) {
-                String sender = csvRecord.get("Sender");
-                String recipients = csvRecord.get("Recipients");
-                String object = csvRecord.get("Object");
-                String text = csvRecord.get("Text");
-                String creationDate = csvRecord.get("CreationDate");
-                String creationTime = csvRecord.get("CreationTime");
-                String lastModifyDateTime = csvRecord.get("LastModifyDateTime");
-                String uuid = csvRecord.get("Uuid");
-                boolean read = Boolean.parseBoolean(csvRecord.get("Read"));
+                String r0 = csvRecord.get(MAIL_HEADER[0]);
+                String r1 = csvRecord.get(MAIL_HEADER[1]);
+                String r2 = csvRecord.get(MAIL_HEADER[2]);
+                String r3 = csvRecord.get(MAIL_HEADER[3]);
+                String r4 = csvRecord.get(MAIL_HEADER[4]);
+                String r5 = csvRecord.get(MAIL_HEADER[5]);
+                String r6 = csvRecord.get(MAIL_HEADER[6]);
+                boolean r7 = Boolean.parseBoolean(csvRecord.get(MAIL_HEADER[7]));
 
-                mailList.add(new Mail(sender, recipients, object, text, creationDate, creationTime, lastModifyDateTime, read, uuid));
+                mailMap.put(r0 , new Mail(r1, r2, r3, r4, r5, r6, r7, r0));
             }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        return mailList;
+        return mailMap;
     }
-    private static void WriteCSV(ArrayList<Mail> mailList, String path) throws IOException {
+    private static Map<String, Mail> readCSVMailSender() {
+        return readCSVMail(CSV_MAIL_SEND_PATH);
+    }
+    private static Map<String, Mail> readCSVMailReceiver() {
+        return readCSVMail(CSV_MAIL_RECEIVED_PATH);
+    }
 
-        if (!mailList.isEmpty())
-            try (FileWriter fileWriter = new FileWriter(path);
-                 CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT)) {
+    private static void writeCSVMail(String path, ArrayList<Mail> mailList){
+        createFileIfNotExists(path, MAIL_HEADER);
+        if(mailList != null) {
+            Map<String, Mail> mailMap = readCSVMail(path);
+            mailList.forEach(mail -> mailMap.put(mail.getUuid(), mail));
 
-                // Intestazioni del CSV
-                csvPrinter.printRecord(
-                        "Sender",
-                        "Recipients",
-                        "Object",
-                        "Text",
-                        "CreationDate",
-                        "CreationTime",
-                        "LastModifyDateTime",
-                        "Uuid",
-                        "Read");
-
-                // Scrivi i dati nel CSV
-                for (Mail mail : mailList)
+            try (Writer writer = new FileWriter(path, false);
+                 CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(MAIL_HEADER))) {
+                for (Mail mail : mailMap.values())
                     csvPrinter.printRecord(
+                            mail.getUuid(),
                             mail.getSender(),
                             mail.getRecipients(),
                             mail.getObject(),
                             mail.getText(),
-                            mail.getDate(),
-                            mail.getTime(),
+                            mail.getCreationDateTime(),
                             mail.getLastModify(),
-                            mail.getUuid(),
                             mail.getRead());
-            }
-    }
-    private static void WriterSender(Mail mail) {
-        String path = pathConstructor(mail.getSender(), "sent");
-
-        ArrayList<Mail> mailList = new ArrayList<>();
-
-        try {
-            if (FileExist(path))
-                mailList = readCSV(path);
-            mailList.add(mail);
-            WriteCSV(mailList, path);
-        } catch (IOException e) {
-            System.err.println(e);
-        }
-    }
-    private static void WriterReceiver(Mail mail) {
-        String path = pathConstructor(mail.getRecipients(), "received");
-
-        ArrayList<Mail> mailList = new ArrayList<>();
-
-        try {
-            if (FileExist(path))
-                mailList = readCSV(path);
-            mailList.add(mail);
-            WriteCSV(mailList, path);
-        } catch (IOException e) {
-            System.err.println(e);
-        }
-    }
-    private static boolean FileExist(String path) {
-        return new File(path).exists();
-    }
-
-    private static void createFileIfNotExists(String filePath) {
-        File file = new File(filePath);
-
-        if (!file.exists()) {
-            try (FileWriter fileWriter = new FileWriter(filePath);
-                 CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT)) {
-                csvPrinter.printRecord("Username", "LastConnectionDataTime");
             } catch (IOException e) {
-                throw new RuntimeException("Error creating file: " + filePath, e);
+                e.printStackTrace();
             }
         }
     }
+    private static void writeCSVMailSender(ArrayList<Mail> mailList){
+        writeCSVMail(CSV_MAIL_SEND_PATH, mailList);
+    }
+    private static void writeCSVMailReceiver(ArrayList<Mail> mailList){
+        writeCSVMail(CSV_MAIL_RECEIVED_PATH, mailList);
+    }
 
+    private static void createFileIfNotExists(String path, String[] headers) {
+        try (Writer writer = new FileWriter(path, false);
+             CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(headers))) {
+            csvPrinter.printRecord();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public static String pathConstructor(String username, String type) {
         String directoryPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "backup";
         File directory = new File(directoryPath);

@@ -276,11 +276,11 @@ public class ClientController {
     }
 
     public class MailCardModel {
-
         private MailModel mailModel = null;
 
-        public MailCardModel(MailModel mailModel) { this.mailModel = mailModel;}
-
+        public MailCardModel(MailModel mailModel) {
+            this.mailModel = mailModel;
+        }
         public VBox buildCard(String soggetto, Mail mail) {
             VBox vbox = new VBox();
             vbox.setId(mail.getUuid());
@@ -330,7 +330,6 @@ public class ClientController {
 
             return hbox;
         }
-
         private static HBox createHBox(String label1Text, String text1, String label2Text, String text2) {
             HBox hbox = new HBox();
             Label label1 = createLabel(label1Text);
@@ -344,7 +343,6 @@ public class ClientController {
 
             return hbox;
         }
-
         private static Label createLabel(String labelText) {
             Label label = new Label(labelText);
             label.setMaxHeight(Double.MAX_VALUE);

@@ -1,7 +1,6 @@
 package com.example.prva.model;
 
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -212,7 +211,7 @@ public class MailModel {
             addLog("Client", "Connessione: " + localAddress);
 
             server.setAddress(localAddress);
-            server.connectToServer(localAddress);
+            server.connectToServer();
 
             server.setAddress(localAddressProperty.get());
 
@@ -236,7 +235,7 @@ public class MailModel {
 
             server.disconnectToServer();
             server.setAddress(localAddress);
-            server.connectToServer(localAddress);
+            server.connectToServer();
 
             controller.setCountMailSent();
             getListMailSent().forEach(controller::createCardSent);

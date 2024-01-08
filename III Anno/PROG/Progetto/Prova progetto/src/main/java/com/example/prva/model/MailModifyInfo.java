@@ -11,7 +11,6 @@ public class MailModifyInfo implements Serializable {
     private boolean read = false;
     private boolean deleteAll = false;
 
-
     public MailModifyInfo(Mail mail, String username, boolean sent){
         this.mail = mail;
         this.username = username;

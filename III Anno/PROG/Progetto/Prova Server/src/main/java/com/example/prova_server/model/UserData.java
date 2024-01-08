@@ -1,25 +1,27 @@
 package com.example.prova_server.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserData {
     String username;
-    private ArrayList<Mail> mailSent;
-    private ArrayList<Mail> mailReceived;
+    private Map<String, Mail> mailSent;
+    private Map<String, Mail> mailReceived;
     private boolean connected;
     private String clientAddress;
 
     public UserData(String username) {
         this.username = username;
-        this.mailSent = new ArrayList<>();
-        this.mailReceived = new ArrayList<>();
+        this.mailSent = new HashMap<>();
+        this.mailReceived = new HashMap<>();
         this.connected = false;
     }
 
     public UserData(String username, String clientAddress) {
         this.username = username;
-        this.mailSent = new ArrayList<>();
-        this.mailReceived = new ArrayList<>();
+        this.mailSent = new HashMap<>();
+        this.mailReceived = new HashMap<>();
         this.connected = true;
         this.clientAddress = clientAddress;
     }
@@ -28,45 +30,41 @@ public class UserData {
         return username;
     }
 
-    public ArrayList<Mail> getMailSent() {
+    public Map<String, Mail> getMailSent() {
         return mailSent;
     }
-    public ArrayList<Mail> getMailReceived() {
+    public Map<String, Mail> getMailReceived() {
         return mailReceived;
     }
 
     public void addMailSent(Mail mail) {
-        this.mailSent.add(mail);
+        this.mailSent.put(mail.getUuid(), mail);
     }
     public void addMailReceived(Mail mail) {
-        this.mailReceived.add(mail);
+        this.mailReceived.put(mail.getUuid(), mail);
     }
 
     public void removeMailRecived(Mail mail) {
-        mailReceived.stream()
-                .filter(m -> m.getUuid().equals(mail.getUuid()))
-                .forEach(Mail::setDelete);
+        mailReceived.get(mail.getUuid()).setDelete();
     }
     public void removeMailSent(Mail mail) {
-        mailSent.stream()
-            .filter(m -> m.getUuid().equals(mail.getUuid()))
-            .forEach(Mail::setDelete);
+        mailSent.get(mail.getUuid()).setDelete();
     }
 
     public void setReadMailRecived(Mail mail) {
-        mailReceived.stream().filter(m -> m.equals(mail)).forEach(Mail::setRead);
+        mailReceived.get(mail.getUuid()).setRead();
     }
     public void setReadMailSent(Mail mail) {
-        mailSent.stream().filter(m -> m.equals(mail)).forEach(Mail::setRead);
+        mailSent.get(mail.getUuid()).setRead();
     }
 
-    public void loadSendMails(ArrayList<Mail> sender) {
+    public void loadSendMails(Map<String, Mail> mailMap) {
         mailSent.clear();
-        mailSent.addAll(sender);
+        mailSent = mailMap;
     }
-    public void loadReceivedMails(ArrayList<Mail> received) {
+    public void loadReceivedMails(Map<String, Mail> mailMap) {
         mailReceived.clear();
-        mailReceived.addAll(received);
+        mailReceived = mailMap;
     }
 
     public void setOn(boolean connected) {
@@ -83,11 +81,15 @@ public class UserData {
         mailSent.clear();
     }
 
-    public ArrayList<Mail> getMailSent(String lastConnectionDatatime) {
-        return new ArrayList<> (mailSent.stream().filter(m -> m.moreRecentlyOf(lastConnectionDatatime)).toList());
+    public Map<String, Mail> getMailSent(String lastConnectionDatatime) {
+        return  mailSent.entrySet().stream()
+                .filter(m -> m.getValue().moreRecentlyOf(lastConnectionDatatime))
+                .collect(java.util.stream.Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
-    public ArrayList<Mail> getMailReceived(String lastConnectionDatatime) {
-        return new ArrayList<> (mailReceived.stream().filter(m -> m.moreRecentlyOf(lastConnectionDatatime)).toList());
+    public Map<String, Mail> getMailReceived(String lastConnectionDatatime) {
+        return  mailReceived.entrySet().stream()
+                .filter(m -> m.getValue().moreRecentlyOf(lastConnectionDatatime))
+                .collect(java.util.stream.Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     public String getClientAddress() {

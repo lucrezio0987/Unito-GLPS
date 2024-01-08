@@ -2,6 +2,7 @@ package com.example.prva.model;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -12,37 +13,32 @@ public class Mail implements Serializable {
     private String recipients;
     private String text;
     private String object;
-    private String creationDate;
-    private String creationTime;
+    private String creationDateTime;
     private String lastModifyDateTime;
 
     private boolean delete;
     private boolean read;
 
     Mail(String sender, String recipients, String object, String text){
-        SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm:ss");
         SimpleDateFormat formatDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date now = new Date();
         this.sender = sender;
         this.recipients = recipients;
         this.object = object;
         this.text = text;
-        this.creationDate = formatDate.format(now);;
-        this.creationTime = formatTime.format(now);;
+        this.creationDateTime = formatDateTime.format(now);
         this.lastModifyDateTime = formatDateTime.format(now);
         this.read = false;
         this.delete = false;
         this.uuid = UUID.randomUUID().toString();
     }
 
-    Mail(String sender, String recipients, String object, String text, String creationDate, String creationTime, String  lastModifyDateTime, boolean read, String uuid){
+    Mail(String sender, String recipients, String object, String text, String creationDateTime, String  lastModifyDateTime, boolean read, String uuid){
         this.sender = sender;
         this.recipients = recipients;
         this.object = object;
         this.text = text;
-        this.creationDate = creationDate;
-        this.creationTime = creationTime;
+        this.creationDateTime = creationDateTime;
         this.lastModifyDateTime = lastModifyDateTime;
         this.read = read;
         this.uuid = uuid;
@@ -52,9 +48,15 @@ public class Mail implements Serializable {
     public String getRecipients()   { return recipients;    }
     public String getText()         { return text;          }
     public String getObject()       { return object;        }
-    public String getDate()         { return creationDate;          }
-    public String getTime()         { return creationTime;          }
-    public String getLastModify()   { return lastModifyDateTime;    }
+    public String getCreationDateTime(){ return creationDateTime;  }
+    public String getDate(){
+        return Arrays.asList(creationDateTime.split(" ")).get(0);
+    }
+    public String getTime(){
+        return Arrays.asList(creationDateTime.split(" ")).get(1);
+
+    }
+    public String getLastModify()   { return lastModifyDateTime;}
     public String getUuid()         { return uuid;          }
     public boolean getRead()        { return read;          }
     public List<String> getRecipientsList()   {
@@ -70,8 +72,7 @@ public class Mail implements Serializable {
         this.recipients = null;
         this.object = null;
         this.text = null;
-        this.creationDate = null;
-        this.creationTime = null;
+        this.creationDateTime = null;
         this.delete = true;
         setLastModify();
     }
