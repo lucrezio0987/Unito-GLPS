@@ -26,7 +26,7 @@ public class ClientController {
                         forwardBtnSent, forwardBtnReceived,sendBtnClear,
                         deleteBtnSent, replyBtnReceived, deleteBtnRecived, sendBtn, replyAllBtnReceived,
                         reconnectBtnSent, reconnectBtnReceived, reconnectBtnSend,
-                        reconnectServerBtnLog, connectServerBtnLog, disconnectServerBtnLog, reconnectBtnLog,
+                        connectServerBtnLog, disconnectServerBtnLog, reconnectBtnLog,
                         clearBackupData, clearAllBackup, clearBackupMail;
     @FXML
     private Label       addressLabelSent, objectLabelSent, addressLabelReceived, objectLabelReceived,
@@ -107,7 +107,6 @@ public class ClientController {
         addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
         lastConnectionColumn.setCellValueFactory(new PropertyValueFactory<>("lastConnectionDateTime"));
 
-
         setConnection(mailModel.connect());
 
         Cancella_Tutto_Inviata.setOnAction(event -> {
@@ -155,10 +154,12 @@ public class ClientController {
             mailModel.forwardReceived();
         });
 
-        reconnectBtnSent.setOnAction(event ->       { clearMail(); setConnection(mailModel.reconect());});
-        reconnectBtnReceived.setOnAction(event ->   { clearMail(); setConnection(mailModel.reconect());});
-        reconnectBtnSend.setOnAction(event ->       { clearMail(); setConnection(mailModel.reconect());});
-        reconnectBtnLog.setOnAction(event ->        { clearMail(); setConnection(mailModel.reconect());});
+        reconnectBtnSent.setOnAction(event ->       { clearMail(); setConnection(mailModel.reconnect());});
+        reconnectBtnReceived.setOnAction(event ->   { clearMail(); setConnection(mailModel.reconnect());});
+        reconnectBtnSend.setOnAction(event ->       { clearMail(); setConnection(mailModel.reconnect());});
+        reconnectBtnLog.setOnAction(event ->        { clearMail(); setConnection(mailModel.reconnect());});
+        connectServerBtnLog.setOnAction(event ->    { setConnection(mailModel.connect());});
+        disconnectServerBtnLog.setOnAction(event -> { setConnection(mailModel.disconnect());});
 
         clearBackupMail.setOnAction(event ->    mailModel.clearBackupMail());
         clearBackupData.setOnAction(event ->    mailModel.clearBackupData());

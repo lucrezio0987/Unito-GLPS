@@ -6,7 +6,6 @@ import java.util.regex.Pattern;
 
 import com.example.prva.controller.ClientController;
 
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 
 public class MailModel {
@@ -229,7 +228,7 @@ public class MailModel {
         }
         return server.isConnected();
     }
-    public boolean reconect() {
+    public boolean reconnect() {
         if(syntaxControll()) {
             String localAddress = localAddressProperty.get();
 
@@ -249,6 +248,11 @@ public class MailModel {
         } else {
             addLog("Client", "ERRORE: Indirizzo inserito non valido, connessione NON eseguita");
         }
+        return server.isConnected();
+    }
+    public boolean disconnect() {
+        addLog("Client", "Riconnessione: " + localAddressProperty.get());
+        server.disconnectToServer();
         return server.isConnected();
     }
 
