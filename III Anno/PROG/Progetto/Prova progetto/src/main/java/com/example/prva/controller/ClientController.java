@@ -6,23 +6,28 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.shape.*;
 import javafx.scene.text.*;
 
+import java.util.Map;
+
 public class ClientController {
     @FXML
     private TextField   localAddressReceived, localAddressSent, localAddressSend, localAddressLog,
                         addressMailSent, addressMailRecived, addressMailSend,
-                        objectMailSent, objectMailRecived, objectMailSend;
+                        objectMailSent, objectMailRecived, objectMailSend,
+                        ServerHost;
     @FXML
     private Button      Cancella_Tutto_Ricevuta, Cancella_Tutto_Inviata,
                         forwardBtnSent, forwardBtnReceived,sendBtnClear,
                         deleteBtnSent, replyBtnReceived, deleteBtnRecived, sendBtn, replyAllBtnReceived,
                         reconnectBtnSent, reconnectBtnReceived, reconnectBtnSend,
-                        reconnectServerBtnLog, connectServerBtnLog, disconnectServerBtnLog, reconnectBtnLog;
+                        reconnectServerBtnLog, connectServerBtnLog, disconnectServerBtnLog, reconnectBtnLog,
+                        clearBackupData, clearAllBackup, clearBackupMail;
     @FXML
     private Label       addressLabelSent, objectLabelSent, addressLabelReceived, objectLabelReceived,
                         countMailSent, countMailReceived;
@@ -40,6 +45,10 @@ public class ClientController {
     @FXML
     private Circle      ConnectLedReceived, ConnectLedSend, ConnectLedSent, ConnectLedLog,
                         DisconnectLedReceived, DisconnectLedSend, DisconnectLedSent, DisconnectLedLog;
+    @FXML
+    private TableView<TableRowData>         tableLastConnectInfo;
+    @FXML
+    private TableColumn<TableRowData, String> addressColumn, lastConnectionColumn;
 
     MailModel mailModel;
     MailCardModel mailCardModel;
@@ -62,10 +71,9 @@ public class ClientController {
 
     //TODO: mettere una label nel client per modificare eventualemente l'indirizzo del server (nel caso vada runnato da due pc diversi)
 
+    //TODO: il controlo della sintassi deve dare qualche tipo di feedback qualora non andasse a buon fine
 
-
-
-    public void initModel(String localAddressMail) {
+    public void initModel(String localAddressMail, String serverHost) {
         mailModel = new MailModel(this);
         mailCardModel = new MailCardModel(mailModel);
 
@@ -84,6 +92,8 @@ public class ClientController {
         mailModel.getAddressMailSendProperty().bindBidirectional(addressMailSend.textProperty());
         mailModel.getObjectMailSendProperty().bindBidirectional(objectMailSend.textProperty());
 
+        mailModel.getServeHostProperty().bindBidirectional(ServerHost.textProperty());
+
         textLog.textProperty().bind(mailModel.getTextLogProperty());
 
         mailModel.getLocalAddressProperty().bindBidirectional(localAddressReceived.textProperty());
@@ -92,6 +102,12 @@ public class ClientController {
         mailModel.getLocalAddressProperty().bindBidirectional(localAddressLog.textProperty());
 
         localAddressSend.textProperty().set(localAddressMail);
+        ServerHost.textProperty().set(serverHost);
+
+        addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
+        lastConnectionColumn.setCellValueFactory(new PropertyValueFactory<>("lastConnectionDateTime"));
+
+
         setConnection(mailModel.connect());
 
         Cancella_Tutto_Inviata.setOnAction(event -> {
@@ -143,6 +159,11 @@ public class ClientController {
         reconnectBtnReceived.setOnAction(event ->   { clearMail(); setConnection(mailModel.reconect());});
         reconnectBtnSend.setOnAction(event ->       { clearMail(); setConnection(mailModel.reconect());});
         reconnectBtnLog.setOnAction(event ->        { clearMail(); setConnection(mailModel.reconect());});
+
+        clearBackupMail.setOnAction(event ->    mailModel.clearBackupMail());
+        clearBackupData.setOnAction(event ->    mailModel.clearBackupData());
+        clearAllBackup.setOnAction(event ->     mailModel.clearAllBackup());
+
     }
 
     public void setConnection(boolean connect) {
@@ -260,9 +281,12 @@ public class ClientController {
         setCountMailSent();
     }
 
+
+
     public void termModel() {
         mailModel.stop();
     }
+
 
     public class MailCardModel {
         private MailModel mailModel = null;
@@ -342,5 +366,34 @@ public class ClientController {
             return label;
         }
 
+    }
+
+    public void addAllRowToTable(Map<String, String> map) {
+        clearTable();
+        map.forEach((key, value) -> {
+            tableLastConnectInfo.getItems().add(new TableRowData(key, value));
+            System.out.println(">>> " + key + " - " + value);
+        });
+    }
+
+
+    public void clearTable() {
+        tableLastConnectInfo.getItems().clear();
+    }
+
+    public static class TableRowData {
+        private String address;
+        private String lastConnectionDateTime;
+
+        public TableRowData(String address, String lastConnectionDateTime) {
+            this.address = address;
+            this.lastConnectionDateTime = lastConnectionDateTime;
+        }
+        public String getAddress() {
+            return address;
+        }
+        public String getLastConnectionDateTime() {
+            return lastConnectionDateTime;
+        }
     }
 }

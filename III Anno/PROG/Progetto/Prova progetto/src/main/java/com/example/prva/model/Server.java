@@ -10,8 +10,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import java.util.concurrent.*;
-
 import com.example.prva.controller.ClientController;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -22,7 +20,7 @@ import java.io.FileWriter;
 
 
 public class Server {
-    private static final String SERVER_ADDRESS = "localhost";
+    private static String SERVER_ADDRESS = "localhost";
     private static final int SERVER_PORT_CONNECTION = 8000;
     private static final int SERVER_PORT_MAIL = 8001;
     private static final int SERVER_PORT_MODIFY = 8002;
@@ -45,13 +43,16 @@ public class Server {
     Thread clientMessageServerThread = null;
     Thread serverConnectionThread = null;
 
-    public Server(ClientController controller){
+    public Server(ClientController controller, String serveHost){
         this.controller = controller;
+        SERVER_ADDRESS = serveHost;
 
         CSV_INFO_PATH = pathConstructor(null, "data");
 
         mailSent = new HashMap<>();
         mailReceived = new HashMap<>();
+
+        controller.addAllRowToTable(readCSVInfo());
 
         startListening();
     }
@@ -70,6 +71,9 @@ public class Server {
         CSV_MAIL_RECEIVED_PATH = pathConstructor(localAddress, "received");
 
         loadBackup();
+    }
+    void setServerAddress(String serverAddress) {
+        SERVER_ADDRESS = serverAddress;
     }
 
     private void startListening() {
@@ -172,6 +176,7 @@ public class Server {
             socket.close();
         } catch (IOException e) {
             System.out.println("Disconnessione al Server Fallita");
+            writeCSVInfo(localAddress, null);
         }
     }
     void connectToServer() {
@@ -179,7 +184,7 @@ public class Server {
         loadBackup();
         try {
             Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_CONNECTION);
-            ConnectionInfo connectionInfo = new ConnectionInfo(true, localAddress, readCSVInfo().get(localAddress));
+            ConnectionInfo connectionInfo = new ConnectionInfo(true, localAddress, getLastConnectionDataTime(localAddress));
 
             try {
                 ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
@@ -316,22 +321,32 @@ public class Server {
         mailReceived = readCSVMailReceiver();
     }
 
-    private static Map<String, String> readCSVInfo() {
-        createFileIfNotExists(CSV_INFO_PATH, INF_HEADER);
 
+    private static String getLastConnectionDataTime(String username) {
+        String str = readCSVInfo().get(username);
+        if(str.equals("Only Offline"))
+            return null;
+        else
+            return str;
+    }
+    public static Map<String, String> readCSVInfo() {
         Map<String, String> records = new HashMap<>();
-        try (Reader reader = new FileReader(CSV_INFO_PATH);
-             CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withHeader())) {
-            for (CSVRecord csvRecord : csvParser)
-                records.put(csvRecord.get("Username"), csvRecord.get("LastConnectionDataTime"));
+        if(FileExist(CSV_INFO_PATH)) {
+            try (Reader reader = new FileReader(CSV_INFO_PATH);
+                 CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withHeader())) {
+                for (CSVRecord csvRecord : csvParser)
+                    records.put(csvRecord.get("Username"), csvRecord.get("LastConnectionDataTime"));
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return records;
     }
     private static void writeCSVInfo(String username, String lastConnectionDataTime) {
         Map<String, String> records = readCSVInfo();
+        if(lastConnectionDataTime == null)
+            lastConnectionDataTime = "Only Offline";
         records.put(username, lastConnectionDataTime);
         try (Writer writer = new FileWriter(CSV_INFO_PATH, false);
              CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(INF_HEADER))) {
@@ -340,6 +355,7 @@ public class Server {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        controller.addAllRowToTable(records);
     }
 
     private static Map<String, Mail> readCSVMail(String path) {
@@ -428,6 +444,24 @@ public class Server {
         disconnectToServer();
         clientMessageServerThread.interrupt();
         serverConnectionThread.interrupt();
+    }
+
+    public void clearAllBackup() {
+        clearBackupMail();
+        clearBackupData();
+    }
+    public void clearBackupMail() {
+        String directoryPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "backup";
+        File directory = new File(directoryPath);
+
+        if (directory.exists() && directory.isDirectory())
+            for (File file : Objects.requireNonNull(directory.listFiles()))
+                if (file.isFile() && ( file.getName().contains("-received.csv") || file.getName().contains("-sender.csv")))
+                    file.delete();
+    }
+    public void clearBackupData() {
+        new File(CSV_INFO_PATH).delete();
+        controller.clearTable();
     }
 
 }

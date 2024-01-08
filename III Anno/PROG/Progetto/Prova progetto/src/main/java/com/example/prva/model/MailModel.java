@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import com.example.prva.controller.ClientController;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 
 public class MailModel {
@@ -27,11 +28,13 @@ public class MailModel {
     private SimpleStringProperty objectMailSentProperty = null; // oggetto mail inviata
 
     private SimpleStringProperty localAddressProperty = null;
+    private SimpleStringProperty serveHostProperty = null;
 
     private Mail activeMailSent = null;
     private Mail activeMailReceived = null;
 
     private Server server = null;
+
 
     public MailModel(ClientController controller) {
         this.controller = controller;
@@ -50,10 +53,9 @@ public class MailModel {
         objectMailSentProperty = new SimpleStringProperty();
 
         localAddressProperty = new SimpleStringProperty();
+        serveHostProperty = new SimpleStringProperty();
 
-        server = new Server(controller);
-        //setMailSent();
-        //setMailReceived();
+        server = new Server(controller, serveHostProperty.getValue());
     }
 
     public SimpleStringProperty getTextMailSendProperty(){ return this.textMailSendProperty; }
@@ -70,11 +72,11 @@ public class MailModel {
     public SimpleStringProperty getObjectMailSendProperty(){ return this.objectMailSendProperty; }
 
     public SimpleStringProperty getLocalAddressProperty(){ return this.localAddressProperty; }
+    public SimpleStringProperty getServeHostProperty() { return  this.serveHostProperty;}
 
     public ArrayList<Mail> getListMailSent(){ return new ArrayList<>(server.getMailsSent()); }
     public ArrayList<Mail> getListMailReceived(){ return new ArrayList<>(server.getMailsReceived());
     }
-
 
     public void openMailReceived(String uuid){
         Mail mail;
@@ -211,6 +213,7 @@ public class MailModel {
             addLog("Client", "Connessione: " + localAddress);
 
             server.setAddress(localAddress);
+            server.setServerAddress(serveHostProperty.get());
             server.connectToServer();
 
             server.setAddress(localAddressProperty.get());
@@ -226,7 +229,6 @@ public class MailModel {
         }
         return server.isConnected();
     }
-
     public boolean reconect() {
         if(syntaxControll()) {
             String localAddress = localAddressProperty.get();
@@ -235,6 +237,7 @@ public class MailModel {
 
             server.disconnectToServer();
             server.setAddress(localAddress);
+            server.setServerAddress(serveHostProperty.get());
             server.connectToServer();
 
             controller.setCountMailSent();
@@ -281,4 +284,15 @@ public class MailModel {
         server.stop();
     }
 
+    public void clearAllBackup() {
+        server.clearAllBackup();
+    }
+
+    public void clearBackupMail() {
+        server.clearBackupMail();
+    }
+
+    public void clearBackupData() {
+        server.clearBackupData();
+    }
 }
