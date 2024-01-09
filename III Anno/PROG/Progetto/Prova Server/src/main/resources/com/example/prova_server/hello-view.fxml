@@ -3,6 +3,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,21 +12,16 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="627.0" prefWidth="906.0" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.prova_server.controller.ServerController">
    <children>
-      <ScrollPane layoutX="14.0" layoutY="13.0" prefHeight="604.0" prefWidth="681.0">
-         <content>
-            <TextArea fx:id="textArea" prefHeight="601.0" prefWidth="670.0" />
-         </content>
-      </ScrollPane>
-      <Button fx:id="stopBtn" layoutX="739.0" layoutY="590.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="106.0" text="Stop" />
-      <Button fx:id="resetBtn" layoutX="739.0" layoutY="553.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="106.0" text="Reset" />
-      <Button fx:id="startBtn" layoutX="739.0" layoutY="516.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="106.0" text="Start" />
+      <Button fx:id="stopBtn" layoutX="741.0" layoutY="388.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="106.0" text="Stop" />
+      <Button fx:id="resetBtn" layoutX="741.0" layoutY="351.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="106.0" text="Reset" />
+      <Button fx:id="startBtn" layoutX="741.0" layoutY="314.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="106.0" text="Start" />
       <Label layoutX="703.0" layoutY="193.0" prefHeight="18.0" prefWidth="106.0" text="Client Connect:" />
       <Label fx:id="countLabel" layoutX="835.0" layoutY="191.0" prefHeight="22.0" prefWidth="41.0" text="99+">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Button fx:id="clearBackupButton" layoutX="740.0" layoutY="388.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="106.0" text="Clear Backup" />
+      <Button fx:id="clearBackupButton" layoutX="741.0" layoutY="564.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="106.0" text="Clear Backup" />
       <TextField fx:id="serverHostLabel" layoutX="703.0" layoutY="154.0" prefHeight="25.0" prefWidth="181.0" />
       <Label layoutX="703.0" layoutY="129.0" prefHeight="18.0" prefWidth="106.0" text="Server Host:" />
       <Label layoutX="745.0" layoutY="26.0" prefHeight="35.0" prefWidth="139.0" text="Server Mail">
@@ -32,5 +29,24 @@
             <Font size="25.0" />
          </font>
       </Label>
+      <TableView fx:id="clientTable" layoutX="14.0" layoutY="420.0" prefHeight="200.0" prefWidth="681.0">
+        <columns>
+            <TableColumn fx:id="usernameColumn" prefWidth="314.0" text="Username" />
+            <TableColumn fx:id="addressColumn" prefWidth="126.0" text="Address" />
+            <TableColumn fx:id="isOnColumn" prefWidth="84.0" text="Connected" />
+            <TableColumn fx:id="sendColumn" prefWidth="70.0" text="Send" />
+            <TableColumn fx:id="receivedColumn" prefWidth="69.0" text="Received" />
+        </columns>
+      </TableView>
+      <Label layoutX="16.0" layoutY="15.0" prefHeight="18.0" prefWidth="106.0" text="Log:" underline="true">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <ScrollPane layoutX="14.0" layoutY="38.0" prefHeight="376.0" prefWidth="681.0">
+         <content>
+            <TextArea fx:id="textArea" prefHeight="374.0" prefWidth="678.0" />
+         </content>
+      </ScrollPane>
    </children>
 </AnchorPane>

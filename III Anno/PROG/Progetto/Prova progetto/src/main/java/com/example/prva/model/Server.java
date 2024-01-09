@@ -326,7 +326,7 @@ public class Server {
 
     private static String getLastConnectionDataTime(String username) {
         String str = readCSVInfo().get(username);
-        if(str.equals("Only Offline"))
+        if(str == null || str.equals("Only Offline"))
             return null;
         else
             return str;

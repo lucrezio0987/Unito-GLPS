@@ -3,7 +3,6 @@ package com.example.prova_server.model;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import javafx.application.Platform;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.io.*;
@@ -29,26 +28,18 @@ public class ServerModel {
     private static final int CLIENT_PORT_CONNECTION = 8004;
     private static final int THREAD_POOL_SIZE = 10;
     private static final String[] MAIL_HEADER = {"Uuid", "Sender", "Recipients", "Object", "Text", "CreationDateTime", "LastModifyDateTime", "read"};
-
     private static SimpleStringProperty textAreaProperty = null;
     private static SimpleStringProperty countProperty = null;
     private static SimpleStringProperty serveHostTextProperty = null;
-
-
     private static ServerSocket clientServerSocket = null;
     private static ServerSocket mailServerSocket  = null;
     private static ServerSocket modifySocket  = null;
-
     private static ArrayList<String> logList = null;
-
     private Thread clientThread;
     private Thread mailThread;
     private Thread modifyThread;
-
     private static ExecutorService executorService;
-
     private static Map<String, UserData> userDataList;
-
     private static boolean isStarted = false;
 
     public SimpleStringProperty getTextAreaProperty() {
@@ -264,6 +255,10 @@ public class ServerModel {
             }
     }
 
+    public Map<String, UserData> getClientMap() {
+        return userDataList;
+    }
+
     private static class ConnectionHandler implements Runnable  {
         private Socket socket;
 
@@ -289,9 +284,9 @@ public class ServerModel {
                     map.put("sent", userDataList.get(username).getMailSent(LastConnectionDatatime));
                     map.put("received", userDataList.get(username).getMailReceived(LastConnectionDatatime));
 
-                    log( "Updates for Client: lastConn: " + LastConnectionDatatime + "\n" +
-                                 "                    mailSent nuove: " + map.get("sent").size() + "\n" +
-                                 "                    mailReceived nuove: " + map.get("received").size());
+                    log( "Updates for Client: lastConn:            " + LastConnectionDatatime + "\n" +
+                                 "                     mailSent nuove:     " + map.get("sent").size() + "\n" +
+                                 "                     mailReceived nuove: " + map.get("received").size());
 
                     ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
                     String jsonList = new Gson().toJson(map);
@@ -307,6 +302,8 @@ public class ServerModel {
 
                     userDataList.get(username).setOn(false);
                     backup(username);
+
+                    Platform.runLater(() -> { countProperty.set(Integer.toString(getClientNumber()));});
 
                     log("Client:  " + username + " disconnesso. (" + userDataList.get(username).getClientAddress()+ ")");
                 }
@@ -477,6 +474,7 @@ public class ServerModel {
     public static synchronized void addUser(String username, String address) {
         userDataList.putIfAbsent(username, new UserData(username, address));
         userDataList.get(username).setOn(true);
+
         Platform.runLater(() -> { countProperty.set(Integer.toString(getClientNumber()));});
     }
     public static synchronized String getAddressForUser(String username) {
@@ -568,6 +566,8 @@ public class ServerModel {
     public void clearBackup() {
         String directoryPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "backup";
         File directory = new File(directoryPath);
+
+        userDataList.clear();
 
         if (directory.exists() && directory.isDirectory())
             for (File file : Objects.requireNonNull(directory.listFiles()))
