@@ -3,6 +3,7 @@ package com.example.prva.model;
 import org.apache.commons.csv.*;
 import java.io.*;
 import java.lang.reflect.Type;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
@@ -180,7 +181,8 @@ public class Server {
         setConnected(false);
         loadBackup();
         try {
-            Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_CONNECTION);
+            Socket socket = new Socket();
+            socket.connect(new InetSocketAddress(SERVER_ADDRESS, SERVER_PORT_CONNECTION), 1000);
             ConnectionInfo connectionInfo = new ConnectionInfo(true, localAddress, getLastConnectionDataTime(localAddress));
 
             try {
@@ -216,7 +218,6 @@ public class Server {
             socket.close();
         } catch (IOException e) {
             System.out.println("Connessione al Server Fallita (connectToServer)");
-            e.printStackTrace();
         }
     }
 
