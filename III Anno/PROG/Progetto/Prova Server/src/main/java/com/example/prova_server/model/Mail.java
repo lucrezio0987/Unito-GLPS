@@ -5,13 +5,13 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Mail implements Serializable {
-    private String uuid;
-    private String sender;
-    private String recipients;
-    private String text;
-    private String object;
-    private String creationDateTime;
-    private String lastModifyDateTime;
+    private static String uuid;
+    private static String sender;
+    private static String recipients;
+    private static String text;
+    private static String object;
+    private static String creationDateTime;
+    private static String lastModifyDateTime;
 
     private boolean delete;
     private boolean read;
@@ -51,7 +51,6 @@ public class Mail implements Serializable {
     }
     public String getTime(){
         return Arrays.asList(creationDateTime.split(" ")).get(1);
-
     }
     public String getLastModify()   { return lastModifyDateTime;}
     public String getUuid()         { return uuid;          }
@@ -75,7 +74,7 @@ public class Mail implements Serializable {
     }
     public void setLastModify() {
         SimpleDateFormat formatDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        this.lastModifyDateTime = formatDateTime.format(new Date());
+        lastModifyDateTime = formatDateTime.format(new Date());
     }
 
     public boolean isDelete() {
@@ -88,11 +87,22 @@ public class Mail implements Serializable {
         SimpleDateFormat formatDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         try {
             Date lastConnectionDateTime = formatDateTime.parse(DateTime);
-            Date currentDateTime = formatDateTime.parse(this.lastModifyDateTime);
+            Date currentDateTime = formatDateTime.parse(lastModifyDateTime);
             return currentDateTime.after(lastConnectionDateTime);
         } catch (ParseException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public static int moreRecentlyOf(Mail otherMail) {
+        SimpleDateFormat formatDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        try {
+            Date otherDateTime = formatDateTime.parse(otherMail.getLastModify());
+            Date thisDateTime = formatDateTime.parse(lastModifyDateTime);
+            return thisDateTime.compareTo(otherDateTime);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
     }
 

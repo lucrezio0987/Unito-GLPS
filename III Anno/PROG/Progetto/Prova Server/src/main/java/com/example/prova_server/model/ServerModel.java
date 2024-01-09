@@ -256,9 +256,21 @@ public class ServerModel {
                                  "                     mailReceived nuove: " + map.get("received").size());
 
                     ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-                    String jsonList = new Gson().toJson(map);
-                    outputStream.writeObject(jsonList);
+                    outputStream.writeObject(new Gson().toJson(map));
                     outputStream.flush();
+
+                    //TODO: Scrive al client quand'è stata l'ultima modifica che il server ha ricevuto
+                    // String lastMail = String.valueOf(
+                    //         Objects.requireNonNull(
+                    //                 userDataList.get(username).getMailSent().values()
+                    //                         .stream()
+                    //                         .sorted(Comparator.comparing(Mail::moreRecentlyOf))
+                    //                         .findFirst()
+                    //                         .orElse(null))
+                    //                 .getLastModify()
+                    // );
+                    // outputStream.writeObject(new Gson().toJson(lastMail));
+                    // outputStream.flush();
 
                     log("Client: " + username + " connesso da " + userDataList.get(username).getClientAddress());
 
