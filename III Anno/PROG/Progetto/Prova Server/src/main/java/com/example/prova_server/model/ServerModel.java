@@ -20,7 +20,7 @@ import org.apache.commons.csv.*;
 import java.io.FileReader;
 import java.io.FileWriter;
 
-public class ServerModel_2 {
+public class ServerModel {
     private static final String SERVER_ADDRESS = "localhost";
     private static final int SERVER_PORT_CONNECTION = 8000;
     private static final int SERVER_PORT_MESSAGES = 8001;
@@ -59,7 +59,7 @@ public class ServerModel_2 {
                 .count();
     }
 
-    public ServerModel_2() {
+    public ServerModel() {
         textAreaProperty = new SimpleStringProperty();
         countProperty = new SimpleStringProperty();
         countProperty.set(Integer.toString(0));
@@ -106,7 +106,6 @@ public class ServerModel_2 {
                 }
             }
         });
-
         clientThread.start();
 
         // Thread per gestire i messaggi dei client
@@ -140,7 +139,6 @@ public class ServerModel_2 {
                 }
             }
         });
-
         mailThread.start();
 
         modifyThread = new Thread(() -> {
@@ -173,7 +171,6 @@ public class ServerModel_2 {
                 }
             }
         });
-
         modifyThread.start();
 
         if(clientThread.isAlive() && mailThread.isAlive()) {
@@ -234,9 +231,9 @@ public class ServerModel_2 {
                     map.put("sent", userDataList.get(username).getMailSent(LastConnectionDatatime));
                     map.put("received", userDataList.get(username).getMailReceived(LastConnectionDatatime));
 
-                    log("Updates for Client: lastConn: " + LastConnectionDatatime);
-                    log("Updates for Client: mailSent nuove: " + map.get("sent").size());
-                    log("Updates for Client: mailReceived nuove: " + map.get("received").size());
+                    log( "Updates for Client: lastConn: " + LastConnectionDatatime + "\n" +
+                                 "                    mailSent nuove: " + map.get("sent").size() + "\n" +
+                                 "                    mailReceived nuove: " + map.get("received").size());
 
                     ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
                     String jsonList = new Gson().toJson(map);
@@ -399,7 +396,6 @@ public class ServerModel_2 {
                         textAreaProperty.set(csvRecord.get(0));
                     else
                         textAreaProperty.set(currentText + "\n" + csvRecord.get(0));
-                    logList.add(csvRecord.get(0));
                 }
 
             } catch (IOException e) {
@@ -410,15 +406,14 @@ public class ServerModel_2 {
         logList.add("------------------------------------------[ " +
                 new SimpleDateFormat("dd/MM/yy HH:mm:ss").format(new Date())
                 + " ]------------------------------------------");
-        if(!logList.isEmpty())
-            try (Writer writer = new FileWriter(pathConstructor(null, "log"), true);
-                 CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT)) {
-                for (String log : logList)
-                    csvPrinter.printRecord(log);
+        try (Writer writer = new FileWriter(pathConstructor(null, "log"), true);
+             CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT)) {
+            for (String log : logList)
+                csvPrinter.printRecord(log);
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static synchronized void addUser(String username, String address) {

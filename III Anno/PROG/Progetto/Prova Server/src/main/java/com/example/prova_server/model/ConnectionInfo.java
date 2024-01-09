@@ -3,6 +3,7 @@ package com.example.prova_server.model;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
 public class ConnectionInfo implements Serializable {
     private boolean connected;

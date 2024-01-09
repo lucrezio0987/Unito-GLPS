@@ -92,9 +92,6 @@ public class Server {
                             String jsonMail = (String) inputStream.readObject();
                             Mail mail = new Gson().fromJson(jsonMail, Mail.class);
 
-                            //ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-                            //Mail mail = (Mail) inputStream.readObject();
-
                             System.out.println("MAIL ricevuta da " + mail.getSender() + ": " + mail.getText());
                             addMailReceived(mail);
 
@@ -145,7 +142,7 @@ public class Server {
         serverConnectionThread.start();
 
     }
-    void disconnectToServer() {
+    public void disconnectToServer() {
         setConnected(false);
         backup();
         try {
@@ -179,7 +176,7 @@ public class Server {
             writeCSVInfo(localAddress, null);
         }
     }
-    void connectToServer() {
+    public void connectToServer() {
         setConnected(false);
         loadBackup();
         try {
@@ -241,7 +238,8 @@ public class Server {
         return getMails(mailReceived);
     }
 
-    public void addMailSent(Mail mail){
+    public boolean addMailSent(Mail mail){
+        boolean ret = false;
         if(isConnected()) {
             try {
                 Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_MAIL);
@@ -253,14 +251,17 @@ public class Server {
 
                 socket.close();
 
+                ret = true;
                 System.out.println("Email inviata a: " + mail.getRecipients());
             } catch (IOException e) {
                 e.printStackTrace();
                 System.out.println("invio server fallita");
+                return ret;
             }
         }
         mailSent.put(mail.getUuid(), mail);
         controller.createCardSent(mail);
+        return ret;
     }
     public void addMailReceived(Mail mail) {
         mailReceived.put(mail.getUuid(), mail);
@@ -321,7 +322,6 @@ public class Server {
         mailReceived = readCSVMailReceiver();
     }
 
-
     private static String getLastConnectionDataTime(String username) {
         String str = readCSVInfo().get(username);
         if(str.equals("Only Offline"))
@@ -346,8 +346,9 @@ public class Server {
     private static void writeCSVInfo(String username, String lastConnectionDataTime) {
         Map<String, String> records = readCSVInfo();
         if(lastConnectionDataTime == null)
-            lastConnectionDataTime = "Only Offline";
-        records.put(username, lastConnectionDataTime);
+            records.putIfAbsent(username, "Only Offline");
+        else
+            records.put(username, lastConnectionDataTime);
         try (Writer writer = new FileWriter(CSV_INFO_PATH, false);
              CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(INF_HEADER))) {
             for (Map.Entry<String, String> record : records.entrySet())
@@ -434,10 +435,11 @@ public class Server {
         File directory = new File(directoryPath);
         if (!directory.exists())
             directory.mkdirs();
-        if(type.equals("data"))
+        if(type.equals("data") || type.equals("log"))
             return directoryPath + File.separator  + type + ".csv";
         else
             return directoryPath + File.separator + username + "-" + type + ".csv";
+
     }
 
     public void stop() {

@@ -27,7 +27,7 @@ public class ClientController {
                         deleteBtnSent, replyBtnReceived, deleteBtnRecived, sendBtn, replyAllBtnReceived,
                         reconnectBtnSent, reconnectBtnReceived, reconnectBtnSend,
                         connectServerBtnLog, disconnectServerBtnLog, reconnectBtnLog,
-                        clearBackupData, clearAllBackup, clearBackupMail;
+                        clearBackupData, clearAllBackup, clearBackupMail, clearBackupLog;
     @FXML
     private Label       addressLabelSent, objectLabelSent, addressLabelReceived, objectLabelReceived,
                         countMailSent, countMailReceived;
@@ -73,6 +73,8 @@ public class ClientController {
 
     //TODO: il controlo della sintassi deve dare qualche tipo di feedback qualora non andasse a buon fine
 
+    //TODO: salvare e caricare i log in un file
+
     public void initModel(String localAddressMail, String serverHost) {
         mailModel = new MailModel(this);
         mailCardModel = new MailCardModel(mailModel);
@@ -110,15 +112,10 @@ public class ClientController {
         setConnection(mailModel.connect());
 
         Cancella_Tutto_Inviata.setOnAction(event -> {
-            // mailModel.addLog("null", "MailReceivedList: Prima della cancellazione ( " + mailModel.getListMailReceived().toString() + " )");
-            System.out.println("MailReceivedList: Prima della cancellazione ( " + mailModel.getListMailReceived().toString() + " )");
             deleteMailSent();
-            System.out.println("MailSentList: Cancellata ( " + mailModel.getListMailSent().toString() + " )\n");
         });
         Cancella_Tutto_Ricevuta.setOnAction(event -> {
-            System.out.println("MailReceivedList: Prima della cancellazione ( " + mailModel.getListMailReceived().toString() + " )");
             deleteMailReceived();
-            System.out.println("MailReceivedList: Cancellata ( " + mailModel.getListMailReceived().toString() + " )\n");
         });
 
         sendBtn.setOnAction(event -> {
@@ -164,6 +161,7 @@ public class ClientController {
         clearBackupMail.setOnAction(event ->    mailModel.clearBackupMail());
         clearBackupData.setOnAction(event ->    mailModel.clearBackupData());
         clearAllBackup.setOnAction(event ->     mailModel.clearAllBackup());
+        clearBackupLog.setDisable(true);
 
     }
 
@@ -373,7 +371,6 @@ public class ClientController {
         clearTable();
         map.forEach((key, value) -> {
             tableLastConnectInfo.getItems().add(new TableRowData(key, value));
-            System.out.println(">>> " + key + " - " + value);
         });
     }
 

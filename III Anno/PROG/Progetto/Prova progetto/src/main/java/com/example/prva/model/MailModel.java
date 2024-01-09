@@ -1,6 +1,8 @@
 package com.example.prva.model;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,7 +18,7 @@ public class MailModel {
     private SimpleStringProperty textMailSendProperty = null; // testo mail da inviare
     private SimpleStringProperty textMailReceivedProperty = null; //testo mail ricevuta
     private SimpleStringProperty textMailSentProperty = null; // testo mail inviata
-    private static SimpleStringProperty textLogProperty = null;
+    private SimpleStringProperty textLogProperty = null;
 
     private SimpleStringProperty addressMailSendProperty = null; // address mail da inviare
     private SimpleStringProperty addressMailReceivedProperty = null; // address mail ricevuta
@@ -94,7 +96,6 @@ public class MailModel {
         objectMailReceivedProperty.set(mail.getObject());
         textMailReceivedProperty.set(mail.getText());
     }
-
     public void openMailSent(String uuid){
         Mail mail;
 
@@ -115,15 +116,24 @@ public class MailModel {
 
     public void setMailRead(String uuid){
         server.setMailReceivedRead(uuid);
+        log("MAIL: Mail letta (" + uuid + ")");
     }
-    public void deleteMailSentList(){ server.deleteMailSentList(); }
-    public void deleteMailReceivedList(){ server.deleteMailReceivedList(); }
+    public void deleteMailSentList(){
+        server.deleteMailSentList();
+        log("MAIL: Cancellazione di tutte le mail Inviate");
+    }
+    public void deleteMailReceivedList(){
+        server.deleteMailReceivedList();
+        log("MAIL: Cancellazione di tutte le mail Ricevute");
+    }
 
     public void deleteMailSent(String uuid){
         server.deleteMailSent(uuid);
+        log("MAIL: mail Inviata cancellata (" + uuid + ")");
     }
     public void deleteMailReceived(String uuid) {
         server.deleteMailReceived(uuid);
+        log("MAIL: mail Ricevuta cancellata (" + uuid + ")");
     }
 
     public String deleteActualMailSent(){
@@ -140,9 +150,8 @@ public class MailModel {
     }
 
     public void sendMail(){
-
-        if(!syntaxControll()) {
-            addLog("Client", "ERRORE: Indirizzo inserito non valido, email NON inviata");
+        if(!syntaxControll(localAddressProperty.get())) {
+            log("ERRORE: email non inviata");
             return;
         }
         String sender       = localAddressProperty.get();
@@ -159,7 +168,10 @@ public class MailModel {
         addressMailSendProperty.set("");
         objectMailSendProperty.set("");
 
-        server.addMailSent(mailSend);
+        if(server.addMailSent(mailSend))
+            mailSend.getRecipientsList().forEach(r -> log("MAIL: mail inviata con successo [" + sender + " -> "+ r + "]"));
+        else
+            mailSend.getRecipientsList().forEach(r -> log("MAIL: invio non completato (Server Disconnesso) [" + sender + " -> "+ r + "]"));
     }
 
     public void sendMailClear() {
@@ -167,14 +179,12 @@ public class MailModel {
         objectMailSendProperty.set("");
         textMailSendProperty.set("");
     }
-
     public void reply() {
         addressMailSendProperty.set(activeMailReceived.getSender());
         objectMailSendProperty.set(activeMailReceived.getObject());
         textMailSendProperty.set("\n\n----------------------- Last Mail: -----------------------\n"
                 + activeMailReceived.getText());
     }
-
     public void replyAll() {
         StringBuilder addressList = new StringBuilder();
         addressList.append(activeMailReceived.getSender());
@@ -206,10 +216,8 @@ public class MailModel {
     }
 
     public boolean connect() {
-        if(syntaxControll()) {
-            String localAddress = localAddressProperty.get();
-
-            addLog("Client", "Connessione: " + localAddress);
+        String localAddress = localAddressProperty.get();
+        if(syntaxControll(localAddress)) {
 
             server.setAddress(localAddress);
             server.setServerAddress(serveHostProperty.get());
@@ -223,16 +231,17 @@ public class MailModel {
             controller.setCountMailReceived();
             getListMailReceived().forEach(controller::createCardReceived);
 
-        } else {
-            addLog("Client", "ERRORE: Indirizzo inserito non valido, connessione NON eseguita");
+            if (server.isConnected()) {
+                log("SERVER: Connessione (" + localAddress + ")");
+                return true;
+            }
         }
-        return server.isConnected();
+        log("ERRORE: Connessione al server non riuscita");
+        return false;
     }
     public boolean reconnect() {
-        if(syntaxControll()) {
-            String localAddress = localAddressProperty.get();
-
-            addLog("Client", "Riconnessione: " + localAddress);
+        String localAddress = localAddressProperty.get();
+        if(syntaxControll(localAddress)) {
 
             server.disconnectToServer();
             server.setAddress(localAddress);
@@ -244,44 +253,41 @@ public class MailModel {
 
             controller.setCountMailReceived();
             getListMailReceived().forEach(controller::createCardReceived);
-
-        } else {
-            addLog("Client", "ERRORE: Indirizzo inserito non valido, connessione NON eseguita");
+            if (server.isConnected()) {
+                log("SERVER: Riconnessione (" + localAddress + ")");
+                return true;
+            }
         }
-        return server.isConnected();
+        log("ERRORE: Riconnessione al server non riuscita");
+        return false;
+
     }
     public boolean disconnect() {
-        addLog("Client", "Riconnessione: " + localAddressProperty.get());
+        log("SERVER: Disconnesso");
         server.disconnectToServer();
         return server.isConnected();
     }
 
-    private boolean syntaxControll() {
+    private boolean syntaxControll(String address) {
         Pattern pattern = Pattern.compile("^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,6}$");
-        Matcher matcher = pattern.matcher(localAddressProperty.get());
-        return matcher.matches();
-    }
-
-    public void addLog(String type, String msg) {
-        switch (type) {
-            case "Server":
-                appendToTextArea(type + ": "+ msg);
-                break;
-            case "Client":
-                appendToTextArea(type + ": " + msg);
-                break;
-            default:
-                appendToTextArea(type + ": " + msg);
-                break;
+        Matcher matcher = pattern.matcher(address);
+        if(!matcher.matches()) {
+            log("ERRORE: Errore di sintassi: " + address);
+            return false;
         }
+        return true;
     }
-    private static void appendToTextArea(String newLine) {
-            String currentText = textLogProperty.getValue();
-            if(currentText == null)
-                textLogProperty.set(newLine);
-            else
-                textLogProperty.set(currentText + "\n" + newLine);
-            System.out.println(newLine);
+    public synchronized void log(String newLine) {
+        if (newLine.isEmpty())
+            newLine = "ALLERT: String is NULL";
+        newLine = "<" + new SimpleDateFormat("HH:mm:ss").format(new Date()) + ">  " + newLine;
+
+        String currentText = textLogProperty.getValue();
+        if (currentText == null)
+            textLogProperty.set(newLine);
+        else
+            textLogProperty.set(currentText + "\n" + newLine);
+        System.out.println(newLine);
     }
 
     public void stop() {
@@ -290,13 +296,14 @@ public class MailModel {
 
     public void clearAllBackup() {
         server.clearAllBackup();
+        log("BACKUP: Rimossi tutti i file di backup");
     }
-
     public void clearBackupMail() {
         server.clearBackupMail();
+        log("BACKUP: Rimossi i file csv di backup delle mail (Inviate e Ricevute)");
     }
-
     public void clearBackupData() {
         server.clearBackupData();
+        log("BACKUP: Rimosso il file data.csv (Utente, DataUltimaConnessione)");
     }
 }

@@ -8,7 +8,7 @@ import javafx.scene.control.TextArea;
 
 public class ServerController {
 
-    ServerModel_2 model;
+    ServerModel model;
     @FXML
     private TextArea textArea;
     @FXML
@@ -21,7 +21,7 @@ public class ServerController {
 
 
     public void initModel() {
-        model = new ServerModel_2();
+        model = new ServerModel();
 
         textArea.textProperty().bind(model.getTextAreaProperty());
         countLabel.textProperty().bind(model.getCountProperty());

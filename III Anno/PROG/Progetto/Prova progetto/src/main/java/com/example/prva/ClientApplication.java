@@ -17,7 +17,7 @@ public class ClientApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(ClientApplication.class.getResource("Client-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
-        stage.setTitle("Client di Posta Elettronica");
+        stage.setTitle("Client Mail");
         stage.setScene(scene);
         stage.getIcons().add(new Image(ClientApplication.class.getResourceAsStream("email-img.png")));
         stage.show();

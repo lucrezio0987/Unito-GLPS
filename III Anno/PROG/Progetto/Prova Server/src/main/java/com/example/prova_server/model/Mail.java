@@ -83,6 +83,8 @@ public class Mail implements Serializable {
     }
 
     public boolean moreRecentlyOf(String DateTime) {
+        if(DateTime == null)
+            return true;
         SimpleDateFormat formatDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         try {
             Date lastConnectionDateTime = formatDateTime.parse(DateTime);
