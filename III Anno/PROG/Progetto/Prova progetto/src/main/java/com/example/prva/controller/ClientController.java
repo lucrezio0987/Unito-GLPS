@@ -161,7 +161,7 @@ public class ClientController {
         clearBackupMail.setOnAction(event ->    mailModel.clearBackupMail());
         clearBackupData.setOnAction(event ->    mailModel.clearBackupData());
         clearAllBackup.setOnAction(event ->     mailModel.clearAllBackup());
-        clearBackupLog.setDisable(true);
+        clearBackupLog.setOnAction(event ->     mailModel.clearBackupLog());
 
     }
 
@@ -194,12 +194,8 @@ public class ClientController {
     public void setCountMailReceived() { countMailReceived.setText(String.valueOf(mailModel.getListMailReceived().size())); }
 
     private void clearMail() {
-        Lista_posta_inviata.getChildren().clear();
-        Lista_posta_ricevuta.getChildren().clear();
-        showMailPanelSent(false);
-        showMailPanelReceived(false);
-        setCountMailSent();
-        setCountMailReceived();
+        deleteMailSent();
+        deleteMailReceived();
     }
     private void deleteMailSent(){
         mailModel.deleteMailSentList();
@@ -215,7 +211,26 @@ public class ClientController {
         setCountMailReceived();
     }
 
-    private void showMailPanelReceived(boolean bool) {
+    public void clearLocalMail() {
+        clearLocalMailSent();
+        clearLocalMailReceived();
+    }
+    private void clearLocalMailSent(){
+        mailModel.clearLocalMailSentList();
+        Lista_posta_inviata.getChildren().clear();
+        showMailPanelSent(false);
+        setCountMailSent();
+    }
+
+    private void clearLocalMailReceived(){
+        mailModel.clearLocalMailReceivedList();
+        Lista_posta_ricevuta.getChildren().clear();
+        showMailPanelReceived(false);
+        setCountMailReceived();
+    }
+
+
+    public void showMailPanelReceived(boolean bool) {
         if(bool) {
             imgEmailReceived.setVisible(false);
 
@@ -244,7 +259,7 @@ public class ClientController {
             forwardBtnReceived.setVisible(false);
         }
     }
-    private void showMailPanelSent(boolean bool) {
+    public void showMailPanelSent(boolean bool) {
         if(bool) {
             imgEmailSent.setVisible(false);
 

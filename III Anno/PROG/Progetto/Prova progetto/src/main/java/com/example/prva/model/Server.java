@@ -466,4 +466,11 @@ public class Server {
         controller.clearTable();
     }
 
+    public void clearLocalMailsSent() {
+        mailSent.clear();
+    }
+
+    public void clearLocalMailsReceived() {
+        mailReceived.clear();
+    }
 }

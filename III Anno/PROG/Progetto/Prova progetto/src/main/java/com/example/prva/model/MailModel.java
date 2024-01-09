@@ -1,8 +1,11 @@
 package com.example.prva.model;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -280,6 +283,7 @@ public class MailModel {
     public synchronized void log(String newLine) {
         if (newLine.isEmpty())
             newLine = "ALLERT: String is NULL";
+
         newLine = "<" + new SimpleDateFormat("HH:mm:ss").format(new Date()) + ">  " + newLine;
 
         String currentText = textLogProperty.getValue();
@@ -295,15 +299,53 @@ public class MailModel {
     }
 
     public void clearAllBackup() {
-        server.clearAllBackup();
+        clearBackupMail();
+        clearBackupData();
+        clearBackupLog();
         log("BACKUP: Rimossi tutti i file di backup");
     }
     public void clearBackupMail() {
-        server.clearBackupMail();
+
+        Arrays.stream(Objects.requireNonNull(new File(
+                        System.getProperty("user.dir") +
+                                File.separator + "src" +
+                                File.separator + "backup").listFiles()))
+                .filter(f -> f.getName().contains("-received.csv") ||
+                             f.getName().contains("-sender.csv"))
+                .forEach(File::delete);
+
+        controller.clearLocalMail();
         log("BACKUP: Rimossi i file csv di backup delle mail (Inviate e Ricevute)");
     }
     public void clearBackupData() {
-        server.clearBackupData();
+
+        Arrays.stream(Objects.requireNonNull(new File(
+                    System.getProperty("user.dir") +
+                            File.separator + "src" +
+                            File.separator + "backup").listFiles()))
+                .filter(f -> f.getName().equals("data.csv"))
+                .forEach(File::delete);
+
+        controller.clearTable();
         log("BACKUP: Rimosso il file data.csv (Utente, DataUltimaConnessione)");
+    }
+    public void clearBackupLog() {
+
+        Arrays.stream(Objects.requireNonNull(new File(
+                        System.getProperty("user.dir") +
+                                File.separator + "src" +
+                                File.separator + "backup").listFiles()))
+                .filter(f -> f.getName().equals("log.csv"))
+                .forEach(File::delete);
+
+        textLogProperty.set(null);
+        log("BACKUP: pulita la storiografia dei log (log.csv) [FILE DI LOG NON ANCORA IMPLEMENTATO]");
+    }
+
+    public void clearLocalMailSentList() {
+        server.clearLocalMailsSent();
+    }
+    public void clearLocalMailReceivedList() {
+        server.clearLocalMailsReceived();
     }
 }
