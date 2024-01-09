@@ -3,6 +3,7 @@ package com.example.prova_server.model;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.io.*;
@@ -32,6 +33,8 @@ public class ServerModel {
 
     private static SimpleStringProperty textAreaProperty = null;
     private static SimpleStringProperty countProperty = null;
+    private static SimpleStringProperty serveHostTextProperty = null;
+
 
     private static ServerSocket clientServerSocket = null;
     private static ServerSocket mailServerSocket  = null;
@@ -53,6 +56,10 @@ public class ServerModel {
         return textAreaProperty;
     }
     public SimpleStringProperty getCountProperty() { return countProperty; }
+    public SimpleStringProperty getServeHostTextProperty() {
+        return serveHostTextProperty;
+    }
+
     private static int getClientNumber() {
         return (int) userDataList.values().stream()
                 .filter(UserData::isOn)
@@ -62,6 +69,8 @@ public class ServerModel {
     public ServerModel() {
         textAreaProperty = new SimpleStringProperty();
         countProperty = new SimpleStringProperty();
+        serveHostTextProperty = new SimpleStringProperty();
+
         countProperty.set(Integer.toString(0));
 
         logList = new ArrayList<>();
@@ -107,6 +116,7 @@ public class ServerModel {
             }
         });
         clientThread.start();
+        serveHostTextProperty.set("Da Implementare");
 
         // Thread per gestire i messaggi dei client
         mailThread = new Thread(() -> {

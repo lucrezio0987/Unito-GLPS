@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 public class ServerController {
 
@@ -15,6 +16,8 @@ public class ServerController {
     private Button stopBtn, resetBtn, startBtn, clearBackupButton;
     @FXML
     private Label countLabel;
+    @FXML
+    public TextField serverHostLabel;
 
     public ServerController() {
     }
@@ -25,6 +28,7 @@ public class ServerController {
 
         textArea.textProperty().bind(model.getTextAreaProperty());
         countLabel.textProperty().bind(model.getCountProperty());
+        model.getServeHostTextProperty().bindBidirectional(serverHostLabel.textProperty());
 
         model.start();
 
