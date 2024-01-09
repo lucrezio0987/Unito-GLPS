@@ -22,7 +22,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 
 public class ServerModel {
-    private static final String SERVER_ADDRESS = "localhost";
     private static final int SERVER_PORT_CONNECTION = 8000;
     private static final int SERVER_PORT_MESSAGES = 8001;
     private static final int SERVER_PORT_MODIFY = 8002;
@@ -116,7 +115,7 @@ public class ServerModel {
             }
         });
         clientThread.start();
-        serveHostTextProperty.set("Da Implementare");
+
 
         // Thread per gestire i messaggi dei client
         mailThread = new Thread(() -> {
@@ -185,11 +184,60 @@ public class ServerModel {
 
         if(clientThread.isAlive() && mailThread.isAlive()) {
             isStarted = true;
-            log("Server: STARTED");
+            log("Server: STARTED ");
         } else {
             log("ERRORE: Server not started");
         }
+
+        try {
+            serveHostTextProperty.set(InetAddress.getLocalHost().getHostAddress());
+        } catch (UnknownHostException e) {
+            throw new RuntimeException(e);
+        }
     }
+
+
+    private static String getPublicIP() {
+        URL url = null;
+        try {
+            url = new URL("https://api64.ipify.org?format=json");
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+        HttpURLConnection connection = null;
+        try {
+            connection = (HttpURLConnection) url.openConnection();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            return parseIPFromResponse(response.toString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            connection.disconnect();
+        }
+    }
+
+    private static String parseIPFromResponse(String response) {
+        // Modifica questo metodo in base al formato della risposta ottenuta dal servizio
+        // In questo esempio, si assume che la risposta sia in formato JSON
+        // e l'indirizzo IP è ottenuto dall'oggetto JSON restituito
+        // Ad esempio, se la risposta fosse {"ip":"123.456.789.012"}, questo metodo restituirebbe "123.456.789.012"
+        // Considera l'utilizzo di una libreria JSON più avanzata in un contesto di produzione
+
+        // Questo è solo un esempio di parsing e può non essere accurato a seconda del formato reale della risposta
+        int startIndex = response.indexOf("\"ip\":\"") + 6;
+        int endIndex = response.indexOf("\"", startIndex);
+        return response.substring(startIndex, endIndex);
+    }
+
     public void stop() {
         if(isStarted)
             try {
@@ -526,6 +574,7 @@ public class ServerModel {
                 if (file.isFile())
                     file.delete();
 
+        textAreaProperty.set(null);
 
         log("BACKUP: cartella di backup svuotata");
     }

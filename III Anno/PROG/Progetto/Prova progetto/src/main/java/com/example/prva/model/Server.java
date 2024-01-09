@@ -215,7 +215,8 @@ public class Server {
             }
             socket.close();
         } catch (IOException e) {
-            System.out.println("Connessione al Server Fallita");
+            System.out.println("Connessione al Server Fallita (connectToServer)");
+            e.printStackTrace();
         }
     }
 
