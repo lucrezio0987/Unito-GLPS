@@ -186,49 +186,6 @@ public class ServerModel {
             throw new RuntimeException(e);
         }
     }
-
-
-    private static String getPublicIP() {
-        URL url = null;
-        try {
-            url = new URL("https://api64.ipify.org?format=json");
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
-        HttpURLConnection connection = null;
-        try {
-            connection = (HttpURLConnection) url.openConnection();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
-            StringBuilder response = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                response.append(line);
-            }
-            return parseIPFromResponse(response.toString());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            connection.disconnect();
-        }
-    }
-
-    private static String parseIPFromResponse(String response) {
-        // Modifica questo metodo in base al formato della risposta ottenuta dal servizio
-        // In questo esempio, si assume che la risposta sia in formato JSON
-        // e l'indirizzo IP è ottenuto dall'oggetto JSON restituito
-        // Ad esempio, se la risposta fosse {"ip":"123.456.789.012"}, questo metodo restituirebbe "123.456.789.012"
-        // Considera l'utilizzo di una libreria JSON più avanzata in un contesto di produzione
-
-        // Questo è solo un esempio di parsing e può non essere accurato a seconda del formato reale della risposta
-        int startIndex = response.indexOf("\"ip\":\"") + 6;
-        int endIndex = response.indexOf("\"", startIndex);
-        return response.substring(startIndex, endIndex);
-    }
-
     public void stop() {
         if(isStarted)
             try {
@@ -253,6 +210,16 @@ public class ServerModel {
                 e.printStackTrace();
                 log("ERROR: Errore durante l'interruzione del server");
             }
+    }
+
+    public boolean ConnSocketIsOn(){
+        return clientThread.isAlive();
+    }
+    public boolean MailSocketIsOn(){
+        return mailThread.isAlive();
+    }
+    public boolean ModSocketIsOn(){
+        return modifyThread.isAlive();
     }
 
     public Map<String, UserData> getClientMap() {
@@ -563,6 +530,7 @@ public class ServerModel {
             return directoryPath + File.separator + username + "-" + type + ".csv";
     }
 
+
     public void clearBackup() {
         String directoryPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "backup";
         File directory = new File(directoryPath);
@@ -578,4 +546,81 @@ public class ServerModel {
 
         log("BACKUP: cartella di backup svuotata");
     }
+
+
+    public void clearAllBackup() {
+        clearBackupMail();
+        clearBackupLog();
+        log("BACKUP: Rimossi tutti i file di backup");
+    }
+    public void clearBackupMail() {
+        Arrays.stream(Objects.requireNonNull(new File(
+                        System.getProperty("user.dir") +
+                                File.separator + "src" +
+                                File.separator + "backup").listFiles()))
+                .filter(f -> f.getName().contains("-received.csv") ||
+                        f.getName().contains("-sender.csv"))
+                .forEach(File::delete);
+
+        userDataList.forEach((u, data) -> {
+            data.clearMailListRecived();
+            data.clearMailListRecived();
+        });
+
+        log("BACKUP: Rimossi i file csv di backup delle mail (Inviate e Ricevute)");
+    }
+    public void clearBackupLog() {
+
+        Arrays.stream(Objects.requireNonNull(new File(
+                        System.getProperty("user.dir") +
+                                File.separator + "src" +
+                                File.separator + "backup").listFiles()))
+                .filter(f -> f.getName().equals("log.csv"))
+                .forEach(File::delete);
+
+        textAreaProperty.set(null);
+        log("BACKUP: pulita la storiografia dei log (log.csv)");
+    }
+
+
+    private static String getPublicIP() {
+        URL url = null;
+        try {
+            url = new URL("https://api64.ipify.org?format=json");
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+        HttpURLConnection connection = null;
+        try {
+            connection = (HttpURLConnection) url.openConnection();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            return parseIPFromResponse(response.toString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            connection.disconnect();
+        }
+    }
+    private static String parseIPFromResponse(String response) {
+        // Modifica questo metodo in base al formato della risposta ottenuta dal servizio
+        // In questo esempio, si assume che la risposta sia in formato JSON
+        // e l'indirizzo IP è ottenuto dall'oggetto JSON restituito
+        // Ad esempio, se la risposta fosse {"ip":"123.456.789.012"}, questo metodo restituirebbe "123.456.789.012"
+        // Considera l'utilizzo di una libreria JSON più avanzata in un contesto di produzione
+
+        // Questo è solo un esempio di parsing e può non essere accurato a seconda del formato reale della risposta
+        int startIndex = response.indexOf("\"ip\":\"") + 6;
+        int endIndex = response.indexOf("\"", startIndex);
+        return response.substring(startIndex, endIndex);
+    }
+
 }

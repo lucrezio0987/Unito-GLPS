@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.shape.Circle;
 
 import java.util.Map;
 
@@ -25,6 +26,8 @@ public class ServerController {
     @FXML
     private TableColumn<TableRowData, String> usernameColumn, addressColumn, isOnColumn, sendColumn, receivedColumn;
 
+    @FXML
+    private Circle ConnectLedConPort, DisconnectLedConPort, ConnectLedMailPort, DisconnectLedMailPort, ConnectLedModPort, DisconnectLedModPort;
 
     public ServerController() {
     }
@@ -40,6 +43,10 @@ public class ServerController {
         model.start();
 
         clearBackupButton.setOnAction( event -> model.clearBackup());
+
+        setConnectLedConPort(model.ConnSocketIsOn());
+        setConnectLedMailPort(model.MailSocketIsOn());
+        setConnectLedModPort(model.ModSocketIsOn());
 
         startBtn.setOnAction(event -> { model.start();});
         stopBtn.setOnAction(event -> { model.stop();});
@@ -76,6 +83,19 @@ public class ServerController {
         model.stop();
     }
 
+    public void setConnectLedConPort(Boolean bool) {
+        ConnectLedConPort.setVisible(bool);
+        DisconnectLedConPort.setVisible(!bool);
+    }
+    public void setConnectLedMailPort(Boolean bool) {
+        ConnectLedMailPort.setVisible(bool);
+        DisconnectLedMailPort.setVisible(!bool);
+    }
+
+    public void setConnectLedModPort(Boolean bool) {
+        ConnectLedModPort.setVisible(bool);
+        DisconnectLedModPort.setVisible(!bool);
+    }
     public void addAllRowToTable() {
         clearTable();
         model.getClientMap().forEach((key, value) -> {
