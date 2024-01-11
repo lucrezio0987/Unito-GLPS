@@ -151,6 +151,7 @@ public class ClientController {
             mailModel.forwardReceived();
         });
 
+        
         reconnectBtnSent.setOnAction(event ->       { clearMail(); setConnection(mailModel.reconnect());});
         reconnectBtnReceived.setOnAction(event ->   { clearMail(); setConnection(mailModel.reconnect());});
         reconnectBtnSend.setOnAction(event ->       { clearMail(); setConnection(mailModel.reconnect());});
@@ -285,17 +286,15 @@ public class ClientController {
     }
 
     public synchronized void createCardReceived(Mail mail){
-        VBox card = mailCardModel.buildCard("Mittente:", mail);
-        Lista_posta_ricevuta.getChildren().add(0, card);
-        setCountMailReceived();
+            VBox card = mailCardModel.buildCard("Mittente:", mail);
+            Lista_posta_ricevuta.getChildren().add(0, card);
+            setCountMailReceived();
     }
     public synchronized void createCardSent(Mail mail){
         VBox card = mailCardModel.buildCard("Destinatari:", mail);
         Lista_posta_inviata.getChildren().add(0, card);
         setCountMailSent();
     }
-
-
 
     public void termModel() {
         mailModel.stop();
