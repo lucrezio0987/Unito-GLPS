@@ -252,6 +252,7 @@ public class Server {
                 outputStream.flush();
 
                 socket.close();
+
                 ret = true;
                 System.out.println("Email inviata a: " + mail.getRecipients());
             } catch (IOException e) {
