@@ -49,8 +49,8 @@
             <TextArea fx:id="textArea" prefHeight="374.0" prefWidth="678.0" />
          </content>
       </ScrollPane>
-      <Button fx:id="clearBackupButton1" layoutX="728.0" layoutY="522.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="133.0" text="Clear Backup Log" />
-      <Button fx:id="clearBackupButton11" layoutX="727.0" layoutY="485.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="133.0" text="Clear Backup Mail" />
+      <Button fx:id="clearBackupLogButton" layoutX="728.0" layoutY="522.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="133.0" text="Clear Backup Log" />
+      <Button fx:id="clearBackupMailButton" layoutX="727.0" layoutY="485.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="133.0" text="Clear Backup Mail" />
       <Label layoutX="724.0" layoutY="128.0" prefHeight="18.0" prefWidth="160.0" text="Porta Connessioni   (8000)" />
       <Label layoutX="724.0" layoutY="146.0" prefHeight="18.0" prefWidth="160.0" text="Porta Mail                 (8001)" />
       <Label layoutX="724.0" layoutY="165.0" prefHeight="18.0" prefWidth="160.0" text="Porta Modifiche       (8002)" />
