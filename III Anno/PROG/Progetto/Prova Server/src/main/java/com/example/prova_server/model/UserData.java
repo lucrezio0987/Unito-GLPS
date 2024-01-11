@@ -95,4 +95,12 @@ public class UserData {
     public String getClientAddress() {
         return clientAddress;
     }
+
+    public void updateMailSent(Map<String, Mail> uppdates) {
+        mailSent.putAll(uppdates);
+    }
+
+    public void updateMailReceived(Map<String, Mail> uppdates) {
+        mailReceived.putAll(uppdates);
+    }
 }

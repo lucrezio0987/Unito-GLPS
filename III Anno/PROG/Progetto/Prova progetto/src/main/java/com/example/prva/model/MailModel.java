@@ -221,10 +221,12 @@ public class MailModel {
     public boolean connect() {
         String localAddress = localAddressProperty.get();
         if(syntaxControll(localAddress)) {
-
             server.setAddress(localAddress);
             server.setServerAddress(serveHostProperty.get());
-            server.connectToServer();
+            if (!server.connectToServer()) {
+                log("ERRORE: Connessione al server non riuscita");
+                return false;
+            }
 
             server.setAddress(localAddressProperty.get());
 
@@ -234,33 +236,32 @@ public class MailModel {
             controller.setCountMailReceived();
             getListMailReceived().forEach(controller::createCardReceived);
 
-            if (server.isConnected()) {
-                log("SERVER: Connessione (" + localAddress + ")");
-                return true;
-            }
+            return true;
         }
-        log("ERRORE: Connessione al server non riuscita");
         return false;
     }
     public boolean reconnect() {
         String localAddress = localAddressProperty.get();
         if(syntaxControll(localAddress)) {
 
-            server.disconnectToServer();
+            if(!server.disconnectToServer()){
+                log("ERRORE: Riconnessione al server non riuscita (Problema di Disconnessione)");
+                return false;
+            }
             server.setAddress(localAddress);
             server.setServerAddress(serveHostProperty.get());
-            server.connectToServer();
+            if(!server.connectToServer()){
+                log("ERRORE: Riconnessione al server non riuscita (Problema di Connessione)");
+                return false;
+            }
             controller.setCountMailSent();
             getListMailSent().forEach(controller::createCardSent);
 
             controller.setCountMailReceived();
             getListMailReceived().forEach(controller::createCardReceived);
-            if (server.isConnected()) {
-                log("SERVER: Riconnessione (" + localAddress + ")");
-                return true;
-            }
+
+            return true;
         }
-        log("ERRORE: Riconnessione al server non riuscita");
         return false;
 
     }

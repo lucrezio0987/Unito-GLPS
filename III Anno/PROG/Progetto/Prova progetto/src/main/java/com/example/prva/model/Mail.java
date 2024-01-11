@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-public class Mail implements Serializable {
+public class Mail implements Serializable, Comparable<Mail> {
     private String uuid;
     private String sender;
     private String recipients;
@@ -98,16 +98,17 @@ public class Mail implements Serializable {
         }
     }
 
-    //public static int moreRecentlyOf(Mail otherMail) {
-    //    SimpleDateFormat formatDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-    //    try {
-    //        Date otherDateTime = formatDateTime.parse(otherMail.getLastModify());
-    //        Date thisDateTime = formatDateTime.parse(lastModifyDateTime);
-    //        return thisDateTime.compareTo(otherDateTime);
-    //    } catch (ParseException e) {
-    //        throw new RuntimeException(e);
-    //    }
-    //}
+    @Override
+    public int compareTo(Mail otherMail) {
+        SimpleDateFormat formatDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        try {
+            Date otherDateTime = formatDateTime.parse(otherMail.getLastModify());
+            Date thisDateTime = formatDateTime.parse(lastModifyDateTime);
+            return otherDateTime.compareTo(thisDateTime);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @Override
     public boolean equals(Object o) {

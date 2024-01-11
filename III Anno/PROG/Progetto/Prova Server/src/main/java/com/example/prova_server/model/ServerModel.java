@@ -2,10 +2,12 @@ package com.example.prova_server.model;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.net.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,6 +21,8 @@ import org.apache.commons.csv.*;
 
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ServerModel {
     private static final int SERVER_PORT_CONNECTION = 8000;
@@ -237,8 +241,10 @@ public class ServerModel {
         public void run() {
             try {
                 ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-                String jsonConnectionInfo = (String) inputStream.readObject();
-                ConnectionInfo connectionInfo = new Gson().fromJson(jsonConnectionInfo, ConnectionInfo.class);
+                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+
+                // RICEZIONE: informazioni di connessione
+                ConnectionInfo connectionInfo = new Gson().fromJson((String) inputStream.readObject(), ConnectionInfo.class);
 
                 String username = connectionInfo.getUsername();
                 String LastConnectionDatatime = connectionInfo.getLastConnectionDateTime();
@@ -247,45 +253,64 @@ public class ServerModel {
                     addUser(username, socket.getInetAddress().getHostAddress());
                     loadBackup(username);
 
-                    Map<String, Map<String, Mail>> map = new HashMap<>();
-                    map.put("sent", userDataList.get(username).getMailSent(LastConnectionDatatime));
-                    map.put("received", userDataList.get(username).getMailReceived(LastConnectionDatatime));
-
-                    log( "Updates for Client: lastConn:            " + LastConnectionDatatime + "\n" +
-                                 "                     mailSent nuove:     " + map.get("sent").size() + "\n" +
-                                 "                     mailReceived nuove: " + map.get("received").size());
-
-                    ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-                    outputStream.writeObject(new Gson().toJson(map));
+                    // INVIO: data ultima modifica del server
+                    String lastModifyData = String.valueOf(
+                            Objects.requireNonNull(
+                                            Stream.concat(
+                                                            userDataList.get(username).getMailSent().values().stream(),
+                                                            userDataList.get(username).getMailReceived().values().stream()
+                                                    )
+                                                    .sorted()
+                                                    .findFirst()
+                                                    .orElse(null))
+                                    .getLastModify()
+                    );
+                    outputStream.writeObject(new Gson().toJson(lastModifyData));
                     outputStream.flush();
 
-                    //TODO: Scrive al client quand'è stata l'ultima modifica che il server ha ricevuto
-                    // String lastMail = String.valueOf(
-                    //         Objects.requireNonNull(
-                    //                 userDataList.get(username).getMailSent().values()
-                    //                         .stream()
-                    //                         .sorted(Comparator.comparing(Mail::moreRecentlyOf))
-                    //                         .findFirst()
-                    //                         .orElse(null))
-                    //                 .getLastModify()
-                    // );
-                    // outputStream.writeObject(new Gson().toJson(lastMail));
-                    // outputStream.flush();
+                    // RICEZIONE: modifiche del client offline
+                    Type type = new TypeToken<Map<String, Map<String, Mail>>>() {}.getType();
+                    Map<String, Map<String, Mail>> mapMailClient = new Gson().fromJson((String) inputStream.readObject(), type);
+
+                    Map<String, Mail> mapMailSentServer = userDataList.get(username).getMailSent(LastConnectionDatatime);
+                    Map<String, Mail> mapMailReceivedServer = userDataList.get(username).getMailSent(LastConnectionDatatime);
+                    Map<String, Mail> mapMailSentClient = mapMailClient.get("sent");
+                    Map<String, Mail> mapMailReceivedClient = mapMailClient.get("received");
+
+                    // Crea delle liste combinando le modifiche del client e del server
+                    Map<String, Mail> combinedSentMap = combineMailMaps(mapMailSentClient, mapMailSentServer);
+                    Map<String, Mail> combinedReceivedMap = combineMailMaps(mapMailReceivedClient, mapMailReceivedServer);
+
+                    // Aggiornamento delle liste con le modifiche combinate
+                    userDataList.get(username).updateMailSent(combinedSentMap);
+                    userDataList.get(username).updateMailReceived(combinedReceivedMap);
+
+                    Map<String, Map<String, Mail>> mapMailServer = new HashMap<>();
+                    mapMailServer.put("sent", combinedSentMap);
+                    mapMailServer.put("received", combinedReceivedMap);
+
+                    // INVIO: lista modifiche client-server combinate
+                    outputStream.writeObject(new Gson().toJson(mapMailServer));
+                    outputStream.flush();
 
                     log("Client: " + username + " connesso da " + userDataList.get(username).getClientAddress());
 
                 } else {
-                    ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-                    outputStream.writeObject("Null");
-                    outputStream.flush();
 
                     userDataList.get(username).setOn(false);
                     backup(username);
-
                     Platform.runLater(() -> { countProperty.set(Integer.toString(getClientNumber()));});
+
+                    // INVIO: risposta "Disconnessione notificata"
+                    outputStream.writeObject("Disconnessione notificata");
+                    outputStream.flush();
 
                     log("Client:  " + username + " disconnesso. (" + userDataList.get(username).getClientAddress()+ ")");
                 }
+
+                outputStream.close();
+                inputStream.close();
+
                 socket.close();
             } catch (JsonSyntaxException | IOException | ClassNotFoundException e) {
                 e.printStackTrace();
@@ -624,4 +649,21 @@ public class ServerModel {
         return response.substring(startIndex, endIndex);
     }
 
+    public static Map<String, Mail> combineMailMaps(Map<String, Mail> mapClient, Map<String, Mail> mapServer) {
+        return Stream.concat(
+                mapClient.entrySet().stream(),
+                mapServer.entrySet().stream()
+        ).collect(Collectors.toMap(
+                Map.Entry::getKey,
+                Map.Entry::getValue,
+                (mailClient, mailServer) -> {
+                    boolean isDeleteOnClient = mailClient.isDelete();
+                    boolean isDeleteOnServer = mailServer.isDelete();
+                    if (isDeleteOnClient ^ isDeleteOnServer)
+                        return isDeleteOnClient ? mailClient : mailServer;
+                    else
+                        return mailClient.moreRecentlyOf(mailServer.getLastModify()) ? mailClient : mailServer;
+                })
+        );
+    }
 }

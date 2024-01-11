@@ -18,6 +18,8 @@ import javafx.application.Platform;
 
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 public class Server {
@@ -143,81 +145,110 @@ public class Server {
         serverConnectionThread.start();
 
     }
-    public void disconnectToServer() {
+    public boolean disconnectToServer() {
         setConnected(false);
         backup();
         try {
             Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_CONNECTION);
+
+            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+
             ConnectionInfo connectionInfo = new ConnectionInfo(false, localAddress);
+
+            // INVIO: informazioni di connessione
+            outputStream.writeObject(new Gson().toJson(connectionInfo));
+            outputStream.flush();
+
+            // RICEZIONE: risposta "Disconnessione notificata"
+            String jsonServerReturn = (String) inputStream.readObject();
+            if(jsonServerReturn.equals("Disconnessione notificata"))
+                System.out.println("Disconnessione: " + localAddress);
+
             writeCSVInfo(localAddress, connectionInfo.getLastConnectionDateTime());
-
-            try {
-                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-                String jsonConnectionInfo = new Gson().toJson(connectionInfo);
-                outputStream.writeObject(jsonConnectionInfo);
-                outputStream.flush();
-
-                try {
-                    ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-                    String jsonSenderCSV = (String) inputStream.readObject();
-                    if(jsonSenderCSV.equals("Null"))
-                        System.out.println("Disconnessione: " + localAddress);
-
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-                outputStream.close();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            outputStream.close();
+            inputStream.close();
             socket.close();
-        } catch (IOException e) {
+            return true;
+        } catch (IOException | ClassNotFoundException e) {
             System.out.println("Disconnessione al Server Fallita");
             writeCSVInfo(localAddress, null);
+            return false;
         }
     }
-    public void connectToServer() {
+    public boolean connectToServer() {
         setConnected(false);
         loadBackup();
         try {
             Socket socket = new Socket();
             socket.connect(new InetSocketAddress(SERVER_ADDRESS, SERVER_PORT_CONNECTION), 1000);
-            ConnectionInfo connectionInfo = new ConnectionInfo(true, localAddress, getLastConnectionDataTime(localAddress));
 
-            try {
-                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-                String jsonConnectionInfo = new Gson().toJson(connectionInfo);
-                outputStream.writeObject(jsonConnectionInfo);
-                outputStream.flush();
-                setConnected(true);
+            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
 
-                    try {
-                        ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-                        String jsonSenderCSV = (String) inputStream.readObject();
+            String lastModifyDataClient = String.valueOf(
+                    Objects.requireNonNull(
+                                    Stream.concat(
+                                                    mailSent.values().stream(),
+                                                    mailReceived.values().stream()
+                                            )
+                                            .sorted()
+                                            .findFirst()
+                                            .orElse(null))
+                            .getLastModify()
+            );
+            ConnectionInfo connectionInfo = new ConnectionInfo(true, localAddress, lastModifyDataClient);
 
-                        Type type = new TypeToken<Map<String, Map<String, Mail>>>() {}.getType();
-                        Map<String, Map<String, Mail>> map = new Gson().fromJson(jsonSenderCSV, type);
+            // INVIO: informazioni di connessione
+            outputStream.writeObject(new Gson().toJson(connectionInfo));
+            outputStream.flush();
+            setConnected(true);
 
-                        System.out.println("Server: (" + mailSent.size()+ ") mailSent nuove: " + map.get("sent").size());
-                        System.out.println("Server: (" + mailReceived.size() + ") mailReceived nuove: " + map.get("received").size());
+            // RICEZIONE: data ultima modifica del server
+            String lastModifyDataServer = new Gson().fromJson((String) inputStream.readObject(), String.class);
 
-                        if(!map.get("sent").isEmpty() && !map.get("received").isEmpty()) {
-                            map.get("sent").values().forEach(mail -> mailSent.put(mail.getUuid(), mail));
-                            map.get("received").values().forEach(mail -> mailReceived.put(mail.getUuid(), mail));
-                            backup();
-                        }
+            Map<String, Map<String, Mail>> mapMailClient = new HashMap<>();
+            mapMailClient.put("sent",
+                    mailSent.values().stream()
+                            .filter(m -> m.moreRecentlyOf(lastModifyDataServer))
+                            .collect(Collectors.toMap(Mail::getUuid, mail -> mail))
+            );
+            mapMailClient.put("received",
+                    mailReceived.values().stream()
+                            .filter(m -> m.moreRecentlyOf(lastModifyDataServer))
+                            .collect(Collectors.toMap(Mail::getUuid, mail -> mail))
+            );
 
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                outputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            // INVIO: modifiche del client offline
+            outputStream.writeObject(new Gson().toJson(mapMailClient));
+            outputStream.flush();
+
+            // RICEZIONE: lista modifiche client-server combinate
+            String jsonSenderCSV = (String) inputStream.readObject();
+
+            Type type = new TypeToken<Map<String, Map<String, Mail>>>() {}.getType();
+            Map<String, Map<String, Mail>> mapMailServer = new Gson().fromJson(jsonSenderCSV, type);
+
+            mailSent.putAll(mapMailServer.get("sent"));
+            mailReceived.putAll(mapMailServer.get("received"));
+
+            backup();
+
+                //if(!mapMailServer.get("sent").isEmpty() && !mapMailServer.get("received").isEmpty()) {
+                //            mapMailServer.get("sent").values().forEach(mail -> mailSent.put(mail.getUuid(), mail));
+                //            mapMailServer.get("received").values().forEach(mail -> mailReceived.put(mail.getUuid(), mail));
+                //            backup();
+                //        }
+
+            outputStream.close();
+            inputStream.close();
+
             socket.close();
-        } catch (IOException e) {
-            System.out.println("Connessione al Server Fallita (connectToServer)");
+            return true;
+        } catch (IOException | ClassNotFoundException e) {
+            //e.printStackTrace();
+            //System.out.println("Connessione al Server Fallita (connectToServer)");
+            return false;
         }
     }
 
