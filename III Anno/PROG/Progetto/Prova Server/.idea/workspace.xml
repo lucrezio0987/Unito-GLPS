@@ -5,11 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b545aa37-8307-4738-b698-f55b798e1538" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/prova_server/model/ServerModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/prova_server/model/ServerModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Prova progetto/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova progetto/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Prova progetto/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova progetto/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Prova progetto/src/main/java/com/example/prva/controller/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova progetto/src/main/java/com/example/prva/controller/ClientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Prova progetto/src/main/java/com/example/prva/model/Mail.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova progetto/src/main/java/com/example/prva/model/Mail.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,6 +65,7 @@
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.keymap",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -140,10 +141,22 @@
       <workItem from="1704811916059" duration="2694000" />
       <workItem from="1704815065061" duration="4466000" />
       <workItem from="1704823450115" duration="6024000" />
+      <workItem from="1704972322360" duration="769000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/prova_server/model/Mail.java</url>
+          <line>72</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

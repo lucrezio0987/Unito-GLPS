@@ -309,6 +309,7 @@ public class ServerModel {
                 String sender = mail.getSender();
 
                 loadBackup(sender);
+                log("MAIL: " + sender + " -> " + mail.getRecipients() + "[Obj: " + mail.getObject() +"]");
                 userDataList.get(sender).addMailSent(mail);
                 backup(sender);
 
