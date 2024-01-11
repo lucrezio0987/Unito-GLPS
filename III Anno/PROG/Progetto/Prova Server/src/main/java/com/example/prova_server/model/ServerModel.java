@@ -526,13 +526,17 @@ public class ServerModel {
         return Files.exists(Path.of(path));
     }
     private static void createFileIfNotExists(String path, String[] headers) {
-        if(!FileExist(path))
-            try (Writer writer = new FileWriter(path, false);
-                 CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(headers))) {
-                csvPrinter.printRecord();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+        if (!FileExist(path)) {
+            createFileAndWriteHeader(path, headers);
+        }
+    }
+    private static void createFileAndWriteHeader(String path, String[] headers) {
+        try (Writer writer = new FileWriter(path, false);
+             CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(headers))) {
+            csvPrinter.printRecord();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     private static String pathConstructor(String username, String type){
         String directoryPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "backup";
@@ -561,7 +565,6 @@ public class ServerModel {
 
         log("BACKUP: cartella di backup svuotata");
     }
-
 
     public void clearAllBackup() {
         clearBackupMail();

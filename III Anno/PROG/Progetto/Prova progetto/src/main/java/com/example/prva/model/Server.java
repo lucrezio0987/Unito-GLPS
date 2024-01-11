@@ -252,7 +252,6 @@ public class Server {
                 outputStream.flush();
 
                 socket.close();
-                backup();
                 ret = true;
                 System.out.println("Email inviata a: " + mail.getRecipients());
             } catch (IOException e) {
@@ -263,6 +262,7 @@ public class Server {
         }
         mailSent.put(mail.getUuid(), mail);
         controller.createCardSent(mail);
+        backup();
         return ret;
     }
     public void addMailReceived(Mail mail) {
@@ -424,13 +424,17 @@ public class Server {
         return new File(path).exists();
     }
     private static void createFileIfNotExists(String path, String[] headers) {
-        if(!FileExist(path))
-            try (Writer writer = new FileWriter(path, false);
-                 CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(headers))) {
-                csvPrinter.printRecord();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+        if (!FileExist(path)) {
+            createFileAndWriteHeader(path, headers);
+        }
+    }
+    private static void createFileAndWriteHeader(String path, String[] headers) {
+        try (Writer writer = new FileWriter(path, false);
+             CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(headers))) {
+            csvPrinter.printRecord();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     public static String pathConstructor(String username, String type) {
         String directoryPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "backup";
@@ -450,10 +454,6 @@ public class Server {
         serverConnectionThread.interrupt();
     }
 
-    public void clearAllBackup() {
-        clearBackupMail();
-        clearBackupData();
-    }
     public void clearBackupMail() {
         String directoryPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "backup";
         File directory = new File(directoryPath);
@@ -471,7 +471,6 @@ public class Server {
     public void clearLocalMailsSent() {
         mailSent.clear();
     }
-
     public void clearLocalMailsReceived() {
         mailReceived.clear();
     }
