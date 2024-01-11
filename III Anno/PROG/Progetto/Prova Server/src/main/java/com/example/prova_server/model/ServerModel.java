@@ -308,10 +308,12 @@ public class ServerModel {
                 Mail mail = new Gson().fromJson(jsonMail, Mail.class);
                 String sender = mail.getSender();
 
-                loadBackup(sender);
                 log("MAIL: " + sender + " -> " + mail.getRecipients() + "[Obj: " + mail.getObject() +"]");
+                loadBackup(sender);
+                log("-- lista mail caricate: " + sender);
                 userDataList.get(sender).addMailSent(mail);
                 backup(sender);
+                log("-- lista mail salvata: " + sender);
 
                 mail.getRecipientsList().forEach(recipient -> {
                     try {

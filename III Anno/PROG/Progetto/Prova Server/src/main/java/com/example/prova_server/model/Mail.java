@@ -5,13 +5,13 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Mail implements Serializable {
-    private static String uuid;
-    private static String sender;
-    private static String recipients;
-    private static String text;
-    private static String object;
-    private static String creationDateTime;
-    private static String lastModifyDateTime;
+    private String uuid;
+    private String sender;
+    private String recipients;
+    private String text;
+    private String object;
+    private String creationDateTime;
+    private String lastModifyDateTime;
 
     private boolean delete;
     private boolean read;
@@ -95,16 +95,16 @@ public class Mail implements Serializable {
         }
     }
 
-    public static int moreRecentlyOf(Mail otherMail) {
-        SimpleDateFormat formatDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        try {
-            Date otherDateTime = formatDateTime.parse(otherMail.getLastModify());
-            Date thisDateTime = formatDateTime.parse(lastModifyDateTime);
-            return thisDateTime.compareTo(otherDateTime);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    //public static int moreRecentlyOf(Mail otherMail) {
+    //    SimpleDateFormat formatDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    //    try {
+    //        Date otherDateTime = formatDateTime.parse(otherMail.getLastModify());
+    //        Date thisDateTime = formatDateTime.parse(lastModifyDateTime);
+    //        return thisDateTime.compareTo(otherDateTime);
+    //    } catch (ParseException e) {
+    //        throw new RuntimeException(e);
+    //    }
+    //}
 
     @Override
     public boolean equals(Object o) {
