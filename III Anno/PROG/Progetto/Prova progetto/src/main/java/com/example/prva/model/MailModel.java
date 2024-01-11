@@ -298,9 +298,9 @@ public class MailModel {
     }
 
     public void clearAllBackup() {
+        clearBackupLog();
         clearBackupMail();
         clearBackupData();
-        clearBackupLog();
         log("BACKUP: Rimossi tutti i file di backup");
     }
     public void clearBackupMail() {

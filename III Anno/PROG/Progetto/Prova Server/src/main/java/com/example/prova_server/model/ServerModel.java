@@ -549,26 +549,9 @@ public class ServerModel {
             return directoryPath + File.separator + username + "-" + type + ".csv";
     }
 
-
-    public void clearBackup() {
-        String directoryPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "backup";
-        File directory = new File(directoryPath);
-
-        userDataList.clear();
-
-        if (directory.exists() && directory.isDirectory())
-            for (File file : Objects.requireNonNull(directory.listFiles()))
-                if (file.isFile())
-                    file.delete();
-
-        textAreaProperty.set(null);
-
-        log("BACKUP: cartella di backup svuotata");
-    }
-
     public void clearAllBackup() {
-        clearBackupMail();
         clearBackupLog();
+        clearBackupMail();
         log("BACKUP: Rimossi tutti i file di backup");
     }
     public void clearBackupMail() {
