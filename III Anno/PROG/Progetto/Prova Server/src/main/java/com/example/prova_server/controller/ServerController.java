@@ -107,8 +107,8 @@ public class ServerController {
                     key,
                     value.getClientAddress(),
                     String.valueOf(value.isOn()),
-                    String.valueOf(value.getMailSent().size()),
-                    String.valueOf(value.getMailReceived().size())));
+                    String.valueOf(value.getMailSentNotDelete().size()),
+                    String.valueOf(value.getMailReceivedNotDelete().size())));
         });
     }
 

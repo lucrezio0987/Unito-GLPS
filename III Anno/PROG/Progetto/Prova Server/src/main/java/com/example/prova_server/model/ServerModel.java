@@ -279,12 +279,11 @@ public class ServerModel {
                     Map<String, Map<String, Mail>> mapMailClient = new Gson().fromJson((String) inputStream.readObject(), type);
                     System.out.println(":::::::   FINE -> RICEZIONE: modifiche del client offline == mapMailClient: " + mapMailClient.get("sent").size() + " " + mapMailClient.get("received").size());
 
-                    Map<String, Mail> mapMailSentServer = userDataList.get(username).getMailSent(LastConnectionDatatime);
-                    Map<String, Mail> mapMailReceivedServer = userDataList.get(username).getMailReceived(LastConnectionDatatime);
                     Map<String, Mail> mapMailSentClient = mapMailClient.get("sent");
                     Map<String, Mail> mapMailReceivedClient = mapMailClient.get("received");
-
                     sendNotSent(mapMailSentClient);
+                    Map<String, Mail> mapMailSentServer = userDataList.get(username).getMailSent(LastConnectionDatatime);
+                    Map<String, Mail> mapMailReceivedServer = userDataList.get(username).getMailReceived(LastConnectionDatatime);
 
                     // Crea delle liste combinando le modifiche del client e del server
                     Map<String, Mail> combinedSentMap = combineMailMaps(mapMailSentClient, mapMailSentServer);
@@ -606,7 +605,7 @@ public class ServerModel {
                 .forEach(File::delete);
 
         userDataList.forEach((u, data) -> {
-            data.clearMailListRecived();
+            data.clearMailListSent();
             data.clearMailListRecived();
         });
 

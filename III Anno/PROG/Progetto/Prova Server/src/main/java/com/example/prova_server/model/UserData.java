@@ -3,6 +3,7 @@ package com.example.prova_server.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class UserData {
     String username;
@@ -35,6 +36,19 @@ public class UserData {
     }
     public Map<String, Mail> getMailReceived() {
         return mailReceived;
+    }
+    public Map<String, Mail> getMailSentNotDelete() {
+        return mailSent.entrySet()
+                .stream()
+                .filter(entry -> !entry.getValue().isDelete())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    public Map<Object, Object> getMailReceivedNotDelete() {
+        return mailReceived.entrySet()
+                .stream()
+                .filter(entry -> !entry.getValue().isDelete())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     public void addMailSent(Mail mail) {
@@ -107,4 +121,5 @@ public class UserData {
     public void setAddress(String address) {
         this.clientAddress = address;
     }
+
 }

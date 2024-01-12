@@ -152,10 +152,10 @@ public class ClientController {
         });
 
         
-        reconnectBtnSent.setOnAction(event ->       { clearMail(); setConnection(mailModel.reconnect());});
-        reconnectBtnReceived.setOnAction(event ->   { clearMail(); setConnection(mailModel.reconnect());});
-        reconnectBtnSend.setOnAction(event ->       { clearMail(); setConnection(mailModel.reconnect());});
-        reconnectBtnLog.setOnAction(event ->        { clearMail(); setConnection(mailModel.reconnect());});
+        reconnectBtnSent.setOnAction(event ->       { clearLocalMail(); setConnection(mailModel.reconnect());});
+        reconnectBtnReceived.setOnAction(event ->   { clearLocalMail(); setConnection(mailModel.reconnect());});
+        reconnectBtnSend.setOnAction(event ->       { clearLocalMail(); setConnection(mailModel.reconnect());});
+        reconnectBtnLog.setOnAction(event ->        { clearLocalMail(); setConnection(mailModel.reconnect());});
         connectServerBtnLog.setOnAction(event ->    { setConnection(mailModel.connect());});
         disconnectServerBtnLog.setOnAction(event -> { setConnection(mailModel.disconnect());});
 
@@ -194,7 +194,7 @@ public class ClientController {
     public void setCountMailSent() { countMailSent.setText(String.valueOf(mailModel.getListMailSent().size())); }
     public void setCountMailReceived() { countMailReceived.setText(String.valueOf(mailModel.getListMailReceived().size())); }
 
-    private void clearMail() {
+    private void deleteMail() {
         deleteMailSent();
         deleteMailReceived();
     }
