@@ -417,6 +417,9 @@ public class ServerModel {
                 .forEach(mail -> mail.getRecipientsList().forEach(recipient -> sendMail(recipient, mail)));
     }
     private static void sendMail(String recipient, Mail mail) {
+        if(mail.isDelete())
+            return;
+
         loadBackup(recipient);
         userDataList.get(recipient).addMailReceived(mail);
         backup(recipient);
@@ -684,7 +687,9 @@ public class ServerModel {
     }
 
     public static Map<String, Mail> combineMailMaps(Map<String, Mail> mapClient, Map<String, Mail> mapServer) {
-        return Stream.concat(
+        log("  [+] MAPPA 1 Client: " + mapClient.values().size() + " ( di cui " + mapClient.values().stream().filter(m -> m.isDelete()).count() + " cancellate)");
+        log("  [+] MAPPA 2 Server: " + mapServer.values().size() + " ( di cui " + mapServer.values().stream().filter(m -> m.isDelete()).count() + " cancellate)");
+        Map<String, Mail> combMap = Stream.concat(
                 mapClient.entrySet().stream(),
                 mapServer.entrySet().stream()
         ).collect(Collectors.toMap(
@@ -699,5 +704,7 @@ public class ServerModel {
                         return mailClient.moreRecentlyOf(mailServer.getLastModify()) ? mailClient : mailServer;
                 })
         );
+        log("  [+] MAPPA 1+2 Comb: " + combMap.values().size() + " ( di cui " + combMap.values().stream().filter(m -> m.isDelete()).count() + " cancellate)");
+        return combMap;
     }
 }

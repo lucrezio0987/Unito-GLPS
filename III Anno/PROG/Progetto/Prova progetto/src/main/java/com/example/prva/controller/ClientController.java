@@ -230,7 +230,6 @@ public class ClientController {
         setCountMailReceived();
     }
 
-
     public void showMailPanelReceived(boolean bool) {
         if(bool) {
             imgEmailReceived.setVisible(false);

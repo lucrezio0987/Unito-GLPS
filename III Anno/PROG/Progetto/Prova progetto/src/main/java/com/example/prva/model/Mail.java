@@ -29,7 +29,7 @@ public class Mail implements Serializable, Comparable<Mail> {
         this.creationDateTime = formatDateTime.format(now);
         this.lastModifyDateTime = formatDateTime.format(now);
         this.read = false;
-        this.delete = false;
+        this.delete = sender == null && recipients == null;
         this.uuid = UUID.randomUUID().toString();
     }
 
@@ -42,8 +42,7 @@ public class Mail implements Serializable, Comparable<Mail> {
         this.lastModifyDateTime = lastModifyDateTime;
         this.read = read;
         this.uuid = uuid;
-        if(sender == null && recipients == null)
-            this.delete = true;
+        this.delete = sender == null && recipients == null;
     }
 
     public String getSender()       { return sender;        }
@@ -75,7 +74,7 @@ public class Mail implements Serializable, Comparable<Mail> {
         setLastModify();
     }
     public void setDelete() {
-        if(!isDelete()) {
+        if(!delete) {
             this.sender = null;
             this.recipients = null;
             this.object = null;
