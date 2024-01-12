@@ -229,9 +229,7 @@ public class MailModel {
             server.setAddress(localAddress);
             server.setServerAddress(serveHostProperty.get());
             server.connectToServer();
-
-            //server.setAddress(localAddressProperty.get());
-
+            
             controller.setCountMailSent();
             getListMailSent().forEach(controller::createCardSent);
 
@@ -259,13 +257,16 @@ public class MailModel {
                     log("ERRORE: Riconnessione al server non riuscita (Problema di Connessione)");
             }
 
-            controller.setCountMailSent();
-            getListMailSent().forEach(controller::createCardSent);
-
-            controller.setCountMailReceived();
-            getListMailReceived().forEach(controller::createCardReceived);
-
             if(server.isConnected()) {
+                controller.clearLocalMail();
+
+                controller.setCountMailSent();
+                getListMailSent().forEach(controller::createCardSent);
+
+                controller.setCountMailReceived();
+                getListMailReceived().forEach(controller::createCardReceived);
+
+
                 log("SERVER: Connesso");
                 return true;
             }
