@@ -75,10 +75,10 @@ public class UserData {
     }
 
     public void clearMailListRecived() {
-        mailReceived.clear();
+        mailReceived.values().forEach(Mail::setDelete);
     }
     public void clearMailListSent() {
-        mailSent.clear();
+        mailSent.values().forEach(Mail::setDelete);
     }
 
     public Map<String, Mail> getMailSent(String lastConnectionDatatime) {
