@@ -455,11 +455,16 @@ public class Server {
         return new File(path).exists();
     }
     private static void createFileIfNotExists(String path, String[] headers) {
+        String directoryPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "backup";
+        File directory = new File(directoryPath);
+        if (!directory.exists())
+            directory.mkdirs();
         if (!FileExist(path)) {
             createFileAndWriteHeader(path, headers);
         }
     }
     private static void createFileAndWriteHeader(String path, String[] headers) {
+
         try (Writer writer = new FileWriter(path, false);
              CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(headers))) {
             csvPrinter.printRecord();
