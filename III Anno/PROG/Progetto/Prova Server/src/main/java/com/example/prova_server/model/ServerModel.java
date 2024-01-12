@@ -294,7 +294,7 @@ public class ServerModel {
                     userDataList.get(username).updateMailReceived(combinedReceivedMap);
 
                     backup(username);
-                    
+
                     Map<String, Map<String, Mail>> mapMailServer = new HashMap<>();
                     mapMailServer.put("sent", combinedSentMap);
                     mapMailServer.put("received", combinedReceivedMap);

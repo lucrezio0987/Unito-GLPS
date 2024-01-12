@@ -250,17 +250,17 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label layoutX="328.0" layoutY="267.0" prefHeight="29.0" prefWidth="160.0" text="(Mat: ... ) ">
+                  <Label layoutX="328.0" layoutY="267.0" prefHeight="29.0" prefWidth="160.0" text="(Mat: 976703 ) ">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label layoutX="328.0" layoutY="293.0" prefHeight="29.0" prefWidth="160.0" text="(Mat: ... )">
+                  <Label layoutX="328.0" layoutY="293.0" prefHeight="29.0" prefWidth="160.0" text="(Mat: 929759 )">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label layoutX="328.0" layoutY="319.0" prefHeight="29.0" prefWidth="160.0" text="(Mat: ... )">
+                  <Label layoutX="328.0" layoutY="319.0" prefHeight="29.0" prefWidth="160.0" text="(Mat: 1021437 )">
                      <font>
                         <Font size="14.0" />
                      </font>

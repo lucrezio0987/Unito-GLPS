@@ -70,7 +70,7 @@ public class Mail implements Serializable, Comparable<Mail> {
     }
 
     public void setRead() {
-        this.read = false;
+        this.read = true;
         setLastModify();
     }
     public void setDelete() {
