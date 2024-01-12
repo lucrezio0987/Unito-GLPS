@@ -280,7 +280,7 @@ public class ServerModel {
                     System.out.println(":::::::   FINE -> RICEZIONE: modifiche del client offline == mapMailClient: " + mapMailClient.get("sent").size() + " " + mapMailClient.get("received").size());
 
                     Map<String, Mail> mapMailSentServer = userDataList.get(username).getMailSent(LastConnectionDatatime);
-                    Map<String, Mail> mapMailReceivedServer = userDataList.get(username).getMailSent(LastConnectionDatatime);
+                    Map<String, Mail> mapMailReceivedServer = userDataList.get(username).getMailReceived(LastConnectionDatatime);
                     Map<String, Mail> mapMailSentClient = mapMailClient.get("sent");
                     Map<String, Mail> mapMailReceivedClient = mapMailClient.get("received");
 

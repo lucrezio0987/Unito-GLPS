@@ -40,7 +40,14 @@ public class ServerController {
         countLabel.textProperty().bind(model.getCountProperty());
         model.getServeHostTextProperty().bindBidirectional(serverHostLabel.textProperty());
 
+        usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
+        addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
+        isOnColumn.setCellValueFactory(new PropertyValueFactory<>("isOn"));
+        sendColumn.setCellValueFactory(new PropertyValueFactory<>("Send"));
+        receivedColumn.setCellValueFactory(new PropertyValueFactory<>("Received"));
+
         model.start();
+        addAllRowToTable();
 
         clearBackupButton.setOnAction( event -> model.clearAllBackup());
         clearBackupLogButton.setOnAction(event -> model.clearBackupLog());
@@ -66,11 +73,6 @@ public class ServerController {
         stopBtn.setDisable(true);
         resetBtn.setDisable(true);
 
-        usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
-        addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
-        isOnColumn.setCellValueFactory(new PropertyValueFactory<>("isOn"));
-        sendColumn.setCellValueFactory(new PropertyValueFactory<>("Send"));
-        receivedColumn.setCellValueFactory(new PropertyValueFactory<>("Received"));
 
         textArea.textProperty().addListener(new ChangeListener<String>() {
             @Override
