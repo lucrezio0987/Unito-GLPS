@@ -67,6 +67,8 @@ public class ClientController {
 
     //TODO: il controllo della sintassi deve dare qualche tipo di feedback qualora non andasse a buon fine
 
+    //TODO: Ristrutturare le classi
+
 
     public void initModel(String localAddressMail, String serverHost) {
         mailModel = new MailModel(this);
