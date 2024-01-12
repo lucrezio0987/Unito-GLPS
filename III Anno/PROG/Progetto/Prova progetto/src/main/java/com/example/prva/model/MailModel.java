@@ -228,12 +228,9 @@ public class MailModel {
         if(syntaxControll(localAddress)) {
             server.setAddress(localAddress);
             server.setServerAddress(serveHostProperty.get());
-            if (!server.connectToServer()) {
-                log("ERRORE: Connessione al server non riuscita");
-                return false;
-            }
+            server.connectToServer();
 
-            server.setAddress(localAddressProperty.get());
+            //server.setAddress(localAddressProperty.get());
 
             controller.setCountMailSent();
             getListMailSent().forEach(controller::createCardSent);
@@ -241,8 +238,11 @@ public class MailModel {
             controller.setCountMailReceived();
             getListMailReceived().forEach(controller::createCardReceived);
 
-            log("SERVER: Connesso");
-            return true;
+            if(server.isConnected()) {
+                log("SERVER: Connesso");
+                return true;
+            }
+            log("ERRORE: Connessione al server non riuscita (Backup caricati)");
         }
         return false;
     }
@@ -250,15 +250,13 @@ public class MailModel {
         String localAddress = localAddressProperty.get();
         if(syntaxControll(localAddress)) {
 
-            if(!server.disconnectToServer()){
+            if(!server.disconnectToServer())
                 log("ERRORE: Riconnessione al server non riuscita (Problema di Disconnessione)");
-                return false;
-            }
-            server.setAddress(localAddress);
-            server.setServerAddress(serveHostProperty.get());
-            if(!server.connectToServer()){
-                log("ERRORE: Riconnessione al server non riuscita (Problema di Connessione)");
-                return false;
+            else {
+                server.setAddress(localAddress);
+                server.setServerAddress(serveHostProperty.get());
+                if (!server.connectToServer())
+                    log("ERRORE: Riconnessione al server non riuscita (Problema di Connessione)");
             }
 
             controller.setCountMailSent();
@@ -267,8 +265,10 @@ public class MailModel {
             controller.setCountMailReceived();
             getListMailReceived().forEach(controller::createCardReceived);
 
-            log("SERVER: Connesso");
-            return true;
+            if(server.isConnected()) {
+                log("SERVER: Connesso");
+                return true;
+            }
         }
         return false;
 
