@@ -152,10 +152,10 @@ public class ClientController {
         });
 
         
-        reconnectBtnSent.setOnAction(event ->       { clearLocalMail(); setConnection(mailModel.reconnect());});
-        reconnectBtnReceived.setOnAction(event ->   { clearLocalMail(); setConnection(mailModel.reconnect());});
-        reconnectBtnSend.setOnAction(event ->       { clearLocalMail(); setConnection(mailModel.reconnect());});
-        reconnectBtnLog.setOnAction(event ->        { clearLocalMail(); setConnection(mailModel.reconnect());});
+        reconnectBtnSent.setOnAction(event ->       { setConnection(mailModel.reconnect());});
+        reconnectBtnReceived.setOnAction(event ->   { setConnection(mailModel.reconnect());});
+        reconnectBtnSend.setOnAction(event ->       { setConnection(mailModel.reconnect());});
+        reconnectBtnLog.setOnAction(event ->        { setConnection(mailModel.reconnect());});
         connectServerBtnLog.setOnAction(event ->    { clearLocalMail(); setConnection(mailModel.connect());});
         disconnectServerBtnLog.setOnAction(event -> { setConnection(mailModel.disconnect());});
 

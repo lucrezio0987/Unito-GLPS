@@ -229,7 +229,7 @@ public class MailModel {
             server.setAddress(localAddress);
             server.setServerAddress(serveHostProperty.get());
             server.connectToServer();
-            
+
             controller.setCountMailSent();
             getListMailSent().forEach(controller::createCardSent);
 
