@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1cbb55e0-871d-4be9-bc5a-7bd8e3cae843" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Prova Server/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova Server/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/prva/model/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/prva/model/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/prva/controller/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/prva/controller/ClientController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,7 +140,7 @@
       <workItem from="1704978802040" duration="2339000" />
       <workItem from="1704981759728" duration="6441000" />
       <workItem from="1705021545718" duration="4985000" />
-      <workItem from="1705062205111" duration="14215000" />
+      <workItem from="1705062205111" duration="15363000" />
     </task>
     <servers />
   </component>

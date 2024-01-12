@@ -65,11 +65,16 @@ public class ClientController {
                ma un altra idea potrebbe essere fare in modo che il client si metta su "una porta libera" (causerebbe più problemi e renderebbe il sistema poco scalabile a parer mio)
      */
 
+<<<<<<< Updated upstream
     //TODO: il controllo della sintassi deve dare qualche tipo di feedback qualora non andasse a buon fine
 
     //TODO: Ristrutturare le classi
 
 
+=======
+    //TODO: il controlo della sintassi deve dare qualche tipo di feedback qualora non andasse a buon fine
+
+>>>>>>> Stashed changes
     public void initModel(String localAddressMail, String serverHost) {
         mailModel = new MailModel(this);
         mailCardModel = new MailCardModel(mailModel);
