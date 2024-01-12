@@ -163,16 +163,18 @@ public class Server {
             outputStream.flush();
 
             // RICEZIONE: risposta "Disconnessione notificata"
-            String jsonServerReturn = (String) inputStream.readObject();
-            if(jsonServerReturn.equals("Disconnessione notificata"))
-                System.out.println("Disconnessione: " + localAddress);
+            // String serverReturn = (String) inputStream.readObject();
+            // if(serverReturn.equals("Disconnessione notificata"))
+            //     System.out.println("Disconnessione: " + localAddress);
+
+            inputStream.close();
+            outputStream.close();
 
             writeCSVInfo(localAddress, connectionInfo.getLastConnectionDateTime());
-            outputStream.close();
-            inputStream.close();
+
             socket.close();
             return true;
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException e) {
             System.out.println("Disconnessione al Server Fallita");
             writeCSVInfo(localAddress, null);
             return false;

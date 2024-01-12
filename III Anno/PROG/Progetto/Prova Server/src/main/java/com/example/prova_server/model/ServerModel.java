@@ -314,10 +314,10 @@ public class ServerModel {
                     Platform.runLater(() -> { countProperty.set(Integer.toString(getClientNumber()));});
 
                     // INVIO: risposta "Disconnessione notificata"
-                    System.out.println(":::::::   INVIO: risposta Disconnessione notificata");
-                    outputStream.writeObject("Disconnessione notificata");
-                    outputStream.flush();
-                    System.out.println(":::::::   INVIO: risposta Disconnessione notificata");
+                    // System.out.println(":::::::   INVIO: risposta Disconnessione notificata");
+                    // outputStream.writeObject("Disconnessione notificata");
+                    // outputStream.flush();
+                    // System.out.println(":::::::   INVIO: risposta Disconnessione notificata");
 
                     log("Client:  " + username + " disconnesso. (" + userDataList.get(username).getClientAddress()+ ")");
                 }
