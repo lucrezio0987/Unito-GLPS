@@ -241,6 +241,7 @@ public class MailModel {
             controller.setCountMailReceived();
             getListMailReceived().forEach(controller::createCardReceived);
 
+            log("SERVER: Connesso");
             return true;
         }
         return false;
@@ -266,14 +267,15 @@ public class MailModel {
             controller.setCountMailReceived();
             getListMailReceived().forEach(controller::createCardReceived);
 
+            log("SERVER: Connesso");
             return true;
         }
         return false;
 
     }
     public boolean disconnect() {
-        log("SERVER: Disconnesso");
         server.disconnectToServer();
+        log("SERVER: Disconnesso");
         return server.isConnected();
     }
 
