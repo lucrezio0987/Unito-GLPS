@@ -195,8 +195,8 @@ public class Server {
                     .sorted()
                     .map(Mail::getLastModify)
                     .findFirst()
-                    .orElse(null);
-
+                    .orElse("01/01/00001 00:00:00");
+            
             ConnectionInfo connectionInfo = new ConnectionInfo(true, localAddress, lastModifyDataClient);
 
             // INVIO: informazioni di connessione

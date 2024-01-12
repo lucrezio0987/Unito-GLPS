@@ -259,25 +259,13 @@ public class ServerModel {
                     addUser(username, socket.getInetAddress().getHostAddress());
                     loadBackup(username);
 
-                    //String lastModifyData = String.valueOf(
-                    //        Objects.requireNonNull(
-                    //                        Stream.concat(
-                    //                                        userDataList.get(username).getMailSent().values().stream(),
-                    //                                        userDataList.get(username).getMailReceived().values().stream()
-                    //                                )
-                    //                                .sorted()
-                    //                                .findFirst()
-                    //                                .orElse(null))
-                    //                .getLastModify()
-                    //);
-
                     String lastModifyData = userDataList.get(username).getMailSent().values().stream()
                             .flatMap(mail -> Stream.of(mail, userDataList.get(username).getMailReceived().get(mail.getUuid())))
                             .filter(Objects::nonNull)
                             .sorted()
                             .map(Mail::getLastModify)
                             .findFirst()
-                            .orElse(null);
+                            .orElse("01/01/00001 00:00:00");
 
                     // INVIO: data ultima modifica del server
                     System.out.println(":::::::   INIZIO -> INVIO: data ultima modifica del server == lastModifyData: " + lastModifyData);
@@ -430,7 +418,6 @@ public class ServerModel {
     }
 
     private static void sendMail(String recipient, Mail mail) throws IOException {
-
         loadBackup(recipient);
         userDataList.get(recipient).addMailReceived(mail);
         backup(recipient);
