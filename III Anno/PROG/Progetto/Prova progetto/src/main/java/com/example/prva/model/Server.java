@@ -92,11 +92,11 @@ public class Server {
                         Socket socket = clientMessageServerSocket.accept();
                         try {
                             ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-                            String jsonMail = (String) inputStream.readObject();
-                            Mail mail = new Gson().fromJson(jsonMail, Mail.class);
+                            Mail mail = new Gson().fromJson((String) inputStream.readObject(), Mail.class);
 
                             System.out.println("MAIL ricevuta da " + mail.getSender() + ": " + mail.getText());
                             addMailReceived(mail);
+                            backup();
 
                             socket.close();
                         } catch (IOException | ClassNotFoundException e) {
@@ -149,10 +149,12 @@ public class Server {
         setConnected(false);
         backup();
         try {
-            Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_CONNECTION);
+            Socket socket = new Socket();
+            socket.connect(new InetSocketAddress(SERVER_ADDRESS, SERVER_PORT_CONNECTION), 2000);
+            socket.setSoTimeout(2000);
 
-            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
             ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
 
             ConnectionInfo connectionInfo = new ConnectionInfo(false, localAddress);
 
@@ -181,31 +183,33 @@ public class Server {
         loadBackup();
         try {
             Socket socket = new Socket();
-            socket.connect(new InetSocketAddress(SERVER_ADDRESS, SERVER_PORT_CONNECTION), 1000);
+            socket.connect(new InetSocketAddress(SERVER_ADDRESS, SERVER_PORT_CONNECTION), 2000);
+            socket.setSoTimeout(2000);
 
             ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
             ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
 
-            String lastModifyDataClient = String.valueOf(
-                    Objects.requireNonNull(
-                                    Stream.concat(
-                                                    mailSent.values().stream(),
-                                                    mailReceived.values().stream()
-                                            )
-                                            .sorted()
-                                            .findFirst()
-                                            .orElse(null))
-                            .getLastModify()
-            );
+            String lastModifyDataClient = mailSent.values().stream()
+                    .flatMap(mail -> Stream.of(mail, mailReceived.get(mail.getUuid())))
+                    .filter(Objects::nonNull)
+                    .sorted()
+                    .map(Mail::getLastModify)
+                    .findFirst()
+                    .orElse(null);
+
             ConnectionInfo connectionInfo = new ConnectionInfo(true, localAddress, lastModifyDataClient);
 
             // INVIO: informazioni di connessione
+            System.out.println(":::::::   INIZIO -> INVIO: informazioni di connessione == lastModifyDataClient: " + lastModifyDataClient);
             outputStream.writeObject(new Gson().toJson(connectionInfo));
             outputStream.flush();
+            System.out.println(":::::::   FINE -> INVIO: informazioni di connessione");
             setConnected(true);
 
             // RICEZIONE: data ultima modifica del server
+            System.out.println(":::::::   INIZIO -> RICEZIONE: data ultima modifica del server");
             String lastModifyDataServer = new Gson().fromJson((String) inputStream.readObject(), String.class);
+            System.out.println(":::::::   FINE -> RICEZIONE: data ultima modifica del server == lastModifyDataServer: " + lastModifyDataServer);
 
             Map<String, Map<String, Mail>> mapMailClient = new HashMap<>();
             mapMailClient.put("sent",
@@ -220,25 +224,23 @@ public class Server {
             );
 
             // INVIO: modifiche del client offline
+            System.out.println(":::::::   INIZIO -> INVIO: modifiche del client offline == mapMailClient: " + mapMailClient.get("sent").size() + " " + mapMailClient.get("received").size());
             outputStream.writeObject(new Gson().toJson(mapMailClient));
             outputStream.flush();
+            System.out.println(":::::::   FINE -> INVIO: modifiche del client offline");
 
             // RICEZIONE: lista modifiche client-server combinate
+            System.out.println(":::::::   INIZIO -> RICEZIONE: lista modifiche client-server combinate");
             String jsonSenderCSV = (String) inputStream.readObject();
 
             Type type = new TypeToken<Map<String, Map<String, Mail>>>() {}.getType();
             Map<String, Map<String, Mail>> mapMailServer = new Gson().fromJson(jsonSenderCSV, type);
+            System.out.println(":::::::   FINE -> RICEZIONE: lista modifiche client-server combinate == mapMailServer: " + mapMailServer.get("sent").size() + " " + mapMailServer.get("received").size());
 
             mailSent.putAll(mapMailServer.get("sent"));
             mailReceived.putAll(mapMailServer.get("received"));
 
             backup();
-
-                //if(!mapMailServer.get("sent").isEmpty() && !mapMailServer.get("received").isEmpty()) {
-                //            mapMailServer.get("sent").values().forEach(mail -> mailSent.put(mail.getUuid(), mail));
-                //            mapMailServer.get("received").values().forEach(mail -> mailReceived.put(mail.getUuid(), mail));
-                //            backup();
-                //        }
 
             outputStream.close();
             inputStream.close();
@@ -423,7 +425,6 @@ public class Server {
     }
 
     private static void writeCSVMail(String path, Map<String, Mail> mailList){
-        createFileIfNotExists(path, MAIL_HEADER);
         Map<String, Mail> mailMap = readCSVMail(path);
         mailList.values().stream()
                 .filter(mail -> !mail.isDelete())

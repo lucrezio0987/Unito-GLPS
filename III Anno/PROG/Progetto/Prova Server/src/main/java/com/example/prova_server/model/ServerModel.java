@@ -75,6 +75,7 @@ public class ServerModel {
     }
     public void start() {
         loadBackupLog();
+        getSetUsernamesSaved().forEach(ServerModel::loadBackup);
 
         if(isStarted)
             return;
@@ -190,6 +191,7 @@ public class ServerModel {
             throw new RuntimeException(e);
         }
     }
+
     public void stop() {
         if(isStarted)
             try {
@@ -240,11 +242,15 @@ public class ServerModel {
         @Override
         public void run() {
             try {
-                ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+                socket.setSoTimeout(2000);
+
                 ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+                ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
 
                 // RICEZIONE: informazioni di connessione
+                System.out.println(":::::::   INIZIO -> RICEZIONE: informazioni di connessione");
                 ConnectionInfo connectionInfo = new Gson().fromJson((String) inputStream.readObject(), ConnectionInfo.class);
+                System.out.println(":::::::   FINE -> RICEZIONE: informazioni di connessione == connectionInfo " + connectionInfo.getLastConnectionDateTime());
 
                 String username = connectionInfo.getUsername();
                 String LastConnectionDatatime = connectionInfo.getLastConnectionDateTime();
@@ -253,24 +259,37 @@ public class ServerModel {
                     addUser(username, socket.getInetAddress().getHostAddress());
                     loadBackup(username);
 
+                    //String lastModifyData = String.valueOf(
+                    //        Objects.requireNonNull(
+                    //                        Stream.concat(
+                    //                                        userDataList.get(username).getMailSent().values().stream(),
+                    //                                        userDataList.get(username).getMailReceived().values().stream()
+                    //                                )
+                    //                                .sorted()
+                    //                                .findFirst()
+                    //                                .orElse(null))
+                    //                .getLastModify()
+                    //);
+
+                    String lastModifyData = userDataList.get(username).getMailSent().values().stream()
+                            .flatMap(mail -> Stream.of(mail, userDataList.get(username).getMailReceived().get(mail.getUuid())))
+                            .filter(Objects::nonNull)
+                            .sorted()
+                            .map(Mail::getLastModify)
+                            .findFirst()
+                            .orElse(null);
+
                     // INVIO: data ultima modifica del server
-                    String lastModifyData = String.valueOf(
-                            Objects.requireNonNull(
-                                            Stream.concat(
-                                                            userDataList.get(username).getMailSent().values().stream(),
-                                                            userDataList.get(username).getMailReceived().values().stream()
-                                                    )
-                                                    .sorted()
-                                                    .findFirst()
-                                                    .orElse(null))
-                                    .getLastModify()
-                    );
+                    System.out.println(":::::::   INIZIO -> INVIO: data ultima modifica del server == lastModifyData: " + lastModifyData);
                     outputStream.writeObject(new Gson().toJson(lastModifyData));
                     outputStream.flush();
+                    System.out.println(":::::::   FINE -> INVIO: data ultima modifica del server");
 
                     // RICEZIONE: modifiche del client offline
+                    System.out.println(":::::::   INIZIO -> RICEZIONE: modifiche del client offline");
                     Type type = new TypeToken<Map<String, Map<String, Mail>>>() {}.getType();
                     Map<String, Map<String, Mail>> mapMailClient = new Gson().fromJson((String) inputStream.readObject(), type);
+                    System.out.println(":::::::   FINE -> RICEZIONE: modifiche del client offline == mapMailClient: " + mapMailClient.get("sent").size() + " " + mapMailClient.get("received").size());
 
                     Map<String, Mail> mapMailSentServer = userDataList.get(username).getMailSent(LastConnectionDatatime);
                     Map<String, Mail> mapMailReceivedServer = userDataList.get(username).getMailSent(LastConnectionDatatime);
@@ -290,7 +309,9 @@ public class ServerModel {
                     mapMailServer.put("received", combinedReceivedMap);
 
                     // INVIO: lista modifiche client-server combinate
+                    System.out.println(":::::::   INIZIO -> INVIO: lista modifiche client-server combinate == mapMailClient: " + mapMailServer.get("sent").size() + " " + mapMailServer.get("received").size());
                     outputStream.writeObject(new Gson().toJson(mapMailServer));
+                    System.out.println(":::::::   FINE -> INVIO: lista modifiche client-server combinate");
                     outputStream.flush();
 
                     log("Client: " + username + " connesso da " + userDataList.get(username).getClientAddress());
@@ -302,8 +323,10 @@ public class ServerModel {
                     Platform.runLater(() -> { countProperty.set(Integer.toString(getClientNumber()));});
 
                     // INVIO: risposta "Disconnessione notificata"
+                    System.out.println(":::::::   INVIO: risposta Disconnessione notificata");
                     outputStream.writeObject("Disconnessione notificata");
                     outputStream.flush();
+                    System.out.println(":::::::   INVIO: risposta Disconnessione notificata");
 
                     log("Client:  " + username + " disconnesso. (" + userDataList.get(username).getClientAddress()+ ")");
                 }
@@ -609,6 +632,24 @@ public class ServerModel {
     }
 
 
+    private Set<String> getSetUsernamesSaved() {
+        Set<String> utentiConDati = new HashSet<>();
+
+        String directoryPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "backup";
+        File directory = new File(directoryPath);
+
+        if (directory.exists() && directory.isDirectory() && directory.listFiles() != null)
+            for (File file : directory.listFiles())
+                if (file.isFile()) {
+                    String fileName = file.getName();
+                    if (fileName.matches("(.+)-(received|sender)\\.csv")) {
+                        String[] parts = fileName.split("-");
+                        utentiConDati.add(parts[0]);
+                    }
+                }
+
+        return utentiConDati;
+    }
     private static String getPublicIP() {
         URL url = null;
         try {
