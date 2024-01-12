@@ -301,6 +301,7 @@ public class Server {
     }
     public void addMailReceived(Mail mail) {
         mailReceived.put(mail.getUuid(), mail);
+        backup();
         System.out.println("MESSAGGI: " + mail.getText());
         Platform.runLater(() -> controller.createCardReceived(mail));
     }
@@ -324,27 +325,32 @@ public class Server {
         if(isConnected())
             notifyModifyToServer(new MailModifyInfo(mailSent.get(uuid), localAddress, true).setDeleate());
         mailSent.get(uuid).setDelete();
+        backup();
     }
     public void deleteMailReceived(String uuid) {
         if(isConnected())
             notifyModifyToServer(new MailModifyInfo(mailReceived.get(uuid), localAddress, false).setDeleate());
         mailReceived.get(uuid).setDelete();
+        backup();
     }
     public void deleteMailSentList() {
         if(isConnected())
             notifyModifyToServer(new MailModifyInfo(null, localAddress, true).setDeleateAll());
         mailSent.values().forEach(Mail::setDelete);
+        backup();
     }
     public void deleteMailReceivedList() {
         if(isConnected())
             notifyModifyToServer(new MailModifyInfo(null, localAddress, false).setDeleateAll());
         mailReceived.values().forEach(Mail::setDelete);
+        backup();
     }
 
     public void setMailReceivedRead(String uuid) {
         if(isConnected())
             notifyModifyToServer(new MailModifyInfo(mailReceived.get(uuid), localAddress, false).setReaded());
         mailReceived.get(uuid).setRead();
+        backup();
     }
 
     // -- CSV --
