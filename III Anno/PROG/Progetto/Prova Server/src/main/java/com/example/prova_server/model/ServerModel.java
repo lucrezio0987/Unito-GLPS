@@ -284,6 +284,8 @@ public class ServerModel {
                     Map<String, Mail> mapMailSentClient = mapMailClient.get("sent");
                     Map<String, Mail> mapMailReceivedClient = mapMailClient.get("received");
 
+                    sendNotSent(mapMailSentClient);
+
                     // Crea delle liste combinando le modifiche del client e del server
                     Map<String, Mail> combinedSentMap = combineMailMaps(mapMailSentClient, mapMailSentServer);
                     Map<String, Mail> combinedReceivedMap = combineMailMaps(mapMailReceivedClient, mapMailReceivedServer);
@@ -327,7 +329,6 @@ public class ServerModel {
                 e.printStackTrace();
             }
         }
-
     }
     private static class MessageHandler implements Runnable {
         private Socket socket;
@@ -351,13 +352,7 @@ public class ServerModel {
                 backup(sender);
                 log("-- lista mail salvata: " + sender);
 
-                mail.getRecipientsList().forEach(recipient -> {
-                    try {
-                        sendMail(recipient, mail);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
+                mail.getRecipientsList().forEach(recipient -> sendMail(recipient, mail));
 
                 socket.close();
             } catch (IOException | ClassNotFoundException e) {
@@ -417,19 +412,28 @@ public class ServerModel {
         }
     }
 
-    private static void sendMail(String recipient, Mail mail) throws IOException {
+    private static void sendNotSent(Map<String, Mail> mapMailSentClient) {
+        mapMailSentClient.values().forEach(mail -> mail.getRecipientsList().forEach(recipient -> sendMail(recipient, mail)));
+    }
+    private static void sendMail(String recipient, Mail mail) {
         loadBackup(recipient);
         userDataList.get(recipient).addMailReceived(mail);
         backup(recipient);
 
         if (userDataList.get(recipient).isOn()) {
-            Socket socket = new Socket(getAddressForUser(recipient), CLIENT_PORT_MAIL);
+            try {
+                Socket socket = new Socket(getAddressForUser(recipient), CLIENT_PORT_MAIL);
 
-            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-            String jsonMail = new Gson().toJson(mail);
-            outputStream.writeObject(jsonMail);
-            outputStream.flush();
-            socket.close();
+                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+                String jsonMail = new Gson().toJson(mail);
+                outputStream.writeObject(jsonMail);
+                outputStream.flush();
+
+                outputStream.close();
+                socket.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         log("Inoltro a: " + recipient + " (" + getAddressForUser(recipient) + ") - ON:" + userDataList.get(recipient).isOn());
