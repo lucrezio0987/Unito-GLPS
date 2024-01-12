@@ -259,6 +259,7 @@ public class MailModel {
                 log("ERRORE: Riconnessione al server non riuscita (Problema di Connessione)");
                 return false;
             }
+
             controller.setCountMailSent();
             getListMailSent().forEach(controller::createCardSent);
 
