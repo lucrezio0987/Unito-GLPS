@@ -55,10 +55,6 @@ public class ClientController {
 
     //TODO: AGGIUNGERE COMMENTI!!!!!!
 
-    //TODO: far funzionare i pulsati del server
-
-    // TODO: il client deve inviare al server le modifiche che lui ha fatto mentre era offline
-
     /*TODO: fare in modo che i client sullo stesso host (quindi se li avvi su stesso pc ad esempio) possano essere distinguibili:
         IDEE:
             1. ho notato che l'oggetto Socket oltre a contenere la portaLocale e l'indirizzo locale contiene anche un altra porta che sembra variaare all'interno della stessa rete
@@ -69,11 +65,8 @@ public class ClientController {
                ma un altra idea potrebbe essere fare in modo che il client si metta su "una porta libera" (causerebbe più problemi e renderebbe il sistema poco scalabile a parer mio)
      */
 
-    //TODO: mettere una label nel client per modificare eventualemente l'indirizzo del server (nel caso vada runnato da due pc diversi)
+    //TODO: il controllo della sintassi deve dare qualche tipo di feedback qualora non andasse a buon fine
 
-    //TODO: il controlo della sintassi deve dare qualche tipo di feedback qualora non andasse a buon fine
-
-    //TODO: salvare e caricare i log in un file
 
     public void initModel(String localAddressMail, String serverHost) {
         mailModel = new MailModel(this);
