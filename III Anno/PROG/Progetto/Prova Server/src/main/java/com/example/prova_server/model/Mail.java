@@ -47,9 +47,13 @@ public class Mail implements Serializable, Comparable<Mail> {
     public String getObject()       { return object;        }
     public String getCreationDateTime(){ return creationDateTime;  }
     public String getDate(){
+        if(Arrays.asList(creationDateTime.split(" ")).size() != 2)
+            return null;
         return Arrays.asList(creationDateTime.split(" ")).get(0);
     }
     public String getTime(){
+        if(Arrays.asList(creationDateTime.split(" ")).size() != 2)
+            return null;
         return Arrays.asList(creationDateTime.split(" ")).get(1);
     }
     public String getLastModify()   { return lastModifyDateTime;}
@@ -64,13 +68,15 @@ public class Mail implements Serializable, Comparable<Mail> {
         setLastModify();
     }
     public void setDelete() {
-        this.sender = null;
-        this.recipients = null;
-        this.object = null;
-        this.text = null;
-        this.creationDateTime = null;
-        this.delete = true;
-        setLastModify();
+        if(!isDelete()) {
+            this.sender = null;
+            this.recipients = null;
+            this.object = null;
+            this.text = null;
+            this.creationDateTime = null;
+            this.delete = true;
+            setLastModify();
+        }
     }
     public void setLastModify() {
         SimpleDateFormat formatDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -78,9 +84,7 @@ public class Mail implements Serializable, Comparable<Mail> {
     }
 
     public boolean isDelete() {
-        if ((sender == null && recipients == null) || delete)
-            return true;
-        return false;
+        return creationDateTime == null || delete;
     }
 
     public boolean moreRecentlyOf(String DateTime) {
