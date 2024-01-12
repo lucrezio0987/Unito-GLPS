@@ -503,6 +503,7 @@ public class ServerModel {
 
     public static synchronized void addUser(String username, String address) {
         userDataList.putIfAbsent(username, new UserData(username, address));
+        userDataList.get(username).setAddress(address);
         userDataList.get(username).setOn(true);
 
         Platform.runLater(() -> { countProperty.set(Integer.toString(getClientNumber()));});

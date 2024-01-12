@@ -103,4 +103,8 @@ public class UserData {
     public void updateMailReceived(Map<String, Mail> uppdates) {
         mailReceived.putAll(uppdates);
     }
+
+    public void setAddress(String address) {
+        this.clientAddress = address;
+    }
 }
