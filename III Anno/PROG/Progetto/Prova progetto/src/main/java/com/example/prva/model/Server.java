@@ -426,9 +426,7 @@ public class Server {
 
     private static void writeCSVMail(String path, Map<String, Mail> mailList){
         Map<String, Mail> mailMap = readCSVMail(path);
-        mailList.values().stream()
-                .filter(mail -> !mail.isDelete())
-                .forEach(mail -> mailMap.put(mail.getUuid(), mail));
+        mailList.values().forEach(mail -> mailMap.put(mail.getUuid(), mail));
 
         try (Writer writer = new FileWriter(path, false);
              CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(MAIL_HEADER))) {
