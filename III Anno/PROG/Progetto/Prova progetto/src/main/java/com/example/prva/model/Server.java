@@ -256,8 +256,8 @@ public class Server {
 
     public ArrayList<Mail> getMails(Map<String, Mail> mailMap) {
         return new ArrayList<>(mailMap.values().stream()
-                .filter(mail -> !mail.isDelete())
                 .sorted()
+                .filter(mail -> !mail.isDelete())
                 .toList());
     }
     public ArrayList<Mail> getMailsSent() {

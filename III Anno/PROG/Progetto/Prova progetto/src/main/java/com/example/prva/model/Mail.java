@@ -42,7 +42,7 @@ public class Mail implements Serializable, Comparable<Mail> {
         this.lastModifyDateTime = lastModifyDateTime;
         this.read = read;
         this.uuid = uuid;
-        this.delete = sender == null && recipients == null;
+        this.delete = (sender == null && recipients == null ) || (sender.equals("") && recipients.equals("")) ;
     }
 
     public String getSender()       { return sender;        }

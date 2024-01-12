@@ -687,8 +687,8 @@ public class ServerModel {
     }
 
     public static Map<String, Mail> combineMailMaps(Map<String, Mail> mapClient, Map<String, Mail> mapServer) {
-        log("  [+] MAPPA 1 Client: " + mapClient.values().size() + " ( di cui " + mapClient.values().stream().filter(m -> m.isDelete()).count() + " cancellate)");
-        log("  [+] MAPPA 2 Server: " + mapServer.values().size() + " ( di cui " + mapServer.values().stream().filter(m -> m.isDelete()).count() + " cancellate)");
+        log("  [+] MAPPA 1 Client: " + mapClient.values().size() + " ( di cui " + mapClient.values().stream().filter(Mail::isDelete).count() + " cancellate)");
+        log("  [+] MAPPA 2 Server: " + mapServer.values().size() + " ( di cui " + mapServer.values().stream().filter(Mail::isDelete).count() + " cancellate)");
         Map<String, Mail> combMap = Stream.concat(
                 mapClient.entrySet().stream(),
                 mapServer.entrySet().stream()
