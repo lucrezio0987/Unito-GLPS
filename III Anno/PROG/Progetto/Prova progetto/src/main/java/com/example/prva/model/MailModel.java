@@ -154,7 +154,7 @@ public class MailModel {
 
     public void sendMail(){
         if(!syntaxControll(localAddressProperty.get())) {
-            log("ERRORE: email non inviata");
+            log("ERRORE: email non inviata (Mittente non valido)");
             return;
         }
         String sender       = localAddressProperty.get();
@@ -166,6 +166,11 @@ public class MailModel {
                                 textMailSendProperty.get();
 
         Mail mailSend = new Mail(sender ,recipients, object, text);
+
+        if (mailSend.getRecipientsList().stream().anyMatch(r -> !syntaxControll(r))) {
+            log("ERRORE: email non inviata (Uno dei destinatari non valido)");
+            return;
+        }
 
         textMailSendProperty.set("");
         addressMailSendProperty.set("");
