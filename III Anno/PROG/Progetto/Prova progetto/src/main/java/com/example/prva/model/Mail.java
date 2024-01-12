@@ -42,6 +42,8 @@ public class Mail implements Serializable, Comparable<Mail> {
         this.lastModifyDateTime = lastModifyDateTime;
         this.read = read;
         this.uuid = uuid;
+        if(sender == null && recipients == null)
+            this.delete = true;
     }
 
     public String getSender()       { return sender;        }
@@ -50,14 +52,16 @@ public class Mail implements Serializable, Comparable<Mail> {
     public String getObject()       { return object;        }
     public String getCreationDateTime(){ return creationDateTime;  }
     public String getDate(){
-        if(Arrays.asList(creationDateTime.split(" ")).size() != 2)
+        List<String> dataSplitted = Arrays.asList(creationDateTime.split(" "));
+        if(dataSplitted.size() != 2)
             return null;
-        return Arrays.asList(creationDateTime.split(" ")).get(0);
+        return dataSplitted.get(0);
     }
     public String getTime(){
-        if(Arrays.asList(creationDateTime.split(" ")).size() != 2)
+        List<String> dataSplitted = Arrays.asList(creationDateTime.split(" "));
+        if(dataSplitted.size() != 2)
             return null;
-        return Arrays.asList(creationDateTime.split(" ")).get(1);
+        return dataSplitted.get(1);
     }
     public String getLastModify()   { return lastModifyDateTime;}
     public String getUuid()         { return uuid;          }
@@ -87,7 +91,7 @@ public class Mail implements Serializable, Comparable<Mail> {
     }
 
     public boolean isDelete() {
-        return creationDateTime == null || delete;
+        return delete;
     }
 
     public boolean moreRecentlyOf(String DateTime) {

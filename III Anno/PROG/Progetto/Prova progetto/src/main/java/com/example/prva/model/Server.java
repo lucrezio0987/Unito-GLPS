@@ -257,13 +257,7 @@ public class Server {
     public ArrayList<Mail> getMails(Map<String, Mail> mailMap) {
         return new ArrayList<>(mailMap.values().stream()
                 .filter(mail -> !mail.isDelete())
-                .sorted(Comparator.comparing(mail -> {
-                    try {
-                        return new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(mail.getCreationDateTime());
-                    } catch (ParseException e) {
-                        throw new RuntimeException(e);
-                    }
-                }))
+                .sorted()
                 .toList());
     }
     public ArrayList<Mail> getMailsSent() {

@@ -8,7 +8,7 @@
       <change beforePath="$PROJECT_DIR$/../Prova Server/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova Server/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Prova Server/src/main/java/com/example/prova_server/model/Mail.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova Server/src/main/java/com/example/prova_server/model/Mail.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/prva/model/Mail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/prva/model/Mail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/prva/model/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/prva/model/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -143,7 +143,7 @@
       <workItem from="1704978802040" duration="2339000" />
       <workItem from="1704981759728" duration="6441000" />
       <workItem from="1705021545718" duration="4985000" />
-      <workItem from="1705062205111" duration="3301000" />
+      <workItem from="1705062205111" duration="4288000" />
     </task>
     <servers />
   </component>
