@@ -81,7 +81,9 @@ public class Mail implements Serializable, Comparable<Mail> {
     }
 
     public boolean isDelete() {
-        return delete;
+        if ((sender == null && recipients == null) || delete)
+            return true;
+        return false;
     }
 
     public boolean moreRecentlyOf(String DateTime) {
