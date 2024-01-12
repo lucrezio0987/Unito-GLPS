@@ -265,7 +265,7 @@ public class ServerModel {
                             .sorted()
                             .map(Mail::getLastModify)
                             .findFirst()
-                            .orElse("01/01/00001 00:00:00");
+                            .orElse("01/01/0001 00:00:00");
 
                     // INVIO: data ultima modifica del server
                     System.out.println(":::::::   INIZIO -> INVIO: data ultima modifica del server == lastModifyData: " + lastModifyData);
