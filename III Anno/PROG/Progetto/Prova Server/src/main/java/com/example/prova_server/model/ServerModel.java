@@ -639,7 +639,6 @@ public class ServerModel {
         log("BACKUP: pulita la storiografia dei log (log.csv)");
     }
 
-
     private Set<String> getSetUsernamesSaved() {
         Set<String> utentiConDati = new HashSet<>();
 

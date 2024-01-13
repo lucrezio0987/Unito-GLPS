@@ -16,7 +16,7 @@ public class ServerController {
     @FXML
     private TextArea textArea;
     @FXML
-    private Button stopBtn, resetBtn, startBtn, clearBackupButton, clearBackupLogButton, clearBackupMailButton;
+    private Button clearBackupButton, clearBackupLogButton, clearBackupMailButton;
     @FXML
     private Label countLabel;
     @FXML
@@ -58,23 +58,6 @@ public class ServerController {
         setConnectLedConPort(model.ConnSocketIsOn());
         setConnectLedMailPort(model.MailSocketIsOn());
         setConnectLedModPort(model.ModSocketIsOn());
-
-        startBtn.setOnAction(event -> { model.start();});
-        stopBtn.setOnAction(event -> { model.stop();});
-        resetBtn.setOnAction(event -> {
-            model.stop();
-            try {
-                wait(1050);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            model.start();
-        });
-
-        startBtn.setDisable(true);
-        stopBtn.setDisable(true);
-        resetBtn.setDisable(true);
-
 
         textArea.textProperty().addListener((observable, oldValue, newValue) -> addAllRowToTable());
 
