@@ -31,10 +31,6 @@ public class UserData {
         this.broadcastPort = broadcastPort;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
     public Map<String, Mail> getMailSent() {
         return mailSent;
     }
@@ -88,8 +84,8 @@ public class UserData {
     public void setOn(boolean connected) {
         if(!connected){
             this.clientAddress = null;
-            this.mailPort = -1;
-            this.broadcastPort = -1;
+            this.mailPort = 0;
+            this.broadcastPort = 0;
         }
         this.connected = connected;
     }

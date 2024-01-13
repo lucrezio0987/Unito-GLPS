@@ -505,7 +505,7 @@ public class ServerModel {
     }
 
     public static synchronized void addUser(String username, String address, int mailPort, int broadcastPort) {
-        userDataList.putIfAbsent(username, new UserData(username, address, -1, -1));
+        userDataList.putIfAbsent(username, new UserData(username, address, mailPort, broadcastPort));
         userDataList.get(username).setAddress(address);
         userDataList.get(username).setMailPort(mailPort);
         userDataList.get(username).setBroadcastPort(broadcastPort);
