@@ -7,8 +7,6 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import com.example.prva.controller.ClientController;
@@ -27,8 +25,8 @@ public class Server {
     private static final int SERVER_PORT_CONNECTION = 8000;
     private static final int SERVER_PORT_MAIL = 8001;
     private static final int SERVER_PORT_MODIFY = 8002;
+    private static final int CLIENT_PORT_BRAODCAST = 8003;
     private static int CLIENT_PORT_MAIL = 0;
-    private static int CLIENT_PORT_CONNECTION = 0;
     private static final String[] MAIL_HEADER = {"Uuid", "Sender", "Recipients", "Object", "Text", "CreationDateTime", "LastModifyDateTime", "read"};
     private static final String[] INF_HEADER = {"Username", "LastConnectionDataTime"};
 
@@ -44,7 +42,7 @@ public class Server {
     private boolean connected = false;
     private static String localAddress = null;
     Thread clientMessageServerThread = null;
-    Thread serverConnectionThread = null;
+    Thread serverBroadcastThread = null;
 
     public Server(ClientController controller, String serveHost){
         this.controller = controller;
@@ -113,10 +111,10 @@ public class Server {
         });
         clientMessageServerThread.start();
 
-        serverConnectionThread = new Thread(() -> {
+        serverBroadcastThread = new Thread(() -> {
             try {
-                ServerSocket serverConnectionSocket = new ServerSocket(CLIENT_PORT_CONNECTION);
-                System.out.println("Client in ascolto sulla porta " + CLIENT_PORT_CONNECTION + " per i messaggi di disconnessione del server...");
+                ServerSocket serverConnectionSocket = new ServerSocket(CLIENT_PORT_BRAODCAST);
+                System.out.println("Client in ascolto sulla porta " + CLIENT_PORT_BRAODCAST + " per i messaggi di disconnessione del server...");
                 serverConnectionSocket.setSoTimeout(1000);
 
                 while (!Thread.interrupted()) {
@@ -142,7 +140,7 @@ public class Server {
                 e.printStackTrace();
             }
         });
-        serverConnectionThread.start();
+        serverBroadcastThread.start();
 
     }
     public boolean disconnectToServer() {
@@ -171,10 +169,9 @@ public class Server {
             outputStream.close();
 
             CLIENT_PORT_MAIL = 0;
-            CLIENT_PORT_CONNECTION = 0;
 
             clientMessageServerThread.interrupt();
-            serverConnectionThread.interrupt();
+            serverBroadcastThread.interrupt();
 
             writeCSVInfo(localAddress, connectionInfo.getLastConnectionDateTime());
 
@@ -249,7 +246,6 @@ public class Server {
             mailSent.putAll(mapMailServer.get("sent"));
             mailReceived.putAll(mapMailServer.get("received"));
 
-            CLIENT_PORT_CONNECTION = connectionInfo.getBroadcastPort();
             CLIENT_PORT_MAIL = connectionInfo.getMailPort();
 
             startListening();
@@ -502,7 +498,7 @@ public class Server {
     public void stop() {
         disconnectToServer();
         clientMessageServerThread.interrupt();
-        serverConnectionThread.interrupt();
+        serverBroadcastThread.interrupt();
     }
 
     public void clearBackupMail() {

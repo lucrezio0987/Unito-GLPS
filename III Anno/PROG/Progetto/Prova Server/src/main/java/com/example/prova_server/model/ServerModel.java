@@ -28,8 +28,7 @@ public class ServerModel {
     private static final int SERVER_PORT_CONNECTION = 8000;
     private static final int SERVER_PORT_MESSAGES = 8001;
     private static final int SERVER_PORT_MODIFY = 8002;
-    private static final int CLIENT_PORT_MAIL = 8003;
-    private static final int CLIENT_PORT_CONNECTION = 8004;
+    private static final int CLIENT_PORT_BRODCAST = 8003;
     private static final int THREAD_POOL_SIZE = 10;
     private static final String[] MAIL_HEADER = {"Uuid", "Sender", "Recipients", "Object", "Text", "CreationDateTime", "LastModifyDateTime", "read"};
     private static SimpleStringProperty textAreaProperty = null;
@@ -257,9 +256,9 @@ public class ServerModel {
                 String address = socket.getInetAddress().getHostAddress();
 
                 if (connectionInfo.isConnected()) {
-                    List<Integer> ports = selectPort(address);
+                    int port = selectPort(address);
 
-                    addUser(username, address, ports.get(0), ports.get(1));
+                    addUser(username, address, port);
                     loadBackup(username);
 
                     String lastModifyData = userDataList.get(username).getMailSent().values().stream()
@@ -271,7 +270,7 @@ public class ServerModel {
                             .orElse("01/01/0001 00:00:00");
 
 
-                    connectionInfo = new ConnectionInfo(ports.get(0), ports.get(1), lastModifyData);
+                    connectionInfo = new ConnectionInfo(port, lastModifyData);
 
                     // INVIO: data ultima modifica del server
                     System.out.println(":::::::   INIZIO -> INVIO: data ultima modifica del server + porte == lastModifyData: " + lastModifyData);
@@ -436,7 +435,7 @@ public class ServerModel {
 
         if (userDataList.get(recipient).isOn()) {
             try {
-                Socket socket = new Socket(getAddressForUser(recipient), CLIENT_PORT_MAIL);
+                Socket socket = new Socket(userDataList.get(recipient).getClientAddress(), userDataList.get(recipient).getMailPort());
 
                 ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
                 String jsonMail = new Gson().toJson(mail);
@@ -453,7 +452,7 @@ public class ServerModel {
         log("Inoltro a: " + recipient + " (" + getAddressForUser(recipient) + ") - ON:" + userDataList.get(recipient).isOn());
     }
     private void clientBroadcastStopMessage(String address) {
-        try (Socket socket = new Socket(address, CLIENT_PORT_CONNECTION)) {
+        try (Socket socket = new Socket(address, CLIENT_PORT_BRODCAST)) {
             try (ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream())) {
                 String jsonStartedInfo = new Gson().toJson(isStarted);
                 outputStream.writeObject(jsonStartedInfo);
@@ -506,11 +505,10 @@ public class ServerModel {
         }
     }
 
-    public static synchronized void addUser(String username, String address, int sendPort, int broadcastPort) {
-        userDataList.putIfAbsent(username, new UserData(username, address, -1, -1));
+    public static synchronized void addUser(String username, String address, int mailPort) {
+        userDataList.putIfAbsent(username, new UserData(username, address, -1));
         userDataList.get(username).setAddress(address);
-        userDataList.get(username).setMailPort(sendPort);
-        userDataList.get(username).setBroadcastPort(broadcastPort);
+        userDataList.get(username).setMailPort(mailPort);
         userDataList.get(username).setOn(true);
 
         Platform.runLater(() -> { countProperty.set(Integer.toString(getClientNumber()));});
@@ -719,20 +717,17 @@ public class ServerModel {
         return combMap;
     }
 
-    private static List<Integer> selectPort(String address) {
-
-        List<Integer> freePorts = new ArrayList<>();
+    private static int selectPort(String address) {
         List<Integer> occupiedPorts = userDataList.values().stream()
                 .filter(d -> d.getClientAddress().equals(address))
                 .filter(UserData::isOn)
-                .flatMap(d -> Stream.of(d.getBroadcastPort(), d.getMailPort()))
-                .sorted()
+                .map(UserData::getMailPort)
                 .toList();
 
-        for (int port = 8010; port <= 9000 && freePorts.size() != 2; ++port)
+        for (int port = 8010; port <= 9000; ++port)
             if (!occupiedPorts.contains(port))
-                freePorts.add(port);
+                return port;
 
-        return freePorts;
+        return -1;
     }
 }
