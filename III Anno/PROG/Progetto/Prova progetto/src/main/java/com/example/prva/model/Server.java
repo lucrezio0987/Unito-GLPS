@@ -27,8 +27,8 @@ public class Server {
     private static final int SERVER_PORT_CONNECTION = 8000;
     private static final int SERVER_PORT_MAIL = 8001;
     private static final int SERVER_PORT_MODIFY = 8002;
-    private static final int CLIENT_PORT_MAIL = 8003;
-    private static final int CLIENT_PORT_CONNECTION = 8004;
+    private static int CLIENT_PORT_MAIL = 0;
+    private static int CLIENT_PORT_CONNECTION = 0;
     private static final String[] MAIL_HEADER = {"Uuid", "Sender", "Recipients", "Object", "Text", "CreationDateTime", "LastModifyDateTime", "read"};
     private static final String[] INF_HEADER = {"Username", "LastConnectionDataTime"};
 
@@ -158,7 +158,7 @@ public class Server {
 
             ConnectionInfo connectionInfo = new ConnectionInfo(false, localAddress);
 
-            // INVIO: informazioni di connessione
+            // INVIO: informazioni di disconnessione
             outputStream.writeObject(new Gson().toJson(connectionInfo));
             outputStream.flush();
 
@@ -169,6 +169,12 @@ public class Server {
 
             inputStream.close();
             outputStream.close();
+
+            CLIENT_PORT_MAIL = 0;
+            CLIENT_PORT_CONNECTION = 0;
+
+            clientMessageServerThread.interrupt();
+            serverConnectionThread.interrupt();
 
             writeCSVInfo(localAddress, connectionInfo.getLastConnectionDateTime());
 
@@ -209,9 +215,10 @@ public class Server {
             setConnected(true);
 
             // RICEZIONE: data ultima modifica del server
-            System.out.println(":::::::   INIZIO -> RICEZIONE: data ultima modifica del server");
-            String lastModifyDataServer = new Gson().fromJson((String) inputStream.readObject(), String.class);
-            System.out.println(":::::::   FINE -> RICEZIONE: data ultima modifica del server == lastModifyDataServer: " + lastModifyDataServer);
+            System.out.println(":::::::   INIZIO -> RICEZIONE: data ultima modifica del server + porte");
+            connectionInfo = new Gson().fromJson((String) inputStream.readObject(), ConnectionInfo.class);
+            String lastModifyDataServer = connectionInfo.getLastConnectionDateTime();
+            System.out.println(":::::::   FINE -> RICEZIONE: data ultima modifica del server + porte == lastModifyDataServer: " + lastModifyDataServer);
 
             Map<String, Map<String, Mail>> mapMailClient = new HashMap<>();
             mapMailClient.put("sent",
@@ -242,6 +249,11 @@ public class Server {
             mailSent.putAll(mapMailServer.get("sent"));
             mailReceived.putAll(mapMailServer.get("received"));
 
+            CLIENT_PORT_CONNECTION = connectionInfo.getBroadcastPort();
+            CLIENT_PORT_MAIL = connectionInfo.getMailPort();
+
+            startListening();
+
             backup();
 
             outputStream.close();
@@ -250,6 +262,7 @@ public class Server {
             socket.close();
             return true;
         } catch (IOException | ClassNotFoundException e) {
+
             //e.printStackTrace();
             //System.out.println("Connessione al Server Fallita (connectToServer)");
             return false;

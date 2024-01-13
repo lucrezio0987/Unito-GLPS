@@ -254,9 +254,12 @@ public class ServerModel {
 
                 String username = connectionInfo.getUsername();
                 String LastConnectionDatatime = connectionInfo.getLastConnectionDateTime();
+                String address = socket.getInetAddress().getHostAddress();
 
                 if (connectionInfo.isConnected()) {
-                    addUser(username, socket.getInetAddress().getHostAddress());
+                    List<Integer> ports = selectPort(address);
+
+                    addUser(username, address, ports.get(0), ports.get(1));
                     loadBackup(username);
 
                     String lastModifyData = userDataList.get(username).getMailSent().values().stream()
@@ -267,12 +270,15 @@ public class ServerModel {
                             .findFirst()
                             .orElse("01/01/0001 00:00:00");
 
+
+                    connectionInfo = new ConnectionInfo(ports.get(0), ports.get(1), lastModifyData);
+
                     // INVIO: data ultima modifica del server
-                    System.out.println(":::::::   INIZIO -> INVIO: data ultima modifica del server == lastModifyData: " + lastModifyData);
+                    System.out.println(":::::::   INIZIO -> INVIO: data ultima modifica del server + porte == lastModifyData: " + lastModifyData);
                     //ConnectionInfo conn = new ConnectionInfo()
-                    outputStream.writeObject(new Gson().toJson(lastModifyData));
+                    outputStream.writeObject(new Gson().toJson(connectionInfo));
                     outputStream.flush();
-                    System.out.println(":::::::   FINE -> INVIO: data ultima modifica del server");
+                    System.out.println(":::::::   FINE -> INVIO: data ultima modifica del server + porte");
 
                     // RICEZIONE: modifiche del client offline
                     System.out.println(":::::::   INIZIO -> RICEZIONE: modifiche del client offline");
@@ -311,6 +317,7 @@ public class ServerModel {
                 } else {
 
                     userDataList.get(username).setOn(false);
+
                     backup(username);
                     Platform.runLater(() -> { countProperty.set(Integer.toString(getClientNumber()));});
 
@@ -499,9 +506,11 @@ public class ServerModel {
         }
     }
 
-    public static synchronized void addUser(String username, String address) {
+    public static synchronized void addUser(String username, String address, int sendPort, int broadcastPort) {
         userDataList.putIfAbsent(username, new UserData(username, address, -1, -1));
         userDataList.get(username).setAddress(address);
+        userDataList.get(username).setMailPort(sendPort);
+        userDataList.get(username).setBroadcastPort(broadcastPort);
         userDataList.get(username).setOn(true);
 
         Platform.runLater(() -> { countProperty.set(Integer.toString(getClientNumber()));});
@@ -711,4 +720,20 @@ public class ServerModel {
         return combMap;
     }
 
+    private static List<Integer> selectPort(String address) {
+
+        List<Integer> freePorts = new ArrayList<>();
+        List<Integer> occupiedPorts = userDataList.values().stream()
+                .filter(d -> d.getClientAddress().equals(address))
+                .filter(UserData::isOn)
+                .flatMap(d -> Stream.of(d.getBroadcastPort(), d.getMailPort()))
+                .sorted()
+                .toList();
+
+        for (int port = 8010; port <= 9000 && freePorts.size() != 2; ++port)
+            if (!occupiedPorts.contains(port))
+                freePorts.add(port);
+
+        return freePorts;
+    }
 }

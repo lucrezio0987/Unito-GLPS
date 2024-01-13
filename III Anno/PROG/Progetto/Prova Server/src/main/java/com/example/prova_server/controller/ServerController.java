@@ -103,10 +103,12 @@ public class ServerController {
             clientTable.getItems().add(new TableRowData(
                     username,
                     userData.getClientAddress(),
-                    String.valueOf(userData.isOn()),
+                    String.valueOf(userData.getMailPort()),
+                    String.valueOf(userData.getBroadcastPort()),
                     String.valueOf(userData.getMailSentNotDelete().size()),
-                    String.valueOf(userData.getMailReceivedNotDelete().size())));
-                //TODO: Aggiungere le due porte
+                    String.valueOf(userData.getMailReceivedNotDelete().size()),
+                    String.valueOf(userData.isOn())
+            ));
         });
     }
 
@@ -117,31 +119,42 @@ public class ServerController {
     public static class TableRowData {
         private String username;
         private String address;
-        private String isOn;
+        private String sentPort;
+        private String broadcastPort;
         private String send;
         private String received;
+        private String isOn;
 
-        public TableRowData(String username, String address, String isOn, String send, String received) {
+        public TableRowData(String username, String address, String sentPort, String broadcastPort, String send, String received, String isOn) {
             this.username = username;
             this.address = address;
-            this.isOn = isOn;
+            this.sentPort = sentPort;
+            this.broadcastPort = broadcastPort;
             this.send = send;
             this.received = received;
+            this.isOn = isOn;
         }
+
         public String getUsername() {
             return username;
         }
         public String getAddress() {
             return address;
         }
-        public String getIsOn() {
-            return isOn;
+        public String getSentPort() {
+            return sentPort;
+        }
+        public String getBroadcastPort() {
+            return broadcastPort;
         }
         public String getSend() {
             return send;
         }
         public String getReceived() {
             return received;
+        }
+        public String getIsOn() {
+            return isOn;
         }
     }
 }

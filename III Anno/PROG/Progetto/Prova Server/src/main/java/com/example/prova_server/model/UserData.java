@@ -11,8 +11,8 @@ public class UserData {
     private Map<String, Mail> mailReceived;
     private boolean connected;
     private String clientAddress;
-    private int broadcastPort;
-    private int mailPort;
+    private int broadcastPort = 0;
+    private int mailPort = 0;
 
     public UserData(String username) {
         this.username = username;
@@ -86,6 +86,11 @@ public class UserData {
     }
 
     public void setOn(boolean connected) {
+        if(!connected){
+            this.clientAddress = null;
+            this.mailPort = 0;
+            this.broadcastPort = 0;
+        }
         this.connected = connected;
     }
     public boolean isOn() {
