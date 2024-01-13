@@ -102,16 +102,16 @@ public class ServerController {
     public static class TableRowData {
         private String username;
         private String address;
-        private String sentPort;
+        private String sendPort;
         private String broadcastPort;
         private String send;
         private String received;
         private String isOn;
 
-        public TableRowData(String username, String address, String sentPort, String broadcastPort, String send, String received, String isOn) {
+        public TableRowData(String username, String address, String sendPort, String broadcastPort, String send, String received, String isOn) {
             this.username = username;
             this.address = address;
-            this.sentPort = sentPort;
+            this.sendPort = sendPort;
             this.broadcastPort = broadcastPort;
             this.send = send;
             this.received = received;
@@ -124,8 +124,8 @@ public class ServerController {
         public String getAddress() {
             return address;
         }
-        public String getSentPort() {
-            return sentPort;
+        public String getSendPort() {
+            return sendPort;
         }
         public String getBroadcastPort() {
             return broadcastPort;
