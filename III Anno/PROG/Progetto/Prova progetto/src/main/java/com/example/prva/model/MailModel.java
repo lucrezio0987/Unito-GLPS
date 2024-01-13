@@ -246,7 +246,7 @@ public class MailModel {
     }
     public boolean reconnect() {
         if(!server.isConnected())
-            connect();
+            return connect();
 
         String localAddress = localAddressProperty.get();
         if(syntaxControll(localAddress)) {
