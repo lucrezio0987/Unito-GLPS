@@ -87,7 +87,7 @@ public class ServerModel {
                 while (!Thread.interrupted()) {
                     try {
                         Socket socket = clientServerSocket.accept();
-                        log("Connection: Connessione Client ("+SERVER_PORT_CONNECTION+"):  " + socket.toString());
+                        log("[ executorService ] <-- " + socket.toString() + " (Connection)");
                         executorService.submit(new ConnectionHandler(socket));
                     } catch (SocketTimeoutException e) {
                         continue;
@@ -121,7 +121,7 @@ public class ServerModel {
                 while (!Thread.interrupted()) {
                     try {
                         Socket socket = mailServerSocket.accept();
-                        log("Mail: Ricevuta Mail ("+ SERVER_PORT_MESSAGES +"): " + socket.toString());
+                        log("[ executorService ] <-- " + socket.toString() + " (Mail)");
                         executorService.submit(new MessageHandler(socket));
                     } catch (SocketTimeoutException e) {
                         continue;
@@ -248,7 +248,7 @@ public class ServerModel {
                 // RICEZIONE: informazioni di connessione
                 System.out.println(":::::::   INIZIO -> RICEZIONE: informazioni di connessione");
                 ConnectionInfo connectionInfo = new Gson().fromJson((String) inputStream.readObject(), ConnectionInfo.class);
-                System.out.println(":::::::   FINE -> RICEZIONE: informazioni di connessione == connectionInfo " + connectionInfo.getLastConnectionDateTime());
+                System.out.println(":::::::   FINE -> RICEZIONE: informazioni di connessione == isConnected " + connectionInfo.isConnected());
 
                 String username = connectionInfo.getUsername();
                 String LastConnectionDatatime = connectionInfo.getLastConnectionDateTime();
@@ -257,8 +257,12 @@ public class ServerModel {
                 if (connectionInfo.isConnected()) {
                     List<Integer> ports = selectPort(address);
 
-                    addUser(username, address, ports.get(0), ports.get(1));
                     loadBackup(username);
+                    userDataList.get(username).setAddress(address);
+                    userDataList.get(username).setMailPort(ports.get(0));
+                    userDataList.get(username).setBroadcastPort(ports.get(1));
+                    userDataList.get(username).setOn(true);
+                    log("UTENTE: " + username +" (mp:" + ports.get(0) + ", bp:" +ports.get(1)+")");
 
                     String lastModifyData = userDataList.get(username).getMailSent().values().stream()
                             .flatMap(mail -> Stream.of(mail, userDataList.get(username).getMailReceived().get(mail.getUuid())))
@@ -310,14 +314,12 @@ public class ServerModel {
                     System.out.println(":::::::   FINE -> INVIO: lista modifiche client-server combinate");
                     outputStream.flush();
 
-                    log("Client: " + username + " connesso da " + userDataList.get(username).getClientAddress());
-
+                    log("Client: " + username + " connesso da " + userDataList.get(username).getClientAddress() + " | porte: " + userDataList.get(username).getBroadcastPort() + "/" + userDataList.get(username).getMailPort());
                 } else {
 
                     userDataList.get(username).setOn(false);
 
                     backup(username);
-                    Platform.runLater(() -> { countProperty.set(Integer.toString(getClientNumber()));});
 
                     // INVIO: risposta "Disconnessione notificata"
                     // System.out.println(":::::::   INVIO: risposta Disconnessione notificata");
@@ -327,6 +329,8 @@ public class ServerModel {
 
                     log("Client:  " + username + " disconnesso. (" + userDataList.get(username).getClientAddress()+ ")");
                 }
+
+                Platform.runLater(() -> { countProperty.set(Integer.toString(getClientNumber()));});
 
                 outputStream.close();
                 inputStream.close();
@@ -504,15 +508,6 @@ public class ServerModel {
         }
     }
 
-    public static synchronized void addUser(String username, String address, int mailPort, int broadcastPort) {
-        userDataList.putIfAbsent(username, new UserData(username, address, mailPort, broadcastPort));
-        userDataList.get(username).setAddress(address);
-        userDataList.get(username).setMailPort(mailPort);
-        userDataList.get(username).setBroadcastPort(broadcastPort);
-        userDataList.get(username).setOn(true);
-
-        Platform.runLater(() -> { countProperty.set(Integer.toString(getClientNumber()));});
-    }
     public static synchronized String getAddressForUser(String username) {
         return userDataList.get(username).getClientAddress();
     }
@@ -722,12 +717,12 @@ public class ServerModel {
         List<Integer> occupiedPorts = userDataList.values().stream()
                 .filter(d -> d.getClientAddress().equals(address))
                 .filter(UserData::isOn)
-                .map(UserData::getMailPort)
+                .flatMap(d -> Stream.of(d.getBroadcastPort(), d.getMailPort()))
                 .toList();
 
         List<Integer> ports = new ArrayList<>();
 
-        for (int port = 8010; port <= 9000 && ports.size() != 2; ++port)
+        for (Integer port = 8010; port <= 9000 && ports.size() != 2; ++port)
             if (!occupiedPorts.contains(port))
                 ports.add(port);
 

@@ -230,9 +230,9 @@ public class MailModel {
             server.setServerAddress(serveHostProperty.get());
             server.connectToServer();
 
+            controller.clearLocalMail();
             controller.setCountMailSent();
             getListMailSent().forEach(controller::createCardSent);
-
             controller.setCountMailReceived();
             getListMailReceived().forEach(controller::createCardReceived);
 
@@ -245,37 +245,9 @@ public class MailModel {
         return false;
     }
     public boolean reconnect() {
-        if(!server.isConnected())
-            return connect();
-
-        String localAddress = localAddressProperty.get();
-        if(syntaxControll(localAddress)) {
-
-            if(!server.disconnectToServer())
-                log("ERRORE: Riconnessione al server non riuscita (Problema di Disconnessione)");
-            else {
-                server.setAddress(localAddress);
-                server.setServerAddress(serveHostProperty.get());
-                if (!server.connectToServer())
-                    log("ERRORE: Riconnessione al server non riuscita (Problema di Connessione)");
-            }
-
-            if(server.isConnected()) {
-                controller.clearLocalMail();
-
-                controller.setCountMailSent();
-                getListMailSent().forEach(controller::createCardSent);
-
-                controller.setCountMailReceived();
-                getListMailReceived().forEach(controller::createCardReceived);
-
-
-                log("SERVER: Connesso");
-                return true;
-            }
-        }
-        return false;
-
+        if(server.isConnected())
+            disconnect();
+        return connect();
     }
     public boolean disconnect() {
         server.disconnectToServer();

@@ -149,7 +149,7 @@ public class ClientController {
         reconnectBtnReceived.setOnAction(event ->   { setConnection(mailModel.reconnect());});
         reconnectBtnSend.setOnAction(event ->       { setConnection(mailModel.reconnect());});
         reconnectBtnLog.setOnAction(event ->        { setConnection(mailModel.reconnect());});
-        connectServerBtnLog.setOnAction(event ->    { clearLocalMail(); setConnection(mailModel.connect());});
+        connectServerBtnLog.setOnAction(event ->    { setConnection(mailModel.reconnect());});
         disconnectServerBtnLog.setOnAction(event -> { setConnection(mailModel.disconnect());});
 
         clearBackupMail.setOnAction(event ->    mailModel.clearBackupMail());

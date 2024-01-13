@@ -16,7 +16,7 @@ public class ServerController {
     @FXML
     private TextArea textArea;
     @FXML
-    private Button clearBackupButton, clearBackupLogButton, clearBackupMailButton;
+    private Button clearBackupButton, clearBackupLogButton, clearBackupMailButton, uploadTableBtn;
     @FXML
     private Label countLabel;
     @FXML
@@ -54,6 +54,8 @@ public class ServerController {
         clearBackupButton.setOnAction( event -> model.clearAllBackup());
         clearBackupLogButton.setOnAction(event -> model.clearBackupLog());
         clearBackupMailButton.setOnAction(event -> model.clearBackupMail());
+
+        uploadTableBtn.setOnAction(event -> addAllRowToTable());
 
         setConnectLedConPort(model.ConnSocketIsOn());
         setConnectLedMailPort(model.MailSocketIsOn());

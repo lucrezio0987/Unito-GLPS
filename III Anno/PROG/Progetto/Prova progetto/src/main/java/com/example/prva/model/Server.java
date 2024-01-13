@@ -63,6 +63,10 @@ public class Server {
     }
     private void setConnected(boolean connected) {
         this.connected = connected;
+        if(!connected) {
+            this.clientMessageServerThread.interrupt();
+            this.serverBroadcastThread.interrupt();
+        }
         controller.setConnection(connected);
     }
     void setAddress(String localAddress) {
@@ -143,7 +147,7 @@ public class Server {
         serverBroadcastThread.start();
 
     }
-    public boolean disconnectToServer() {
+    public void disconnectToServer() {
         setConnected(false);
         backup();
         try {
@@ -177,14 +181,12 @@ public class Server {
             writeCSVInfo(localAddress, connectionInfo.getLastConnectionDateTime());
 
             socket.close();
-            return true;
         } catch (IOException e) {
             System.out.println("Disconnessione al Server Fallita");
             writeCSVInfo(localAddress, null);
-            return false;
         }
     }
-    public boolean connectToServer() {
+    public void connectToServer() {
         setConnected(false);
         loadBackup();
         try {
@@ -210,7 +212,6 @@ public class Server {
             outputStream.writeObject(new Gson().toJson(connectionInfo));
             outputStream.flush();
             System.out.println(":::::::   FINE -> INVIO: informazioni di connessione");
-            setConnected(true);
 
             // RICEZIONE: data ultima modifica del server
             System.out.println(":::::::   INIZIO -> RICEZIONE: data ultima modifica del server + porte");
@@ -258,12 +259,13 @@ public class Server {
             inputStream.close();
 
             socket.close();
-            return true;
+
+            setConnected(true);
         } catch (IOException | ClassNotFoundException e) {
 
             //e.printStackTrace();
             //System.out.println("Connessione al Server Fallita (connectToServer)");
-            return false;
+            setConnected(false);
         }
     }
 
