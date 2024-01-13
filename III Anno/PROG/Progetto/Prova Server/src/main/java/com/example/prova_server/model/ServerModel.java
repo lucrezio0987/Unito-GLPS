@@ -269,6 +269,7 @@ public class ServerModel {
 
                     // INVIO: data ultima modifica del server
                     System.out.println(":::::::   INIZIO -> INVIO: data ultima modifica del server == lastModifyData: " + lastModifyData);
+                    //ConnectionInfo conn = new ConnectionInfo()
                     outputStream.writeObject(new Gson().toJson(lastModifyData));
                     outputStream.flush();
                     System.out.println(":::::::   FINE -> INVIO: data ultima modifica del server");
@@ -499,7 +500,7 @@ public class ServerModel {
     }
 
     public static synchronized void addUser(String username, String address) {
-        userDataList.putIfAbsent(username, new UserData(username, address));
+        userDataList.putIfAbsent(username, new UserData(username, address, -1, -1));
         userDataList.get(username).setAddress(address);
         userDataList.get(username).setOn(true);
 
@@ -709,4 +710,5 @@ public class ServerModel {
         log("  [+] MAPPA 1+2 Comb: " + combMap.values().size() + " ( di cui " + combMap.values().stream().filter(m -> m.isDelete()).count() + " cancellate)");
         return combMap;
     }
+
 }

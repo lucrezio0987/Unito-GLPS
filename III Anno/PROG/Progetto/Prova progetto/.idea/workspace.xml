@@ -65,7 +65,7 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="ClientApplication" type="Application" factoryName="Application">
+    <configuration name="ClientApplication" type="Application" factoryName="Application" singleton="false">
       <option name="MAIN_CLASS_NAME" value="com.example.prva.ClientApplication" />
       <module name="Prva" />
       <method v="2">
@@ -165,6 +165,11 @@
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="3" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/prva/model/Server.java</url>
+          <line>456</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
