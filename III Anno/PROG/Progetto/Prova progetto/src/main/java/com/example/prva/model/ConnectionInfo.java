@@ -9,12 +9,14 @@ public class ConnectionInfo implements Serializable {
     private String username;
     private String lastConnectionDateTime;
     private int mailPort;
+    private int broadcastPort;
 
-    public ConnectionInfo(boolean connected, String username, String lastConnectionDateTime, int mailPort){
+    public ConnectionInfo(boolean connected, String username, String lastConnectionDateTime, int mailPort, int broadcastPort){
         this.connected = connected;
         this.username = username;
         this.lastConnectionDateTime = lastConnectionDateTime;
         this.mailPort = mailPort;
+        this.broadcastPort = broadcastPort;
     }
     public ConnectionInfo(boolean connected, String username, String lastConnectionDateTime){
         this.connected = connected;
@@ -27,7 +29,8 @@ public class ConnectionInfo implements Serializable {
         SimpleDateFormat formatDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         this.lastConnectionDateTime = formatDateTime.format(new Date());
     }
-    public ConnectionInfo(int mailPort, String lastConnectionDateTime){
+    public ConnectionInfo(int mailPort, int broadcastPort, String lastConnectionDateTime){
+        this.broadcastPort = broadcastPort;
         this.mailPort = mailPort;
         this.lastConnectionDateTime = lastConnectionDateTime;
     }
@@ -44,6 +47,9 @@ public class ConnectionInfo implements Serializable {
     public void setMailPort(int mailPort) {
         this.mailPort = mailPort;
     }
+    public void setBroadcastPort(int broadcastPort) {
+        this.broadcastPort = broadcastPort;
+    }
 
     public String getUsername() {
         return username;
@@ -54,5 +60,7 @@ public class ConnectionInfo implements Serializable {
     public int getMailPort() {
         return mailPort;
     }
-
+    public int getBroadcastPort() {
+        return broadcastPort;
+    }
 }

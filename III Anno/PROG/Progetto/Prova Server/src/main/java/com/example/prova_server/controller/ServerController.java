@@ -87,7 +87,7 @@ public class ServerController {
                     username,
                     userData.getClientAddress(),
                     String.valueOf(userData.getMailPort()),
-                    String.valueOf(8003),
+                    String.valueOf(userData.getBroadcastPort()),
                     String.valueOf(userData.getMailSentNotDelete().size()),
                     String.valueOf(userData.getMailReceivedNotDelete().size()),
                     String.valueOf(userData.isOn())

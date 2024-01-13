@@ -25,7 +25,7 @@ public class Server {
     private static final int SERVER_PORT_CONNECTION = 8000;
     private static final int SERVER_PORT_MAIL = 8001;
     private static final int SERVER_PORT_MODIFY = 8002;
-    private static final int CLIENT_PORT_BRAODCAST = 8003;
+    private static int CLIENT_PORT_BRAODCAST = 0;
     private static int CLIENT_PORT_MAIL = 0;
     private static final String[] MAIL_HEADER = {"Uuid", "Sender", "Recipients", "Object", "Text", "CreationDateTime", "LastModifyDateTime", "read"};
     private static final String[] INF_HEADER = {"Username", "LastConnectionDataTime"};
@@ -168,7 +168,8 @@ public class Server {
             inputStream.close();
             outputStream.close();
 
-            CLIENT_PORT_MAIL = 0;
+            CLIENT_PORT_BRAODCAST = -1;
+            CLIENT_PORT_MAIL = -1;
 
             clientMessageServerThread.interrupt();
             serverBroadcastThread.interrupt();
@@ -247,6 +248,7 @@ public class Server {
             mailReceived.putAll(mapMailServer.get("received"));
 
             CLIENT_PORT_MAIL = connectionInfo.getMailPort();
+            CLIENT_PORT_BRAODCAST = connectionInfo.getBroadcastPort();
 
             startListening();
 

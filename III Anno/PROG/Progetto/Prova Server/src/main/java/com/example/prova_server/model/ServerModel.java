@@ -28,7 +28,6 @@ public class ServerModel {
     private static final int SERVER_PORT_CONNECTION = 8000;
     private static final int SERVER_PORT_MESSAGES = 8001;
     private static final int SERVER_PORT_MODIFY = 8002;
-    private static final int CLIENT_PORT_BRODCAST = 8003;
     private static final int THREAD_POOL_SIZE = 10;
     private static final String[] MAIL_HEADER = {"Uuid", "Sender", "Recipients", "Object", "Text", "CreationDateTime", "LastModifyDateTime", "read"};
     private static SimpleStringProperty textAreaProperty = null;
@@ -208,7 +207,7 @@ public class ServerModel {
 
                 userDataList.values().stream()
                         .filter(UserData::isOn)
-                        .forEach( u -> clientBroadcastStopMessage(u.getClientAddress()));
+                        .forEach( u -> clientBroadcastStopMessage(u.getClientAddress(), u.getBroadcastPort()));
 
                 backupLog();
             } catch (InterruptedException e) {
@@ -256,9 +255,9 @@ public class ServerModel {
                 String address = socket.getInetAddress().getHostAddress();
 
                 if (connectionInfo.isConnected()) {
-                    int port = selectPort(address);
+                    List<Integer> ports = selectPort(address);
 
-                    addUser(username, address, port);
+                    addUser(username, address, ports.get(0), ports.get(1));
                     loadBackup(username);
 
                     String lastModifyData = userDataList.get(username).getMailSent().values().stream()
@@ -270,7 +269,7 @@ public class ServerModel {
                             .orElse("01/01/0001 00:00:00");
 
 
-                    connectionInfo = new ConnectionInfo(port, lastModifyData);
+                    connectionInfo = new ConnectionInfo(ports.get(0), ports.get(1), lastModifyData);
 
                     // INVIO: data ultima modifica del server
                     System.out.println(":::::::   INIZIO -> INVIO: data ultima modifica del server + porte == lastModifyData: " + lastModifyData);
@@ -451,8 +450,8 @@ public class ServerModel {
 
         log("Inoltro a: " + recipient + " (" + getAddressForUser(recipient) + ") - ON:" + userDataList.get(recipient).isOn());
     }
-    private void clientBroadcastStopMessage(String address) {
-        try (Socket socket = new Socket(address, CLIENT_PORT_BRODCAST)) {
+    private void clientBroadcastStopMessage(String address, int broadcastPort) {
+        try (Socket socket = new Socket(address, broadcastPort)) {
             try (ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream())) {
                 String jsonStartedInfo = new Gson().toJson(isStarted);
                 outputStream.writeObject(jsonStartedInfo);
@@ -505,10 +504,11 @@ public class ServerModel {
         }
     }
 
-    public static synchronized void addUser(String username, String address, int mailPort) {
-        userDataList.putIfAbsent(username, new UserData(username, address, -1));
+    public static synchronized void addUser(String username, String address, int mailPort, int broadcastPort) {
+        userDataList.putIfAbsent(username, new UserData(username, address, -1, -1));
         userDataList.get(username).setAddress(address);
         userDataList.get(username).setMailPort(mailPort);
+        userDataList.get(username).setBroadcastPort(broadcastPort);
         userDataList.get(username).setOn(true);
 
         Platform.runLater(() -> { countProperty.set(Integer.toString(getClientNumber()));});
@@ -717,17 +717,20 @@ public class ServerModel {
         return combMap;
     }
 
-    private static int selectPort(String address) {
+    private static List<Integer> selectPort(String address) {
+
         List<Integer> occupiedPorts = userDataList.values().stream()
                 .filter(d -> d.getClientAddress().equals(address))
                 .filter(UserData::isOn)
                 .map(UserData::getMailPort)
                 .toList();
 
-        for (int port = 8010; port <= 9000; ++port)
-            if (!occupiedPorts.contains(port))
-                return port;
+        List<Integer> ports = new ArrayList<>();
 
-        return -1;
+        for (int port = 8010; port <= 9000 && ports.size() != 2; ++port)
+            if (!occupiedPorts.contains(port))
+                ports.add(port);
+
+        return ports;
     }
 }
