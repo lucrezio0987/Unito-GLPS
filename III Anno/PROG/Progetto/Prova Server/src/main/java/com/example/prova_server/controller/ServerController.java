@@ -24,7 +24,7 @@ public class ServerController {
     @FXML
     private TableView<TableRowData>         clientTable;
     @FXML
-    private TableColumn<TableRowData, String> usernameColumn, addressColumn, isOnColumn, sendColumn, receivedColumn;
+    private TableColumn<TableRowData, String> usernameColumn, addressColumn, isOnColumn, sendColumn, receivedColumn, sendPortColumn, broadcastPortColumn;
 
     @FXML
     private Circle ConnectLedConPort, DisconnectLedConPort, ConnectLedMailPort, DisconnectLedMailPort, ConnectLedModPort, DisconnectLedModPort;
@@ -40,11 +40,13 @@ public class ServerController {
         countLabel.textProperty().bind(model.getCountProperty());
         model.getServeHostTextProperty().bindBidirectional(serverHostLabel.textProperty());
 
-        usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
-        addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
-        isOnColumn.setCellValueFactory(new PropertyValueFactory<>("isOn"));
+        usernameColumn.setCellValueFactory(new PropertyValueFactory<>("Username"));
+        addressColumn.setCellValueFactory(new PropertyValueFactory<>("Address"));
+        isOnColumn.setCellValueFactory(new PropertyValueFactory<>("IsOn"));
         sendColumn.setCellValueFactory(new PropertyValueFactory<>("Send"));
         receivedColumn.setCellValueFactory(new PropertyValueFactory<>("Received"));
+        sendPortColumn.setCellValueFactory(new PropertyValueFactory<>("SendPort"));
+        broadcastPortColumn.setCellValueFactory(new PropertyValueFactory<>("BroadcastPort"));
 
         model.start();
         addAllRowToTable();
@@ -74,12 +76,7 @@ public class ServerController {
         resetBtn.setDisable(true);
 
 
-        textArea.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                addAllRowToTable();
-            }
-        });
+        textArea.textProperty().addListener((observable, oldValue, newValue) -> addAllRowToTable());
 
     }
 
@@ -102,13 +99,14 @@ public class ServerController {
     }
     public void addAllRowToTable() {
         clearTable();
-        model.getClientMap().forEach((key, value) -> {
+        model.getClientMap().forEach((username, userData) -> {
             clientTable.getItems().add(new TableRowData(
-                    key,
-                    value.getClientAddress(),
-                    String.valueOf(value.isOn()),
-                    String.valueOf(value.getMailSentNotDelete().size()),
-                    String.valueOf(value.getMailReceivedNotDelete().size())));
+                    username,
+                    userData.getClientAddress(),
+                    String.valueOf(userData.isOn()),
+                    String.valueOf(userData.getMailSentNotDelete().size()),
+                    String.valueOf(userData.getMailReceivedNotDelete().size())));
+                //TODO: Aggiungere le due porte
         });
     }
 

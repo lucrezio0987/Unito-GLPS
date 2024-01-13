@@ -13,16 +13,13 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="627.0" prefWidth="906.0" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.prova_server.controller.ServerController">
    <children>
-      <Button fx:id="stopBtn" layoutX="741.0" layoutY="388.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="106.0" text="Stop" />
-      <Button fx:id="resetBtn" layoutX="741.0" layoutY="351.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="106.0" text="Reset" />
-      <Button fx:id="startBtn" layoutX="741.0" layoutY="314.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="106.0" text="Start" />
-      <Label layoutX="702.0" layoutY="236.0" prefHeight="18.0" prefWidth="106.0" text="Client Connect:" underline="true" />
-      <Label fx:id="countLabel" layoutX="840.0" layoutY="234.0" prefHeight="22.0" prefWidth="41.0" text="99+">
+      <Label layoutX="702.0" layoutY="216.0" prefHeight="18.0" prefWidth="106.0" text="Client Connect:" underline="true" />
+      <Label fx:id="countLabel" layoutX="840.0" layoutY="214.0" prefHeight="22.0" prefWidth="41.0" text="0">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Button fx:id="clearBackupButton" layoutX="726.0" layoutY="564.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="133.0" text="Clear All Backup" />
+      <Button fx:id="clearBackupButton" layoutX="725.0" layoutY="357.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="133.0" text="Clear All Backup" />
       <TextField fx:id="serverHostLabel" layoutX="702.0" layoutY="95.0" prefHeight="25.0" prefWidth="181.0" />
       <Label layoutX="702.0" layoutY="70.0" prefHeight="18.0" prefWidth="106.0" text="Server Host:" underline="true" />
       <Label layoutX="745.0" layoutY="26.0" prefHeight="35.0" prefWidth="139.0" text="Server Mail">
@@ -30,13 +27,15 @@
             <Font size="25.0" />
          </font>
       </Label>
-      <TableView fx:id="clientTable" layoutX="14.0" layoutY="420.0" prefHeight="200.0" prefWidth="681.0">
+      <TableView fx:id="clientTable" layoutX="14.0" layoutY="420.0" prefHeight="200.0" prefWidth="878.0">
         <columns>
             <TableColumn fx:id="usernameColumn" prefWidth="314.0" text="Username" />
             <TableColumn fx:id="addressColumn" prefWidth="126.0" text="Address" />
-            <TableColumn fx:id="isOnColumn" prefWidth="84.0" text="Connected" />
+            <TableColumn fx:id="sendPortColumn" prefWidth="95.0" text="Send Port" />
+            <TableColumn fx:id="broadcastPortColumn" prefWidth="110.0" text="Broadcast Port" />
             <TableColumn fx:id="sendColumn" prefWidth="70.0" text="Send" />
             <TableColumn fx:id="receivedColumn" prefWidth="69.0" text="Received" />
+            <TableColumn fx:id="isOnColumn" prefWidth="84.0" text="Connected" />
         </columns>
       </TableView>
       <Label layoutX="16.0" layoutY="15.0" prefHeight="18.0" prefWidth="106.0" text="Log:" underline="true">
@@ -49,11 +48,11 @@
             <TextArea fx:id="textArea" prefHeight="374.0" prefWidth="678.0" />
          </content>
       </ScrollPane>
-      <Button fx:id="clearBackupLogButton" layoutX="728.0" layoutY="522.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="133.0" text="Clear Backup Log" />
-      <Button fx:id="clearBackupMailButton" layoutX="727.0" layoutY="485.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="133.0" text="Clear Backup Mail" />
-      <Label layoutX="724.0" layoutY="128.0" prefHeight="18.0" prefWidth="160.0" text="Porta Connessioni   (8000)" />
-      <Label layoutX="724.0" layoutY="146.0" prefHeight="18.0" prefWidth="160.0" text="Porta Mail                 (8001)" />
-      <Label layoutX="724.0" layoutY="165.0" prefHeight="18.0" prefWidth="160.0" text="Porta Modifiche       (8002)" />
+      <Button fx:id="clearBackupLogButton" layoutX="727.0" layoutY="315.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="133.0" text="Clear Backup Log" />
+      <Button fx:id="clearBackupMailButton" layoutX="726.0" layoutY="278.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="133.0" text="Clear Backup Mail" />
+      <Label layoutX="724.0" layoutY="128.0" prefHeight="18.0" prefWidth="169.0" text="Porta Connessioni   (8000)" />
+      <Label layoutX="724.0" layoutY="146.0" prefHeight="18.0" prefWidth="169.0" text="Porta Mail                  (8001)" />
+      <Label layoutX="724.0" layoutY="165.0" prefHeight="18.0" prefWidth="169.0" text="Porta Modifiche       (8002)" />
       <Circle fx:id="ConnectLedConPort" fill="#1fff29" layoutX="709.0" layoutY="137.0" radius="5.0" stroke="#0fab17" strokeType="INSIDE" />
       <Circle fx:id="DisconnectLedConPort" fill="#ff2121" layoutX="709.0" layoutY="137.0" radius="5.0" stroke="#ab0f0f" strokeType="INSIDE" />
       <Circle fx:id="ConnectLedMailPort" fill="#1fff29" layoutX="709.0" layoutY="155.0" radius="5.0" stroke="#0fab17" strokeType="INSIDE" />
