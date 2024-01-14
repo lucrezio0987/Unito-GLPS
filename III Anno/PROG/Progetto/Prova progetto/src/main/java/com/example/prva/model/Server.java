@@ -345,25 +345,25 @@ public class Server {
 
     public void deleteMailSent(String uuid) {
         if(isConnected())
-            notifyModifyToServer(new MailModifyInfo(mailSent.get(uuid), localAddress, true).setDeleate());
+            notifyModifyToServer(new MailModifyInfo(mailSent.get(uuid), localAddress, true).setDelete());
         mailSent.get(uuid).setDelete();
         backup();
     }
     public void deleteMailReceived(String uuid) {
         if(isConnected())
-            notifyModifyToServer(new MailModifyInfo(mailReceived.get(uuid), localAddress, false).setDeleate());
+            notifyModifyToServer(new MailModifyInfo(mailReceived.get(uuid), localAddress, false).setDelete());
         mailReceived.get(uuid).setDelete();
         backup();
     }
     public void deleteMailSentList() {
         if(isConnected())
-            notifyModifyToServer(new MailModifyInfo(null, localAddress, true).setDeleateAll());
+            notifyModifyToServer(new MailModifyInfo(null, localAddress, true).setDeleteAll());
         mailSent.values().forEach(Mail::setDelete);
         backup();
     }
     public void deleteMailReceivedList() {
         if(isConnected())
-            notifyModifyToServer(new MailModifyInfo(null, localAddress, false).setDeleateAll());
+            notifyModifyToServer(new MailModifyInfo(null, localAddress, false).setDeleteAll());
         mailReceived.values().forEach(Mail::setDelete);
         backup();
     }
