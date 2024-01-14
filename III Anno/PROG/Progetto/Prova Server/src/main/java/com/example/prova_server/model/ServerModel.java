@@ -612,10 +612,7 @@ public class ServerModel {
                         f.getName().contains("-sender.csv"))
                 .forEach(File::delete);
 
-        userDataList.forEach((u, data) -> {
-            data.clearMailListSent();
-            data.clearMailListRecived();
-        });
+        userDataList.clear();
 
         log("BACKUP: Rimossi i file csv di backup delle mail (Inviate e Ricevute)");
     }
@@ -712,13 +709,20 @@ public class ServerModel {
         return combMap;
     }
 
-    private static List<Integer> selectPort(String address) {
+    private synchronized static List<Integer> selectPort(String address) {
 
         List<Integer> occupiedPorts = userDataList.values().stream()
-                .filter(d -> d.getClientAddress().equals(address))
-                .filter(UserData::isOn)
-                .flatMap(d -> Stream.of(d.getBroadcastPort(), d.getMailPort()))
-                .toList();
+                        .filter(UserData::isOn)
+                        .filter(d -> d.getClientAddress().equals(address))
+                        .flatMap(d -> Stream.of(d.getBroadcastPort(), d.getMailPort()))
+                        .toList();
+
+//        for(UserData d : userDataList.values())
+//            if(d.getClientAddress().equals(address) && d.isOn()){
+//                occupiedPorts.add(d.getBroadcastPort());
+//                occupiedPorts.add(d.getMailPort());
+//            }
+
 
         List<Integer> ports = new ArrayList<>();
 

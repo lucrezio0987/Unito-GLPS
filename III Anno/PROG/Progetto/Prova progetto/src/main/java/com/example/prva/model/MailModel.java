@@ -247,6 +247,7 @@ public class MailModel {
     public boolean reconnect() {
         if(server.isConnected())
             disconnect();
+
         return connect();
     }
     public boolean disconnect() {
