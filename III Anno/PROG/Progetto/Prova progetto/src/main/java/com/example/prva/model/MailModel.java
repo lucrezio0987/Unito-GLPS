@@ -237,7 +237,7 @@ public class MailModel {
     public boolean connect() {
         String localAddress = localAddressProperty.get();
         if(syntaxControll(localAddress)) {
-            if(server.isConnected() && server.getAddress().equals(localAddress)) {
+            if(!(server.isConnected() && server.getAddress().equals(localAddress))) {
                 server.setAddress(localAddress);
                 server.setServerAddress(serveHostProperty.get());
                 server.connectToServer();
