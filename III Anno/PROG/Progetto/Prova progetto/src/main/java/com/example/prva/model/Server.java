@@ -205,16 +205,13 @@ public class Server {
         }
     }
     public synchronized void connectToServer() {
-        Socket socket = null;
-        ObjectInputStream inputStream = null;
-        ObjectOutputStream outputStream = null;
         try {
-            socket = new Socket();
+            Socket socket = new Socket();
             socket.connect(new InetSocketAddress(SERVER_ADDRESS, SERVER_PORT_CONNECTION), 2000);
             socket.setSoTimeout(2000);
 
-            inputStream = new ObjectInputStream(socket.getInputStream());
-            outputStream = new ObjectOutputStream(socket.getOutputStream());
+            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
 
             String lastModifyDataClient = mailSent.values().stream()
                     .flatMap(mail -> Stream.of(mail, mailReceived.get(mail.getUuid())))
@@ -264,27 +261,22 @@ public class Server {
             Map<String, Map<String, Mail>> mapMailServer = new Gson().fromJson(jsonSenderCSV, type);
             System.out.println(":::::::   FINE -> RICEZIONE: lista modifiche client-server combinate == mapMailServer: " + mapMailServer.get("sent").size() + " " + mapMailServer.get("received").size());
 
+            outputStream.close();
+            inputStream.close();
+            socket.close();
+
             mailSent.putAll(mapMailServer.get("sent"));
             mailReceived.putAll(mapMailServer.get("received"));
 
             startListening(connectionInfo.getMailPort(), connectionInfo.getBroadcastPort());
-
             backup();
-
             setConnected(true);
+
         } catch (IOException | ClassNotFoundException e) {
             stopListening();
             //e.printStackTrace();
             //System.out.println("Connessione al Server Fallita (connectToServer)");
             setConnected(false);
-        } finally {
-            try {
-                outputStream.close();
-                inputStream.close();
-                socket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
