@@ -103,11 +103,21 @@ public class Server {
                 while (!Thread.interrupted()) {
                     try (Socket socket = clientMessageServerSocket.accept()) {
                         ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+                        ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+
+                        // RICEZIONE: invio della mail
                         Mail mail = new Gson().fromJson((String) inputStream.readObject(), Mail.class);
+
+                        // INVIO: conferma di invio
+                        outputStream.writeObject(new Gson().toJson(true));
+                        outputStream.flush();
 
                         System.out.println("MAIL ricevuta da " + mail.getSender() + ": " + mail.getText());
                         addMailReceived(mail);
                         backup();
+
+                        inputStream.close();
+                        outputStream.close();
                     } catch (SocketTimeoutException ignored) {
                     } catch (IOException | ClassNotFoundException e) {
                         e.printStackTrace();

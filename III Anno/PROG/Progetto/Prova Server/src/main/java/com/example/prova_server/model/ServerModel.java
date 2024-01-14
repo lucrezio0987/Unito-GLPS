@@ -277,7 +277,6 @@ public class ServerModel {
 
                     // INVIO: data ultima modifica del server
                     System.out.println(":::::::   INIZIO -> INVIO: data ultima modifica del server + porte == lastModifyData: " + lastModifyData);
-                    //ConnectionInfo conn = new ConnectionInfo()
                     outputStream.writeObject(new Gson().toJson(connectionInfo));
                     outputStream.flush();
                     System.out.println(":::::::   FINE -> INVIO: data ultima modifica del server + porte");
@@ -429,6 +428,9 @@ public class ServerModel {
                 .forEach(mail -> mail.getRecipientsList().forEach(recipient -> sendMail(recipient, mail)));
     }
     private static void sendMail(String recipient, Mail mail) {
+        boolean success;
+        int i;
+
         if(mail.isDelete())
             return;
 
@@ -436,23 +438,34 @@ public class ServerModel {
         userDataList.get(recipient).addMailReceived(mail);
         backup(recipient);
 
-        if (userDataList.get(recipient).isOn()) {
-            try {
-                Socket socket = new Socket(userDataList.get(recipient).getClientAddress(), userDataList.get(recipient).getMailPort());
+        for(i = 0, success = false; i< 5 && !success; ++i) {
+            if (userDataList.get(recipient).isOn()) {
+                try {
 
-                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-                String jsonMail = new Gson().toJson(mail);
-                outputStream.writeObject(jsonMail);
-                outputStream.flush();
+                    Socket socket = new Socket(userDataList.get(recipient).getClientAddress(), userDataList.get(recipient).getMailPort());
 
-                outputStream.close();
-                socket.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+                    ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+                    ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+
+                    // INVIO: invio della mail
+                    outputStream.writeObject(new Gson().toJson(mail));
+                    outputStream.flush();
+
+                    // RICEZIONE: conferma di invio
+                    success = new Gson().fromJson((String) inputStream.readObject(), boolean.class);
+
+                    inputStream.close();
+                    outputStream.close();
+                    socket.close();
+                } catch (IOException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
-
-        log("Inoltro a: " + recipient + " (" + getAddressForUser(recipient) + ") - ON:" + userDataList.get(recipient).isOn());
+        if (!success)
+            log("ERRORE: Mail non inviata a " + recipient + " dopo 5 tentativi falliti (Caso non gestito)");
+        else
+            log("Inoltro a: " + recipient + " (" + getAddressForUser(recipient) + ") - ON:" + userDataList.get(recipient).isOn());
     }
     private void clientBroadcastStopMessage(String address, int broadcastPort) {
         try (Socket socket = new Socket(address, broadcastPort)) {
