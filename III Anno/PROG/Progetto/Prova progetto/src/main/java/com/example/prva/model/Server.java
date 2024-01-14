@@ -127,8 +127,8 @@ public class Server {
                 e.printStackTrace();
             } finally {
                 try {
-                    assert clientMessageServerSocket != null;
-                    clientMessageServerSocket.close();
+                    if(clientMessageServerSocket != null)
+                        clientMessageServerSocket.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -161,8 +161,8 @@ public class Server {
                 e.printStackTrace();
             } finally {
                 try {
-                    assert serverConnectionSocket != null;
-                    serverConnectionSocket.close();
+                    if(serverConnectionSocket != null)
+                        serverConnectionSocket.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
