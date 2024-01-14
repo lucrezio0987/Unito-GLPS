@@ -391,8 +391,6 @@ public class ServerModel {
                         userDataList.get(username).clearMailListSent();
                     if (modifyInfo.isDelete())
                         userDataList.get(username).removeMailSent(mail);
-                    if (modifyInfo.isCreate())
-                        userDataList.get(username).addMailSent(mail);
                 } else {
                     if (modifyInfo.isDeleteAll())
                         userDataList.get(username).clearMailListReceived();
@@ -400,8 +398,6 @@ public class ServerModel {
                         userDataList.get(username).removeMailReceived(mail);
                     if (modifyInfo.isRead())
                         userDataList.get(username).setReadMailReceived(mail);
-                    if (modifyInfo.isCreate())
-                        userDataList.get(username).addMailReceived(mail);
                 }
 
                 if (modifyInfo.isDeleteAll())
@@ -410,8 +406,6 @@ public class ServerModel {
                     log("MODIFY: ("+username+") delete");
                 if (modifyInfo.isRead())
                     log("MODIFY: ("+username+") read");
-                if (modifyInfo.isCreate())
-                    log("MODIFY: ("+username+") created");
 
                 backup(username);
 
