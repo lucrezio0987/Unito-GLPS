@@ -104,7 +104,7 @@ public class Server {
         this.CLIENT_PORT_BRAODCAST = CLIENT_PORT_BRAODCAST;
 
         clientMessageServerThread = new Thread(() -> {
-            try {
+            try     {
                 ServerSocket clientMessageServerSocket = new ServerSocket(CLIENT_PORT_MAIL);
                 System.out.println("Client in ascolto sulla porta " + CLIENT_PORT_MAIL + " per le mail...");
                 clientMessageServerSocket.setSoTimeout(1000);
@@ -201,6 +201,7 @@ public class Server {
         }
     }
     public synchronized void connectToServer() {
+        setConnected(false);
         loadBackup();
         try {
             Socket socket = new Socket();
@@ -277,7 +278,6 @@ public class Server {
             //System.out.println("Connessione al Server Fallita (connectToServer)");
             setConnected(false);
         }
-        setConnected(false);
     }
 
     public ArrayList<Mail> getMails(Map<String, Mail> mailMap) {
