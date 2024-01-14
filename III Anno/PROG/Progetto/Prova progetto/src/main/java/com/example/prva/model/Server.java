@@ -25,8 +25,8 @@ public class Server {
     private static final int SERVER_PORT_CONNECTION = 8000;
     private static final int SERVER_PORT_MAIL = 8001;
     private static final int SERVER_PORT_MODIFY = 8002;
-    private static int CLIENT_PORT_BRAODCAST = 0;
-    private static int CLIENT_PORT_MAIL = 0;
+    private static int broadcastPort = 0;
+    private static int mailPort = 0;
     private static final String[] MAIL_HEADER = {"Uuid", "Sender", "Recipients", "Object", "Text", "CreationDateTime", "LastModifyDateTime", "read"};
     private static final String[] INF_HEADER = {"Username", "LastConnectionDataTime"};
 
@@ -78,8 +78,8 @@ public class Server {
     }
 
     private synchronized void stopListening() {
-        CLIENT_PORT_MAIL = 0;
-        CLIENT_PORT_BRAODCAST = 0;
+        mailPort = 0;
+        broadcastPort = 0;
 
         if (clientMessageServerThread != null) {
             clientMessageServerThread.interrupt();}
@@ -87,17 +87,17 @@ public class Server {
         if (serverBroadcastThread != null)
             serverBroadcastThread.interrupt();
     }
-    private synchronized void startListening(int CLIENT_PORT_MAIL, int CLIENT_PORT_BRAODCAST) {
+    private synchronized void startListening(int newMailPort, int newBroadcastPort) {
         stopListening();
 
-        this.CLIENT_PORT_MAIL = CLIENT_PORT_MAIL;
-        this.CLIENT_PORT_BRAODCAST = CLIENT_PORT_BRAODCAST;
+        this.mailPort = newMailPort;
+        this.broadcastPort = newBroadcastPort;
 
         clientMessageServerThread = new Thread(() -> {
             ServerSocket clientMessageServerSocket = null;
             try     {
-                clientMessageServerSocket = new ServerSocket(CLIENT_PORT_MAIL);
-                System.out.println("Client in ascolto sulla porta " + CLIENT_PORT_MAIL + " per le mail...");
+                clientMessageServerSocket = new ServerSocket(newMailPort);
+                System.out.println("Client in ascolto sulla porta " + newMailPort + " per le mail...");
                 clientMessageServerSocket.setSoTimeout(500);
 
                 while (!Thread.interrupted()) {
@@ -138,14 +138,14 @@ public class Server {
         clientMessageServerThread.start();
 
         serverBroadcastThread = new Thread(() -> {
-            ServerSocket serverConnectionSocket = null;
+            ServerSocket serverBroadcastSocket = null;
             try {
-                serverConnectionSocket = new ServerSocket(CLIENT_PORT_BRAODCAST);
-                System.out.println("Client in ascolto sulla porta " + CLIENT_PORT_BRAODCAST + " per i messaggi di disconnessione del server...");
-                serverConnectionSocket.setSoTimeout(500);
+                serverBroadcastSocket = new ServerSocket(newBroadcastPort);
+                System.out.println("Client in ascolto sulla porta " + newBroadcastPort + " per i messaggi di disconnessione del server...");
+                serverBroadcastSocket.setSoTimeout(500);
 
                 while (!Thread.interrupted()) {
-                    try (Socket socket = serverConnectionSocket.accept()) {
+                    try (Socket socket = serverBroadcastSocket.accept()) {
                         ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
                         String jsonMail = (String) inputStream.readObject();
                         boolean connected = new Gson().fromJson(jsonMail, boolean.class);
@@ -162,8 +162,8 @@ public class Server {
                 e.printStackTrace();
             } finally {
                 try {
-                    if(serverConnectionSocket != null)
-                        serverConnectionSocket.close();
+                    if(serverBroadcastSocket != null)
+                        serverBroadcastSocket.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -541,11 +541,11 @@ public class Server {
     }
 
     public String getMailPort() {
-        return Integer.toString(CLIENT_PORT_MAIL);
+        return Integer.toString(mailPort);
     }
 
     public String getBroadcastPort() {
-        return Integer.toString(CLIENT_PORT_BRAODCAST);
+        return Integer.toString(broadcastPort);
     }
 
     public String getAddress() {
