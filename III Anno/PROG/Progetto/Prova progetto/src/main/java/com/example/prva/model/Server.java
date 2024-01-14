@@ -61,7 +61,7 @@ public class Server {
     }
     private void setConnected(boolean connected) {
         if(!connected && this.connected)
-            stopListeningThreads();
+            stopListening();
         this.connected = connected;
         controller.setConnection(connected);
     }
@@ -77,12 +77,12 @@ public class Server {
         SERVER_ADDRESS = serverAddress;
     }
 
-    private void stopListeningThreads() {
+    private synchronized void stopListening() {
         CLIENT_PORT_MAIL = 0;
         CLIENT_PORT_BRAODCAST = 0;
 
-        if (clientMessageServerThread != null)
-            clientMessageServerThread.interrupt();
+        if (clientMessageServerThread != null) {
+            clientMessageServerThread.interrupt();}
 
         if (serverBroadcastThread != null)
             serverBroadcastThread.interrupt();
@@ -97,9 +97,8 @@ public class Server {
             e.printStackTrace();
         }
     }
-
-    private void startListening(int CLIENT_PORT_MAIL, int CLIENT_PORT_BRAODCAST) {
-        stopListeningThreads();
+    private synchronized void startListening(int CLIENT_PORT_MAIL, int CLIENT_PORT_BRAODCAST) {
+        stopListening();
 
         this.CLIENT_PORT_MAIL = CLIENT_PORT_MAIL;
         this.CLIENT_PORT_BRAODCAST = CLIENT_PORT_BRAODCAST;
@@ -168,7 +167,7 @@ public class Server {
         serverBroadcastThread.start();
 
     }
-    public void disconnectToServer() {
+    public synchronized void disconnectToServer() {
         setConnected(false);
         backup();
         try {
@@ -201,7 +200,7 @@ public class Server {
             writeCSVInfo(localAddress, null);
         }
     }
-    public void connectToServer() {
+    public synchronized void connectToServer() {
         loadBackup();
         try {
             Socket socket = new Socket();
@@ -273,7 +272,7 @@ public class Server {
 
             setConnected(true);
         } catch (IOException | ClassNotFoundException e) {
-            stopListeningThreads();
+            stopListening();
             //e.printStackTrace();
             //System.out.println("Connessione al Server Fallita (connectToServer)");
             setConnected(false);

@@ -11,8 +11,8 @@ public class UserData {
     private Map<String, Mail> mailReceived;
     private boolean connected;
     private String clientAddress;
-    private Integer broadcastPort = -1;
-    private Integer mailPort = -1;
+    private int broadcastPort = 0;
+    private int mailPort = 0;
 
     public UserData(String username) {
         this.username = username;
@@ -21,7 +21,7 @@ public class UserData {
         this.connected = false;
     }
 
-    public UserData(String username, String clientAddress, Integer mailPort, Integer broadcastPort) {
+    public UserData(String username, String clientAddress, int mailPort, int broadcastPort) {
         this.username = username;
         this.mailSent = new HashMap<>();
         this.mailReceived = new HashMap<>();
@@ -127,10 +127,10 @@ public class UserData {
         this.clientAddress = address;
     }
 
-    public Integer getMailPort() {
+    public int getMailPort() {
         return mailPort;
     }
-    public Integer getBroadcastPort() {
+    public int getBroadcastPort() {
         return broadcastPort;
     }
 
