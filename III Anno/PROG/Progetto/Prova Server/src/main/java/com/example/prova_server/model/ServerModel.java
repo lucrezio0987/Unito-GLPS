@@ -454,7 +454,7 @@ public class ServerModel {
 
         log("Inoltro a: " + recipient + " (" + getAddressForUser(recipient) + ") - ON:" + userDataList.get(recipient).isOn());
     }
-    private static void clientBroadcastStopMessage(String address, int broadcastPort) {
+    private void clientBroadcastStopMessage(String address, int broadcastPort) {
         try (Socket socket = new Socket(address, broadcastPort)) {
             try (ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream())) {
                 String jsonStartedInfo = new Gson().toJson(isStarted);
@@ -478,7 +478,7 @@ public class ServerModel {
         userDataList.get(username).loadSendMails(readCSVMail(pathConstructor(username, "sender")));
         userDataList.get(username).loadReceivedMails(readCSVMail(pathConstructor(username, "received")));
     }
-    private static synchronized void loadBackupLog() {
+    private void loadBackupLog() {
         if(FileExist(pathConstructor(null, "log")))
             try (Reader reader = new FileReader(pathConstructor(null, "log"));
                  CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT)) {
@@ -494,7 +494,7 @@ public class ServerModel {
                 e.printStackTrace();
             }
     }
-    private static synchronized void backupLog() {
+    private void backupLog() {
         logList.add("------------------------------------------[ " +
                 new SimpleDateFormat("dd/MM/yy HH:mm:ss").format(new Date())
                 + " ]------------------------------------------");
@@ -526,7 +526,7 @@ public class ServerModel {
         logList.add(newLine);
     }
 
-    private static synchronized Map<String, Mail> readCSVMail(String path) {
+    private static Map<String, Mail> readCSVMail(String path) {
         createFileIfNotExists(path, MAIL_HEADER);
 
         Map<String, Mail> mailMap = new HashMap<>();
@@ -548,7 +548,7 @@ public class ServerModel {
         }
         return mailMap;
     }
-    private static synchronized void writeCSVMail(String path, Map<String, Mail> mailList){
+    private static void writeCSVMail(String path, Map<String, Mail> mailList){
         createFileIfNotExists(path, MAIL_HEADER);
         if(mailList != null) {
             Map<String, Mail> mailMap = readCSVMail(path);
@@ -571,15 +571,15 @@ public class ServerModel {
             }
         }
     }
-    private static synchronized boolean FileExist(String path) {
+    private static boolean FileExist(String path) {
         return Files.exists(Path.of(path));
     }
-    private static synchronized void createFileIfNotExists(String path, String[] headers) {
+    private static void createFileIfNotExists(String path, String[] headers) {
         if (!FileExist(path)) {
             createFileAndWriteHeader(path, headers);
         }
     }
-    private static synchronized void createFileAndWriteHeader(String path, String[] headers) {
+    private static void createFileAndWriteHeader(String path, String[] headers) {
         try (Writer writer = new FileWriter(path, false);
              CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(headers))) {
             csvPrinter.printRecord();
@@ -587,7 +587,7 @@ public class ServerModel {
             throw new RuntimeException(e);
         }
     }
-    private static synchronized String pathConstructor(String username, String type){
+    private static String pathConstructor(String username, String type){
         String directoryPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "backup";
         File directory = new File(directoryPath);
         if (!directory.exists())
@@ -598,12 +598,12 @@ public class ServerModel {
             return directoryPath + File.separator + username + "-" + type + ".csv";
     }
 
-    public static synchronized void clearAllBackup() {
+    public void clearAllBackup() {
         clearBackupLog();
         clearBackupMail();
         log("BACKUP: Rimossi tutti i file di backup");
     }
-    public static synchronized void clearBackupMail() {
+    public void clearBackupMail() {
         Arrays.stream(Objects.requireNonNull(new File(
                         System.getProperty("user.dir") +
                                 File.separator + "src" +
@@ -616,7 +616,7 @@ public class ServerModel {
 
         log("BACKUP: Rimossi i file csv di backup delle mail (Inviate e Ricevute)");
     }
-    public static synchronized void clearBackupLog() {
+    public void clearBackupLog() {
 
         Arrays.stream(Objects.requireNonNull(new File(
                         System.getProperty("user.dir") +
@@ -629,7 +629,7 @@ public class ServerModel {
         log("BACKUP: pulita la storiografia dei log (log.csv)");
     }
 
-    private static synchronized Set<String> getSetUsernamesSaved() {
+    private Set<String> getSetUsernamesSaved() {
         Set<String> utentiConDati = new HashSet<>();
 
         String directoryPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "backup";
@@ -648,7 +648,7 @@ public class ServerModel {
         return utentiConDati;
     }
 
-    public static synchronized Map<String, Mail> combineMailMaps(Map<String, Mail> mapClient, Map<String, Mail> mapServer) {
+    public static Map<String, Mail> combineMailMaps(Map<String, Mail> mapClient, Map<String, Mail> mapServer) {
         log("  [+] MAPPA 1 Client: " + mapClient.values().size() + " ( di cui " + mapClient.values().stream().filter(Mail::isDelete).count() + " cancellate)");
         log("  [+] MAPPA 2 Server: " + mapServer.values().size() + " ( di cui " + mapServer.values().stream().filter(Mail::isDelete).count() + " cancellate)");
         Map<String, Mail> combMap = Stream.concat(
@@ -670,7 +670,7 @@ public class ServerModel {
         return combMap;
     }
 
-    private static synchronized List<Integer> selectPort(String address) {
+    private synchronized static List<Integer> selectPort(String address) {
 
         List<Integer> occupiedPorts = userDataList.values().stream()
                         .filter(UserData::isOn)
