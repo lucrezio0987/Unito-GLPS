@@ -237,17 +237,18 @@ public class MailModel {
     public boolean connect() {
         String localAddress = localAddressProperty.get();
         if(syntaxControll(localAddress)) {
-            server.setAddress(localAddress);
-            server.setServerAddress(serveHostProperty.get());
-            server.connectToServer();
+            if(server.isConnected() && server.getAddress().equals(localAddress)) {
+                server.setAddress(localAddress);
+                server.setServerAddress(serveHostProperty.get());
+                server.connectToServer();
 
-            setPortInProperty();
-            controller.clearMailView();
-            controller.setCountMailSent();
-            getListMailSent().forEach(controller::createCardSent);
-            controller.setCountMailReceived();
-            getListMailReceived().forEach(controller::createCardReceived);
-
+                setPortInProperty();
+                controller.clearMailView();
+                controller.setCountMailSent();
+                getListMailSent().forEach(controller::createCardSent);
+                controller.setCountMailReceived();
+                getListMailReceived().forEach(controller::createCardReceived);
+            }
             if(server.isConnected()) {
                 log("SERVER: Connesso");
                 return true;
@@ -264,14 +265,13 @@ public class MailModel {
 
     public boolean reconnect() {
         if(server.isConnected())
-            disconnect();
-
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
+            try {
+                disconnect();
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            
         return connect();
     }
     public boolean disconnect() {

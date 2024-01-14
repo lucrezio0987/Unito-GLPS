@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b545aa37-8307-4738-b698-f55b798e1538" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Prova progetto/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova progetto/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Prova progetto/src/main/java/com/example/prva/model/MailModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova progetto/src/main/java/com/example/prva/model/MailModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Prova progetto/src/main/java/com/example/prva/model/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova progetto/src/main/java/com/example/prva/model/Server.java" afterDir="false" />
     </list>
@@ -145,7 +144,7 @@
       <workItem from="1705021552737" duration="5079000" />
       <workItem from="1705062210956" duration="15236000" />
       <workItem from="1705143041836" duration="467000" />
-      <workItem from="1705229968786" duration="7870000" />
+      <workItem from="1705229968786" duration="8426000" />
     </task>
     <servers />
   </component>

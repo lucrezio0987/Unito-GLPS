@@ -537,4 +537,8 @@ public class Server {
     public String getBroadcastPort() {
         return Integer.toString(CLIENT_PORT_BRAODCAST);
     }
+
+    public String getAddress() {
+        return localAddress;
+    }
 }
