@@ -271,7 +271,7 @@ public class MailModel {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            
+
         return connect();
     }
     public boolean disconnect() {
