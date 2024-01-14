@@ -104,8 +104,9 @@ public class Server {
         this.CLIENT_PORT_BRAODCAST = CLIENT_PORT_BRAODCAST;
 
         clientMessageServerThread = new Thread(() -> {
+            ServerSocket clientMessageServerSocket = null;
             try     {
-                ServerSocket clientMessageServerSocket = new ServerSocket(CLIENT_PORT_MAIL);
+                clientMessageServerSocket = new ServerSocket(CLIENT_PORT_MAIL);
                 System.out.println("Client in ascolto sulla porta " + CLIENT_PORT_MAIL + " per le mail...");
                 clientMessageServerSocket.setSoTimeout(1000);
 
@@ -120,10 +121,11 @@ public class Server {
                             addMailReceived(mail);
                             backup();
 
-                            socket.close();
                         } catch (IOException | ClassNotFoundException e) {
                             e.printStackTrace();
                             System.out.println("Errore durante la lettura della mail dal Server");
+                        } finally {
+                            socket.close();
                         }
                     } catch (SocketTimeoutException e) {
                         continue;
@@ -131,13 +133,21 @@ public class Server {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+            } finally {
+                try {
+                    assert clientMessageServerSocket != null;
+                    clientMessageServerSocket.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         clientMessageServerThread.start();
 
         serverBroadcastThread = new Thread(() -> {
+            ServerSocket serverConnectionSocket = null;
             try {
-                ServerSocket serverConnectionSocket = new ServerSocket(CLIENT_PORT_BRAODCAST);
+                serverConnectionSocket = new ServerSocket(CLIENT_PORT_BRAODCAST);
                 System.out.println("Client in ascolto sulla porta " + CLIENT_PORT_BRAODCAST + " per i messaggi di disconnessione del server...");
                 serverConnectionSocket.setSoTimeout(1000);
 
@@ -150,11 +160,11 @@ public class Server {
                             boolean connected = new Gson().fromJson(jsonMail, boolean.class);
 
                             setConnected(connected);
-
-                            socket.close();
                         } catch (IOException | ClassNotFoundException e) {
                             e.printStackTrace();
                             System.out.println("Errore durante la lettura del messaggio dal Server");
+                        } finally {
+                            socket.close();
                         }
                     } catch (SocketTimeoutException e) {
                         continue;
@@ -162,6 +172,13 @@ public class Server {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+            } finally {
+                try {
+                    assert serverConnectionSocket != null;
+                    serverConnectionSocket.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         serverBroadcastThread.start();
@@ -515,8 +532,7 @@ public class Server {
 
     public void stop() {
         disconnectToServer();
-        clientMessageServerThread.interrupt();
-        serverBroadcastThread.interrupt();
+
     }
 
     public void clearBackupMail() {
