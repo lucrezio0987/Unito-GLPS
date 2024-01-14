@@ -398,7 +398,10 @@ public class Server {
             try (Reader reader = new FileReader(CSV_INFO_PATH);
                  CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withHeader())) {
                 for (CSVRecord csvRecord : csvParser)
-                    records.put(csvRecord.get("Username"), csvRecord.get("LastConnectionDataTime"));
+                    records.put(
+                            csvRecord.get("Username"),
+                            csvRecord.get("LastConnectionDataTime")
+                    );
 
             } catch (IOException e) {
                 e.printStackTrace();
