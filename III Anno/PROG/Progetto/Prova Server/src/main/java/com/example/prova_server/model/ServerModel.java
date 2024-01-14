@@ -395,19 +395,19 @@ public class ServerModel {
                         userDataList.get(username).addMailSent(mail);
                 } else {
                     if (modifyInfo.isDeleteAll())
-                        userDataList.get(username).clearMailListRecived();
+                        userDataList.get(username).clearMailListReceived();
                     if (modifyInfo.isDelete())
-                        userDataList.get(username).removeMailRecived(mail);
+                        userDataList.get(username).removeMailReceived(mail);
                     if (modifyInfo.isRead())
-                        userDataList.get(username).setReadMailRecived(mail);
+                        userDataList.get(username).setReadMailReceived(mail);
                     if (modifyInfo.isCreate())
                         userDataList.get(username).addMailReceived(mail);
                 }
 
                 if (modifyInfo.isDeleteAll())
-                    log("MODIFY: ("+username+") deleate ALL");
+                    log("MODIFY: ("+username+") delete ALL");
                 if (modifyInfo.isDelete())
-                    log("MODIFY: ("+username+") deleate");
+                    log("MODIFY: ("+username+") delete");
                 if (modifyInfo.isRead())
                     log("MODIFY: ("+username+") read");
                 if (modifyInfo.isCreate())

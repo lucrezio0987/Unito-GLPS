@@ -1,6 +1,5 @@
 package com.example.prova_server.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -58,18 +57,15 @@ public class UserData {
         this.mailReceived.put(mail.getUuid(), mail);
     }
 
-    public void removeMailRecived(Mail mail) {
+    public void removeMailReceived(Mail mail) {
         mailReceived.get(mail.getUuid()).setDelete();
     }
     public void removeMailSent(Mail mail) {
         mailSent.get(mail.getUuid()).setDelete();
     }
 
-    public void setReadMailRecived(Mail mail) {
+    public void setReadMailReceived(Mail mail) {
         mailReceived.get(mail.getUuid()).setRead();
-    }
-    public void setReadMailSent(Mail mail) {
-        mailSent.get(mail.getUuid()).setRead();
     }
 
     public void loadSendMails(Map<String, Mail> mailMap) {
@@ -93,7 +89,7 @@ public class UserData {
         return connected;
     }
 
-    public void clearMailListRecived() {
+    public void clearMailListReceived() {
         mailReceived.values().forEach(Mail::setDelete);
     }
     public void clearMailListSent() {
@@ -118,7 +114,6 @@ public class UserData {
     public void updateMailSent(Map<String, Mail> uppdates) {
         mailSent.putAll(uppdates);
     }
-
     public void updateMailReceived(Map<String, Mail> uppdates) {
         mailReceived.putAll(uppdates);
     }
