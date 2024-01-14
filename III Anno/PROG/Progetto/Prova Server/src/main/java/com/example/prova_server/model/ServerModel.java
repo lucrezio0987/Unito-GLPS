@@ -454,6 +454,8 @@ public class ServerModel {
                     // RICEZIONE: conferma di invio
                     success = new Gson().fromJson((String) inputStream.readObject(), boolean.class);
 
+                    log("MAIL INVIATA CON SUCCESSO: [" + mail.getSender() + " -> " + recipient + "]" );
+
                     inputStream.close();
                     outputStream.close();
                     socket.close();

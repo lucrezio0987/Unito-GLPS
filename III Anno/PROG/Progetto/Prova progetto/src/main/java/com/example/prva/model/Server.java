@@ -102,8 +102,8 @@ public class Server {
 
                 while (!Thread.interrupted()) {
                     try (Socket socket = clientMessageServerSocket.accept()) {
-                        ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
                         ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+                        ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
 
                         // RICEZIONE: invio della mail
                         Mail mail = new Gson().fromJson((String) inputStream.readObject(), Mail.class);
