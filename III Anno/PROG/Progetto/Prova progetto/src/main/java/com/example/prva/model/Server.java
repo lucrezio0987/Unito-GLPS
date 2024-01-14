@@ -86,15 +86,6 @@ public class Server {
 
         if (serverBroadcastThread != null)
             serverBroadcastThread.interrupt();
-
-        // try {
-        //     if (clientMessageServerThread != null)
-        //         clientMessageServerThread.join();
-        //     if (serverBroadcastThread != null)
-        //         serverBroadcastThread.join();
-        // } catch (InterruptedException e) {
-        //     e.printStackTrace();
-        // }
     }
     private synchronized void startListening(int CLIENT_PORT_MAIL, int CLIENT_PORT_BRAODCAST) {
         stopListening();
@@ -107,7 +98,7 @@ public class Server {
             try     {
                 clientMessageServerSocket = new ServerSocket(CLIENT_PORT_MAIL);
                 System.out.println("Client in ascolto sulla porta " + CLIENT_PORT_MAIL + " per le mail...");
-                clientMessageServerSocket.setSoTimeout(1000);
+                clientMessageServerSocket.setSoTimeout(500);
 
                 while (!Thread.interrupted()) {
                     try (Socket socket = clientMessageServerSocket.accept()) {
@@ -141,7 +132,7 @@ public class Server {
             try {
                 serverConnectionSocket = new ServerSocket(CLIENT_PORT_BRAODCAST);
                 System.out.println("Client in ascolto sulla porta " + CLIENT_PORT_BRAODCAST + " per i messaggi di disconnessione del server...");
-                serverConnectionSocket.setSoTimeout(1000);
+                serverConnectionSocket.setSoTimeout(500);
 
                 while (!Thread.interrupted()) {
                     try (Socket socket = serverConnectionSocket.accept()) {
