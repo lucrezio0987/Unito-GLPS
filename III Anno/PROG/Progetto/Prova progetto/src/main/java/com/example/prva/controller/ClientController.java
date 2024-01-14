@@ -209,6 +209,15 @@ public class ClientController {
         setCountMailReceived();
     }
 
+    public void clearMailView() {
+        Lista_posta_inviata.getChildren().clear();
+        Lista_posta_ricevuta.getChildren().clear();
+        showMailPanelSent(false);
+        showMailPanelReceived(false);
+        setCountMailSent();
+        setCountMailReceived();
+    }
+
     public void clearLocalMail() {
         clearLocalMailSent();
         clearLocalMailReceived();

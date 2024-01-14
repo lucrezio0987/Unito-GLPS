@@ -87,15 +87,14 @@ public class Server {
         if (serverBroadcastThread != null)
             serverBroadcastThread.interrupt();
 
-        try {
-            if (clientMessageServerThread != null)
-                clientMessageServerThread.join();
-
-            if (serverBroadcastThread != null)
-                serverBroadcastThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        // try {
+        //     if (clientMessageServerThread != null)
+        //         clientMessageServerThread.join();
+        //     if (serverBroadcastThread != null)
+        //         serverBroadcastThread.join();
+        // } catch (InterruptedException e) {
+        //     e.printStackTrace();
+        // }
     }
     private synchronized void startListening(int CLIENT_PORT_MAIL, int CLIENT_PORT_BRAODCAST) {
         stopListening();
@@ -111,24 +110,17 @@ public class Server {
                 clientMessageServerSocket.setSoTimeout(1000);
 
                 while (!Thread.interrupted()) {
-                    try {
-                        Socket socket = clientMessageServerSocket.accept();
-                        try {
-                            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-                            Mail mail = new Gson().fromJson((String) inputStream.readObject(), Mail.class);
+                    try (Socket socket = clientMessageServerSocket.accept()) {
+                        ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+                        Mail mail = new Gson().fromJson((String) inputStream.readObject(), Mail.class);
 
-                            System.out.println("MAIL ricevuta da " + mail.getSender() + ": " + mail.getText());
-                            addMailReceived(mail);
-                            backup();
+                        System.out.println("MAIL ricevuta da " + mail.getSender() + ": " + mail.getText());
+                        addMailReceived(mail);
+                        backup();
 
-                        } catch (IOException | ClassNotFoundException e) {
-                            e.printStackTrace();
-                            System.out.println("Errore durante la lettura della mail dal Server");
-                        } finally {
-                            socket.close();
-                        }
-                    } catch (SocketTimeoutException e) {
-                        continue;
+                    } catch (IOException | ClassNotFoundException e) {
+                        e.printStackTrace();
+                        System.out.println("Errore durante la lettura della mail dal Server");
                     }
                 }
             } catch (IOException e) {
@@ -138,7 +130,7 @@ public class Server {
                     assert clientMessageServerSocket != null;
                     clientMessageServerSocket.close();
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
         });
@@ -152,22 +144,15 @@ public class Server {
                 serverConnectionSocket.setSoTimeout(1000);
 
                 while (!Thread.interrupted()) {
-                    try {
-                        Socket socket = serverConnectionSocket.accept();
-                        try {
-                            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-                            String jsonMail = (String) inputStream.readObject();
-                            boolean connected = new Gson().fromJson(jsonMail, boolean.class);
+                    try (Socket socket = serverConnectionSocket.accept()) {
+                        ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+                        String jsonMail = (String) inputStream.readObject();
+                        boolean connected = new Gson().fromJson(jsonMail, boolean.class);
 
-                            setConnected(connected);
-                        } catch (IOException | ClassNotFoundException e) {
-                            e.printStackTrace();
-                            System.out.println("Errore durante la lettura del messaggio dal Server");
-                        } finally {
-                            socket.close();
-                        }
-                    } catch (SocketTimeoutException e) {
-                        continue;
+                        setConnected(connected);
+                    } catch (IOException | ClassNotFoundException e) {
+                        e.printStackTrace();
+                        System.out.println("Errore durante la lettura del messaggio dal Server");
                     }
                 }
 
@@ -178,7 +163,7 @@ public class Server {
                     assert serverConnectionSocket != null;
                     serverConnectionSocket.close();
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
         });
@@ -186,8 +171,6 @@ public class Server {
 
     }
     public synchronized void disconnectToServer() {
-        setConnected(false);
-        backup();
         try {
             Socket socket = new Socket();
             socket.connect(new InetSocketAddress(SERVER_ADDRESS, SERVER_PORT_CONNECTION), 2000);
@@ -216,18 +199,22 @@ public class Server {
         } catch (IOException e) {
             System.out.println("Disconnessione al Server Fallita");
             writeCSVInfo(localAddress, null);
+        } finally {
+            setConnected(false);
+            backup();
         }
     }
     public synchronized void connectToServer() {
-        setConnected(false);
-        loadBackup();
+        Socket socket = null;
+        ObjectInputStream inputStream = null;
+        ObjectOutputStream outputStream = null;
         try {
-            Socket socket = new Socket();
+            socket = new Socket();
             socket.connect(new InetSocketAddress(SERVER_ADDRESS, SERVER_PORT_CONNECTION), 2000);
             socket.setSoTimeout(2000);
 
-            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+            inputStream = new ObjectInputStream(socket.getInputStream());
+            outputStream = new ObjectOutputStream(socket.getOutputStream());
 
             String lastModifyDataClient = mailSent.values().stream()
                     .flatMap(mail -> Stream.of(mail, mailReceived.get(mail.getUuid())))
@@ -284,17 +271,20 @@ public class Server {
 
             backup();
 
-            outputStream.close();
-            inputStream.close();
-
-            socket.close();
-
             setConnected(true);
         } catch (IOException | ClassNotFoundException e) {
             stopListening();
             //e.printStackTrace();
             //System.out.println("Connessione al Server Fallita (connectToServer)");
             setConnected(false);
+        } finally {
+            try {
+                outputStream.close();
+                inputStream.close();
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -533,7 +523,6 @@ public class Server {
 
     public void stop() {
         disconnectToServer();
-
     }
 
     public void clearBackupMail() {

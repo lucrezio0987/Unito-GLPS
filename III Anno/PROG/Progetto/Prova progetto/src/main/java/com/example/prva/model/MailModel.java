@@ -242,7 +242,7 @@ public class MailModel {
             server.connectToServer();
 
             setPortInProperty();
-            controller.clearLocalMail();
+            controller.clearMailView();
             controller.setCountMailSent();
             getListMailSent().forEach(controller::createCardSent);
             controller.setCountMailReceived();
