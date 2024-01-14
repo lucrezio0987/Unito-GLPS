@@ -117,7 +117,7 @@ public class Server {
                         System.out.println("MAIL ricevuta da " + mail.getSender() + ": " + mail.getText());
                         addMailReceived(mail);
                         backup();
-
+                    } catch (SocketTimeoutException ignored) {
                     } catch (IOException | ClassNotFoundException e) {
                         e.printStackTrace();
                         System.out.println("Errore durante la lettura della mail dal Server");
@@ -150,6 +150,7 @@ public class Server {
                         boolean connected = new Gson().fromJson(jsonMail, boolean.class);
 
                         setConnected(connected);
+                    } catch (SocketTimeoutException ignored) {
                     } catch (IOException | ClassNotFoundException e) {
                         e.printStackTrace();
                         System.out.println("Errore durante la lettura del messaggio dal Server");
@@ -192,10 +193,10 @@ public class Server {
 
             inputStream.close();
             outputStream.close();
+            socket.close();
 
             writeCSVInfo(localAddress, connectionInfo.getLastConnectionDateTime());
 
-            socket.close();
         } catch (IOException e) {
             System.out.println("Disconnessione al Server Fallita");
             writeCSVInfo(localAddress, null);
