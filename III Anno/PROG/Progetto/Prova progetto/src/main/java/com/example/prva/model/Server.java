@@ -54,19 +54,15 @@ public class Server {
         mailReceived = new HashMap<>();
 
         controller.addAllRowToTable(readCSVInfo());
-
-        startListening();
     }
 
     public boolean isConnected() {
         return connected;
     }
     private void setConnected(boolean connected) {
+        if(!connected && this.connected)
+            stopListeningThreads();
         this.connected = connected;
-        if(!connected) {
-            this.clientMessageServerThread.interrupt();
-            this.serverBroadcastThread.interrupt();
-        }
         controller.setConnection(connected);
     }
     void setAddress(String localAddress) {
@@ -81,7 +77,32 @@ public class Server {
         SERVER_ADDRESS = serverAddress;
     }
 
-    private void startListening() {
+    private void stopListeningThreads() {
+        CLIENT_PORT_MAIL = 0;
+        CLIENT_PORT_BRAODCAST = 0;
+
+        if (clientMessageServerThread != null)
+            clientMessageServerThread.interrupt();
+
+        if (serverBroadcastThread != null)
+            serverBroadcastThread.interrupt();
+
+        try {
+            if (clientMessageServerThread != null)
+                clientMessageServerThread.join();
+
+            if (serverBroadcastThread != null)
+                serverBroadcastThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void startListening(int CLIENT_PORT_MAIL, int CLIENT_PORT_BRAODCAST) {
+        stopListeningThreads();
+
+        this.CLIENT_PORT_MAIL = CLIENT_PORT_MAIL;
+        this.CLIENT_PORT_BRAODCAST = CLIENT_PORT_BRAODCAST;
 
         clientMessageServerThread = new Thread(() -> {
             try {
@@ -172,12 +193,6 @@ public class Server {
             inputStream.close();
             outputStream.close();
 
-            CLIENT_PORT_BRAODCAST = -1;
-            CLIENT_PORT_MAIL = -1;
-
-            clientMessageServerThread.interrupt();
-            serverBroadcastThread.interrupt();
-
             writeCSVInfo(localAddress, connectionInfo.getLastConnectionDateTime());
 
             socket.close();
@@ -187,7 +202,6 @@ public class Server {
         }
     }
     public void connectToServer() {
-        setConnected(false);
         loadBackup();
         try {
             Socket socket = new Socket();
@@ -248,10 +262,7 @@ public class Server {
             mailSent.putAll(mapMailServer.get("sent"));
             mailReceived.putAll(mapMailServer.get("received"));
 
-            CLIENT_PORT_MAIL = connectionInfo.getMailPort();
-            CLIENT_PORT_BRAODCAST = connectionInfo.getBroadcastPort();
-
-            startListening();
+            startListening(connectionInfo.getMailPort(), connectionInfo.getBroadcastPort());
 
             backup();
 
@@ -262,11 +273,12 @@ public class Server {
 
             setConnected(true);
         } catch (IOException | ClassNotFoundException e) {
-
+            stopListeningThreads();
             //e.printStackTrace();
             //System.out.println("Connessione al Server Fallita (connectToServer)");
             setConnected(false);
         }
+        setConnected(false);
     }
 
     public ArrayList<Mail> getMails(Map<String, Mail> mailMap) {
@@ -524,5 +536,13 @@ public class Server {
     }
     public void clearLocalMailsReceived() {
         mailReceived.clear();
+    }
+
+    public String getMailPort() {
+        return Integer.toString(CLIENT_PORT_MAIL);
+    }
+
+    public String getBroadcastPort() {
+        return Integer.toString(CLIENT_PORT_BRAODCAST);
     }
 }

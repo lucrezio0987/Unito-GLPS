@@ -30,7 +30,7 @@ public class ClientController {
                         clearBackupData, clearAllBackup, clearBackupMail, clearBackupLog;
     @FXML
     private Label       addressLabelSent, objectLabelSent, addressLabelReceived, objectLabelReceived,
-                        countMailSent, countMailReceived;
+                        countMailSent, countMailReceived, mailPort, broadcastPort;
     @FXML
     private TextArea    textMailSent, textMailReceived, textMailSend, textLog;
     @FXML
@@ -48,7 +48,7 @@ public class ClientController {
     @FXML
     private TableView<TableRowData>         tableLastConnectInfo;
     @FXML
-    private TableColumn<TableRowData, String> addressColumn, lastConnectionColumn;
+    private TableColumn<TableRowData, String> addressColumn, lastConnectionColumn, sentColumn, receivedColumn;
 
     MailModel mailModel;
     MailCardModel mailCardModel;
@@ -91,6 +91,8 @@ public class ClientController {
         mailModel.getServeHostProperty().bindBidirectional(ServerHost.textProperty());
 
         textLog.textProperty().bind(mailModel.getTextLogProperty());
+        mailPort.textProperty().bind(mailModel.getMailPortProperty());;
+        broadcastPort.textProperty().bind(mailModel.getBroadcastPortProperty());;
 
         mailModel.getLocalAddressProperty().bindBidirectional(localAddressReceived.textProperty());
         mailModel.getLocalAddressProperty().bindBidirectional(localAddressSent.textProperty());
@@ -102,6 +104,8 @@ public class ClientController {
 
         addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
         lastConnectionColumn.setCellValueFactory(new PropertyValueFactory<>("lastConnectionDateTime"));
+        sentColumn.setCellValueFactory(new PropertyValueFactory<>("sent"));;
+        receivedColumn.setCellValueFactory(new PropertyValueFactory<>("received"));;
 
         // setConnection(mailModel.connect());
 
@@ -376,7 +380,7 @@ public class ClientController {
     public void addAllRowToTable(Map<String, String> map) {
         clearTable();
         map.forEach((key, value) -> {
-            tableLastConnectInfo.getItems().add(new TableRowData(key, value));
+            tableLastConnectInfo.getItems().add(new TableRowData(key, value, "TODO", "TODO"));
         });
     }
 
@@ -388,16 +392,26 @@ public class ClientController {
     public static class TableRowData {
         private String address;
         private String lastConnectionDateTime;
+        private String sent;
+        private String received;
 
-        public TableRowData(String address, String lastConnectionDateTime) {
+        public TableRowData(String address, String lastConnectionDateTime, String received, String sent) {
             this.address = address;
             this.lastConnectionDateTime = lastConnectionDateTime;
+            this.sent = sent;
+            this.received = received;
         }
         public String getAddress() {
             return address;
         }
         public String getLastConnectionDateTime() {
             return lastConnectionDateTime;
+        }
+        public String getSent() {
+            return sent;
+        }
+        public String getReceived() {
+            return received;
         }
     }
 }

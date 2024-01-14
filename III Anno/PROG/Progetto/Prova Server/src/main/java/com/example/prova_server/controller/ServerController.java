@@ -51,7 +51,7 @@ public class ServerController {
         model.start();
         addAllRowToTable();
 
-        clearBackupButton.setOnAction( event -> model.clearAllBackup());
+        clearBackupButton.setOnAction(event -> model.clearAllBackup());
         clearBackupLogButton.setOnAction(event -> model.clearBackupLog());
         clearBackupMailButton.setOnAction(event -> model.clearBackupMail());
 

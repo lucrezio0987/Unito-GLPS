@@ -124,68 +124,71 @@
                         <Font size="15.0" />
                      </font>
                   </Button>
-                  <Button fx:id="connectServerBtnLog" layoutX="872.0" layoutY="70.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="95.0" text="Connect">
+                  <Button fx:id="connectServerBtnLog" layoutX="873.0" layoutY="59.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="95.0" text="Connect">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Button>
-                  <Button fx:id="disconnectServerBtnLog" layoutX="749.0" layoutY="70.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="108.0" text="Disconnect">
+                  <Button fx:id="disconnectServerBtnLog" layoutX="742.0" layoutY="59.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="108.0" text="Disconnect">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Button>
-                  <Label layoutX="623.0" layoutY="72.0" prefHeight="28.0" prefWidth="109.0" text="Server Status">
+                  <Label layoutX="623.0" layoutY="59.0" prefHeight="28.0" prefWidth="109.0" text="Server Status">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <Circle fx:id="ConnectLedLog" fill="#1fff29" layoutX="611.0" layoutY="86.0" radius="5.0" stroke="#0fab17" strokeType="INSIDE" />
-                  <Circle fx:id="DisconnectLedLog" fill="#ff2121" layoutX="611.0" layoutY="86.0" radius="5.0" stroke="#ab0f0f" strokeType="INSIDE" />
-                  <TextField fx:id="ServerHost" layoutX="116.0" layoutY="73.0" prefHeight="26.0" prefWidth="481.0" />
-                  <Label layoutX="13.0" layoutY="72.0" prefHeight="28.0" prefWidth="98.0" text="Server Host" />
+                  <Circle fx:id="ConnectLedLog" fill="#1fff29" layoutX="611.0" layoutY="73.0" radius="5.0" stroke="#0fab17" strokeType="INSIDE" />
+                  <Circle fx:id="DisconnectLedLog" fill="#ff2121" layoutX="611.0" layoutY="73.0" radius="5.0" stroke="#ab0f0f" strokeType="INSIDE" />
+                  <TextField fx:id="ServerHost" layoutX="116.0" layoutY="60.0" prefHeight="26.0" prefWidth="481.0" />
+                  <Label layoutX="13.0" layoutY="59.0" prefHeight="28.0" prefWidth="98.0" text="Server Host" />
                   <TextArea fx:id="textLog" layoutX="15.0" layoutY="139.0" prefHeight="292.0" prefWidth="966.0" />
-                  <Label layoutX="15.0" layoutY="439.0" prefHeight="28.0" prefWidth="556.0" text="Time of last connection of each user previously connected by this client:" underline="true">
+                  <Label layoutX="15.0" layoutY="439.0" prefHeight="28.0" prefWidth="743.0" text="Data of all Users (for this client):" underline="true">
                      <font>
                         <Font size="16.0" />
                      </font></Label>
-                  <TableView fx:id="tableLastConnectInfo" layoutX="15.0" layoutY="470.0" prefHeight="200.0" prefWidth="600.0">
+                  <TableView fx:id="tableLastConnectInfo" layoutX="15.0" layoutY="470.0" prefHeight="200.0" prefWidth="742.0">
                     <columns>
-                      <TableColumn fx:id="addressColumn" prefWidth="362.0" text="Address" />
-                      <TableColumn fx:id="lastConnectionColumn" prefWidth="230.0" text="LastConnectionDateTime " />
+                      <TableColumn fx:id="addressColumn" prefWidth="394.0" text="Address" />
+                        <TableColumn fx:id="sentColumn" prefWidth="70.0" text="Sent" />
+                        <TableColumn fx:id="receivedColumn" prefWidth="64.0" text="Received" />
+                      <TableColumn fx:id="lastConnectionColumn" prefWidth="190.0" text="LastConnectionDateTime " />
                     </columns>
                   </TableView>
                   <Label layoutX="15.0" layoutY="114.0" prefHeight="28.0" prefWidth="43.0" text="Log:" underline="true">
                      <font>
                         <Font size="16.0" />
                      </font></Label>
-                  <Button fx:id="clearBackupData" layoutX="653.0" layoutY="529.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="63.0" text="Clear">
+                  <Button fx:id="clearBackupData" layoutX="774.0" layoutY="529.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="203.0" text="Clear Backup UserData">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Button>
-                  <Button fx:id="clearAllBackup" layoutX="651.0" layoutY="616.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="156.0" text="Clear All Backup">
+                  <Button fx:id="clearAllBackup" layoutX="772.0" layoutY="623.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="205.0" text="Clear All Backup">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Button>
-                  <Label layoutX="653.0" layoutY="439.0" prefHeight="28.0" prefWidth="152.0" text="Backup:" underline="true">
+                  <Label layoutX="774.0" layoutY="439.0" prefHeight="28.0" prefWidth="152.0" text="Backup:" underline="true">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <Label layoutX="728.0" layoutY="487.0" prefHeight="28.0" prefWidth="244.0" text="Account (Mail Send, Mail Received)" />
-                  <Label layoutX="728.0" layoutY="529.0" prefHeight="28.0" prefWidth="165.0" text="LastConnectionDataTime" />
-                  <Button fx:id="clearBackupMail" layoutX="653.0" layoutY="487.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="63.0" text="Clear">
+                  <Button fx:id="clearBackupMail" layoutX="774.0" layoutY="487.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="202.0" text="Clear Backup Mail">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Button>
-                  <Label layoutX="728.0" layoutY="570.0" prefHeight="28.0" prefWidth="244.0" text="Log" />
-                  <Button fx:id="clearBackupLog" layoutX="653.0" layoutY="570.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="63.0" text="Clear">
+                  <Button fx:id="clearBackupLog" layoutX="774.0" layoutY="570.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="203.0" text="Clear Backup log">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Button>
+                  <Label layoutX="116.0" layoutY="87.0" prefHeight="28.0" prefWidth="98.0" text="Mail Port:" />
+                  <Label layoutX="327.0" layoutY="87.0" prefHeight="28.0" prefWidth="98.0" text="Broadcast Port:" />
+                  <Label fx:id="mailPort" layoutX="204.0" layoutY="87.0" prefHeight="28.0" prefWidth="98.0" text="0" />
+                  <Label fx:id="broadcastPort" layoutX="449.0" layoutY="87.0" prefHeight="28.0" prefWidth="98.0" text="0" />
                </children>
             </AnchorPane>
          </content>

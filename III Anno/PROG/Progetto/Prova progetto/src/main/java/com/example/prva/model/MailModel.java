@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 import com.example.prva.controller.ClientController;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 
 public class MailModel {
 
@@ -33,6 +34,8 @@ public class MailModel {
 
     private SimpleStringProperty localAddressProperty = null;
     private SimpleStringProperty serveHostProperty = null;
+    private SimpleStringProperty mailPortProperty = null;
+    private SimpleStringProperty broadcastPortProperty = null;
 
     private Mail activeMailSent = null;
     private Mail activeMailReceived = null;
@@ -58,6 +61,8 @@ public class MailModel {
 
         localAddressProperty = new SimpleStringProperty();
         serveHostProperty = new SimpleStringProperty();
+        mailPortProperty = new SimpleStringProperty();
+        broadcastPortProperty = new SimpleStringProperty();
 
         server = new Server(controller, serveHostProperty.getValue());
     }
@@ -77,6 +82,12 @@ public class MailModel {
 
     public SimpleStringProperty getLocalAddressProperty(){ return this.localAddressProperty; }
     public SimpleStringProperty getServeHostProperty() { return  this.serveHostProperty;}
+    public SimpleStringProperty getMailPortProperty() {
+        return mailPortProperty;
+    }
+    public SimpleStringProperty getBroadcastPortProperty() {
+        return broadcastPortProperty;
+    }
 
     public ArrayList<Mail> getListMailSent(){ return new ArrayList<>(server.getMailsSent()); }
     public ArrayList<Mail> getListMailReceived(){ return new ArrayList<>(server.getMailsReceived());
@@ -230,6 +241,7 @@ public class MailModel {
             server.setServerAddress(serveHostProperty.get());
             server.connectToServer();
 
+            setPortInProperty();
             controller.clearLocalMail();
             controller.setCountMailSent();
             getListMailSent().forEach(controller::createCardSent);
@@ -244,6 +256,12 @@ public class MailModel {
         }
         return false;
     }
+
+    private void setPortInProperty() {
+        mailPortProperty.set(server.getMailPort());
+        broadcastPortProperty.set(server.getBroadcastPort());
+    }
+
     public boolean reconnect() {
         if(server.isConnected())
             disconnect();
@@ -252,6 +270,7 @@ public class MailModel {
     }
     public boolean disconnect() {
         server.disconnectToServer();
+        setPortInProperty();
         log("SERVER: Disconnesso");
         return server.isConnected();
     }
@@ -333,4 +352,5 @@ public class MailModel {
     public void clearLocalMailReceivedList() {
         server.clearLocalMailsReceived();
     }
+
 }
