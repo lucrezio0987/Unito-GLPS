@@ -141,14 +141,14 @@ public class ClientModel {
        // TODO: Notify to server
         if (isConnect())
             notifyModifyToServer(new MailModifyInfo(null, userData.getUsername(), true).setDeleteAll());
-        userData.deleteMailSentList();
+        userData.deleteMailListSent();
         log("MAIL: Cancellazione di tutte le mail inviate");
     }
     public void deleteMailReceivedList(){
         // TODO: Notify to server
         if (isConnect())
             notifyModifyToServer(new MailModifyInfo(null, userData.getUsername(), false).setDeleteAll());
-        userData.deleteMailReceivedList();
+        userData.deleteMailListReceived();
         log("MAIL: Cancellazione di tutte le mail ricevute");
     }
     public void deleteMailSent(String uuid){

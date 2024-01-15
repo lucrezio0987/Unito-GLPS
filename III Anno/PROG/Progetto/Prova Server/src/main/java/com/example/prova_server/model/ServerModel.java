@@ -379,12 +379,12 @@ public class ServerModel {
                     if (modifyInfo.isDeleteAll())
                         userDataList.get(username).deleteMailListSent();
                     if (modifyInfo.isDelete())
-                        userDataList.get(username).removeMailSent(mail);
+                        userDataList.get(username).deleteMailSent(mail.getUuid());
                 } else {
                     if (modifyInfo.isDeleteAll())
                         userDataList.get(username).deleteMailListReceived();
                     if (modifyInfo.isDelete())
-                        userDataList.get(username).removeMailReceived(mail);
+                        userDataList.get(username).deleteMailReceived(mail.getUuid());
                     if (modifyInfo.isRead())
                         userDataList.get(username).setReadMailReceived(mail);
                 }

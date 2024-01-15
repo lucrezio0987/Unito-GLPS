@@ -21,9 +21,10 @@ public class UserData {
     private String address = null;
     private int broadcastPort = 0;
     private int mailPort = 0;
+
+    private final String[] MAIL_HEADER = {"Uuid", "Sender", "Recipients", "Object", "Text", "CreationDateTime", "LastModifyDateTime", "read"};
     private String csvMailSendPath = null;
     private String csvMailReceivedPath = null;
-    private final String[] MAIL_HEADER = {"Uuid", "Sender", "Recipients", "Object", "Text", "CreationDateTime", "LastModifyDateTime", "read"};
 
     public UserData() {
         this.username = null;
@@ -75,50 +76,50 @@ public class UserData {
                 .findFirst()
                 .orElse("01/01/0001 00:00:00");
     }
-    public Map<String, Mail> getMailSent() {
+    public synchronized Map<String, Mail> getMailSent() {
         return mailSent;
     }
-    public Map<String, Mail> getMailReceived() {
+    public synchronized Map<String, Mail> getMailReceived() {
         return mailReceived;
     }
-    public Map<String, Mail> getMailSentNotDelete() {
+    public synchronized Map<String, Mail> getMailSentNotDelete() {
         return mailSent.entrySet()
                 .stream()
                 .filter(entry -> !entry.getValue().isDelete())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
-    public Map<String, Mail> getMailReceivedNotDelete() {
+    public synchronized Map<String, Mail> getMailReceivedNotDelete() {
         return mailReceived.entrySet()
                 .stream()
                 .filter(entry -> !entry.getValue().isDelete())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
-    public ArrayList<Mail> getMailsSent() {
+    public synchronized ArrayList<Mail> getMailsSent() {
         return new ArrayList<>(getMailSentNotDelete().values().stream()
                 .sorted()
                 .toList());
     }
-    public ArrayList<Mail> getMailsReceived() {
+    public synchronized ArrayList<Mail> getMailsReceived() {
         return new ArrayList<>(getMailReceivedNotDelete().values().stream()
                 .sorted()
                 .toList());
     }
-    public Map<String, Mail> getMailSent(String lastConnectionDatatime) {
+    public synchronized Map<String, Mail> getMailSent(String lastConnectionDatatime) {
         return  mailSent.entrySet().stream()
                 .filter(m -> m.getValue().moreRecentlyOf(lastConnectionDatatime))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
-    public Map<String, Mail> getMailReceived(String lastConnectionDatatime) {
+    public synchronized Map<String, Mail> getMailReceived(String lastConnectionDatatime) {
         return  mailReceived.entrySet().stream()
                 .filter(m -> m.getValue().moreRecentlyOf(lastConnectionDatatime))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
-    public Map<String, Mail> getMailSentListMoreRecentlyOf(String date) {
+    public synchronized Map<String, Mail> getMailSentListMoreRecentlyOf(String date) {
         return  mailSent.values().stream()
                 .filter(m -> m.moreRecentlyOf(date))
                 .collect(Collectors.toMap(Mail::getUuid, mail -> mail));
     }
-    public Map<String, Mail> getMailReceivedListMoreRecentlyOf(String date) {
+    public synchronized Map<String, Mail> getMailReceivedListMoreRecentlyOf(String date) {
         return  mailReceived.values().stream()
                 .filter(m -> m.moreRecentlyOf(date))
                 .collect(Collectors.toMap(Mail::getUuid, mail -> mail));
@@ -157,18 +158,18 @@ public class UserData {
     public void setMailPort(int mailPort) {
         this.mailPort = mailPort;
     }
-    public void setReadMailReceived(Mail mail) {
+    public synchronized void setReadMailReceived(Mail mail) {
         mailReceived.get(mail.getUuid()).setRead(); backup();
     }
-    public void setMailRead(String uuid) {
+    public synchronized void setMailRead(String uuid) {
         mailReceived.get(uuid).setRead();
         backup();
     }
-    public void loadSendMails() {
+    public synchronized void loadSendMails() {
         mailSent.clear();
         loadBackup();
     }
-    public void loadReceivedMails() {
+    public synchronized void loadReceivedMails() {
         mailReceived.clear();
         loadBackup();
     }
@@ -180,19 +181,19 @@ public class UserData {
         } else
             setUsername(newUsername);
     }
-    public void updateMailSent(Map<String, Mail> updates) {
+    public synchronized void updateMailSent(Map<String, Mail> updates) {
         mailSent.putAll(updates);
         backup();
     }
-    public void updateMailReceived(Map<String, Mail> updates) {
+    public synchronized void updateMailReceived(Map<String, Mail> updates) {
         mailReceived.putAll(updates);
         backup();
     }
-    public void addMailSent(Mail mail) {
+    public synchronized void addMailSent(Mail mail) {
         this.mailSent.put(mail.getUuid(), mail);
         backup();
     }
-    public void addMailReceived(Mail mail) {
+    public synchronized void addMailReceived(Mail mail) {
         this.mailReceived.put(mail.getUuid(), mail);
         backup();
     }
@@ -201,30 +202,16 @@ public class UserData {
     public void clearMailListSent() {
         mailSent.clear();
     }
-    public void deleteMailListReceived() {
+    public synchronized void deleteMailListReceived() {
         mailReceived.values().forEach(Mail::setDelete);
         backup();
     }
-    public void deleteMailListSent() { mailSent.values().forEach(Mail::setDelete); backup(); }
-    public void removeMailReceived(Mail mail) {
-        mailReceived.get(mail.getUuid()).setDelete(); backup();
-    }
-    public void removeMailSent(Mail mail) {
-        mailSent.get(mail.getUuid()).setDelete(); backup();
-    }
-    public void deleteMailSentList() {
-        getMailSentNotDelete().values().forEach(Mail::setDelete);
-        backup();
-    }
-    public void deleteMailReceivedList() {
-        getMailReceivedNotDelete().values().forEach(Mail::setDelete);
-        backup();
-    }
-    public void deleteMailSent(String uuid) {
+    public synchronized void deleteMailListSent() { mailSent.values().forEach(Mail::setDelete); backup(); }
+    public synchronized void deleteMailSent(String uuid) {
         getMailSentNotDelete().get(uuid).setDelete();
         backup();
     }
-    public void deleteMailReceived(String uuid) {
+    public synchronized void deleteMailReceived(String uuid) {
         getMailReceivedNotDelete().get(uuid).setDelete();
         backup();
     }
