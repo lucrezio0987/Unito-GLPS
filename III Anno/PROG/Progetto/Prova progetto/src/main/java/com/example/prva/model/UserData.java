@@ -40,17 +40,6 @@ public class UserData {
         setUsername(username);
         loadBackup();
     }
-    public UserData(String username, String address, int mailPort, int broadcastPort) {
-        this.mailSent = new HashMap<>();
-        this.mailReceived = new HashMap<>();
-        this.connected = true;
-        this.address = address;
-        this.mailPort = mailPort;
-        this.broadcastPort = broadcastPort;
-
-        setUsername(username);
-        loadBackup();
-    }
 
     public boolean isOn() {
         return connected;
@@ -68,8 +57,7 @@ public class UserData {
         return this.username;
     }
     public String getLastModifyData() {
-        return   mailSent.values().stream()
-                .flatMap(mail -> Stream.of(mail, mailReceived.get(mail.getUuid())))
+        return Stream.concat(mailSent.values().stream(), mailReceived.values().stream())
                 .filter(Objects::nonNull)
                 .sorted()
                 .map(Mail::getLastModify)

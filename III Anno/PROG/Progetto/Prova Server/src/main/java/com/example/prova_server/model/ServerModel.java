@@ -266,19 +266,10 @@ public class ServerModel {
                     userDataList.get(username).setOn(true);
                     log("UTENTE: " + username +" (mp:" + ports.get(0) + ", bp:" +ports.get(1)+")");
 
-                    String lastModifyData = userDataList.get(username).getMailSent().values().stream()
-                            .flatMap(mail -> Stream.of(mail, userDataList.get(username).getMailReceived().get(mail.getUuid())))
-                            .filter(Objects::nonNull)
-                            .sorted()
-                            .map(Mail::getLastModify)
-                            .findFirst()
-                            .orElse("01/01/0001 00:00:00");
-
-
-                    connectionInfo = new ConnectionInfo(ports.get(0), ports.get(1), lastModifyData);
+                    connectionInfo = new ConnectionInfo(ports.get(0), ports.get(1), userDataList.get(username).getLastModifyData());
 
                     // INVIO: data ultima modifica del server
-                    System.out.println(":::::::   INIZIO -> INVIO: data ultima modifica del server + porte == lastModifyData: " + lastModifyData);
+                    System.out.println(":::::::   INIZIO -> INVIO: data ultima modifica del server + porte == lastModifyData: " + userDataList.get(username).getLastModifyData());
                     outputStream.writeObject(new Gson().toJson(connectionInfo));
                     outputStream.flush();
                     System.out.println(":::::::   FINE -> INVIO: data ultima modifica del server + porte");

@@ -5,13 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b545aa37-8307-4738-b698-f55b798e1538" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/prova_server/model/MailModifyInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/prova_server/model/MailModifyInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/prova_server/model/ServerModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/prova_server/model/ServerModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/prova_server/model/UserData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/prova_server/model/UserData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Prova progetto/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova progetto/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Prova progetto/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova progetto/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Prova progetto/src/main/java/com/example/prva/model/ClientModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova progetto/src/main/java/com/example/prva/model/ClientModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Prova progetto/src/main/java/com/example/prva/model/MailModifyInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova progetto/src/main/java/com/example/prva/model/MailModifyInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Prova progetto/src/main/java/com/example/prva/model/UserData.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova progetto/src/main/java/com/example/prva/model/UserData.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
