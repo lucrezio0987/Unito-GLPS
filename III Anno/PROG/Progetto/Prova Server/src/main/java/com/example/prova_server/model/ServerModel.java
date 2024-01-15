@@ -79,7 +79,7 @@ public class ServerModel {
 
         if(isStarted)
             return;
-        // thread per gestire la connessione dei client
+        // thread per gestire la connessione dei client e chiamata a connectionHandler
         clientThread = new Thread(() -> {
             try {
                 // apertura del serversocket sulla porta di connessione
@@ -115,10 +115,10 @@ public class ServerModel {
         });
         clientThread.start();
 
-        // Thread per gestire i messaggi dei client
+        // Thread per gestire i messaggi dei client e chiamata a messageHandler
         mailThread = new Thread(() -> {
             try {
-                // apertura serversocket
+                // apertura server socket
                 mailServerSocket = new ServerSocket(SERVER_PORT_MESSAGES);
                 mailServerSocket.setSoTimeout(1000);
                 log("Socket: mailServerSocket OPENED ("+ SERVER_PORT_MESSAGES +")");
@@ -137,6 +137,7 @@ public class ServerModel {
                 e.printStackTrace();
             } finally {
                 try {
+                    // chiusura server socket
                     if (mailServerSocket != null && !mailServerSocket.isClosed()) {
                         mailServerSocket.close();
                         log("Socket: mailServerSocket CLOSED");
@@ -150,12 +151,15 @@ public class ServerModel {
         });
         mailThread.start();
 
+        // Thread per gestire le modifiche e chiamata a modifyHandler
         modifyThread = new Thread(() -> {
             try {
+                // apertura serverSocket
                 ServerSocket modifySocket = new ServerSocket(SERVER_PORT_MODIFY);
                 modifySocket.setSoTimeout(1000);
                 log("Socket: modifySocket OPENED ("+ SERVER_PORT_MODIFY +")");
 
+                // resta in ascolto in attesa di modifiche
                 while (!Thread.interrupted()) {
                     try {
                         Socket socket = modifySocket.accept();
@@ -169,6 +173,7 @@ public class ServerModel {
                 e.printStackTrace();
             } finally {
                 try {
+                    // chiusura socket
                     if (modifySocket != null && !modifySocket.isClosed()) {
                         modifySocket.close();
                         log("Socket: modifySocket CLOSED");
@@ -182,6 +187,7 @@ public class ServerModel {
         });
         modifyThread.start();
 
+        // server avviato
         if(clientThread.isAlive() && mailThread.isAlive()) {
             isStarted = true;
             log("Server: STARTED ");
@@ -195,6 +201,7 @@ public class ServerModel {
             throw new RuntimeException(e);
         }
     }
+    // interrompe i thread attivi
     public void stop() {
         if(isStarted)
             try {
@@ -210,6 +217,7 @@ public class ServerModel {
                 log("Server: STOPED");
                 isStarted = false;
 
+                // invio messaggio di disconnessione nel metodo clientBroadcastStopMessage
                 userDataList.values().stream()
                         .filter(UserData::isOn)
                         .forEach( u -> clientBroadcastStopMessage(u.getAddress(), u.getBroadcastPort()));
@@ -221,23 +229,29 @@ public class ServerModel {
             }
     }
 
+    // thread di connessione attivo = true else false
     public boolean ConnSocketIsOn(){
         return clientThread.isAlive();
     }
+    // thread mail attivo = true else false
     public boolean MailSocketIsOn(){
         return mailThread.isAlive();
     }
+    // thread delle modifiche attivo = true else false
     public boolean ModSocketIsOn(){
         return modifyThread.isAlive();
     }
 
+    // ottiene la mappa dei client connessi
     public Map<String, UserData> getClientMap() {
         return userDataList;
     }
+    // indirizzo dei client connessi
     public static synchronized String getAddressForUser(String username) {
         return userDataList.get(username).getAddress();
     }
 
+    // scambi di connessione
     private static class ConnectionHandler implements Runnable  {
         private Socket socket;
 
