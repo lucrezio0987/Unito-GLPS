@@ -25,7 +25,7 @@ public class MailModifyInfo implements Serializable {
         this.deleteAll = deleateAll;
     }
 
-    public MailModifyInfo setReaded() {
+    public MailModifyInfo setRead() {
         this.read = true;
         return this;
     }

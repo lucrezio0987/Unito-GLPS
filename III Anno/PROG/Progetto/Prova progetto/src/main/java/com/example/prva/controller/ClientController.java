@@ -50,7 +50,7 @@ public class ClientController {
     @FXML
     private TableColumn<TableRowData, String> addressColumn, lastConnectionColumn, sentColumn, receivedColumn;
 
-    MailModel mailModel;
+    ClientModel clientModel;
     MailCardModel mailCardModel;
 
     //TODO: AGGIUNGERE COMMENTI!!!!!!
@@ -70,34 +70,34 @@ public class ClientController {
     //TODO: Ristrutturare le classi
 
     public void initModel(String localAddressMail, String serverHost) {
-        mailModel = new MailModel(this);
-        mailCardModel = new MailCardModel(mailModel);
+        clientModel = new ClientModel(this);
+        mailCardModel = new MailCardModel(clientModel);
 
         showMailPanelReceived(false);
         showMailPanelSent(false);
 
-        textMailSent.textProperty().bind(mailModel.getTextMailSentProperty());
-        addressMailSent.textProperty().bind(mailModel.getAddressMailSentProperty());
-        objectMailSent.textProperty().bind(mailModel.getObjectMailSentProperty());
+        textMailSent.textProperty().bind(clientModel.getTextMailSentProperty());
+        addressMailSent.textProperty().bind(clientModel.getAddressMailSentProperty());
+        objectMailSent.textProperty().bind(clientModel.getObjectMailSentProperty());
 
-        textMailReceived.textProperty().bind(mailModel.getTextMailReceivedProperty());
-        addressMailRecived.textProperty().bind(mailModel.getAddressMailReceivedProperty());
-        objectMailRecived.textProperty().bind(mailModel.getObjectMailReceivedProperty());
+        textMailReceived.textProperty().bind(clientModel.getTextMailReceivedProperty());
+        addressMailRecived.textProperty().bind(clientModel.getAddressMailReceivedProperty());
+        objectMailRecived.textProperty().bind(clientModel.getObjectMailReceivedProperty());
 
-        mailModel.getTextMailSendProperty().bindBidirectional(textMailSend.textProperty());
-        mailModel.getAddressMailSendProperty().bindBidirectional(addressMailSend.textProperty());
-        mailModel.getObjectMailSendProperty().bindBidirectional(objectMailSend.textProperty());
+        clientModel.getTextMailSendProperty().bindBidirectional(textMailSend.textProperty());
+        clientModel.getAddressMailSendProperty().bindBidirectional(addressMailSend.textProperty());
+        clientModel.getObjectMailSendProperty().bindBidirectional(objectMailSend.textProperty());
 
-        mailModel.getServeHostProperty().bindBidirectional(ServerHost.textProperty());
+        clientModel.getServeHostProperty().bindBidirectional(ServerHost.textProperty());
 
-        textLog.textProperty().bind(mailModel.getTextLogProperty());
-        mailPort.textProperty().bind(mailModel.getMailPortProperty());;
-        broadcastPort.textProperty().bind(mailModel.getBroadcastPortProperty());;
+        textLog.textProperty().bind(clientModel.getTextLogProperty());
+        mailPort.textProperty().bind(clientModel.getMailPortProperty());;
+        broadcastPort.textProperty().bind(clientModel.getBroadcastPortProperty());;
 
-        mailModel.getLocalAddressProperty().bindBidirectional(localAddressReceived.textProperty());
-        mailModel.getLocalAddressProperty().bindBidirectional(localAddressSent.textProperty());
-        mailModel.getLocalAddressProperty().bindBidirectional(localAddressSend.textProperty());
-        mailModel.getLocalAddressProperty().bindBidirectional(localAddressLog.textProperty());
+        clientModel.getLocalAddressProperty().bindBidirectional(localAddressReceived.textProperty());
+        clientModel.getLocalAddressProperty().bindBidirectional(localAddressSent.textProperty());
+        clientModel.getLocalAddressProperty().bindBidirectional(localAddressSend.textProperty());
+        clientModel.getLocalAddressProperty().bindBidirectional(localAddressLog.textProperty());
 
         localAddressSend.textProperty().set(localAddressMail);
         ServerHost.textProperty().set(serverHost);
@@ -117,49 +117,49 @@ public class ClientController {
         });
 
         sendBtn.setOnAction(event -> {
-            mailModel.sendMail();
+            clientModel.sendMail();
         });
         deleteBtnSent.setOnAction(event -> {
-            String idMail = mailModel.deleteActualMailSent();
+            String idMail = clientModel.deleteActualMailSent();
             Lista_posta_inviata.getChildren().removeIf(card -> card.getId().equals(idMail));
             showMailPanelSent(false);
             setCountMailSent();
         });
         deleteBtnRecived.setOnAction(event -> {
-            String idMail = mailModel.deleteActualMailReceived();
+            String idMail = clientModel.deleteActualMailReceived();
             Lista_posta_ricevuta.getChildren().removeIf(card -> card.getId().equals(idMail));
             showMailPanelReceived(false);
             setCountMailReceived();
         });
-        sendBtnClear.setOnAction( event -> mailModel.sendMailClear());
+        sendBtnClear.setOnAction( event -> clientModel.sendMailClear());
         replyBtnReceived.setOnAction(event ->{
             tabPanel.getSelectionModel().select(tabSend);
-            mailModel.reply();
+            clientModel.reply();
         });
         replyAllBtnReceived.setOnAction(event ->{
             tabPanel.getSelectionModel().select(tabSend);
-            mailModel.replyAll();
+            clientModel.replyAll();
         });
         forwardBtnSent.setOnAction(event ->{
             tabPanel.getSelectionModel().select(tabSend);
-            mailModel.forwardSent();
+            clientModel.forwardSent();
         });
         forwardBtnReceived.setOnAction(event ->{
             tabPanel.getSelectionModel().select(tabSend);
-            mailModel.forwardReceived();
+            clientModel.forwardReceived();
         });
 
-        reconnectBtnSent.setOnAction(event ->       { setConnection(mailModel.reconnect());});
-        reconnectBtnReceived.setOnAction(event ->   { setConnection(mailModel.reconnect());});
-        reconnectBtnSend.setOnAction(event ->       { setConnection(mailModel.reconnect());});
-        reconnectBtnLog.setOnAction(event ->        { setConnection(mailModel.reconnect());});
-        connectServerBtnLog.setOnAction(event ->    { setConnection(mailModel.connect());});
-        disconnectServerBtnLog.setOnAction(event -> { setConnection(mailModel.disconnect());});
+        reconnectBtnSent.setOnAction(event ->       { setConnection(clientModel.reconnect());});
+        reconnectBtnReceived.setOnAction(event ->   { setConnection(clientModel.reconnect());});
+        reconnectBtnSend.setOnAction(event ->       { setConnection(clientModel.reconnect());});
+        reconnectBtnLog.setOnAction(event ->        { setConnection(clientModel.reconnect());});
+        connectServerBtnLog.setOnAction(event ->    { setConnection(clientModel.connect());});
+        disconnectServerBtnLog.setOnAction(event -> { setConnection(clientModel.disconnect());});
 
-        clearBackupMail.setOnAction(event ->    mailModel.clearBackupMail());
-        clearBackupData.setOnAction(event ->    mailModel.clearBackupData());
-        clearAllBackup.setOnAction(event ->     mailModel.clearAllBackup());
-        clearBackupLog.setOnAction(event ->     mailModel.clearBackupLog());
+        clearBackupMail.setOnAction(event ->    clientModel.clearBackupMail());
+        clearBackupData.setOnAction(event ->    clientModel.clearBackupData());
+        clearAllBackup.setOnAction(event ->     clientModel.clearAllBackup());
+        clearBackupLog.setOnAction(event ->     clientModel.clearBackupLog());
 
     }
 
@@ -188,22 +188,22 @@ public class ClientController {
         }
     }
 
-    public void setCountMailSent() { countMailSent.setText(String.valueOf(mailModel.getListMailSent().size())); }
-    public void setCountMailReceived() { countMailReceived.setText(String.valueOf(mailModel.getListMailReceived().size())); }
+    public void setCountMailSent() { countMailSent.setText(String.valueOf(clientModel.getListMailSent().size())); }
+    public void setCountMailReceived() { countMailReceived.setText(String.valueOf(clientModel.getListMailReceived().size())); }
 
     private void deleteMail() {
         deleteMailSent();
         deleteMailReceived();
     }
     private void deleteMailSent(){
-        mailModel.deleteMailSentList();
+        clientModel.deleteMailSentList();
         Lista_posta_inviata.getChildren().clear();
         showMailPanelSent(false);
         setCountMailSent();
     }
 
     private void deleteMailReceived(){
-        mailModel.deleteMailReceivedList();
+        clientModel.deleteMailReceivedList();
         Lista_posta_ricevuta.getChildren().clear();
         showMailPanelReceived(false);
         setCountMailReceived();
@@ -223,14 +223,14 @@ public class ClientController {
         clearLocalMailReceived();
     }
     private void clearLocalMailSent(){
-        mailModel.clearLocalMailSentList();
+        clientModel.clearLocalMailSentList();
         Lista_posta_inviata.getChildren().clear();
         showMailPanelSent(false);
         setCountMailSent();
     }
 
     private void clearLocalMailReceived(){
-        mailModel.clearLocalMailReceivedList();
+        clientModel.clearLocalMailReceivedList();
         Lista_posta_ricevuta.getChildren().clear();
         showMailPanelReceived(false);
         setCountMailReceived();
@@ -302,14 +302,14 @@ public class ClientController {
     }
 
     public void termModel() {
-        mailModel.stop();
+        clientModel.stop();
     }
 
 
     public class MailCardModel {
-        private MailModel mailModel = null;
+        private ClientModel mailModel = null;
 
-        public MailCardModel(MailModel mailModel) {
+        public MailCardModel(ClientModel mailModel) {
             this.mailModel = mailModel;
         }
         public VBox buildCard(String soggetto, Mail mail) {
@@ -392,7 +392,6 @@ public class ClientController {
             tableLastConnectInfo.getItems().add(new TableRowData(key, value, "TODO", "TODO"));
         });
     }
-
 
     public void clearTable() {
         tableLastConnectInfo.getItems().clear();
