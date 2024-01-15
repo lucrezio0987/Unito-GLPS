@@ -304,7 +304,6 @@ public class ClientController {
         clientModel.stop();
     }
 
-
     public class MailCardModel {
         private ClientModel mailModel = null;
 
@@ -389,7 +388,6 @@ public class ClientController {
             tableLastConnectInfo.getItems().add(new TableRowData(key, "TODO", "TODO"));
         });
     }
-
     public void clearTable() {
         tableLastConnectInfo.getItems().clear();
     }

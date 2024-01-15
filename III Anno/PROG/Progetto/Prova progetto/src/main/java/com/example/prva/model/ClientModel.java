@@ -3,8 +3,10 @@ package com.example.prva.model;
 import com.example.prva.controller.ClientController;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
@@ -327,6 +329,12 @@ public class ClientModel {
             }
             log("ERRORE: Connessione al server non riuscita (Backup caricati)");
         }
+
+        localAddressProperty.set("!! SYNTAX ERRORE !!");
+        PauseTransition pause = new PauseTransition(Duration.millis(400));
+        pause.setOnFinished(event -> localAddressProperty.set(""));
+        pause.play();
+
         return false;
     }
     public boolean reconnect() {
