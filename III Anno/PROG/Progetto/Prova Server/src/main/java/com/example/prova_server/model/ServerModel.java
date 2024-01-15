@@ -25,10 +25,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ServerModel {
-    private static final int SERVER_PORT_CONNECTION = 8000;
-    private static final int SERVER_PORT_MESSAGES = 8001;
-    private static final int SERVER_PORT_MODIFY = 8002;
-    private static final int THREAD_POOL_SIZE = 10;
+    private static final int SERVER_PORT_CONNECTION = 8000; // porta per le connessioni
+    private static final int SERVER_PORT_MESSAGES = 8001; // porta per lo scambio di mail
+    private static final int SERVER_PORT_MODIFY = 8002; // porta per le modifiche
+    private static final int THREAD_POOL_SIZE = 10; // numero massimo di client che si possono connettere contepmoraneamente
     private static final String[] MAIL_HEADER = {"Uuid", "Sender", "Recipients", "Object", "Text", "CreationDateTime", "LastModifyDateTime", "read"};
     private static SimpleStringProperty textAreaProperty = null;
     private static SimpleStringProperty countProperty = null;
@@ -52,12 +52,13 @@ public class ServerModel {
         return serveHostTextProperty;
     }
 
+    // restituisce il numero di client connessi
     private static int getClientNumber() {
         return (int) userDataList.values().stream()
                 .filter(UserData::isOn)
                 .count();
     }
-
+    // costruttore
     public ServerModel() {
         textAreaProperty = new SimpleStringProperty();
         countProperty = new SimpleStringProperty();
@@ -71,19 +72,22 @@ public class ServerModel {
         userDataList = new ConcurrentHashMap<>();
 
     }
+    // chiama il metodo di backup dei log, e avvia il thread per gestire la connessione e la ricezione di mail
     public void start() {
         loadBackupLog();
         getSetUsernamesSaved().forEach(u -> userDataList.putIfAbsent(u, new UserData(u)));
 
         if(isStarted)
             return;
-            // Thread per gestire la connessione dei client
+        // thread per gestire la connessione dei client
         clientThread = new Thread(() -> {
             try {
+                // apertura del serversocket sulla porta di connessione
                 clientServerSocket = new ServerSocket(SERVER_PORT_CONNECTION);
                 clientServerSocket.setSoTimeout(1000);
                 log("Socket: clientServerSocket OPENED ("+ SERVER_PORT_CONNECTION +")");
 
+                // il thread resta in attesa di nuove connessioni da parte di client
                 while (!Thread.interrupted()) {
                     try {
                         Socket socket = clientServerSocket.accept();
@@ -98,6 +102,7 @@ public class ServerModel {
             } finally {
                 try {
                     if (clientServerSocket != null && !clientServerSocket.isClosed()) {
+                        // chiude il socket
                         clientServerSocket.close();
                         log("Socket: clientServerSocket CLOSED");
                     } else {
@@ -110,14 +115,15 @@ public class ServerModel {
         });
         clientThread.start();
 
-
         // Thread per gestire i messaggi dei client
         mailThread = new Thread(() -> {
             try {
+                // apertura serversocket
                 mailServerSocket = new ServerSocket(SERVER_PORT_MESSAGES);
                 mailServerSocket.setSoTimeout(1000);
                 log("Socket: mailServerSocket OPENED ("+ SERVER_PORT_MESSAGES +")");
 
+                // thread resta in attesa di mail inviate dai client connessi
                 while (!Thread.interrupted()) {
                     try {
                         Socket socket = mailServerSocket.accept();

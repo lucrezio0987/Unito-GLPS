@@ -23,12 +23,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ClientModel {
-    private static final int SERVER_PORT_CONNECTION = 8000;
-    private static final int SERVER_PORT_MAIL = 8001;
-    private static final int SERVER_PORT_MODIFY = 8002;
+    private static final int SERVER_PORT_CONNECTION = 8000; // porta per i messaggi di connessione e disconnessione
+    private static final int SERVER_PORT_MAIL = 8001; // porta per lo scambio di mail
+    private static final int SERVER_PORT_MODIFY = 8002; // porta per lo scambio delle modifiche
 
-    Thread clientMessageServerThread = null;
-    Thread serverBroadcastThread = null;
+    Thread clientMessageServerThread = null; // thread che resta in attesa di mail
+    Thread serverBroadcastThread = null; // thread che resta in attesa di comunicazioni dal server
     private UserData userData;
     private Mail activeMailSent = null;
     private Mail activeMailReceived = null;
@@ -77,24 +77,40 @@ public class ClientModel {
         disconnectToServer();
     }
 
+    // mail da inviare -> testo
     public SimpleStringProperty getTextMailSendProperty(){ return this.textMailSendProperty; }
+    // mail ricevute -> testo
     public SimpleStringProperty getTextMailReceivedProperty(){ return this.textMailReceivedProperty; }
+    // mail inviate -> testo
     public SimpleStringProperty getTextMailSentProperty(){ return this.textMailSentProperty; }
+    // tabella dei log
     public SimpleStringProperty getTextLogProperty() { return this.textLogProperty; }
+    // indirizzo destinatario mail da inviare
     public SimpleStringProperty getAddressMailSendProperty(){ return this.addressMailSendProperty; }
+    // indirizzo mittente mail ricevuta
     public SimpleStringProperty getAddressMailReceivedProperty(){ return this.addressMailReceivedProperty; }
+    // indirizzo destinatario mail inviata
     public SimpleStringProperty getAddressMailSentProperty(){ return this.addressMailSentProperty; }
+    // oggetto mail inviata
     public SimpleStringProperty getObjectMailSentProperty(){ return this.objectMailSentProperty; }
+    // oggetto mail ricevuta
     public SimpleStringProperty getObjectMailReceivedProperty(){ return this.objectMailReceivedProperty; }
+    // oggetto mail da inviare
     public SimpleStringProperty getObjectMailSendProperty(){ return this.objectMailSendProperty; }
+    // username
     public SimpleStringProperty getLocalAddressProperty(){ return this.localAddressProperty; }
+    // indirizzo server
     public SimpleStringProperty getServeHostProperty() { return  this.serveHostProperty;}
+    // porta scambio mail
     public SimpleStringProperty getMailPortProperty() {
         return mailPortProperty;
     }
+    // porta scambio messaggi server
     public SimpleStringProperty getBroadcastPortProperty() { return broadcastPortProperty; }
 
+    // array contenente la lista di mail inviata
     public ArrayList<Mail> getListMailSent(){ return new ArrayList<>(userData.getMailSentNotDelete().values()); }
+    // array contenente la lista di mail ricevute
     public ArrayList<Mail> getListMailReceived(){ return new ArrayList<>(userData.getMailReceivedNotDelete().values()); }
 
     private void setPortInProperty() {
@@ -104,7 +120,7 @@ public class ClientModel {
     void setServerAddress(String serverAddress) {
         serveHostProperty.set(serverAddress);
     }
-
+    // apertura mail ricevuta -> impostazione interfaccia
     public void openMailReceived(String uuid){
         Mail mail;
 
@@ -118,6 +134,7 @@ public class ClientModel {
         objectMailReceivedProperty.set(mail.getObject());
         textMailReceivedProperty.set(mail.getText());
     }
+    // apertura mail inviata -> impostazione interfaccia
     public void openMailSent(String uuid){
         Mail mail;
 
@@ -132,54 +149,57 @@ public class ClientModel {
         textMailSentProperty.set(mail.getText());
     }
 
+    // imposta una mail letta chiamando notifyModifyServer per avvisare il server del cambiamento
     public void setMailRead(String uuid){
-        // TODO: Notify to server
         if (isConnect())
             notifyModifyToServer(new MailModifyInfo(userData.getMailReceived().get(uuid), userData.getUsername(), false).setRead());
         userData.setMailRead(uuid);
         log("MAIL: Mail letta (" + uuid + ")");
     }
+    // cancellazione di tutte le mail inviate e notifica del cambiamento al server
     public void deleteMailSentList(){
-       // TODO: Notify to server
         if (isConnect())
             notifyModifyToServer(new MailModifyInfo(null, userData.getUsername(), true).setDeleteAll());
         userData.deleteMailListSent();
         log("MAIL: Cancellazione di tutte le mail inviate");
     }
+    // cancellazione di tutte le mail ricevute e notifica del cambiamento al server
     public void deleteMailReceivedList(){
-        // TODO: Notify to server
         if (isConnect())
             notifyModifyToServer(new MailModifyInfo(null, userData.getUsername(), false).setDeleteAll());
         userData.deleteMailListReceived();
         log("MAIL: Cancellazione di tutte le mail ricevute");
     }
+    // cancellazione di una mail inviata e notifica del cambiamento al server
     public void deleteMailSent(String uuid){
-        // TODO: Notify to server
         if (isConnect())
             notifyModifyToServer(new MailModifyInfo(userData.getMailSent().get(uuid), userData.getUsername(), true).setDelete());
         userData.deleteMailSent(uuid);
         log("MAIL: mail Inviata cancellata (" + uuid + ")");
     }
+    // cancellazione di una mail ricevuta e notifica del cambiamento al server
     public void deleteMailReceived(String uuid) {
-        // TODO: Notify to server
         if (isConnect())
             notifyModifyToServer(new MailModifyInfo(userData.getMailReceived().get(uuid), userData.getUsername(), false).setDelete());
         userData.deleteMailReceived(uuid);
         log("MAIL: mail Ricevuta cancellata (" + uuid + ")");
     }
+    // invoca deleteMailSent per cancellare la mail impostata come "attiva" cioè quella visibile
     public String deleteActualMailSent(){
         String actual = activeMailSent.getUuid();
         deleteMailSent(actual);
         openMailSent("");
         return actual;
     }
+    // invoca deleteMailReceived per cancellare la mail impostata come "attiva" cioè quella visibile
     public String deleteActualMailReceived(){
         String actual = activeMailReceived.getUuid();
         deleteMailReceived(actual);
         openMailReceived("");
         return actual;
     }
-
+    // invio della mail se il syntax controll non restituisce errore
+    // creazione dell'oggetto mail e chiamata del metodo send, passando l'oggetto mail
     public void sendMail(){
 
         if(!syntaxControll(localAddressProperty.get())) {
@@ -214,6 +234,9 @@ public class ClientModel {
         else
             mailSend.getRecipientsList().forEach(r -> log("MAIL: invio non completato (Server Disconnesso) [" + sender + " -> "+ r + "]"));
     }
+    // chiamato dal metodo sendMail
+    // se connesso, apre il socket sulla porta per l'invio di mail
+    // invia in formato json l'oggetto mail al server e richiude il socket
     private boolean send(Mail mailSend) {
         boolean ret = false;
         if(isConnect()) {
@@ -228,15 +251,15 @@ public class ClientModel {
                 socket.close();
 
                 ret = true;
-                System.out.println("Email inviata a: " + mailSend.getRecipients());
             } catch (IOException e) {
                 e.printStackTrace();
-                System.out.println("invio server fallita");
                 return ret;
             }
         }
         return ret;
     }
+    // chiamato per gestire le modifiche
+    // apre un socket sulla porta modify e invia un oggetto MailModifyInfo, richiude il socket
     private void notifyModifyToServer(MailModifyInfo mailModifyInfo) {
         try {
             Socket socket = new Socket(serveHostProperty.getValue(), SERVER_PORT_MODIFY);
@@ -251,24 +274,27 @@ public class ClientModel {
             e.printStackTrace();
         }
     }
-
+    // aggiunge una mail ricevuta alla mappa
     private void addMailReceived(Mail mail) {
         userData.addMailReceived(mail);
         log("MAIL: ricevuta da " + mail.getSender());
         Platform.runLater(() -> controller.createCardReceived(mail));
     }
 
+    // svuota i campi dell'interfaccia per "ripulire"
     public void sendMailClear() {
         addressMailSendProperty.set("");
         objectMailSendProperty.set("");
         textMailSendProperty.set("");
     }
+    // imposta l'interfaccia per una risposta ad una mail
     public void reply() {
         addressMailSendProperty.set(activeMailReceived.getSender());
         objectMailSendProperty.set(activeMailReceived.getObject());
         textMailSendProperty.set("\n\n----------------------- Last Mail: -----------------------\n"
                 + activeMailReceived.getText());
     }
+    // imposta l'interfaccia impostando come destinatari tutti i destinatari della mail ricevuta
     public void replyAll() {
         StringBuilder addressList = new StringBuilder();
         addressList.append(activeMailReceived.getSender());
@@ -283,6 +309,7 @@ public class ClientModel {
         textMailSendProperty.set("\n\n----------------------- Last Mail: -----------------------\n"
                 + activeMailReceived.getText());
     }
+    // imposta l'interfaccia per inoltrare una mail ricevuta a un altro destinatario
     public void forwardReceived() {
         addressMailSendProperty.set("");
         objectMailSendProperty.set(activeMailReceived.getObject());
@@ -290,6 +317,7 @@ public class ClientModel {
                 + "[ Mail Forwarded, original recipient:  " + localAddressProperty.getValue() + " ]"
         );
     }
+    // imposta l'interfaccia per inoltrare una mail inviata a un altro destinatario
     public void forwardSent() {
         addressMailSendProperty.set("");
         objectMailSendProperty.set(activeMailSent.getObject());
@@ -298,16 +326,18 @@ public class ClientModel {
         );
     }
 
+    // se connected true, imposta la connessione, se no chiama stoplistening in caso di disconnessione
     private void setConnected(boolean connected) {
         if(!connected && userData.isOn())
             stopListening();
         userData.setOn(connected);
         controller.setConnection(connected);
     }
+    // true = connesso, false = disconnesso
     private boolean isConnect() {
         return userData.isOn();
     }
-
+    //chiama il metodo connectToServer e setPort, per avviare la connessione
     public boolean connect() {
         String localAddress = localAddressProperty.get();
         if(syntaxControll(localAddress)) {
@@ -337,6 +367,7 @@ public class ClientModel {
 
         return false;
     }
+    // invoca prima la disconnessione e poi la connect per riconnettere
     public boolean reconnect() {
         if(isConnect())
             try {
@@ -348,6 +379,7 @@ public class ClientModel {
 
         return connect();
     }
+    // chiama il metodo disconnectToServer
     public boolean disconnect() {
         disconnectToServer();
         setPortInProperty();
@@ -355,8 +387,10 @@ public class ClientModel {
         return isConnect();
     }
 
+    // apre il socket sulla porta di connessione ed effettua una serie di scambi con il server
     public synchronized void connectToServer() {
         try {
+            // apertura socket
             Socket socket = new Socket();
             socket.connect(new InetSocketAddress(serveHostProperty.getValue(), SERVER_PORT_CONNECTION), 2000);
             socket.setSoTimeout(2000);
@@ -366,7 +400,7 @@ public class ClientModel {
 
             ConnectionInfo connectionInfo = new ConnectionInfo(true, userData.getUsername(), userData.getLastModifyData());
 
-            // INVIO: informazioni di connessione
+            // INVIO: informazioni di connessione con data ultima modifica del client
             outputStream.writeObject(new Gson().toJson(connectionInfo));
             outputStream.flush();
 
@@ -374,6 +408,7 @@ public class ClientModel {
             connectionInfo = new Gson().fromJson((String) inputStream.readObject(), ConnectionInfo.class);
             String lastModifyDataServer = connectionInfo.getLastConnectionDateTime();
 
+            // creazione di una mappa con le mail inviate e ricevute con data più recente dell'ultima modifica del client
             Map<String, Map<String, Mail>> mapMailClient = new HashMap<>();
             mapMailClient.put("sent", userData.getMailSentListMoreRecentlyOf(lastModifyDataServer));
             mapMailClient.put("received", userData.getMailReceivedListMoreRecentlyOf(lastModifyDataServer));
@@ -390,9 +425,11 @@ public class ClientModel {
             inputStream.close();
             socket.close();
 
+            // aggiornamento delle mail inviate e ricevute durante il periodo di disconnessione
             userData.updateMailSent(mapMailServer.get("sent"));
             userData.updateMailReceived(mapMailServer.get("received"));
 
+            // inizio di ascolto sulle porte di ricezione mail e di ricezione dei messaggi
             startListening(connectionInfo.getMailPort(), connectionInfo.getBroadcastPort());
             setConnected(true);
 
@@ -401,9 +438,11 @@ public class ClientModel {
             setConnected(false);
         }
     }
+    // chiamata dal metodo disconnect
     public synchronized void disconnectToServer() {
         if(isConnect())
             try {
+                // apertura socket per la connessione disconnessione
                 Socket socket = new Socket();
                 socket.connect(new InetSocketAddress(serveHostProperty.getValue(), SERVER_PORT_CONNECTION), 2000);
                 socket.setSoTimeout(2000);
@@ -427,6 +466,7 @@ public class ClientModel {
                 setConnected(false);
             }
     }
+    // inizio ascolto per ricezione mail e messaggi dal server sulle porte passate come parametri
     private synchronized void startListening(int newMailPort, int newBroadcastPort) {
         stopListening();
 
@@ -436,24 +476,26 @@ public class ClientModel {
         clientMessageServerThread = new Thread(() -> {
             ServerSocket clientMessageServerSocket = null;
             try     {
+                // apertura serverSocket
                 clientMessageServerSocket = new ServerSocket(newMailPort);
                 System.out.println("Client in ascolto sulla porta " + newMailPort + " per le mail...");
                 clientMessageServerSocket.setSoTimeout(500);
 
+                // ciclo infinito finchè il Thread non è interrotto, per ricevere eventuali mail
                 while (!Thread.interrupted()) {
                     try (Socket socket = clientMessageServerSocket.accept()) {
                         ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
                         ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
 
-                        // RICEZIONE: invio della mail
+                        // RICEZIONE: mail
                         Mail mail = new Gson().fromJson((String) inputStream.readObject(), Mail.class);
 
-                        // INVIO: conferma di invio
+                        // INVIO: conferma di ricezione
                         outputStream.writeObject(new Gson().toJson(true));
                         outputStream.flush();
 
-                        System.out.println("MAIL ricevuta da " + mail.getSender() + ": " + mail.getText());
                         addMailReceived(mail);
+
 
                         inputStream.close();
                         outputStream.close();
@@ -467,6 +509,7 @@ public class ClientModel {
                 e.printStackTrace();
             } finally {
                 try {
+                    // chiusura socket
                     if(clientMessageServerSocket != null)
                         clientMessageServerSocket.close();
                 } catch (IOException e) {
@@ -479,10 +522,12 @@ public class ClientModel {
         serverBroadcastThread = new Thread(() -> {
             ServerSocket serverBroadcastSocket = null;
             try {
+                // apertura server socket
                 serverBroadcastSocket = new ServerSocket(newBroadcastPort);
                 System.out.println("Client in ascolto sulla porta " + newBroadcastPort + " per i messaggi di disconnessione del server...");
                 serverBroadcastSocket.setSoTimeout(500);
 
+                // ciclo infinito finchè il Thread non è interrotto, per ricevere eventuali mail
                 while (!Thread.interrupted()) {
                     try (Socket socket = serverBroadcastSocket.accept()) {
                         ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
@@ -501,6 +546,7 @@ public class ClientModel {
                 e.printStackTrace();
             } finally {
                 try {
+                    // chiusura socket
                     if(serverBroadcastSocket != null)
                         serverBroadcastSocket.close();
                 } catch (IOException e) {
@@ -510,23 +556,27 @@ public class ClientModel {
         });
         serverBroadcastThread.start();
     }
+    // chiamata durante la disconnessione per "liberare" le porte usate
     private synchronized void stopListening() {
         userData.setMailPort(0);
         userData.setBroadcastPort(0);
 
+        // interrompe il thread
         if (clientMessageServerThread != null) {
             clientMessageServerThread.interrupt();}
-
+        // interrompe il thread
         if (serverBroadcastThread != null)
             serverBroadcastThread.interrupt();
     }
 
+    // cancella tutti i file di backup
     public void clearAllBackup() {
         clearBackupLog();
         clearBackupMail();
         clearBackupData();
         log("BACKUP: Rimossi tutti i file di backup");
     }
+    // cancella i file di backup delle mail
     public void clearBackupMail() {
 
         Arrays.stream(Objects.requireNonNull(new File(
@@ -540,6 +590,7 @@ public class ClientModel {
         controller.clearLocalMail();
         log("BACKUP: Rimossi i file csv di backup delle mail (Inviate e Ricevute)");
     }
+    // cancella il file .data
     public void clearBackupData() {
 
         Arrays.stream(Objects.requireNonNull(new File(
@@ -552,6 +603,7 @@ public class ClientModel {
         controller.clearTable();
         log("BACKUP: Rimosso il file data.csv (Utente, DataUltimaConnessione)");
     }
+    // svuota la text dei log
     public void clearBackupLog() {
 
         Arrays.stream(Objects.requireNonNull(new File(
@@ -565,11 +617,14 @@ public class ClientModel {
         log("BACKUP: pulita la storiografia dei log (log.csv) [FILE DI LOG NON ANCORA IMPLEMENTATO]");
     }
 
+    // pulisce graficamente le mail inviate
     public void clearLocalMailSentList() { userData.clearMailListSent(); }
+    // pulisce graficamente le mail ricevute
     public void clearLocalMailReceivedList() {
         userData.clearMailListReceived();
     }
 
+    // verifica che l'indirizzo inserito sia valido
     private boolean syntaxControll(String address) {
         Pattern pattern = Pattern.compile("^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,6}$");
         Matcher matcher = pattern.matcher(address);
@@ -579,6 +634,7 @@ public class ClientModel {
         }
         return true;
     }
+    // inserisce ogni volta una linea di log, con la newLine come contenuto
     public synchronized void log(String newLine) {
         if (newLine.isEmpty())
             newLine = "ALLERT: String is NULL";
