@@ -448,7 +448,7 @@ public class ServerModel {
             else
                 log("Inoltro a: " + recipient + " (" + getAddressForUser(recipient) + ") - CLIENT ONLINE");
         } else
-            log("Inoltro a: " + recipient + " (" + getAddressForUser(recipient) + ") - CLIENT OFFLINE (Mail Salvata)");
+            log("Inoltro a: " + recipient + " - CLIENT OFFLINE (Mail Salvata)");
     }
     private void clientBroadcastStopMessage(String address, int broadcastPort) {
         try (Socket socket = new Socket(address, broadcastPort)) {
