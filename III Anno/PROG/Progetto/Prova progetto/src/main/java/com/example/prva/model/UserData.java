@@ -175,7 +175,10 @@ public class UserData {
     }
 
     public void updateUsername(String newUsername) {
-        if (this.username != null && !username.equals(newUsername))
+        if (this.username != null) {
+            if(!username.equals(newUsername))
+                setUsername(newUsername);
+        } else
             setUsername(newUsername);
     }
     public void updateMailSent(Map<String, Mail> updates) {

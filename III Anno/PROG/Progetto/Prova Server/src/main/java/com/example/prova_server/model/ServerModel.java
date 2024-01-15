@@ -412,14 +412,14 @@ public class ServerModel {
         boolean success;
         int i;
 
-        if(mail.isDelete())
+        if (mail.isDelete())
             return;
 
         userDataList.putIfAbsent(recipient, new UserData(recipient));
         userDataList.get(recipient).addMailReceived(mail);
 
-        for(i = 0, success = false; i< 5 && !success; ++i) {
-            if (userDataList.get(recipient).isOn()) {
+        if (userDataList.get(recipient).isOn()) {
+            for (i = 0, success = false; i < 5 && !success; ++i)
                 try {
 
                     Socket socket = new Socket(userDataList.get(recipient).getAddress(), userDataList.get(recipient).getMailPort());
@@ -434,7 +434,7 @@ public class ServerModel {
                     // RICEZIONE: conferma di invio
                     success = new Gson().fromJson((String) inputStream.readObject(), boolean.class);
 
-                    log("MAIL INVIATA CON SUCCESSO: [" + mail.getSender() + " -> " + recipient + "]" );
+                    log("MAIL INVIATA CON SUCCESSO: [" + mail.getSender() + " -> " + recipient + "]");
 
                     inputStream.close();
                     outputStream.close();
@@ -442,12 +442,13 @@ public class ServerModel {
                 } catch (IOException | ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
-            }
-        }
-        if (!success)
-            log("ERRORE: Mail non inviata a " + recipient + " dopo 5 tentativi falliti (Caso non gestito)");
-        else
-            log("Inoltro a: " + recipient + " (" + getAddressForUser(recipient) + ") - ON:" + userDataList.get(recipient).isOn());
+
+            if (!success)
+                log("ERRORE: Mail non inviata a " + recipient + " dopo 5 tentativi falliti (Caso non gestito)");
+            else
+                log("Inoltro a: " + recipient + " (" + getAddressForUser(recipient) + ") - CLIENT ONLINE");
+        } else
+            log("Inoltro a: " + recipient + " (" + getAddressForUser(recipient) + ") - CLIENT OFFLINE (Mail Salvata)");
     }
     private void clientBroadcastStopMessage(String address, int broadcastPort) {
         try (Socket socket = new Socket(address, broadcastPort)) {
