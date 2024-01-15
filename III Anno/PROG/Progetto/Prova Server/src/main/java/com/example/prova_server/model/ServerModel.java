@@ -405,7 +405,7 @@ public class ServerModel {
 
     private static void sendNotSent(Map<String, Mail> mapMailSentClient) {
         mapMailSentClient.values().stream()
-                .filter(m -> !m.isDelete())
+                .filter(mail -> !mail.isDelete() && !mail.getRead())
                 .forEach(mail -> mail.getRecipientsList().forEach(recipient -> sendMail(recipient, mail)));
     }
     private static void sendMail(String recipient, Mail mail) {
