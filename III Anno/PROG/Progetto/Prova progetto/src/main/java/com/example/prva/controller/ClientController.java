@@ -315,12 +315,12 @@ public class ClientController {
             VBox vbox = new VBox();
             vbox.setId(mail.getUuid());
             vbox.getStyleClass().add("class-card-posta");
-            if(mail.getRead())
-                vbox.getStyleClass().add("read");
 
             HBox hbox1 = null;
 
             if(soggetto.equals("Mittente:")){
+                if(mail.getRead())
+                    vbox.getStyleClass().add("read");
                 vbox.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     public void handle(MouseEvent e) {
                         mailModel.openMailReceived(mail.getUuid());
@@ -335,8 +335,6 @@ public class ClientController {
                     public void handle(MouseEvent e) {
                         mailModel.openMailSent(mail.getUuid());
                         showMailPanelSent(true);
-                        //mailModel.setMailRead(mail.getUuid());
-                        //((Node) e.getSource()).getStyleClass().add("read");
                     }
                 });
                 hbox1 = createHBox(soggetto, mail.getRecipients());
