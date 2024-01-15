@@ -64,12 +64,6 @@ public class UserData {
                 .findFirst()
                 .orElse("01/01/0001 00:00:00");
     }
-    public synchronized Map<String, Mail> getMailSent() {
-        return mailSent;
-    }
-    public synchronized Map<String, Mail> getMailReceived() {
-        return mailReceived;
-    }
     public synchronized Map<String, Mail> getMailSentNotDelete() {
         return mailSent.entrySet()
                 .stream()
@@ -82,15 +76,11 @@ public class UserData {
                 .filter(entry -> !entry.getValue().isDelete())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
-    public synchronized ArrayList<Mail> getMailsSent() {
-        return new ArrayList<>(getMailSentNotDelete().values().stream()
-                .sorted()
-                .toList());
+    public synchronized Map<String, Mail> getMailSent() {
+        return mailSent;
     }
-    public synchronized ArrayList<Mail> getMailsReceived() {
-        return new ArrayList<>(getMailReceivedNotDelete().values().stream()
-                .sorted()
-                .toList());
+    public synchronized Map<String, Mail> getMailReceived() {
+        return mailReceived;
     }
     public synchronized Map<String, Mail> getMailSent(String lastConnectionDatatime) {
         return  mailSent.entrySet().stream()
@@ -146,20 +136,9 @@ public class UserData {
     public void setMailPort(int mailPort) {
         this.mailPort = mailPort;
     }
-    public synchronized void setReadMailReceived(Mail mail) {
-        mailReceived.get(mail.getUuid()).setRead(); backup();
-    }
     public synchronized void setMailRead(String uuid) {
         mailReceived.get(uuid).setRead();
         backup();
-    }
-    public synchronized void loadSendMails() {
-        mailSent.clear();
-        loadBackup();
-    }
-    public synchronized void loadReceivedMails() {
-        mailReceived.clear();
-        loadBackup();
     }
 
     public void updateUsername(String newUsername) {

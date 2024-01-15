@@ -377,7 +377,7 @@ public class ServerModel {
                     if (modifyInfo.isDelete())
                         userDataList.get(username).deleteMailReceived(mail.getUuid());
                     if (modifyInfo.isRead())
-                        userDataList.get(username).setReadMailReceived(mail);
+                        userDataList.get(username).setMailRead(mail.getUuid());
                 }
 
                 if (modifyInfo.isDeleteAll())
