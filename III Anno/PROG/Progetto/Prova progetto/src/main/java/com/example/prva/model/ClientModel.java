@@ -211,15 +211,6 @@ public class ClientModel {
             log("ERROR: email non inviata (Mittente non valido)");
             return;
         }
-        if(!syntaxControl(addressMailSendProperty.get())){
-            addressMailSendProperty.set("!! SYNTAX ERROR !!");
-            PauseTransition pause = new PauseTransition(Duration.millis(700));
-            pause.setOnFinished(event -> addressMailSendProperty.set(""));
-            pause.play();
-
-            log("ERROR: email non inviata (Destinatario non valido)");
-            return;
-        }
         userData.updateUsername(localAddressProperty.get());
 
         String sender       = localAddressProperty.get();
@@ -233,6 +224,10 @@ public class ClientModel {
         Mail mailSend = new Mail(sender ,recipients, object, text);
 
         if (mailSend.getRecipientsList().stream().anyMatch(r -> !syntaxControl(r))) {
+            addressMailSendProperty.set("!! SYNTAX ERROR !!");
+            PauseTransition pause = new PauseTransition(Duration.millis(700));
+            pause.setOnFinished(event -> addressMailSendProperty.set(""));
+            pause.play();
             log("ERRORE: email non inviata (Uno dei destinatari non valido)");
             return;
         }
