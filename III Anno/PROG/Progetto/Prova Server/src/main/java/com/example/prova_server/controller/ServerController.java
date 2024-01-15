@@ -1,14 +1,10 @@
 package com.example.prova_server.controller;
 
 import com.example.prova_server.model.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.shape.Circle;
-
-import java.util.Map;
 
 public class ServerController {
 
@@ -87,7 +83,7 @@ public class ServerController {
         model.getClientMap().forEach((username, userData) -> {
             clientTable.getItems().add(new TableRowData(
                     username,
-                    userData.getClientAddress(),
+                    userData.getAddress(),
                     String.valueOf(userData.getMailPort()),
                     String.valueOf(userData.getBroadcastPort()),
                     String.valueOf(userData.getMailSentNotDelete().size()),

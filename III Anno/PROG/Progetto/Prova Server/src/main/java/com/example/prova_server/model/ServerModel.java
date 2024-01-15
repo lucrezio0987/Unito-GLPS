@@ -73,7 +73,7 @@ public class ServerModel {
     }
     public void start() {
         loadBackupLog();
-        getSetUsernamesSaved().forEach(ServerModel::loadBackup);
+        getSetUsernamesSaved().forEach(u -> userDataList.putIfAbsent(u, new UserData(u)));
 
         if(isStarted)
             return;
@@ -189,7 +189,6 @@ public class ServerModel {
             throw new RuntimeException(e);
         }
     }
-
     public void stop() {
         if(isStarted)
             try {
@@ -207,7 +206,7 @@ public class ServerModel {
 
                 userDataList.values().stream()
                         .filter(UserData::isOn)
-                        .forEach( u -> clientBroadcastStopMessage(u.getClientAddress(), u.getBroadcastPort()));
+                        .forEach( u -> clientBroadcastStopMessage(u.getAddress(), u.getBroadcastPort()));
 
                 backupLog();
             } catch (InterruptedException e) {
@@ -228,6 +227,9 @@ public class ServerModel {
 
     public Map<String, UserData> getClientMap() {
         return userDataList;
+    }
+    public static synchronized String getAddressForUser(String username) {
+        return userDataList.get(username).getAddress();
     }
 
     private static class ConnectionHandler implements Runnable  {
@@ -257,7 +259,7 @@ public class ServerModel {
                 if (connectionInfo.isConnected()) {
                     List<Integer> ports = selectPort(address);
 
-                    loadBackup(username);
+                    userDataList.putIfAbsent(username, new UserData(username));
                     userDataList.get(username).setAddress(address);
                     userDataList.get(username).setMailPort(ports.get(0));
                     userDataList.get(username).setBroadcastPort(ports.get(1));
@@ -301,8 +303,6 @@ public class ServerModel {
                     userDataList.get(username).updateMailSent(combinedSentMap);
                     userDataList.get(username).updateMailReceived(combinedReceivedMap);
 
-                    backup(username);
-
                     Map<String, Map<String, Mail>> mapMailServer = new HashMap<>();
                     mapMailServer.put("sent", combinedSentMap);
                     mapMailServer.put("received", combinedReceivedMap);
@@ -313,20 +313,11 @@ public class ServerModel {
                     System.out.println(":::::::   FINE -> INVIO: lista modifiche client-server combinate");
                     outputStream.flush();
 
-                    log("Client: " + username + " connesso da " + userDataList.get(username).getClientAddress() + " | porte: " + userDataList.get(username).getBroadcastPort() + "/" + userDataList.get(username).getMailPort());
+                    log("Client: " + username + " connesso da " + userDataList.get(username).getAddress() + " | porte: " + userDataList.get(username).getBroadcastPort() + "/" + userDataList.get(username).getMailPort());
                 } else {
-
                     userDataList.get(username).setOn(false);
 
-                    backup(username);
-
-                    // INVIO: risposta "Disconnessione notificata"
-                    // System.out.println(":::::::   INVIO: risposta Disconnessione notificata");
-                    // outputStream.writeObject("Disconnessione notificata");
-                    // outputStream.flush();
-                    // System.out.println(":::::::   INVIO: risposta Disconnessione notificata");
-
-                    log("Client:  " + username + " disconnesso. (" + userDataList.get(username).getClientAddress()+ ")");
+                    log("Client:  " + username + " disconnesso. (" + userDataList.get(username).getAddress()+ ")");
                 }
 
                 Platform.runLater(() -> { countProperty.set(Integer.toString(getClientNumber()));});
@@ -356,10 +347,8 @@ public class ServerModel {
                 String sender = mail.getSender();
 
                 log("MAIL: " + sender + " -> " + mail.getRecipients() + "[Obj: " + mail.getObject() +"]");
-                loadBackup(sender);
                 log("-- lista mail caricate: " + sender);
                 userDataList.get(sender).addMailSent(mail);
-                backup(sender);
                 log("-- lista mail salvata: " + sender);
 
                 mail.getRecipientsList().forEach(recipient -> sendMail(recipient, mail));
@@ -388,12 +377,12 @@ public class ServerModel {
 
                 if(modifyInfo.getSent()) {
                     if (modifyInfo.isDeleteAll())
-                        userDataList.get(username).clearMailListSent();
+                        userDataList.get(username).deleteMailListSent();
                     if (modifyInfo.isDelete())
                         userDataList.get(username).removeMailSent(mail);
                 } else {
                     if (modifyInfo.isDeleteAll())
-                        userDataList.get(username).clearMailListReceived();
+                        userDataList.get(username).deleteMailListReceived();
                     if (modifyInfo.isDelete())
                         userDataList.get(username).removeMailReceived(mail);
                     if (modifyInfo.isRead())
@@ -406,8 +395,6 @@ public class ServerModel {
                     log("MODIFY: ("+username+") delete");
                 if (modifyInfo.isRead())
                     log("MODIFY: ("+username+") read");
-
-                backup(username);
 
                 socket.close();
             } catch (JsonSyntaxException | IOException | ClassNotFoundException e) {
@@ -428,15 +415,14 @@ public class ServerModel {
         if(mail.isDelete())
             return;
 
-        loadBackup(recipient);
+        userDataList.putIfAbsent(recipient, new UserData(recipient));
         userDataList.get(recipient).addMailReceived(mail);
-        backup(recipient);
 
         for(i = 0, success = false; i< 5 && !success; ++i) {
             if (userDataList.get(recipient).isOn()) {
                 try {
 
-                    Socket socket = new Socket(userDataList.get(recipient).getClientAddress(), userDataList.get(recipient).getMailPort());
+                    Socket socket = new Socket(userDataList.get(recipient).getAddress(), userDataList.get(recipient).getMailPort());
 
                     ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
                     ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
@@ -477,16 +463,66 @@ public class ServerModel {
         }
     }
 
-    private static synchronized void backup(String username) {
-        userDataList.putIfAbsent(username, new UserData(username));
-        writeCSVMail(pathConstructor(username, "received"), userDataList.get(username).getMailReceived());
-        writeCSVMail(pathConstructor(username, "sender"), userDataList.get(username).getMailSent());
+    public static Map<String, Mail> combineMailMaps(Map<String, Mail> mapClient, Map<String, Mail> mapServer) {
+        log("  [+] MAPPA 1 Client: " + mapClient.values().size() + " ( di cui " + mapClient.values().stream().filter(Mail::isDelete).count() + " cancellate)");
+        log("  [+] MAPPA 2 Server: " + mapServer.values().size() + " ( di cui " + mapServer.values().stream().filter(Mail::isDelete).count() + " cancellate)");
+        Map<String, Mail> combMap = Stream.concat(
+                mapClient.entrySet().stream(),
+                mapServer.entrySet().stream()
+        ).collect(Collectors.toMap(
+                Map.Entry::getKey,
+                Map.Entry::getValue,
+                (mailClient, mailServer) -> {
+                    boolean isDeleteOnClient = mailClient.isDelete();
+                    boolean isDeleteOnServer = mailServer.isDelete();
+                    if (isDeleteOnClient ^ isDeleteOnServer)
+                        return isDeleteOnClient ? mailClient : mailServer;
+                    else
+                        return mailClient.moreRecentlyOf(mailServer.getLastModify()) ? mailClient : mailServer;
+                })
+        );
+        log("  [+] MAPPA 1+2 Comb: " + combMap.values().size() + " ( di cui " + combMap.values().stream().filter(m -> m.isDelete()).count() + " cancellate)");
+        return combMap;
     }
-    private static synchronized void loadBackup(String username) {
-        userDataList.putIfAbsent(username, new UserData(username));
-        userDataList.get(username).loadSendMails(readCSVMail(pathConstructor(username, "sender")));
-        userDataList.get(username).loadReceivedMails(readCSVMail(pathConstructor(username, "received")));
+    private synchronized static List<Integer> selectPort(String address) {
+
+        List<Integer> occupiedPorts = userDataList.values().stream()
+                .filter(UserData::isOn)
+                .filter(d -> d.getAddress().equals(address))
+                .flatMap(d -> Stream.of(d.getBroadcastPort(), d.getMailPort()))
+                .toList();
+
+//        for(UserData d : userDataList.values())
+//            if(d.getClientAddress().equals(address) && d.isOn()){
+//                occupiedPorts.add(d.getBroadcastPort());
+//                occupiedPorts.add(d.getMailPort());
+//            }
+
+
+        List<Integer> ports = new ArrayList<>();
+
+        for (Integer port = 8010; port <= 9000 && ports.size() != 2; ++port)
+            if (!occupiedPorts.contains(port))
+                ports.add(port);
+
+        return ports;
     }
+
+    private static synchronized void log(String newLine) {
+        if (newLine.isEmpty())
+            newLine = "ALLERT: String is NULL";
+        newLine = "<" + new SimpleDateFormat("HH:mm:ss").format(new Date()) + ">  " + newLine;
+
+        String currentText = textAreaProperty.getValue();
+        if (currentText == null)
+            textAreaProperty.set(newLine);
+        else
+            textAreaProperty.set(currentText + "\n" + newLine);
+        System.out.println(newLine);
+
+        logList.add(newLine);
+    }
+
     private void loadBackupLog() {
         if(FileExist(pathConstructor(null, "log")))
             try (Reader reader = new FileReader(pathConstructor(null, "log"));
@@ -515,96 +551,6 @@ public class ServerModel {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static synchronized String getAddressForUser(String username) {
-        return userDataList.get(username).getClientAddress();
-    }
-    private static synchronized void log(String newLine) {
-        if (newLine.isEmpty())
-            newLine = "ALLERT: String is NULL";
-        newLine = "<" + new SimpleDateFormat("HH:mm:ss").format(new Date()) + ">  " + newLine;
-
-        String currentText = textAreaProperty.getValue();
-        if (currentText == null)
-            textAreaProperty.set(newLine);
-        else
-            textAreaProperty.set(currentText + "\n" + newLine);
-        System.out.println(newLine);
-
-        logList.add(newLine);
-    }
-
-    private static Map<String, Mail> readCSVMail(String path) {
-        createFileIfNotExists(path, MAIL_HEADER);
-
-        Map<String, Mail> mailMap = new HashMap<>();
-        try (CSVParser csvParser = CSVParser.parse(new FileReader(path), CSVFormat.DEFAULT.withFirstRecordAsHeader())) {
-            for (CSVRecord csvRecord : csvParser) {
-                String r0 = csvRecord.get(MAIL_HEADER[0]); // uuid
-                String r1 = csvRecord.get(MAIL_HEADER[1]); // sender
-                String r2 = csvRecord.get(MAIL_HEADER[2]); // recipients
-                String r3 = csvRecord.get(MAIL_HEADER[3]); // object
-                String r4 = csvRecord.get(MAIL_HEADER[4]); // text
-                String r5 = csvRecord.get(MAIL_HEADER[5]); // creationDateTime
-                String r6 = csvRecord.get(MAIL_HEADER[6]); // lastModifyDateTime
-                boolean r7 = Boolean.parseBoolean(csvRecord.get(MAIL_HEADER[7])); // read
-
-                mailMap.put(r0 , new Mail(r1, r2, r3, r4, r5, r6, r7, r0));
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return mailMap;
-    }
-    private static void writeCSVMail(String path, Map<String, Mail> mailList){
-        createFileIfNotExists(path, MAIL_HEADER);
-        if(mailList != null) {
-            Map<String, Mail> mailMap = readCSVMail(path);
-            mailList.values().forEach(mail -> mailMap.put(mail.getUuid(), mail));
-
-            try (Writer writer = new FileWriter(path, false);
-                 CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(MAIL_HEADER))) {
-                for (Mail mail : mailMap.values())
-                    csvPrinter.printRecord(
-                            mail.getUuid(),
-                            mail.getSender(),
-                            mail.getRecipients(),
-                            mail.getObject(),
-                            mail.getText(),
-                            mail.getCreationDateTime(),
-                            mail.getLastModify(),
-                            mail.getRead());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-    private static boolean FileExist(String path) {
-        return Files.exists(Path.of(path));
-    }
-    private static void createFileIfNotExists(String path, String[] headers) {
-        if (!FileExist(path)) {
-            createFileAndWriteHeader(path, headers);
-        }
-    }
-    private static void createFileAndWriteHeader(String path, String[] headers) {
-        try (Writer writer = new FileWriter(path, false);
-             CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(headers))) {
-            csvPrinter.printRecord();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    private static String pathConstructor(String username, String type){
-        String directoryPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "backup";
-        File directory = new File(directoryPath);
-        if (!directory.exists())
-            directory.mkdirs();
-        if(type.equals("log"))
-            return directoryPath + File.separator  + type + ".csv";
-        else
-            return directoryPath + File.separator + username + "-" + type + ".csv";
     }
 
     public void clearAllBackup() {
@@ -656,50 +602,18 @@ public class ServerModel {
 
         return utentiConDati;
     }
-
-    public static Map<String, Mail> combineMailMaps(Map<String, Mail> mapClient, Map<String, Mail> mapServer) {
-        log("  [+] MAPPA 1 Client: " + mapClient.values().size() + " ( di cui " + mapClient.values().stream().filter(Mail::isDelete).count() + " cancellate)");
-        log("  [+] MAPPA 2 Server: " + mapServer.values().size() + " ( di cui " + mapServer.values().stream().filter(Mail::isDelete).count() + " cancellate)");
-        Map<String, Mail> combMap = Stream.concat(
-                mapClient.entrySet().stream(),
-                mapServer.entrySet().stream()
-        ).collect(Collectors.toMap(
-                Map.Entry::getKey,
-                Map.Entry::getValue,
-                (mailClient, mailServer) -> {
-                    boolean isDeleteOnClient = mailClient.isDelete();
-                    boolean isDeleteOnServer = mailServer.isDelete();
-                    if (isDeleteOnClient ^ isDeleteOnServer)
-                        return isDeleteOnClient ? mailClient : mailServer;
-                    else
-                        return mailClient.moreRecentlyOf(mailServer.getLastModify()) ? mailClient : mailServer;
-                })
-        );
-        log("  [+] MAPPA 1+2 Comb: " + combMap.values().size() + " ( di cui " + combMap.values().stream().filter(m -> m.isDelete()).count() + " cancellate)");
-        return combMap;
+    private static boolean FileExist(String path) {
+        return Files.exists(Path.of(path));
+    }
+    private static String pathConstructor(String username, String type){
+        String directoryPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "backup";
+        File directory = new File(directoryPath);
+        if (!directory.exists())
+            directory.mkdirs();
+        if(type.equals("log"))
+            return directoryPath + File.separator  + type + ".csv";
+        else
+            return directoryPath + File.separator + username + "-" + type + ".csv";
     }
 
-    private synchronized static List<Integer> selectPort(String address) {
-
-        List<Integer> occupiedPorts = userDataList.values().stream()
-                        .filter(UserData::isOn)
-                        .filter(d -> d.getClientAddress().equals(address))
-                        .flatMap(d -> Stream.of(d.getBroadcastPort(), d.getMailPort()))
-                        .toList();
-
-//        for(UserData d : userDataList.values())
-//            if(d.getClientAddress().equals(address) && d.isOn()){
-//                occupiedPorts.add(d.getBroadcastPort());
-//                occupiedPorts.add(d.getMailPort());
-//            }
-
-
-        List<Integer> ports = new ArrayList<>();
-
-        for (Integer port = 8010; port <= 9000 && ports.size() != 2; ++port)
-            if (!occupiedPorts.contains(port))
-                ports.add(port);
-
-        return ports;
-    }
 }

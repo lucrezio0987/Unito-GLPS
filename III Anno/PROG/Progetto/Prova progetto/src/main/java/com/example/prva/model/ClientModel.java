@@ -21,37 +21,31 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ClientModel {
-    private static String SERVER_ADDRESS;
     private static final int SERVER_PORT_CONNECTION = 8000;
     private static final int SERVER_PORT_MAIL = 8001;
     private static final int SERVER_PORT_MODIFY = 8002;
 
-    private static ClientController controller;
-
     Thread clientMessageServerThread = null;
     Thread serverBroadcastThread = null;
     private UserData userData;
+    private Mail activeMailSent = null;
+    private Mail activeMailReceived = null;
 
+    private static ClientController controller;
     private SimpleStringProperty textMailSendProperty = null; // testo mail da inviare
     private SimpleStringProperty textMailReceivedProperty = null; //testo mail ricevuta
     private SimpleStringProperty textMailSentProperty = null; // testo mail inviata
     private SimpleStringProperty textLogProperty = null;
-
     private SimpleStringProperty addressMailSendProperty = null; // address mail da inviare
     private SimpleStringProperty addressMailReceivedProperty = null; // address mail ricevuta
     private SimpleStringProperty addressMailSentProperty = null; // address mail inviata
-
     private SimpleStringProperty objectMailSendProperty = null; // oggetto mail da inviare
     private SimpleStringProperty objectMailReceivedProperty = null; // oggetto mail ricevuta
     private SimpleStringProperty objectMailSentProperty = null; // oggetto mail inviata
-
     private SimpleStringProperty localAddressProperty = null;
     private SimpleStringProperty serveHostProperty = null;
     private SimpleStringProperty mailPortProperty = null;
     private SimpleStringProperty broadcastPortProperty = null;
-
-    private Mail activeMailSent = null;
-    private Mail activeMailReceived = null;
 
     public ClientModel(ClientController controller) {
         this.controller = controller;
@@ -75,23 +69,22 @@ public class ClientModel {
         broadcastPortProperty = new SimpleStringProperty();
 
         userData = new UserData();
-
-        SERVER_ADDRESS = serveHostProperty.getValue();
+    }
+    public void stop() {
+        //TODO implementazione stop
+        disconnectToServer();
     }
 
     public SimpleStringProperty getTextMailSendProperty(){ return this.textMailSendProperty; }
     public SimpleStringProperty getTextMailReceivedProperty(){ return this.textMailReceivedProperty; }
     public SimpleStringProperty getTextMailSentProperty(){ return this.textMailSentProperty; }
     public SimpleStringProperty getTextLogProperty() { return this.textLogProperty; }
-
     public SimpleStringProperty getAddressMailSendProperty(){ return this.addressMailSendProperty; }
     public SimpleStringProperty getAddressMailReceivedProperty(){ return this.addressMailReceivedProperty; }
     public SimpleStringProperty getAddressMailSentProperty(){ return this.addressMailSentProperty; }
-
     public SimpleStringProperty getObjectMailSentProperty(){ return this.objectMailSentProperty; }
     public SimpleStringProperty getObjectMailReceivedProperty(){ return this.objectMailReceivedProperty; }
     public SimpleStringProperty getObjectMailSendProperty(){ return this.objectMailSendProperty; }
-
     public SimpleStringProperty getLocalAddressProperty(){ return this.localAddressProperty; }
     public SimpleStringProperty getServeHostProperty() { return  this.serveHostProperty;}
     public SimpleStringProperty getMailPortProperty() {
@@ -107,7 +100,7 @@ public class ClientModel {
         broadcastPortProperty.set(Integer.toString(userData.getBroadcastPort()));
     }
     void setServerAddress(String serverAddress) {
-        SERVER_ADDRESS = serverAddress;
+        serveHostProperty.set(serverAddress);
     }
 
     public void openMailReceived(String uuid){
@@ -123,7 +116,6 @@ public class ClientModel {
         objectMailReceivedProperty.set(mail.getObject());
         textMailReceivedProperty.set(mail.getText());
     }
-
     public void openMailSent(String uuid){
         Mail mail;
 
@@ -159,7 +151,6 @@ public class ClientModel {
         userData.deleteMailReceivedList();
         log("MAIL: Cancellazione di tutte le mail ricevute");
     }
-
     public void deleteMailSent(String uuid){
         // TODO: Notify to server
         if (isConnect())
@@ -174,7 +165,6 @@ public class ClientModel {
         userData.deleteMailReceived(uuid);
         log("MAIL: mail Ricevuta cancellata (" + uuid + ")");
     }
-
     public String deleteActualMailSent(){
         String actual = activeMailSent.getUuid();
         deleteMailSent(actual);
@@ -222,12 +212,11 @@ public class ClientModel {
         else
             mailSend.getRecipientsList().forEach(r -> log("MAIL: invio non completato (Server Disconnesso) [" + sender + " -> "+ r + "]"));
     }
-
     private boolean send(Mail mailSend) {
         boolean ret = false;
         if(isConnect()) {
             try {
-                Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_MAIL);
+                Socket socket = new Socket(serveHostProperty.getValue(), SERVER_PORT_MAIL);
 
                 ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
                 String jsonMail = new Gson().toJson(mailSend);
@@ -246,10 +235,9 @@ public class ClientModel {
         }
         return ret;
     }
-
     private void notifyModifyToServer(MailModifyInfo mailModifyInfo) {
         try {
-            Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT_MODIFY);
+            Socket socket = new Socket(serveHostProperty.getValue(), SERVER_PORT_MODIFY);
 
             ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
             String jsonModifyInfo = new Gson().toJson(mailModifyInfo);
@@ -261,6 +249,13 @@ public class ClientModel {
             e.printStackTrace();
         }
     }
+
+    private void addMailReceived(Mail mail) {
+        userData.addMailReceived(mail);
+        log("MAIL: ricevuta da " + mail.getSender());
+        Platform.runLater(() -> controller.createCardReceived(mail));
+    }
+
     public void sendMailClear() {
         addressMailSendProperty.set("");
         objectMailSendProperty.set("");
@@ -286,7 +281,6 @@ public class ClientModel {
         textMailSendProperty.set("\n\n----------------------- Last Mail: -----------------------\n"
                 + activeMailReceived.getText());
     }
-
     public void forwardReceived() {
         addressMailSendProperty.set("");
         objectMailSendProperty.set(activeMailReceived.getObject());
@@ -301,6 +295,17 @@ public class ClientModel {
                 + "[ Mail Forwarded, original recipient:  " + activeMailSent.getRecipients() + " ]"
         );
     }
+
+    private void setConnected(boolean connected) {
+        if(!connected && userData.isOn())
+            stopListening();
+        userData.setOn(connected);
+        controller.setConnection(connected);
+    }
+    private boolean isConnect() {
+        return userData.isOn();
+    }
+
     public boolean connect() {
         String localAddress = localAddressProperty.get();
         if(syntaxControll(localAddress)) {
@@ -324,11 +329,6 @@ public class ClientModel {
         }
         return false;
     }
-
-    private boolean isConnect() {
-        return userData.isOn();
-    }
-
     public boolean reconnect() {
         if(isConnect())
             try {
@@ -347,15 +347,77 @@ public class ClientModel {
         return isConnect();
     }
 
-    private synchronized void stopListening() {
-        userData.setMailPort(0);
-        userData.setBroadcastPort(0);
+    public synchronized void connectToServer() {
+        try {
+            Socket socket = new Socket();
+            socket.connect(new InetSocketAddress(serveHostProperty.getValue(), SERVER_PORT_CONNECTION), 2000);
+            socket.setSoTimeout(2000);
 
-        if (clientMessageServerThread != null) {
-            clientMessageServerThread.interrupt();}
+            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
 
-        if (serverBroadcastThread != null)
-            serverBroadcastThread.interrupt();
+            ConnectionInfo connectionInfo = new ConnectionInfo(true, userData.getUsername(), userData.getLastModifyData());
+
+            // INVIO: informazioni di connessione
+            outputStream.writeObject(new Gson().toJson(connectionInfo));
+            outputStream.flush();
+
+            // RICEZIONE: data ultima modifica del server
+            connectionInfo = new Gson().fromJson((String) inputStream.readObject(), ConnectionInfo.class);
+            String lastModifyDataServer = connectionInfo.getLastConnectionDateTime();
+
+            Map<String, Map<String, Mail>> mapMailClient = new HashMap<>();
+            mapMailClient.put("sent", userData.getMailSentListMoreRecentlyOf(lastModifyDataServer));
+            mapMailClient.put("received", userData.getMailReceivedListMoreRecentlyOf(lastModifyDataServer));
+
+            // INVIO: modifiche del client offline
+            outputStream.writeObject(new Gson().toJson(mapMailClient));
+            outputStream.flush();
+
+            // RICEZIONE: lista modifiche client-server combinate
+            Type type = new TypeToken<Map<String, Map<String, Mail>>>() {}.getType();
+            Map<String, Map<String, Mail>> mapMailServer = new Gson().fromJson((String) inputStream.readObject(), type);
+
+            outputStream.close();
+            inputStream.close();
+            socket.close();
+
+            userData.updateMailSent(mapMailServer.get("sent"));
+            userData.updateMailReceived(mapMailServer.get("received"));
+
+            startListening(connectionInfo.getMailPort(), connectionInfo.getBroadcastPort());
+            setConnected(true);
+
+        } catch (IOException | ClassNotFoundException e) {
+            stopListening();
+            setConnected(false);
+        }
+    }
+    public synchronized void disconnectToServer() {
+        if(isConnect())
+            try {
+                Socket socket = new Socket();
+                socket.connect(new InetSocketAddress(serveHostProperty.getValue(), SERVER_PORT_CONNECTION), 2000);
+                socket.setSoTimeout(2000);
+
+                ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+
+                ConnectionInfo connectionInfo = new ConnectionInfo(false, userData.getUsername());
+
+                // INVIO: informazioni di disconnessione
+                outputStream.writeObject(new Gson().toJson(connectionInfo));
+                outputStream.flush();
+
+                inputStream.close();
+                outputStream.close();
+                socket.close();
+
+            } catch (IOException e) {
+                System.out.println("Disconnessione al Server Fallita");
+            } finally {
+                setConnected(false);
+            }
     }
     private synchronized void startListening(int newMailPort, int newBroadcastPort) {
         stopListening();
@@ -440,96 +502,17 @@ public class ClientModel {
         });
         serverBroadcastThread.start();
     }
+    private synchronized void stopListening() {
+        userData.setMailPort(0);
+        userData.setBroadcastPort(0);
 
-    public synchronized void disconnectToServer() {
-        if(isConnect())
-            try {
-                Socket socket = new Socket();
-                socket.connect(new InetSocketAddress(SERVER_ADDRESS, SERVER_PORT_CONNECTION), 2000);
-                socket.setSoTimeout(2000);
+        if (clientMessageServerThread != null) {
+            clientMessageServerThread.interrupt();}
 
-                ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-
-                ConnectionInfo connectionInfo = new ConnectionInfo(false, userData.getUsername());
-
-                // INVIO: informazioni di disconnessione
-                outputStream.writeObject(new Gson().toJson(connectionInfo));
-                outputStream.flush();
-
-                inputStream.close();
-                outputStream.close();
-                socket.close();
-
-            } catch (IOException e) {
-                System.out.println("Disconnessione al Server Fallita");
-            } finally {
-                setConnected(false);
-            }
-    }
-    public synchronized void connectToServer() {
-        try {
-            Socket socket = new Socket();
-            socket.connect(new InetSocketAddress(SERVER_ADDRESS, SERVER_PORT_CONNECTION), 2000);
-            socket.setSoTimeout(2000);
-
-            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-
-            ConnectionInfo connectionInfo = new ConnectionInfo(true, userData.getUsername(), userData.getLastModifyData());
-
-            // INVIO: informazioni di connessione
-            outputStream.writeObject(new Gson().toJson(connectionInfo));
-            outputStream.flush();
-
-            // RICEZIONE: data ultima modifica del server
-            connectionInfo = new Gson().fromJson((String) inputStream.readObject(), ConnectionInfo.class);
-            String lastModifyDataServer = connectionInfo.getLastConnectionDateTime();
-
-            Map<String, Map<String, Mail>> mapMailClient = new HashMap<>();
-            mapMailClient.put("sent", userData.getMailSentListMoreRecentlyOf(lastModifyDataServer));
-            mapMailClient.put("received", userData.getMailReceivedListMoreRecentlyOf(lastModifyDataServer));
-
-            // INVIO: modifiche del client offline
-            outputStream.writeObject(new Gson().toJson(mapMailClient));
-            outputStream.flush();
-
-            // RICEZIONE: lista modifiche client-server combinate
-            Type type = new TypeToken<Map<String, Map<String, Mail>>>() {}.getType();
-            Map<String, Map<String, Mail>> mapMailServer = new Gson().fromJson((String) inputStream.readObject(), type);
-
-            outputStream.close();
-            inputStream.close();
-            socket.close();
-
-            userData.updateMailSent(mapMailServer.get("sent"));
-            userData.updateMailReceived(mapMailServer.get("received"));
-
-            startListening(connectionInfo.getMailPort(), connectionInfo.getBroadcastPort());
-            setConnected(true);
-
-        } catch (IOException | ClassNotFoundException e) {
-            stopListening();
-            setConnected(false);
-        }
+        if (serverBroadcastThread != null)
+            serverBroadcastThread.interrupt();
     }
 
-    public void stop() {
-        //TODO implementazione stop
-        disconnectToServer();
-    }
-
-    private void setConnected(boolean connected) {
-        if(!connected && userData.isOn())
-            stopListening();
-        userData.setOn(connected);
-        controller.setConnection(connected);
-    }
-
-    private void addMailReceived(Mail mail) {
-        userData.addMailReceived(mail);
-        Platform.runLater(() -> controller.createCardReceived(mail));
-    }
     public void clearAllBackup() {
         clearBackupLog();
         clearBackupMail();
@@ -601,6 +584,5 @@ public class ClientModel {
             textLogProperty.set(currentText + "\n" + newLine);
         System.out.println(newLine);
     }
-
 
 }

@@ -12,7 +12,6 @@ public class Mail implements Serializable, Comparable<Mail> {
     private String object;
     private String creationDateTime;
     private String lastModifyDateTime;
-
     private boolean delete;
     private boolean read;
 
@@ -29,7 +28,6 @@ public class Mail implements Serializable, Comparable<Mail> {
         this.delete = sender == null && recipients == null;
         this.uuid = UUID.randomUUID().toString();
     }
-
     Mail(String sender, String recipients, String object, String text, String creationDateTime, String  lastModifyDateTime, boolean read, String uuid){
         this.sender = sender;
         this.recipients = recipients;
@@ -89,7 +87,6 @@ public class Mail implements Serializable, Comparable<Mail> {
     public boolean isDelete() {
         return delete;
     }
-
     public boolean moreRecentlyOf(String DateTime) {
         if(DateTime == null)
             return true;
@@ -115,7 +112,6 @@ public class Mail implements Serializable, Comparable<Mail> {
             throw new RuntimeException(e);
         }
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
