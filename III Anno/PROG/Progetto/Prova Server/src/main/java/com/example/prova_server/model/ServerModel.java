@@ -461,7 +461,7 @@ public class ServerModel {
         Map<String, Mail> combMap = Stream.concat(
                 mapClient.entrySet().stream(),
                 mapServer.entrySet().stream()
-        ).collect(Collectors.toMap(
+            ).collect(Collectors.toMap(
                 Map.Entry::getKey,
                 Map.Entry::getValue,
                 (mailClient, mailServer) -> {
@@ -472,7 +472,7 @@ public class ServerModel {
                     else
                         return mailClient.moreRecentlyOf(mailServer.getLastModify()) ? mailClient : mailServer;
                 })
-        );
+            );
         log("  [+] MAPPA 1+2 Comb: " + combMap.values().size() + " ( di cui " + combMap.values().stream().filter(m -> m.isDelete()).count() + " cancellate)");
         return combMap;
     }

@@ -59,7 +59,7 @@ public class UserData {
     }
 
     // restituisce l'ultima modifica effettuata a una mail, 01/01/0001 se non ci sono mail e di conseguenza modifiche
-    public String getLastModifyData() {
+    public synchronized String getLastModifyData() {
         return Stream.concat(mailSent.values().stream(), mailReceived.values().stream())
                 .filter(Objects::nonNull)
                 .sorted()
@@ -123,13 +123,13 @@ public class UserData {
 
     public void setOn(boolean connected) {
         if(username != null) {
+            loadBackup();
             if (!connected) {
                 backup();
                 this.address = null;
                 this.mailPort = 0;
                 this.broadcastPort = 0;
-            } else
-                loadBackup();
+            }
         }
         this.connected = connected;
     }
@@ -154,7 +154,7 @@ public class UserData {
     public void setMailPort(int mailPort) {
         this.mailPort = mailPort;
     }
-    public synchronized void setMailRead(String uuid) {
+    public void setMailRead(String uuid) {
         mailReceived.get(uuid).setRead();
         backup();
     }
@@ -188,7 +188,9 @@ public class UserData {
         backup();
     }
     // cancelli la lista locale, senza cancellare le mail, esempio quando si cambia utente
-    public void clearMailListReceived() { mailReceived.clear(); }
+    public void clearMailListReceived() {
+        mailReceived.clear();
+    }
     // cancelli la lista locale, senza cancellare le mail, esempio quando si cambia utente
     public void clearMailListSent() {
         mailSent.clear();
