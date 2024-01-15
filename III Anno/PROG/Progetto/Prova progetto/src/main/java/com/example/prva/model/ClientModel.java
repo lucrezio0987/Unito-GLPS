@@ -198,12 +198,26 @@ public class ClientModel {
         openMailReceived("");
         return actual;
     }
-    // invio della mail se il syntax controll non restituisce errore
+    // invio della mail se il syntax control non restituisce errore
     // creazione dell'oggetto mail e chiamata del metodo send, passando l'oggetto mail
     public void sendMail(){
 
-        if(!syntaxControll(localAddressProperty.get())) {
-            log("ERRORE: email non inviata (Mittente non valido)");
+        if(!syntaxControl(localAddressProperty.get())) {
+            localAddressProperty.set("!! SYNTAX ERROR !!");
+            PauseTransition pause = new PauseTransition(Duration.millis(700));
+            pause.setOnFinished(event -> localAddressProperty.set(""));
+            pause.play();
+
+            log("ERROR: email non inviata (Mittente non valido)");
+            return;
+        }
+        if(!syntaxControl(addressMailSendProperty.get())){
+            addressMailSendProperty.set("!! SYNTAX ERROR !!");
+            PauseTransition pause = new PauseTransition(Duration.millis(700));
+            pause.setOnFinished(event -> addressMailSendProperty.set(""));
+            pause.play();
+
+            log("ERROR: email non inviata (Destinatario non valido)");
             return;
         }
         userData.updateUsername(localAddressProperty.get());
@@ -218,7 +232,7 @@ public class ClientModel {
 
         Mail mailSend = new Mail(sender ,recipients, object, text);
 
-        if (mailSend.getRecipientsList().stream().anyMatch(r -> !syntaxControll(r))) {
+        if (mailSend.getRecipientsList().stream().anyMatch(r -> !syntaxControl(r))) {
             log("ERRORE: email non inviata (Uno dei destinatari non valido)");
             return;
         }
@@ -340,7 +354,7 @@ public class ClientModel {
     //chiama il metodo connectToServer e setPort, per avviare la connessione
     public boolean connect() {
         String localAddress = localAddressProperty.get();
-        if(syntaxControll(localAddress)) {
+        if(syntaxControl(localAddress)) {
             if(!(isConnect() && userData.getUsername().equals(localAddress))) {
                 userData.updateUsername(localAddress);
                 userData.setAddress(serveHostProperty.get());
@@ -625,7 +639,7 @@ public class ClientModel {
     }
 
     // verifica che l'indirizzo inserito sia valido
-    private boolean syntaxControll(String address) {
+    private boolean syntaxControl(String address) {
         Pattern pattern = Pattern.compile("^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,6}$");
         Matcher matcher = pattern.matcher(address);
         if(!matcher.matches()) {
