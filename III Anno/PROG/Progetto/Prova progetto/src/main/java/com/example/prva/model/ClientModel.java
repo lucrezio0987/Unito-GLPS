@@ -272,7 +272,7 @@ public class ClientModel {
         addressList.append(activeMailReceived.getSender());
 
         activeMailReceived.getRecipientsList().forEach(el -> {
-            if(!el.equals(activeMailReceived.getSender()))
+            if(!el.equals(userData.getUsername()))
                 addressList.append(", " + el);
         });
 
