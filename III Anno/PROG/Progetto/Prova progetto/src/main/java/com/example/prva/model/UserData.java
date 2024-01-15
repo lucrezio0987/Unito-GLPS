@@ -32,8 +32,6 @@ public class UserData {
         this.mailSent = new HashMap<>();
         this.mailReceived = new HashMap<>();
         this.connected = false;
-
-        loadBackup();
     }
 
     public UserData(String username) {
@@ -120,13 +118,15 @@ public class UserData {
     }
 
     public void setOn(boolean connected) {
-        if(!connected){
-            backup();
-            this.clientAddress = null;
-            this.mailPort = 0;
-            this.broadcastPort = 0;
-        } else loadBackup();
-
+        if(username != null) {
+            if (!connected) {
+                backup();
+                this.clientAddress = null;
+                this.mailPort = 0;
+                this.broadcastPort = 0;
+            } else
+                loadBackup();
+        }
         this.connected = connected;
     }
     public boolean isOn() {

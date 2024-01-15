@@ -48,7 +48,7 @@ public class ClientController {
     @FXML
     private TableView<TableRowData>         tableLastConnectInfo;
     @FXML
-    private TableColumn<TableRowData, String> addressColumn, lastConnectionColumn, sentColumn, receivedColumn;
+    private TableColumn<TableRowData, String> addressColumn, sentColumn, receivedColumn;
 
     ClientModel clientModel;
     MailCardModel mailCardModel;
@@ -103,7 +103,6 @@ public class ClientController {
         ServerHost.textProperty().set(serverHost);
 
         addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
-        lastConnectionColumn.setCellValueFactory(new PropertyValueFactory<>("lastConnectionDateTime"));
         sentColumn.setCellValueFactory(new PropertyValueFactory<>("sent"));;
         receivedColumn.setCellValueFactory(new PropertyValueFactory<>("received"));;
 
@@ -389,7 +388,7 @@ public class ClientController {
     public void addAllRowToTable(Map<String, String> map) {
         clearTable();
         map.forEach((key, value) -> {
-            tableLastConnectInfo.getItems().add(new TableRowData(key, value, "TODO", "TODO"));
+            tableLastConnectInfo.getItems().add(new TableRowData(key, "TODO", "TODO"));
         });
     }
 
@@ -399,21 +398,16 @@ public class ClientController {
 
     public static class TableRowData {
         private String address;
-        private String lastConnectionDateTime;
         private String sent;
         private String received;
 
-        public TableRowData(String address, String lastConnectionDateTime, String received, String sent) {
+        public TableRowData(String address, String received, String sent) {
             this.address = address;
-            this.lastConnectionDateTime = lastConnectionDateTime;
             this.sent = sent;
             this.received = received;
         }
         public String getAddress() {
             return address;
-        }
-        public String getLastConnectionDateTime() {
-            return lastConnectionDateTime;
         }
         public String getSent() {
             return sent;

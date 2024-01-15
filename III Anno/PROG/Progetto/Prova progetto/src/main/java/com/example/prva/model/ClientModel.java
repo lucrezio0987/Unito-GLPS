@@ -442,29 +442,30 @@ public class ClientModel {
     }
 
     public synchronized void disconnectToServer() {
-        try {
-            Socket socket = new Socket();
-            socket.connect(new InetSocketAddress(SERVER_ADDRESS, SERVER_PORT_CONNECTION), 2000);
-            socket.setSoTimeout(2000);
+        if(isConnect())
+            try {
+                Socket socket = new Socket();
+                socket.connect(new InetSocketAddress(SERVER_ADDRESS, SERVER_PORT_CONNECTION), 2000);
+                socket.setSoTimeout(2000);
 
-            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+                ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
 
-            ConnectionInfo connectionInfo = new ConnectionInfo(false, userData.getUsername());
+                ConnectionInfo connectionInfo = new ConnectionInfo(false, userData.getUsername());
 
-            // INVIO: informazioni di disconnessione
-            outputStream.writeObject(new Gson().toJson(connectionInfo));
-            outputStream.flush();
+                // INVIO: informazioni di disconnessione
+                outputStream.writeObject(new Gson().toJson(connectionInfo));
+                outputStream.flush();
 
-            inputStream.close();
-            outputStream.close();
-            socket.close();
+                inputStream.close();
+                outputStream.close();
+                socket.close();
 
-        } catch (IOException e) {
-            System.out.println("Disconnessione al Server Fallita");
-        } finally {
-            setConnected(false);
-        }
+            } catch (IOException e) {
+                System.out.println("Disconnessione al Server Fallita");
+            } finally {
+                setConnected(false);
+            }
     }
     public synchronized void connectToServer() {
         try {

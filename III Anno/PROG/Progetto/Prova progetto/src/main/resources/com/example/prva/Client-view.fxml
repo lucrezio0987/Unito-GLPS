@@ -153,7 +153,6 @@
                       <TableColumn fx:id="addressColumn" prefWidth="394.0" text="Address" />
                         <TableColumn fx:id="sentColumn" prefWidth="70.0" text="Sent" />
                         <TableColumn fx:id="receivedColumn" prefWidth="64.0" text="Received" />
-                      <TableColumn fx:id="lastConnectionColumn" prefWidth="190.0" text="LastConnectionDateTime " />
                     </columns>
                   </TableView>
                   <Label layoutX="15.0" layoutY="114.0" prefHeight="28.0" prefWidth="43.0" text="Log:" underline="true">
