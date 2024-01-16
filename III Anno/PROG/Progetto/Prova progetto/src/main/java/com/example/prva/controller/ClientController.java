@@ -49,22 +49,6 @@ public class ClientController {
     ClientModel clientModel;
     MailCardModel mailCardModel;
 
-    //TODO: AGGIUNGERE COMMENTI!!!!!!
-
-    /*TODO: fare in modo che i client sullo stesso host (quindi se li avvi su stesso pc ad esempio) possano essere distinguibili:
-        IDEE:
-            1. ho notato che l'oggetto Socket oltre a contenere la portaLocale e l'indirizzo locale contiene anche un altra porta che sembra variaare all'interno della stessa rete
-               è possibile che si possa usare quella ma bisogna informarsi
-            2. l'alternativa potrebbe essere che il messaggio viene mandato a tutti su quella rete poi i client in ascolto controllano che il messaggio "sia effettivamente destinato a loro"
-               ad esempio controllando che il ricevende sia uguale al localAddress, ma sarebbe da evitare per ragioni di sicurezza
-            3. non mi piace dato il numero di porte che utilizza anche il client (almeno 2 per ogni client: ricezione mail, ricezione messaggi brodcast dal server),
-               ma un altra idea potrebbe essere fare in modo che il client si metta su "una porta libera" (causerebbe più problemi e renderebbe il sistema poco scalabile a parer mio)
-     */
-
-    //TODO: il controllo della sintassi deve dare qualche tipo di feedback qualora non andasse a buon fine
-
-    //TODO: Ristrutturare le classi
-
     public void initModel(String localAddressMail, String serverHost) {
         clientModel = new ClientModel(this);
         mailCardModel = new MailCardModel(clientModel);
