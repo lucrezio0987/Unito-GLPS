@@ -203,9 +203,14 @@ public class ClientModel {
     public void sendMail(){
 
         if(!syntaxControl(localAddressProperty.get())) {
-            localAddressProperty.set("!! SYNTAX ERROR !!");
-            PauseTransition pause = new PauseTransition(Duration.millis(700));
-            pause.setOnFinished(event -> localAddressProperty.set(""));
+            localAddressProperty.set("!! SYNTAX ERRORE !!");
+            PauseTransition pause = new PauseTransition(Duration.millis(400));
+            pause.setOnFinished(event -> {
+                if (userData.getUsername() != null)
+                    localAddressProperty.set(userData.getUsername());
+                else
+                    localAddressProperty.set("");
+            });
             pause.play();
 
             log("ERROR: email non inviata (Mittente non valido)");
@@ -228,6 +233,7 @@ public class ClientModel {
             PauseTransition pause = new PauseTransition(Duration.millis(700));
             pause.setOnFinished(event -> addressMailSendProperty.set(""));
             pause.play();
+
             log("ERRORE: email non inviata (Uno dei destinatari non valido)");
             return;
         }
@@ -367,12 +373,17 @@ public class ClientModel {
                 return true;
             }
             log("ERRORE: Connessione al server non riuscita (Backup caricati)");
+        } else {
+            localAddressProperty.set("!! SYNTAX ERRORE !!");
+            PauseTransition pause = new PauseTransition(Duration.millis(400));
+            pause.setOnFinished(event -> {
+                if (userData.getUsername() != null)
+                    localAddressProperty.set(userData.getUsername());
+                else
+                    localAddressProperty.set("");
+            });
+            pause.play();
         }
-
-        localAddressProperty.set("!! SYNTAX ERRORE !!");
-        PauseTransition pause = new PauseTransition(Duration.millis(400));
-        pause.setOnFinished(event -> localAddressProperty.set(""));
-        pause.play();
 
         return false;
     }
@@ -582,7 +593,6 @@ public class ClientModel {
     public void clearAllBackup() {
         clearBackupLog();
         clearBackupMail();
-        clearBackupData();
         log("BACKUP: Rimossi tutti i file di backup");
     }
     // cancella i file di backup delle mail
@@ -599,19 +609,7 @@ public class ClientModel {
         controller.clearLocalMail();
         log("BACKUP: Rimossi i file csv di backup delle mail (Inviate e Ricevute)");
     }
-    // cancella il file .data
-    public void clearBackupData() {
 
-        Arrays.stream(Objects.requireNonNull(new File(
-                        System.getProperty("user.dir") +
-                                File.separator + "src" +
-                                File.separator + "backup").listFiles()))
-                .filter(f -> f.getName().equals("data.csv"))
-                .forEach(File::delete);
-
-        controller.clearTable();
-        log("BACKUP: Rimosso il file data.csv (Utente, DataUltimaConnessione)");
-    }
     // svuota la text dei log
     public void clearBackupLog() {
 

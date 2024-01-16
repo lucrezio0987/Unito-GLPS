@@ -27,7 +27,7 @@ public class ClientController {
                         deleteBtnSent, replyBtnReceived, deleteBtnRecived, sendBtn, replyAllBtnReceived,
                         reconnectBtnSent, reconnectBtnReceived, reconnectBtnSend,
                         connectServerBtnLog, disconnectServerBtnLog, reconnectBtnLog,
-                        clearBackupData, clearAllBackup, clearBackupMail, clearBackupLog;
+                        clearAllBackup, clearBackupMail, clearBackupLog;
     @FXML
     private Label       addressLabelSent, objectLabelSent, addressLabelReceived, objectLabelReceived,
                         countMailSent, countMailReceived, mailPort, broadcastPort;
@@ -45,10 +45,6 @@ public class ClientController {
     @FXML
     private Circle      ConnectLedReceived, ConnectLedSend, ConnectLedSent, ConnectLedLog,
                         DisconnectLedReceived, DisconnectLedSend, DisconnectLedSent, DisconnectLedLog;
-    @FXML
-    private TableView<TableRowData>         tableLastConnectInfo;
-    @FXML
-    private TableColumn<TableRowData, String> addressColumn, sentColumn, receivedColumn;
 
     ClientModel clientModel;
     MailCardModel mailCardModel;
@@ -102,10 +98,6 @@ public class ClientController {
         localAddressSend.textProperty().set(localAddressMail);
         ServerHost.textProperty().set(serverHost);
 
-        addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
-        sentColumn.setCellValueFactory(new PropertyValueFactory<>("sent"));;
-        receivedColumn.setCellValueFactory(new PropertyValueFactory<>("received"));;
-
         // setConnection(mailModel.connect());
 
         Cancella_Tutto_Inviata.setOnAction(event -> {
@@ -156,7 +148,6 @@ public class ClientController {
         disconnectServerBtnLog.setOnAction(event -> { setConnection(clientModel.disconnect());});
 
         clearBackupMail.setOnAction(event ->    clientModel.clearBackupMail());
-        clearBackupData.setOnAction(event ->    clientModel.clearBackupData());
         clearAllBackup.setOnAction(event ->     clientModel.clearAllBackup());
         clearBackupLog.setOnAction(event ->     clientModel.clearBackupLog());
 
@@ -382,34 +373,4 @@ public class ClientController {
 
     }
 
-    public void addAllRowToTable(Map<String, String> map) {
-        clearTable();
-        map.forEach((key, value) -> {
-            tableLastConnectInfo.getItems().add(new TableRowData(key, "TODO", "TODO"));
-        });
-    }
-    public void clearTable() {
-        tableLastConnectInfo.getItems().clear();
-    }
-
-    public static class TableRowData {
-        private String address;
-        private String sent;
-        private String received;
-
-        public TableRowData(String address, String received, String sent) {
-            this.address = address;
-            this.sent = sent;
-            this.received = received;
-        }
-        public String getAddress() {
-            return address;
-        }
-        public String getSent() {
-            return sent;
-        }
-        public String getReceived() {
-            return received;
-        }
-    }
-}
+ }

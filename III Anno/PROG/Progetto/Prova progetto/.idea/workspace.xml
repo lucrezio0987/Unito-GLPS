@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1cbb55e0-871d-4be9-bc5a-7bd8e3cae843" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Prova Server/src/main/java/com/example/prova_server/model/ServerModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Prova Server/src/main/java/com/example/prova_server/model/ServerModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/prva/controller/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/prva/controller/ClientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/prva/model/ClientModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/prva/model/ClientModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/prva/Client-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/prva/Client-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,6 +151,8 @@
       <workItem from="1705229959269" duration="14082000" />
       <workItem from="1705305928906" duration="11321000" />
       <workItem from="1705350100312" duration="1695000" />
+      <workItem from="1705396318400" duration="377000" />
+      <workItem from="1705396717381" duration="331000" />
     </task>
     <servers />
   </component>

@@ -143,43 +143,27 @@
                   <Circle fx:id="DisconnectLedLog" fill="#ff2121" layoutX="611.0" layoutY="73.0" radius="5.0" stroke="#ab0f0f" strokeType="INSIDE" />
                   <TextField fx:id="ServerHost" layoutX="116.0" layoutY="60.0" prefHeight="26.0" prefWidth="481.0" />
                   <Label layoutX="13.0" layoutY="59.0" prefHeight="28.0" prefWidth="98.0" text="Server Host" />
-                  <TextArea fx:id="textLog" layoutX="15.0" layoutY="139.0" prefHeight="292.0" prefWidth="966.0" />
-                  <Label layoutX="15.0" layoutY="439.0" prefHeight="28.0" prefWidth="743.0" text="Data of all Users (for this client):" underline="true">
-                     <font>
-                        <Font size="16.0" />
-                     </font></Label>
-                  <TableView fx:id="tableLastConnectInfo" layoutX="15.0" layoutY="470.0" prefHeight="200.0" prefWidth="742.0">
-                    <columns>
-                      <TableColumn fx:id="addressColumn" prefWidth="394.0" text="Address" />
-                        <TableColumn fx:id="sentColumn" prefWidth="70.0" text="Sent" />
-                        <TableColumn fx:id="receivedColumn" prefWidth="64.0" text="Received" />
-                    </columns>
-                  </TableView>
+                  <TextArea fx:id="textLog" layoutX="15.0" layoutY="143.0" prefHeight="434.0" prefWidth="966.0" />
                   <Label layoutX="15.0" layoutY="114.0" prefHeight="28.0" prefWidth="43.0" text="Log:" underline="true">
                      <font>
                         <Font size="16.0" />
                      </font></Label>
-                  <Button fx:id="clearBackupData" layoutX="774.0" layoutY="529.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="203.0" text="Clear Backup UserData">
+                  <Button fx:id="clearAllBackup" layoutX="748.0" layoutY="624.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="205.0" text="Clear All Backup">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Button>
-                  <Button fx:id="clearAllBackup" layoutX="772.0" layoutY="623.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="205.0" text="Clear All Backup">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Button>
-                  <Label layoutX="774.0" layoutY="439.0" prefHeight="28.0" prefWidth="152.0" text="Backup:" underline="true">
+                  <Label layoutX="35.0" layoutY="585.0" prefHeight="28.0" prefWidth="152.0" text="Backup:" underline="true">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <Button fx:id="clearBackupMail" layoutX="774.0" layoutY="487.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="202.0" text="Clear Backup Mail">
+                  <Button fx:id="clearBackupMail" layoutX="268.0" layoutY="631.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="202.0" text="Clear Backup Mail">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Button>
-                  <Button fx:id="clearBackupLog" layoutX="774.0" layoutY="570.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="203.0" text="Clear Backup log">
+                  <Button fx:id="clearBackupLog" layoutX="37.0" layoutY="630.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="203.0" text="Clear Backup log">
                      <font>
                         <Font size="15.0" />
                      </font>
