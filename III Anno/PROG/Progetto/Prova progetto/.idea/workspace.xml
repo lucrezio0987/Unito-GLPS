@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1cbb55e0-871d-4be9-bc5a-7bd8e3cae843" name="Changes" comment="" />
+    <list default="true" id="1cbb55e0-871d-4be9-bc5a-7bd8e3cae843" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../../../.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../.idea/Unito-GLPS.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../.idea/vcs.xml" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -85,6 +93,13 @@
       </method>
     </configuration>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-78a6f59c" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -148,6 +163,7 @@
       <workItem from="1705350100312" duration="1695000" />
       <workItem from="1705396318400" duration="377000" />
       <workItem from="1705396717381" duration="928000" />
+      <workItem from="1709291709786" duration="178000" />
     </task>
     <servers />
   </component>

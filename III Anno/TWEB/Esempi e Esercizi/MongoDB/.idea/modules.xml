@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Unito-GLPS.iml" filepath="$PROJECT_DIR$/.idea/Unito-GLPS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/MongoDB.iml" filepath="$PROJECT_DIR$/.idea/MongoDB.iml" />
     </modules>
   </component>
 </project>
