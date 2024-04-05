@@ -165,7 +165,7 @@ fg=blue
     <coordinates>
       <x>184</x>
       <y>224</y>
-      <w>88</w>
+      <w>80</w>
       <h>112</h>
     </coordinates>
     <panel_attributes>lt=-
@@ -180,7 +180,7 @@ fg=black</panel_attributes>
     <coordinates>
       <x>520</x>
       <y>232</y>
-      <w>128</w>
+      <w>120</w>
       <h>104</h>
     </coordinates>
     <panel_attributes>lt=-
@@ -195,7 +195,7 @@ fg=blue</panel_attributes>
     <coordinates>
       <x>536</x>
       <y>384</y>
-      <w>96</w>
+      <w>88</w>
       <h>96</h>
     </coordinates>
     <panel_attributes>lt=-
@@ -346,7 +346,7 @@ assegnata a v</panel_attributes>
     <coordinates>
       <x>632</x>
       <y>592</y>
-      <w>176</w>
+      <w>168</w>
       <h>112</h>
     </coordinates>
     <panel_attributes>lt=-
@@ -387,7 +387,7 @@ si svolge v</panel_attributes>
     <coordinates>
       <x>400</x>
       <y>552</y>
-      <w>192</w>
+      <w>184</w>
       <h>112</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
@@ -401,7 +401,7 @@ contiene v</panel_attributes>
     <coordinates>
       <x>328</x>
       <y>600</y>
-      <w>96</w>
+      <w>88</w>
       <h>200</h>
     </coordinates>
     <panel_attributes>lt=-
@@ -439,7 +439,7 @@ relativo a v</panel_attributes>
     <coordinates>
       <x>792</x>
       <y>704</y>
-      <w>248</w>
+      <w>240</w>
       <h>136</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
@@ -453,7 +453,7 @@ m2=1
     <coordinates>
       <x>816</x>
       <y>560</y>
-      <w>184</w>
+      <w>176</w>
       <h>96</h>
     </coordinates>
     <panel_attributes>lt=-
@@ -461,5 +461,17 @@ m1=1..n
 m2=0..n
 assegnato a v</panel_attributes>
     <additional_attributes>10.0;20.0;180.0;20.0;180.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>320</x>
+      <y>272</y>
+      <w>568</w>
+      <h>400</h>
+    </coordinates>
+    <panel_attributes>TODO
+bg=yellow</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>
