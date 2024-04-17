@@ -295,15 +295,15 @@ riferito a v</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>488</x>
-      <y>680</y>
+      <y>664</y>
       <w>216</w>
-      <h>112</h>
+      <h>128</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=0..n
 m2=0..1
 assegnata a &gt;</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;80.0;220.0;80.0;220.0;120.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0;220.0;100.0;220.0;140.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -418,10 +418,11 @@ m2=0..n
       <x>368</x>
       <y>576</y>
       <w>168</w>
-      <h>112</h>
+      <h>96</h>
     </coordinates>
     <panel_attributes>Compito
 --
+nome: testo
 tempo: numero
 quantità/porzioni: numero
 da preparare: si/no
@@ -473,10 +474,11 @@ fg=black</panel_attributes>
       <x>536</x>
       <y>320</y>
       <w>144</w>
-      <h>112</h>
+      <h>120</h>
     </coordinates>
     <panel_attributes>Preparazione
 --
+nome:testo
 descrizione: testo
 difficolta': numero
 importanza: numero
@@ -489,12 +491,12 @@ porzioni: testo</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>632</x>
-      <y>424</y>
+      <y>432</y>
       <w>24</w>
-      <h>88</h>
+      <h>80</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -525,15 +527,15 @@ consiste in &gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>432</x>
-      <y>680</y>
+      <y>664</y>
       <w>88</w>
-      <h>168</h>
+      <h>184</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=0..n
 m2=0..1
 svolto in v</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;190.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;210.0</additional_attributes>
   </element>
   <element>
     <id>Text</id>
