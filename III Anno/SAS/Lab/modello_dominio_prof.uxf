@@ -422,7 +422,7 @@ m2=0..n
     </coordinates>
     <panel_attributes>Compito
 --
-nome: testo
+mansione: testo
 tempo: numero
 quantità/porzioni: numero
 da preparare: si/no
@@ -438,7 +438,6 @@ completato: si/no</panel_attributes>
       <h>56</h>
     </coordinates>
     <panel_attributes>Mansione 
-in cucina
 --
 
 fg=black</panel_attributes>
