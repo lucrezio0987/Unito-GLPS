@@ -52,12 +52,12 @@
     <coordinates>
       <x>360</x>
       <y>144</y>
-      <w>369</w>
+      <w>378</w>
       <h>36</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 foglio creato</panel_attributes>
-    <additional_attributes>10.0;20.0;390.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;400.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -192,10 +192,11 @@ bg=#B8E0E0</panel_attributes>
       <x>360</x>
       <y>855</y>
       <w>378</w>
-      <h>36</h>
+      <h>45</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-assegna(compito, quantita/porzioni?)</panel_attributes>
+assegna(compito, turno, cuoco?, 
+quantita/porzioni?, tempo?)</panel_attributes>
     <additional_attributes>10.0;20.0;400.0;20.0</additional_attributes>
   </element>
   <element>
@@ -216,7 +217,7 @@ assegnazione registrata</panel_attributes>
       <x>306</x>
       <y>846</y>
       <w>459</w>
-      <h>81</h>
+      <h>90</h>
     </coordinates>
     <panel_attributes>LOOP
 fg=blue
@@ -229,10 +230,11 @@ bg=#8CB4FF</panel_attributes>
       <x>360</x>
       <y>954</y>
       <w>378</w>
-      <h>36</h>
+      <h>45</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-aggiornaCompito(quantità/porzioni)</panel_attributes>
+aggiornaCompito(compito, cuoco?, turno?, 
+quantità/porzioni?, tempo?)</panel_attributes>
     <additional_attributes>10.0;20.0;400.0;20.0</additional_attributes>
   </element>
   <element>
@@ -473,7 +475,7 @@ bg=#B8E0E0</panel_attributes>
       <h>36</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-stimaTempo(tempo)</panel_attributes>
+stimaTempo(compito, tempo)</panel_attributes>
     <additional_attributes>10.0;20.0;400.0;20.0</additional_attributes>
   </element>
   <element>
