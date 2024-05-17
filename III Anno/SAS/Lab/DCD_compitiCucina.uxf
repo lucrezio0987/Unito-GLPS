@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>9</zoom_level>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>0</x>
+      <y>0</y>
+      <w>1818</w>
+      <h>612</h>
+    </coordinates>
+    <panel_attributes>WorkManagement</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>45</x>
+      <y>45</y>
+      <w>594</w>
+      <h>216</h>
+    </coordinates>
+    <panel_attributes>FoglioRiepilogativoController
+--
+
+--
+*event sender methods*
++addReceiver(er: FoglioRiepilofativoEventReceiver)
++removeReceiver(er: FoglioRiepilofativoEventReceiver)
+-notifyCompitoAggiunto(compito: Compito)
+-notifyFoglioCreato(foglio: Foglio)
+-notifyCompitoAssegnato(compito: Compito, turno: Turno)
+--
+*operations methods*
++creaFoglio(servizio: Servizio)
++definisciCompito(mansione: Mansione, daPreparare: boolean, completato: boolean)
++assegna(compito: Compito, turno: Turno, ch?: Cuoco, porzioni?: String, tempo?: int)
++aggiornaCompito(compito: Compito, turno?: Turno, ch?: Cuoco, porzioni?: String, tempo?: int)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>864</x>
+      <y>45</y>
+      <w>549</w>
+      <h>171</h>
+    </coordinates>
+    <panel_attributes>FoglioRiepilogativo
+--
+-servizio: String
+-mansioni: ArrayList&lt;Mansione&gt;
+-compiti: ArrayList&lt;Compito&gt;
+--
++create(servizio: Servizio)
++aggiungiCompito(mansione: Mansione, daPreparare: boolean, completato: boolean)
++aggiornaCompito(compito: Compito, 
+																																																turno?: Turno, ch?: Cuoco, porzioni?: String, tempo?: int)
+--
++getMansioni()
++getCompiti()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>630</x>
+      <y>135</y>
+      <w>252</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+currentFoglio
+m1=0..1</panel_attributes>
+    <additional_attributes>260.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>774</x>
+      <y>189</y>
+      <w>108</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+compiti
+m1=0..n</panel_attributes>
+    <additional_attributes>10.0;140.0;10.0;10.0;100.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>675</x>
+      <y>315</y>
+      <w>243</w>
+      <h>234</h>
+    </coordinates>
+    <panel_attributes>Compito
+--
+-titolo: String
+-tempo: int
+-porzioni: int
+-daPrepare: boolean
+-completato: boolean
+--
++create()
+--
+-private methods
+-usually for internal management
+-can be omitted
+--
++public metohds
+/+can have abstract methods/
+--
+*Can have several method sections*
++ other methods</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1062</x>
+      <y>315</y>
+      <w>234</w>
+      <h>207</h>
+    </coordinates>
+    <panel_attributes>Mansione
+--
+-instance vars
+-(usually private)
+--
+_+static methods if any_
+_-can be public or private_
+--
+-private methods
+-usually for internal management
+-can be omitted
+--
++public metohds
+/+can have abstract methods/
+--
+*Can have several method sections*
++ other methods</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1170</x>
+      <y>207</y>
+      <w>81</w>
+      <h>126</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+mansioni
+m1=0..n</panel_attributes>
+    <additional_attributes>10.0;120.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>909</x>
+      <y>423</y>
+      <w>171</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+(contains)
+m1=0..1</panel_attributes>
+    <additional_attributes>170.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>45</x>
+      <y>351</y>
+      <w>594</w>
+      <h>81</h>
+    </coordinates>
+    <panel_attributes>FoglioRiepilogativoEventReceiver
+{interface}
+--
++updateFoglioRiepilogativoCreato(foglio: FoglioRiepilogativo)
++updateCompitoAggiunto(foglio: FoglioRiepilogativo, compito: Compito)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>333</x>
+      <y>252</y>
+      <w>117</w>
+      <h>117</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+eventReceivers
+m1=0..n</panel_attributes>
+    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
