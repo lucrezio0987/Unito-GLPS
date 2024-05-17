@@ -29,10 +29,10 @@
       <x>477</x>
       <y>27</y>
       <w>27</w>
-      <h>1224</h>
+      <h>1143</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;1340.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;1250.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -40,10 +40,10 @@
       <x>756</x>
       <y>54</y>
       <w>27</w>
-      <h>1197</h>
+      <h>1116</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;1310.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;1220.0</additional_attributes>
   </element>
   <element>
     <id>UMLFrame</id>
@@ -450,43 +450,6 @@ blocco/sblocco aggiunto</panel_attributes>
     <id>UMLFrame</id>
     <coordinates>
       <x>414</x>
-      <y>1062</y>
-      <w>414</w>
-      <h>72</h>
-    </coordinates>
-    <panel_attributes>OPT
-fg=#128C86
-bg=#B8E0E0</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>477</x>
-      <y>1071</y>
-      <w>306</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;&gt;&gt;
-creaOrario(servizio)</panel_attributes>
-    <additional_attributes>10.0;20.0;320.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>477</x>
-      <y>1098</y>
-      <w>306</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;.
-orario creato</panel_attributes>
-    <additional_attributes>10.0;20.0;320.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLFrame</id>
-    <coordinates>
-      <x>414</x>
       <y>981</y>
       <w>414</w>
       <h>63</h>
@@ -526,7 +489,7 @@ eventi</panel_attributes>
       <x>351</x>
       <y>684</y>
       <w>540</w>
-      <h>459</h>
+      <h>378</h>
     </coordinates>
     <panel_attributes>LOOP
 fg=blue
@@ -537,7 +500,7 @@ bg=#8CB4FF</panel_attributes>
     <id>UMLFrame</id>
     <coordinates>
       <x>414</x>
-      <y>1152</y>
+      <y>1071</y>
       <w>414</w>
       <h>63</h>
     </coordinates>
@@ -550,7 +513,7 @@ bg=#B8E0E0</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>477</x>
-      <y>1152</y>
+      <y>1071</y>
       <w>306</w>
       <h>36</h>
     </coordinates>
@@ -562,7 +525,7 @@ segnaSchema(evento)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>477</x>
-      <y>1179</y>
+      <y>1098</y>
       <w>306</w>
       <h>36</h>
     </coordinates>
