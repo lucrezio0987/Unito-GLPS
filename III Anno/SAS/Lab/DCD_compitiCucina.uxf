@@ -5,7 +5,7 @@
     <id>UMLPackage</id>
     <coordinates>
       <x>0</x>
-      <y>0</y>
+      <y>144</y>
       <w>1818</w>
       <h>612</h>
     </coordinates>
@@ -16,7 +16,7 @@
     <id>UMLClass</id>
     <coordinates>
       <x>45</x>
-      <y>45</y>
+      <y>189</y>
       <w>594</w>
       <h>216</h>
     </coordinates>
@@ -33,7 +33,7 @@
 --
 *operations methods*
 +creaFoglio(servizio: Servizio)
-+definisciCompito(mansione: Mansione, daPreparare: boolean, completato: boolean)
++definisciCompito(mansioni: ArrayList&lt;Mansione&gt;, daPreparare: boolean, completato: boolean)
 +assegna(compito: Compito, turno: Turno, ch?: Cuoco, porzioni?: String, tempo?: int)
 +aggiornaCompito(compito: Compito, turno?: Turno, ch?: Cuoco, porzioni?: String, tempo?: int)
 </panel_attributes>
@@ -43,18 +43,16 @@
     <id>UMLClass</id>
     <coordinates>
       <x>864</x>
-      <y>45</y>
+      <y>189</y>
       <w>549</w>
       <h>171</h>
     </coordinates>
     <panel_attributes>FoglioRiepilogativo
 --
 -servizio: String
--mansioni: ArrayList&lt;Mansione&gt;
--compiti: ArrayList&lt;Compito&gt;
 --
 +create(servizio: Servizio)
-+aggiungiCompito(mansione: Mansione, daPreparare: boolean, completato: boolean)
++aggiungiCompito(mansioni: ArrayList&lt;Mansione&gt;, daPreparare: boolean, completato: boolean)
 +aggiornaCompito(compito: Compito, 
 																																																turno?: Turno, ch?: Cuoco, porzioni?: String, tempo?: int)
 --
@@ -66,7 +64,7 @@
     <id>Relation</id>
     <coordinates>
       <x>630</x>
-      <y>135</y>
+      <y>279</y>
       <w>252</w>
       <h>45</h>
     </coordinates>
@@ -79,7 +77,7 @@ m1=0..1</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>774</x>
-      <y>189</y>
+      <y>333</y>
       <w>108</w>
       <h>144</h>
     </coordinates>
@@ -92,8 +90,8 @@ m1=0..n</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>675</x>
-      <y>315</y>
-      <w>243</w>
+      <y>459</y>
+      <w>423</w>
       <h>234</h>
     </coordinates>
     <panel_attributes>Compito
@@ -104,24 +102,17 @@ m1=0..n</panel_attributes>
 -daPrepare: boolean
 -completato: boolean
 --
-+create()
++create(titolo: String, daPreparare: boolean, completato: boolean)
++addMansione(mansione: Mansione)
 --
--private methods
--usually for internal management
--can be omitted
---
-+public metohds
-/+can have abstract methods/
---
-*Can have several method sections*
-+ other methods</panel_attributes>
+</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1062</x>
-      <y>315</y>
+      <x>1314</x>
+      <y>459</y>
       <w>234</w>
       <h>207</h>
     </coordinates>
@@ -147,34 +138,34 @@ _-can be public or private_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1170</x>
-      <y>207</y>
-      <w>81</w>
-      <h>126</h>
+      <x>1404</x>
+      <y>333</y>
+      <w>126</w>
+      <h>144</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 mansioni
 m1=0..n</panel_attributes>
-    <additional_attributes>10.0;120.0;10.0;10.0</additional_attributes>
+    <additional_attributes>60.0;140.0;60.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>909</x>
-      <y>423</y>
-      <w>171</w>
+      <x>1089</x>
+      <y>567</y>
+      <w>243</w>
       <h>45</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-(contains)
+mansioni
 m1=0..1</panel_attributes>
-    <additional_attributes>170.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>250.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>45</x>
-      <y>351</y>
+      <y>495</y>
       <w>594</w>
       <h>81</h>
     </coordinates>
@@ -189,7 +180,7 @@ m1=0..1</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>333</x>
-      <y>252</y>
+      <y>396</y>
       <w>117</w>
       <h>117</h>
     </coordinates>

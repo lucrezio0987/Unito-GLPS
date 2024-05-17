@@ -32,7 +32,7 @@
       <h>36</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-definisciCompito(mansione, da_preparare, completato)</panel_attributes>
+definisciCompito(mansioni, da_preparare, completato)</panel_attributes>
     <additional_attributes>10.0;20.0;410.0;20.0</additional_attributes>
   </element>
   <element>
@@ -67,7 +67,7 @@ FoglioRiepilogativoController</panel_attributes>
       <h>36</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-aggiungiCompito(mansione, da_preparare, completato)</panel_attributes>
+aggiungiCompito(mansioni, da_preparare, completato)</panel_attributes>
     <additional_attributes>10.0;20.0;400.0;20.0</additional_attributes>
   </element>
   <element>
@@ -98,19 +98,19 @@ FoglioRiepilogativo</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>783</x>
-      <y>1206</y>
+      <y>1188</y>
       <w>315</w>
       <h>36</h>
     </coordinates>
     <panel_attributes>lt=.&gt;
-create(mansione, da_preparare, completato)</panel_attributes>
+create(mansioni, da_preparare, completato)</panel_attributes>
     <additional_attributes>10.0;20.0;330.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>1080</x>
-      <y>1206</y>
+      <y>1188</y>
       <w>117</w>
       <h>36</h>
     </coordinates>
@@ -122,26 +122,26 @@ Compito</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1125</x>
-      <y>1233</y>
+      <y>1215</y>
       <w>27</w>
-      <h>477</h>
+      <h>495</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;510.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;530.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>1134</x>
-      <y>1260</y>
+      <y>1233</y>
       <w>261</w>
-      <h>72</h>
+      <h>63</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 this.mansione = mansione
 this.daPreparare = daPreparare
 this.completato = completato</panel_attributes>
-    <additional_attributes>10.0;10.0;60.0;10.0;60.0;60.0;10.0;60.0</additional_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0;60.0;50.0;10.0;50.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
@@ -227,9 +227,9 @@ compito</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>1125</x>
-      <y>1242</y>
+      <y>1233</y>
       <w>18</w>
-      <h>90</h>
+      <h>108</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -238,7 +238,7 @@ compito</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>783</x>
-      <y>1314</y>
+      <y>1323</y>
       <w>360</w>
       <h>36</h>
     </coordinates>
@@ -397,7 +397,8 @@ fg=#761C8C
 
 
 
--.</panel_attributes>
+-.
+layer=-1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -547,7 +548,7 @@ FoglioRiepilogativo</panel_attributes>
     <coordinates>
       <x>747</x>
       <y>270</y>
-      <w>252</w>
+      <w>234</w>
       <h>63</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
@@ -806,7 +807,7 @@ updateFoglioRiepilogativoCreato(foglioRiepilogativoCtrl.currentFoglio)</panel_at
     <coordinates>
       <x>387</x>
       <y>594</y>
-      <w>234</w>
+      <w>225</w>
       <h>72</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
@@ -890,6 +891,30 @@ lw=2
 
 
 -.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1134</x>
+      <y>1296</y>
+      <w>243</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=.&gt;
+create(mansioni)</panel_attributes>
+    <additional_attributes>10.0;20.0;250.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1359</x>
+      <y>1287</y>
+      <w>153</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>compito.mansioni:
+ArrayList&lt;Mansione&gt;</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
