@@ -548,7 +548,7 @@ FoglioRiepilogativo</panel_attributes>
     <coordinates>
       <x>747</x>
       <y>270</y>
-      <w>234</w>
+      <w>252</w>
       <h>63</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
@@ -711,7 +711,7 @@ Menu</panel_attributes>
     <id>UMLNote</id>
     <coordinates>
       <x>1476</x>
-      <y>378</y>
+      <y>396</y>
       <w>135</w>
       <h>63</h>
     </coordinates>
@@ -807,7 +807,7 @@ updateFoglioRiepilogativoCreato(foglioRiepilogativoCtrl.currentFoglio)</panel_at
     <coordinates>
       <x>387</x>
       <y>594</y>
-      <w>225</w>
+      <w>234</w>
       <h>72</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;

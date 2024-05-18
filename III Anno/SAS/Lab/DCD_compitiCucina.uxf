@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.1">
-  <zoom_level>9</zoom_level>
+  <zoom_level>5</zoom_level>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>0</x>
-      <y>144</y>
-      <w>1818</w>
-      <h>612</h>
+      <x>90</x>
+      <y>105</y>
+      <w>940</w>
+      <h>325</h>
     </coordinates>
-    <panel_attributes>WorkManagement</panel_attributes>
+    <panel_attributes>KitchenJobManagement</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>45</x>
-      <y>189</y>
-      <w>594</w>
-      <h>216</h>
+      <x>110</x>
+      <y>135</y>
+      <w>330</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>FoglioRiepilogativoController
 --
@@ -42,31 +42,29 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>864</x>
-      <y>189</y>
-      <w>549</w>
-      <h>171</h>
+      <x>565</x>
+      <y>135</y>
+      <w>335</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>FoglioRiepilogativo
 --
 -servizio: String
 --
 +create(servizio: Servizio)
-+aggiungiCompito(mansioni: ArrayList&lt;Mansione&gt;, daPreparare: boolean, completato: boolean)
++aggiungiCompito(titolo: String, daPreparare: boolean, completato: boolean)
++aggiungiMansione(compito: Compito, mansione: Mansione)	
 +aggiornaCompito(compito: Compito, 
-																																																turno?: Turno, ch?: Cuoco, porzioni?: String, tempo?: int)
---
-+getMansioni()
-+getCompiti()</panel_attributes>
+																																																turno?: Turno, ch?: Cuoco, porzioni?: String, tempo?: int)																																					</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>630</x>
-      <y>279</y>
-      <w>252</w>
-      <h>45</h>
+      <x>435</x>
+      <y>170</y>
+      <w>140</w>
+      <h>25</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 currentFoglio
@@ -76,23 +74,23 @@ m1=0..1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>774</x>
-      <y>333</y>
-      <w>108</w>
-      <h>144</h>
+      <x>590</x>
+      <y>200</y>
+      <w>40</w>
+      <h>95</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 compiti
 m1=0..n</panel_attributes>
-    <additional_attributes>10.0;140.0;10.0;10.0;100.0;10.0</additional_attributes>
+    <additional_attributes>10.0;170.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>675</x>
-      <y>459</y>
-      <w>423</w>
-      <h>234</h>
+      <x>460</x>
+      <y>285</y>
+      <w>280</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes>Compito
 --
@@ -102,31 +100,39 @@ m1=0..n</panel_attributes>
 -daPrepare: boolean
 -completato: boolean
 --
-+create(titolo: String, daPreparare: boolean, completato: boolean)
++create(titolo: String, porzioni?: int, daPreparare: boolean, completato: boolean)
 +addMansione(mansione: Mansione)
++impostaTurno(turno: Turno)
++impostaCuoco(cuoco: Cuoco)
 --
-</panel_attributes>
+setDaPreparare(daPreparare: boolean)
+setCompletato(completato: boolean)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1314</x>
-      <y>459</y>
-      <w>234</w>
-      <h>207</h>
+      <x>815</x>
+      <y>285</y>
+      <w>190</w>
+      <h>115</h>
     </coordinates>
     <panel_attributes>Mansione
 --
--instance vars
--(usually private)
+-nome: String
+-descrizione: String
+-difficolta: int
+-importanza: int
+-tempo: int
+-quantita: String
+-porzioni: String
+
 --
-_+static methods if any_
-_-can be public or private_
++create(nome: String, descrizione: String, 
+														tempo: int, quantita: String, porzioni: String)
 --
--private methods
--usually for internal management
--can be omitted
++setDifficolta(difficolta: int)
++setImportanza(importanza: int)
 --
 +public metohds
 /+can have abstract methods/
@@ -138,36 +144,23 @@ _-can be public or private_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1404</x>
-      <y>333</y>
-      <w>126</w>
-      <h>144</h>
+      <x>735</x>
+      <y>345</y>
+      <w>90</w>
+      <h>25</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 mansioni
 m1=0..n</panel_attributes>
-    <additional_attributes>60.0;140.0;60.0;10.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1089</x>
-      <y>567</y>
-      <w>243</w>
-      <h>45</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-
-mansioni
-m1=0..1</panel_attributes>
-    <additional_attributes>250.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>160.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>45</x>
-      <y>495</y>
-      <w>594</w>
-      <h>81</h>
+      <x>110</x>
+      <y>305</y>
+      <w>330</w>
+      <h>45</h>
     </coordinates>
     <panel_attributes>FoglioRiepilogativoEventReceiver
 {interface}
@@ -179,14 +172,64 @@ m1=0..1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>333</x>
-      <y>396</y>
-      <w>117</w>
-      <h>117</h>
+      <x>270</x>
+      <y>250</y>
+      <w>65</w>
+      <h>65</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 eventReceivers
 m1=0..n</panel_attributes>
     <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>590</x>
+      <y>390</y>
+      <w>35</w>
+      <h>115</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+turno
+m1=0..1</panel_attributes>
+    <additional_attributes>10.0;210.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>520</x>
+      <y>495</y>
+      <w>145</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Turno
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>775</x>
+      <y>475</y>
+      <w>70</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>Cuoco
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>705</x>
+      <y>390</y>
+      <w>80</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+cuoco
+m1=0..1</panel_attributes>
+    <additional_attributes>140.0;210.0;10.0;210.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>
