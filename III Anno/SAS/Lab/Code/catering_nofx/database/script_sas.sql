@@ -3,11 +3,11 @@
 
 -- Create the database and switch to it
 CREATE DATABASE catering WITH ENCODING 'UTF8';
-\\c catering;
+\c catering;
 
--- Table structure for table 'Events'
-DROP TABLE IF EXISTS "Events";
-CREATE TABLE "Events" (
+-- Table structure for table 'events'
+DROP TABLE IF EXISTS "events";
+CREATE TABLE "events" (
   "id" SERIAL PRIMARY KEY,
   "name" VARCHAR(128),
   "date_start" DATE,
@@ -16,22 +16,22 @@ CREATE TABLE "Events" (
   "organizer_id" INTEGER NOT NULL
 );
 
--- Dumping data for table 'Events'
-INSERT INTO "Events" VALUES
+-- Dumping data for table 'events'
+INSERT INTO "events" VALUES
   (1, 'Convegno Agile Community', '2020-09-25', '2020-09-25', 100, 2),
   (2, 'Compleanno di Manuela', '2020-08-13', '2020-08-13', 25, 2),
   (3, 'Fiera del Sedano Rapa', '2020-10-02', '2020-10-04', 400, 1);
 
--- Table structure for table 'MenuFeatures'
-DROP TABLE IF EXISTS "MenuFeatures";
-CREATE TABLE "MenuFeatures" (
+-- Table structure for table 'menufeatures'
+DROP TABLE IF EXISTS "menufeatures";
+CREATE TABLE "menufeatures" (
   "menu_id" INTEGER NOT NULL,
   "name" VARCHAR(128) NOT NULL,
   "value" BOOLEAN DEFAULT FALSE
 );
 
--- Dumping data for table 'MenuFeatures'
-INSERT INTO "MenuFeatures" VALUES
+-- Dumping data for table 'menufeatures'
+INSERT INTO "menufeatures" VALUES
   (80, 'Richiede cuoco', FALSE), (80, 'Buffet', FALSE),
   (80, 'Richiede cucina', FALSE), (80, 'Finger food', FALSE),
   (80, 'Piatti caldi', FALSE), (82, 'Richiede cuoco', FALSE),
@@ -41,9 +41,9 @@ INSERT INTO "MenuFeatures" VALUES
   (86, 'Richiede cucina', FALSE), (86, 'Finger food', FALSE),
   (86, 'Piatti caldi', FALSE);
 
--- Table structure for table 'MenuItems'
-DROP TABLE IF EXISTS "MenuItems";
-CREATE TABLE "MenuItems" (
+-- Table structure for table 'menuitems'
+DROP TABLE IF EXISTS "menuitems";
+CREATE TABLE "menuitems" (
   "id" SERIAL PRIMARY KEY,
   "menu_id" INTEGER NOT NULL,
   "section_id" INTEGER,
@@ -52,8 +52,8 @@ CREATE TABLE "MenuItems" (
   "position" INTEGER
 );
 
--- Dumping data for table 'MenuItems'
-INSERT INTO "MenuItems" VALUES
+-- Dumping data for table 'menuitems'
+INSERT INTO "menuitems" VALUES
   (96, 80, 0, 'Croissant vuoti', 9, 0),
   (97, 80, 0, 'Croissant alla marmellata', 9, 1),
   (98, 80, 0, 'Pane al cioccolato mignon', 10, 2),
@@ -77,47 +77,47 @@ INSERT INTO "MenuItems" VALUES
   (118, 86, 44, 'Sorbetto al limone', 18, 0),
   (119, 86, 44, 'Torta Saint Honoré', 19, 1);
 
--- Table structure for table 'MenuSections'
-DROP TABLE IF EXISTS "MenuSections";
-CREATE TABLE "MenuSections" (
+-- Table structure for table 'menusections'
+DROP TABLE IF EXISTS "menusections";
+CREATE TABLE "menusections" (
   "id" SERIAL PRIMARY KEY,
   "menu_id" INTEGER NOT NULL,
   "name" TEXT,
   "position" INTEGER
 );
 
--- Dumping data for table 'MenuSections'
-INSERT INTO "MenuSections" VALUES
+-- Dumping data for table 'menusections'
+INSERT INTO "menusections" VALUES
   (41, 86, 'Antipasti', 0),
   (42, 86, 'Primi', 1),
   (43, 86, 'Secondi', 2),
   (44, 86, 'Dessert', 3),
   (45, 87, 'Antipasti', 0);
 
--- Table structure for table 'Menus'
-DROP TABLE IF EXISTS "Menus";
-CREATE TABLE "Menus" (
+-- Table structure for table 'menus'
+DROP TABLE IF EXISTS "menus";
+CREATE TABLE "menus" (
   "id" SERIAL PRIMARY KEY,
   "title" TEXT,
   "owner_id" INTEGER,
   "published" BOOLEAN DEFAULT FALSE
 );
 
--- Dumping data for table 'Menus'
-INSERT INTO "Menus" VALUES
+-- Dumping data for table 'menus'
+INSERT INTO "menus" VALUES
   (80, 'Coffee break mattutino', 2, TRUE),
   (82, 'Coffee break pomeridiano', 2, TRUE),
   (86, 'Cena di compleanno pesce', 3, TRUE);
 
--- Table structure for table 'Recipes'
-DROP TABLE IF EXISTS "Recipes";
-CREATE TABLE "Recipes" (
+-- Table structure for table 'recipes'
+DROP TABLE IF EXISTS "recipes";
+CREATE TABLE "recipes" (
   "id" SERIAL PRIMARY KEY,
   "name" TEXT
 );
 
--- Dumping data for table 'Recipes'
-INSERT INTO "Recipes" VALUES
+-- Dumping data for table 'recipes'
+INSERT INTO "recipes" VALUES
   (1, 'Vitello tonnato'),
   (2, 'Carpaccio di spada'),
   (3, 'Alici marinate'),
@@ -139,23 +139,23 @@ INSERT INTO "Recipes" VALUES
   (19, 'Torta Saint Honoré'),
   (20, 'Risotto alla zucca');
 
--- Table structure for table 'Roles'
-DROP TABLE IF EXISTS "Roles";
-CREATE TABLE "Roles" (
+-- Table structure for table 'roles'
+DROP TABLE IF EXISTS "roles";
+CREATE TABLE "roles" (
   "id" CHAR(1) PRIMARY KEY,
   "role" VARCHAR(128) NOT NULL DEFAULT 'servizio'
 );
 
--- Dumping data for table 'Roles'
-INSERT INTO "Roles" VALUES
+-- Dumping data for table 'roles'
+INSERT INTO "roles" VALUES
   ('c', 'cuoco'),
   ('h', 'chef'),
   ('o', 'organizzatore'),
   ('s', 'servizio');
 
--- Table structure for table 'Services'
-DROP TABLE IF EXISTS "Services";
-CREATE TABLE "Services" (
+-- Table structure for table 'services'
+DROP TABLE IF EXISTS "services";
+CREATE TABLE "services" (
   "id" SERIAL PRIMARY KEY,
   "event_id" INTEGER NOT NULL,
   "name" VARCHAR(128),
@@ -167,8 +167,8 @@ CREATE TABLE "Services" (
   "expected_participants" INTEGER
 );
 
--- Dumping data for table 'Services'
-INSERT INTO "Services" VALUES
+-- Dumping data for table 'services'
+INSERT INTO "services" VALUES
   (1, 2, 'Cena', 86, 0, '2020-08-13', '20:00:00', '23:30:00', 25),
   (2, 1, 'Coffee break mattino', 0, 80, '2020-09-25', '10:30:00', '11:30:00', 100),
   (3, 1, 'Colazione di lavoro', 0, 0, '2020-09-25', '13:00:00', '14:00:00', 80),
@@ -178,15 +178,15 @@ INSERT INTO "Services" VALUES
   (7, 3, 'Pranzo giorno 2', 0, 0, '2020-10-03', '12:00:00', '15:00:00', 300),
   (8, 3, 'Pranzo giorno 3', 0, 0, '2020-10-04', '12:00:00', '15:00:00', 400);
 
--- Table structure for table 'UserRoles'
-DROP TABLE IF EXISTS "UserRoles";
-CREATE TABLE "UserRoles" (
+-- Table structure for table 'userroles'
+DROP TABLE IF EXISTS "userroles";
+CREATE TABLE "userroles" (
   "user_id" INTEGER NOT NULL,
   "role_id" CHAR(1) NOT NULL
 );
 
--- Dumping data for table 'UserRoles'
-INSERT INTO "UserRoles" VALUES
+-- Dumping data for table 'userroles'
+INSERT INTO "userroles" VALUES
   (1, 'o'),
   (2, 'o'),
   (2, 'h'),
@@ -201,15 +201,15 @@ INSERT INTO "UserRoles" VALUES
   (10, 's'),
   (7, 's');
 
--- Table structure for table 'Users'
-DROP TABLE IF EXISTS "Users";
-CREATE TABLE "Users" (
+-- Table structure for table 'users'
+DROP TABLE IF EXISTS "users";
+CREATE TABLE "users" (
   "id" SERIAL PRIMARY KEY,
   "username" VARCHAR(128) NOT NULL
 );
 
--- Dumping data for table 'Users'
-INSERT INTO "Users" VALUES
+-- Dumping data for table 'users'
+INSERT INTO "users" VALUES
   (1, 'Carlin'),
   (2, 'Lidia'),
   (3, 'Tony'),
@@ -220,11 +220,3 @@ INSERT INTO "Users" VALUES
   (8, 'Silvia'),
   (9, 'Marco'),
   (10, 'Piergiorgio');
-"""
-
-# Save the completed PostgreSQL script to a file
-path = "/mnt/data/PostgreSQL_Catering_Dump.sql"
-with open(path, "w") as file:
-    file.write(pgsql_script_content)
-
-path &#8203;``【oaicite:0】``&#8203;

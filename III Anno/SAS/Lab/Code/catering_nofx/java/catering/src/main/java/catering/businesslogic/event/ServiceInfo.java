@@ -35,7 +35,7 @@ public class ServiceInfo implements EventItemInfo {
     public static ArrayList<ServiceInfo> loadServiceInfoForEvent(int event_id) {
         ArrayList<ServiceInfo> result = new ArrayList<>();
         String query = "SELECT id, name, service_date, time_start, time_end, expected_participants " +
-                "FROM Services WHERE event_id = " + event_id;
+                "FROM services WHERE event_id = " + event_id;
         PersistenceManager.executeQuery(query, new ResultHandler() {
             @Override
             public void handle(ResultSet rs) throws SQLException {

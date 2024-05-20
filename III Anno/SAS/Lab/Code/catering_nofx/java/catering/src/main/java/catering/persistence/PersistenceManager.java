@@ -11,7 +11,6 @@ public class PersistenceManager {
 
     // Usare la seguente stringa per connettersi a un database PostgreSQL
     private static String url = String.format("jdbc:postgresql://localhost:5432/catering?ssl=false");
-
     private static int lastId;
 
     public static String escapeString(String input) {

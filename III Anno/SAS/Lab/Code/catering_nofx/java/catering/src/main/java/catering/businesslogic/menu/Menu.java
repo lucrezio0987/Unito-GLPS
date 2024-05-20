@@ -300,7 +300,7 @@ public class Menu {
     // STATIC METHODS FOR PERSISTENCE
 
     public static void saveNewMenu(Menu m) {
-        String menuInsert = "INSERT INTO catering.Menus (title, owner_id, published) VALUES (?, ?, ?);";
+        String menuInsert = "INSERT INTO menus (title, owner_id, published) VALUES (?, ?, ?);";
         int[] result = PersistenceManager.executeBatchUpdate(menuInsert, 1, new BatchUpdateHandler() {
             @Override
             public void handleBatchItem(PreparedStatement ps, int batchCount) throws SQLException {
@@ -336,14 +336,14 @@ public class Menu {
     }
 
     public static void saveMenuTitle(Menu m) {
-        String upd = "UPDATE Menus SET title = '" + PersistenceManager.escapeString(m.getTitle()) + "'" +
+        String upd = "UPDATE menus SET title = '" + PersistenceManager.escapeString(m.getTitle()) + "'" +
                 " WHERE id = " + m.getId();
         PersistenceManager.executeUpdate(upd);
     }
 
     public static void saveMenuFeatures(Menu m) {
         // Delete existing features if any
-        String updDel = "DELETE FROM MenuFeatures WHERE menu_id = " + m.getId();
+        String updDel = "DELETE FROM menufeatures WHERE menu_id = " + m.getId();
         int ret = PersistenceManager.executeUpdate(updDel);
         if (ret > 0) {
             System.out.println("Features deleted: " + ret);
@@ -354,14 +354,14 @@ public class Menu {
 
 
     public static void saveMenuPublished(Menu m) {
-        String upd = "UPDATE Menus SET published = " + m.published +
+        String upd = "UPDATE menus SET published = " + m.published +
                 " WHERE id = " + m.getId();
         PersistenceManager.executeUpdate(upd);
     }
 
     private static void featuresToDB(Menu m) {
         // Save features
-        String featureInsert = "INSERT INTO catering.MenuFeatures (menu_id, name, value) VALUES (?, ?, ?)";
+        String featureInsert = "INSERT INTO menufeatures (menu_id, name, value) VALUES (?, ?, ?)";
         String[] features = m.featuresMap.keySet().toArray(new String[0]);
         PersistenceManager.executeBatchUpdate(featureInsert, features.length, new BatchUpdateHandler() {
             @Override
@@ -381,25 +381,25 @@ public class Menu {
 
     public static void deleteMenu(Menu m) {
         // delete sections
-        String delSec = "DELETE FROM MenuSections WHERE menu_id = " + m.id;
+        String delSec = "DELETE FROM menusections WHERE menu_id = " + m.id;
         PersistenceManager.executeUpdate(delSec);
 
         // delete free & section items
-        String delIt = "DELETE FROM MenuItems WHERE menu_id = " + m.id;
+        String delIt = "DELETE FROM menuitems WHERE menu_id = " + m.id;
         PersistenceManager.executeUpdate(delIt);
 
         // delete features
-        String delFeat = "DELETE FROM MenuFeatures WHERE menu_id = " + m.getId();
+        String delFeat = "DELETE FROM menufeatures WHERE menu_id = " + m.getId();
         PersistenceManager.executeUpdate(delFeat);
 
 
-        String del = "DELETE FROM Menus WHERE id = " + m.getId();
+        String del = "DELETE FROM menus WHERE id = " + m.getId();
         PersistenceManager.executeUpdate(del);
         loadedMenus.remove(m.getId());
     }
 
     public static ArrayList<Menu> loadAllMenus() {
-        String query = "SELECT * FROM Menus WHERE " + true;
+        String query = "SELECT * FROM menus WHERE " + true;
         ArrayList<Menu> newMenus = new ArrayList<>();
         ArrayList<Integer> newMids = new ArrayList<>();
         ArrayList<Menu> oldMenus = new ArrayList<>();
@@ -431,7 +431,7 @@ public class Menu {
             m.owner = User.loadUserById(newMids.get(i));
 
             // load features
-            String featQ = "SELECT * FROM MenuFeatures WHERE menu_id = " + m.id;
+            String featQ = "SELECT * FROM menufeatures WHERE menu_id = " + m.id;
             PersistenceManager.executeQuery(featQ, new ResultHandler() {
                 @Override
                 public void handle(ResultSet rs) throws SQLException {
@@ -446,7 +446,7 @@ public class Menu {
             m.freeItems = MenuItem.loadItemsFor(m.id, 0);
 
             // find if "in use"
-            String inuseQ = "SELECT * FROM Services WHERE approved_menu_id = " + m.id;
+            String inuseQ = "SELECT * FROM services WHERE approved_menu_id = " + m.id;
             PersistenceManager.executeQuery(inuseQ, new ResultHandler() {
                 @Override
                 public void handle(ResultSet rs) throws SQLException {
@@ -462,7 +462,7 @@ public class Menu {
 
             // load features
             m.featuresMap.clear();
-            String featQ = "SELECT * FROM MenuFeatures WHERE menu_id = " + m.id;
+            String featQ = "SELECT * FROM menufeatures WHERE menu_id = " + m.id;
             PersistenceManager.executeQuery(featQ, new ResultHandler() {
                 @Override
                 public void handle(ResultSet rs) throws SQLException {
@@ -477,7 +477,7 @@ public class Menu {
             m.updateFreeItems(MenuItem.loadItemsFor(m.id, 0));
 
             // find if "in use"
-            String inuseQ = "SELECT * FROM Services WHERE approved_menu_id = " + m.id +
+            String inuseQ = "SELECT * FROM services WHERE approved_menu_id = " + m.id +
                     " OR " +
                     "proposed_menu_id = "+ m.id;
             PersistenceManager.executeQuery(inuseQ, new ResultHandler() {
@@ -495,7 +495,7 @@ public class Menu {
     }
 
     public static void saveSectionOrder(Menu m) {
-        String upd = "UPDATE MenuSections SET position = ? WHERE id = ?";
+        String upd = "UPDATE menusections SET position = ? WHERE id = ?";
         PersistenceManager.executeBatchUpdate(upd, m.sections.size(), new BatchUpdateHandler() {
             @Override
             public void handleBatchItem(PreparedStatement ps, int batchCount) throws SQLException {
@@ -512,7 +512,7 @@ public class Menu {
 
 
     public static void saveFreeItemOrder(Menu m) {
-        String upd = "UPDATE MenuItems SET position = ? WHERE id = ?";
+        String upd = "UPDATE menuitems SET position = ? WHERE id = ?";
         PersistenceManager.executeBatchUpdate(upd, m.freeItems.size(), new BatchUpdateHandler() {
             @Override
             public void handleBatchItem(PreparedStatement ps, int batchCount) throws SQLException {

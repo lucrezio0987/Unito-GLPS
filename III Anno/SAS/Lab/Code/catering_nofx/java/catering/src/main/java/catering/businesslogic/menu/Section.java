@@ -109,7 +109,7 @@ public class Section {
 
     // STATIC METHODS FOR PERSISTENCE
     public static void saveNewSection(int menuid, Section sec, int posInMenu) {
-        String secInsert = "INSERT INTO catering.MenuSections (menu_id, name, position) VALUES (" +
+        String secInsert = "INSERT INTO menusections (menu_id, name, position) VALUES (" +
                 menuid + ", " +
                 "'" + PersistenceManager.escapeString(sec.name) + "', " +
                 posInMenu +
@@ -123,7 +123,7 @@ public class Section {
     }
 
     public static void saveAllNewSections(int menuid, List<Section> sections) {
-        String secInsert = "INSERT INTO catering.MenuSections (menu_id, name, position) VALUES (?, ?, ?);";
+        String secInsert = "INSERT INTO menusections (menu_id, name, position) VALUES (?, ?, ?);";
         PersistenceManager.executeBatchUpdate(secInsert, sections.size(), new BatchUpdateHandler() {
             @Override
             public void handleBatchItem(PreparedStatement ps, int batchCount) throws SQLException {
@@ -149,7 +149,7 @@ public class Section {
 
     public static ArrayList<Section> loadSectionsFor(int menu_id) {
         ArrayList<Section> result = new ArrayList<>();
-        String query = "SELECT * FROM MenuSections WHERE menu_id = " + menu_id +
+        String query = "SELECT * FROM menusections WHERE menu_id = " + menu_id +
                 " ORDER BY position";
         PersistenceManager.executeQuery(query, new ResultHandler() {
             @Override
@@ -171,24 +171,24 @@ public class Section {
 
     public static void deleteSection(int menu_id, Section s) {
         // delete items
-        String itemdel = "DELETE FROM MenuItems WHERE section_id = " + s.id +
+        String itemdel = "DELETE FROM menuitems WHERE section_id = " + s.id +
                 " AND menu_id = " + menu_id;
         PersistenceManager.executeUpdate(itemdel);
 
-        String secdel = "DELETE FROM MenuSections WHERE id = " + s.id;
+        String secdel = "DELETE FROM menusections WHERE id = " + s.id;
         PersistenceManager.executeUpdate(secdel);
     }
 
 
     public static void saveSectionName(Section s) {
-        String upd = "UPDATE MenuSections SET name = '" + PersistenceManager.escapeString(s.name) + "'" +
+        String upd = "UPDATE menusections SET name = '" + PersistenceManager.escapeString(s.name) + "'" +
                 " WHERE id = " + s.id;
         PersistenceManager.executeUpdate(upd);
     }
 
 
     public static void saveItemOrder(Section s) {
-        String upd = "UPDATE MenuItems SET position = ? WHERE id = ?";
+        String upd = "UPDATE menuitems SET position = ? WHERE id = ?";
         PersistenceManager.executeBatchUpdate(upd, s.sectionItems.size(), new BatchUpdateHandler() {
             @Override
             public void handleBatchItem(PreparedStatement ps, int batchCount) throws SQLException {

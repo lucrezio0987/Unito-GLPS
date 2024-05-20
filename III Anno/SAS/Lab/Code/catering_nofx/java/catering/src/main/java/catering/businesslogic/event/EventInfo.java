@@ -37,7 +37,7 @@ public class EventInfo implements EventItemInfo {
 
     public static ArrayList<EventInfo> loadAllEventInfo() {
         ArrayList<EventInfo> all = new ArrayList<>();
-        String query = "SELECT * FROM Events WHERE true";
+        String query = "SELECT * FROM events WHERE true";
         PersistenceManager.executeQuery(query, new ResultHandler() {
             @Override
             public void handle(ResultSet rs) throws SQLException {
