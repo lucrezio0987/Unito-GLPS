@@ -221,7 +221,7 @@ fg=black</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>351</x>
+      <x>342</x>
       <y>405</y>
       <w>117</w>
       <h>144</h>
@@ -512,7 +512,7 @@ fg=black</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>513</x>
-      <y>675</y>
+      <y>711</y>
       <w>153</w>
       <h>45</h>
     </coordinates>
@@ -583,5 +583,19 @@ QUANTITA'/PORZIONI IN COMPITO
 MANTENENDOLO SOLO IN MANSIONE
 bg=red</panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>432</x>
+      <y>252</y>
+      <w>234</w>
+      <h>459</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..n
+m2=0..1
+serve per v</panel_attributes>
+    <additional_attributes>40.0;10.0;40.0;340.0;150.0;340.0;150.0;480.0;240.0;480.0</additional_attributes>
   </element>
 </diagram>
