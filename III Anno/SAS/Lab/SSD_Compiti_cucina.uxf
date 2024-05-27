@@ -18,10 +18,10 @@
       <x>657</x>
       <y>63</y>
       <w>27</w>
-      <h>1134</h>
+      <h>1026</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;1240.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;1120.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -29,10 +29,10 @@
       <x>306</x>
       <y>63</y>
       <w>27</w>
-      <h>1143</h>
+      <h>1026</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;1250.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;1120.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -56,7 +56,7 @@
       <h>36</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
-foglio creato</panel_attributes>
+foglio</panel_attributes>
     <additional_attributes>10.0;20.0;400.0;20.0</additional_attributes>
   </element>
   <element>
@@ -77,13 +77,13 @@ da preparare, completato)
     <id>Relation</id>
     <coordinates>
       <x>306</x>
-      <y>576</y>
-      <w>369</w>
+      <y>585</y>
+      <w>378</w>
       <h>36</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
-mansione registrata</panel_attributes>
-    <additional_attributes>10.0;20.0;390.0;20.0</additional_attributes>
+compito</panel_attributes>
+    <additional_attributes>10.0;20.0;400.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLFrame</id>
@@ -195,7 +195,7 @@ bg=#B8E0E0</panel_attributes>
       <h>45</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-assegna(compito, turno, cuoco?, 
+assegnaCompito(compito, turno, cuoco?, 
 quantita/porzioni?, tempo?)</panel_attributes>
     <additional_attributes>10.0;20.0;400.0;20.0</additional_attributes>
   </element>
@@ -208,7 +208,7 @@ quantita/porzioni?, tempo?)</panel_attributes>
       <h>36</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
-assegnazione registrata</panel_attributes>
+compito</panel_attributes>
     <additional_attributes>10.0;20.0;390.0;20.0</additional_attributes>
   </element>
   <element>
