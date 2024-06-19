@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.1">
-  <zoom_level>5</zoom_level>
+  <zoom_level>4</zoom_level>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>0</x>
-      <y>55</y>
-      <w>50</w>
-      <h>35</h>
+      <x>144</x>
+      <y>120</y>
+      <w>40</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>UI</panel_attributes>
     <additional_attributes/>
@@ -15,10 +15,10 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>15</x>
-      <y>85</y>
-      <w>15</w>
-      <h>585</h>
+      <x>156</x>
+      <y>144</y>
+      <w>12</w>
+      <h>468</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;1150.0</additional_attributes>
@@ -26,10 +26,10 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>15</x>
-      <y>90</y>
-      <w>225</w>
-      <h>20</h>
+      <x>156</x>
+      <y>148</y>
+      <w>180</w>
+      <h>16</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 assegnaCompito(compito, turno, ch, porzioni, tempo)</panel_attributes>
@@ -38,10 +38,10 @@ assegnaCompito(compito, turno, ch, porzioni, tempo)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>230</x>
-      <y>80</y>
-      <w>15</w>
-      <h>600</h>
+      <x>328</x>
+      <y>140</y>
+      <w>12</w>
+      <h>480</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;1180.0</additional_attributes>
@@ -49,10 +49,10 @@ assegnaCompito(compito, turno, ch, porzioni, tempo)</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>190</x>
-      <y>65</y>
-      <w>110</w>
-      <h>20</h>
+      <x>296</x>
+      <y>128</y>
+      <w>88</w>
+      <h>16</h>
     </coordinates>
     <panel_attributes>foglioRiepilogativoCtrl: 
 FoglioRiepilogativoController</panel_attributes>
@@ -61,10 +61,10 @@ FoglioRiepilogativoController</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>435</x>
-      <y>90</y>
-      <w>15</w>
-      <h>590</h>
+      <x>492</x>
+      <y>148</y>
+      <w>12</w>
+      <h>472</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;1160.0</additional_attributes>
@@ -72,10 +72,10 @@ FoglioRiepilogativoController</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>400</x>
-      <y>70</y>
-      <w>80</w>
-      <h>25</h>
+      <x>464</x>
+      <y>132</y>
+      <w>64</w>
+      <h>20</h>
     </coordinates>
     <panel_attributes>foglio:
 FoglioRiepilogativo</panel_attributes>
@@ -84,10 +84,10 @@ FoglioRiepilogativo</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>575</x>
-      <y>75</y>
-      <w>65</w>
-      <h>20</h>
+      <x>604</x>
+      <y>136</y>
+      <w>52</w>
+      <h>16</h>
     </coordinates>
     <panel_attributes>compito:
 Compito</panel_attributes>
@@ -96,10 +96,10 @@ Compito</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>600</x>
-      <y>90</y>
-      <w>15</w>
-      <h>590</h>
+      <x>624</x>
+      <y>148</y>
+      <w>12</w>
+      <h>472</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;1160.0</additional_attributes>
@@ -107,10 +107,10 @@ Compito</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>230</x>
-      <y>100</y>
-      <w>10</w>
-      <h>480</h>
+      <x>328</x>
+      <y>156</y>
+      <w>8</w>
+      <h>384</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -118,10 +118,10 @@ Compito</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>435</x>
-      <y>130</y>
-      <w>10</w>
-      <h>360</h>
+      <x>492</x>
+      <y>180</y>
+      <w>8</w>
+      <h>264</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -129,10 +129,10 @@ Compito</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>600</x>
-      <y>140</y>
-      <w>10</w>
-      <h>335</h>
+      <x>624</x>
+      <y>188</y>
+      <w>8</w>
+      <h>244</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -140,10 +140,10 @@ Compito</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>235</x>
-      <y>495</y>
-      <w>155</w>
-      <h>40</h>
+      <x>332</x>
+      <y>472</y>
+      <w>124</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 notifyCompitoAssegnato(compito)</panel_attributes>
@@ -152,10 +152,10 @@ notifyCompitoAssegnato(compito)</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>235</x>
-      <y>525</y>
-      <w>10</w>
-      <h>45</h>
+      <x>332</x>
+      <y>496</y>
+      <w>8</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -163,10 +163,10 @@ notifyCompitoAssegnato(compito)</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>125</x>
-      <y>550</y>
-      <w>1030</w>
-      <h>55</h>
+      <x>244</x>
+      <y>516</y>
+      <w>824</w>
+      <h>44</h>
     </coordinates>
     <panel_attributes>LOOP for all er in eventReceivers
 fg=blue
@@ -177,22 +177,22 @@ fg=blue
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>240</x>
-      <y>560</y>
-      <w>890</w>
-      <h>20</h>
+      <x>336</x>
+      <y>524</y>
+      <w>792</w>
+      <h>16</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 updateCompitoAssegnato(compito)</panel_attributes>
-    <additional_attributes>10.0;20.0;1760.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;1960.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1055</x>
-      <y>65</y>
-      <w>120</w>
-      <h>30</h>
+      <x>1068</x>
+      <y>128</y>
+      <w>96</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>er:
 FoglioRiepilogativoEventReceiver:
@@ -203,9 +203,9 @@ FoglioRiepilogativo</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1120</x>
-      <y>90</y>
-      <w>15</w>
-      <h>590</h>
+      <y>148</y>
+      <w>12</w>
+      <h>472</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;1160.0</additional_attributes>
@@ -214,9 +214,9 @@ FoglioRiepilogativo</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>1120</x>
-      <y>570</y>
-      <w>10</w>
-      <h>10</h>
+      <y>532</y>
+      <w>8</w>
+      <h>8</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -224,10 +224,10 @@ FoglioRiepilogativo</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>15</x>
-      <y>605</y>
-      <w>225</w>
-      <h>20</h>
+      <x>156</x>
+      <y>560</y>
+      <w>180</w>
+      <h>16</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 compito</panel_attributes>
@@ -236,10 +236,10 @@ compito</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>15</x>
-      <y>630</y>
-      <w>225</w>
-      <h>25</h>
+      <x>156</x>
+      <y>580</y>
+      <w>180</w>
+      <h>20</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 throw UseCaseLogicException
@@ -250,10 +250,10 @@ fg=red
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>105</x>
-      <y>110</y>
-      <w>1070</w>
-      <h>560</h>
+      <x>228</x>
+      <y>164</y>
+      <w>932</w>
+      <h>448</h>
     </coordinates>
     <panel_attributes>ALT [foglioRiepilogativoCtrl.foglio]
 fg=#761C8C
@@ -328,10 +328,10 @@ layer=-1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>235</x>
-      <y>120</y>
-      <w>210</w>
-      <h>20</h>
+      <x>332</x>
+      <y>172</y>
+      <w>168</w>
+      <h>16</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 assegnaCompito(compito, turno, ch, porzioni, tempo)</panel_attributes>
@@ -340,10 +340,10 @@ assegnaCompito(compito, turno, ch, porzioni, tempo)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>440</x>
-      <y>130</y>
-      <w>170</w>
-      <h>20</h>
+      <x>496</x>
+      <y>180</y>
+      <w>136</w>
+      <h>16</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 assegnaCompito(turno, ch, porzioni, tempo)</panel_attributes>
@@ -352,81 +352,22 @@ assegnaCompito(turno, ch, porzioni, tempo)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>605</x>
-      <y>145</y>
-      <w>105</w>
-      <h>25</h>
+      <x>628</x>
+      <y>192</y>
+      <w>84</w>
+      <h>20</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 this.turno = turno</panel_attributes>
     <additional_attributes>10.0;10.0;70.0;10.0;70.0;30.0;10.0;30.0</additional_attributes>
   </element>
   <element>
-    <id>UMLFrame</id>
-    <coordinates>
-      <x>705</x>
-      <y>235</y>
-      <w>375</w>
-      <h>80</h>
-    </coordinates>
-    <panel_attributes>LOOP for each cA in chAvailable
-fg=blue
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <id>Relation</id>
     <coordinates>
-      <x>855</x>
-      <y>260</y>
-      <w>205</w>
-      <h>20</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;&gt;&gt;
-add(c)</panel_attributes>
-    <additional_attributes>10.0;20.0;390.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLGeneric</id>
-    <coordinates>
-      <x>1020</x>
-      <y>125</y>
-      <w>75</w>
-      <h>20</h>
-    </coordinates>
-    <panel_attributes>this.chAssigned: 
-ArrayList&lt;Cuoco&gt;</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1050</x>
-      <y>140</y>
-      <w>15</w>
-      <h>540</h>
-    </coordinates>
-    <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;1060.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLGeneric</id>
-    <coordinates>
-      <x>1050</x>
-      <y>270</y>
-      <w>10</w>
-      <h>10</h>
-    </coordinates>
-    <panel_attributes/>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>605</x>
-      <y>375</y>
-      <w>110</w>
-      <h>40</h>
+      <x>628</x>
+      <y>352</y>
+      <w>88</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 this.porzioni = porzioni</panel_attributes>
@@ -435,10 +376,10 @@ this.porzioni = porzioni</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>605</x>
-      <y>425</y>
-      <w>100</w>
-      <h>40</h>
+      <x>628</x>
+      <y>392</y>
+      <w>80</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 this.tempo = tempo</panel_attributes>
@@ -447,10 +388,10 @@ this.tempo = tempo</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>440</x>
-      <y>465</y>
-      <w>170</w>
-      <h>20</h>
+      <x>496</x>
+      <y>424</y>
+      <w>136</w>
+      <h>16</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 compito</panel_attributes>
@@ -459,10 +400,10 @@ compito</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>235</x>
-      <y>480</y>
-      <w>210</w>
-      <h>20</h>
+      <x>332</x>
+      <y>436</y>
+      <w>168</w>
+      <h>16</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 compito</panel_attributes>
@@ -471,39 +412,22 @@ compito</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>480</x>
-      <y>170</y>
-      <w>670</w>
-      <h>160</h>
+      <x>528</x>
+      <y>212</y>
+      <w>520</w>
+      <h>132</h>
     </coordinates>
-    <panel_attributes>OPT [ch]
+    <panel_attributes>OPT [ch &amp;&amp; ch is not empty]
 fg=#128C86</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>740</x>
-      <y>255</y>
-      <w>335</w>
-      <h>55</h>
-    </coordinates>
-    <panel_attributes>ALT 
-c equals to cA
-fg=#761C8C
-lw=2
---
-
--.</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLFrame</id>
-    <coordinates>
-      <x>540</x>
-      <y>370</y>
-      <w>185</w>
-      <h>45</h>
+      <x>576</x>
+      <y>348</y>
+      <w>148</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>OPT [porzioni]
 fg=#128C86</panel_attributes>
@@ -512,10 +436,10 @@ fg=#128C86</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>540</x>
-      <y>425</y>
-      <w>185</w>
-      <h>40</h>
+      <x>576</x>
+      <y>392</y>
+      <w>148</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>OPT [tempo]
 fg=#128C86</panel_attributes>
@@ -524,10 +448,10 @@ fg=#128C86</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>0</x>
-      <y>0</y>
-      <w>110</w>
-      <h>30</h>
+      <x>144</x>
+      <y>76</y>
+      <w>88</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>DSD per l'operazione:
 assegnaCompito
@@ -538,23 +462,23 @@ fontsize=18</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>605</x>
-      <y>195</y>
-      <w>255</w>
-      <h>25</h>
+      <x>628</x>
+      <y>228</y>
+      <w>284</w>
+      <h>20</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-assegnaCuoco(c)
+isChAssigned(c)
 </panel_attributes>
-    <additional_attributes>10.0;20.0;490.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;690.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>820</x>
-      <y>75</y>
-      <w>75</w>
-      <h>20</h>
+      <x>880</x>
+      <y>136</y>
+      <w>60</w>
+      <h>16</h>
     </coordinates>
     <panel_attributes>turno: 
 Turno</panel_attributes>
@@ -563,10 +487,10 @@ Turno</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>850</x>
-      <y>90</y>
-      <w>15</w>
-      <h>590</h>
+      <x>904</x>
+      <y>148</y>
+      <w>12</w>
+      <h>472</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;1160.0</additional_attributes>
@@ -574,70 +498,44 @@ Turno</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>850</x>
-      <y>205</y>
-      <w>10</w>
-      <h>145</h>
+      <x>904</x>
+      <y>236</y>
+      <w>8</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
   </element>
   <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>605</x>
-      <y>290</y>
-      <w>255</w>
-      <h>25</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;.
-throw UseCaseLogicException
-fg=red
-</panel_attributes>
-    <additional_attributes>10.0;20.0;490.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>605</x>
-      <y>340</y>
-      <w>255</w>
-      <h>20</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;.
-true</panel_attributes>
-    <additional_attributes>10.0;20.0;490.0;20.0</additional_attributes>
-  </element>
-  <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>935</x>
-      <y>125</y>
-      <w>75</w>
-      <h>20</h>
+      <x>972</x>
+      <y>136</y>
+      <w>60</w>
+      <h>16</h>
     </coordinates>
-    <panel_attributes>this.chAvailable:
+    <panel_attributes>this.chAssigned:
 ArrayList&lt;Cuoco&gt;</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>970</x>
-      <y>140</y>
-      <w>15</w>
-      <h>540</h>
+      <x>1000</x>
+      <y>148</y>
+      <w>12</w>
+      <h>472</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;1060.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;1160.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>855</x>
-      <y>205</y>
-      <w>125</w>
-      <h>20</h>
+      <x>908</x>
+      <y>248</y>
+      <w>100</w>
+      <h>16</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 get()</panel_attributes>
@@ -646,10 +544,10 @@ get()</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>970</x>
-      <y>215</y>
-      <w>10</w>
-      <h>15</h>
+      <x>1000</x>
+      <y>256</y>
+      <w>8</w>
+      <h>12</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -657,27 +555,128 @@ get()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>855</x>
-      <y>220</y>
-      <w>125</w>
-      <h>20</h>
+      <x>908</x>
+      <y>260</y>
+      <w>100</w>
+      <h>16</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
-chAvailable</panel_attributes>
+chAssigned</panel_attributes>
     <additional_attributes>10.0;20.0;230.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>520</x>
-      <y>185</y>
-      <w>610</w>
-      <h>135</h>
+      <x>540</x>
+      <y>224</y>
+      <w>500</w>
+      <h>116</h>
     </coordinates>
     <panel_attributes>LOOP 
 for each c in ch
 fg=blue
 </panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>628</x>
+      <y>268</y>
+      <w>284</w>
+      <h>16</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+true</panel_attributes>
+    <additional_attributes>10.0;20.0;690.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>780</x>
+      <y>136</y>
+      <w>56</w>
+      <h>16</h>
+    </coordinates>
+    <panel_attributes>this.chAssigned:
+ArrayList&lt;Cuoco&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>804</x>
+      <y>148</y>
+      <w>12</w>
+      <h>468</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;1150.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>804</x>
+      <y>316</y>
+      <w>8</w>
+      <h>8</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>628</x>
+      <y>308</y>
+      <w>184</w>
+      <h>16</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;
+add(c)</panel_attributes>
+    <additional_attributes>10.0;20.0;440.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLFrame</id>
+    <coordinates>
+      <x>552</x>
+      <y>304</y>
+      <w>272</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>OPT if isChAssigned(c)
+fg=#128C86</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLFrame</id>
+    <coordinates>
+      <x>796</x>
+      <y>244</y>
+      <w>232</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>ALT if this.chAssigned contains c
+fg=#761C8C
+lw=2
+--
+
+
+
+
+-.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>628</x>
+      <y>284</y>
+      <w>284</w>
+      <h>16</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+false</panel_attributes>
+    <additional_attributes>10.0;20.0;690.0;20.0</additional_attributes>
   </element>
 </diagram>
