@@ -245,4 +245,18 @@ lw=2
 -.</panel_attributes>
     <additional_attributes/>
   </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>63</x>
+      <y>36</y>
+      <w>198</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>DSD per l'operazione:
+ordinaCompiti
+bg=yellow
+fontsize=18</panel_attributes>
+    <additional_attributes/>
+  </element>
 </diagram>
