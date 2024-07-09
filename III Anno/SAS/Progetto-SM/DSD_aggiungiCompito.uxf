@@ -368,7 +368,7 @@ fg=red
       <w>1162</w>
       <h>420</h>
     </coordinates>
-    <panel_attributes>ALT [foglioRiepilogativoCtrl.foglio]
+    <panel_attributes>ALT [mgr.foglio]
 fg=#761C8C
 layer=-1
 --
