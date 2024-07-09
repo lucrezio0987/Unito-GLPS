@@ -5,7 +5,7 @@
     <id>UMLPackage</id>
     <coordinates>
       <x>110</x>
-      <y>100</y>
+      <y>160</y>
       <w>100</w>
       <h>70</h>
     </coordinates>
@@ -16,18 +16,18 @@
     <id>Relation</id>
     <coordinates>
       <x>140</x>
-      <y>160</y>
+      <y>220</y>
       <w>30</w>
-      <h>410</h>
+      <h>310</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;390.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;290.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>140</x>
-      <y>180</y>
+      <y>240</y>
       <w>390</w>
       <h>40</h>
     </coordinates>
@@ -39,7 +39,7 @@ consultaTabellone()</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>450</x>
-      <y>130</y>
+      <y>190</y>
       <w>140</w>
       <h>40</h>
     </coordinates>
@@ -51,18 +51,18 @@ TabelloneManager</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>510</x>
-      <y>160</y>
+      <y>220</y>
       <w>30</w>
-      <h>400</h>
+      <h>310</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;380.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;290.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
       <x>510</x>
-      <y>200</y>
+      <y>260</y>
       <w>20</w>
       <h>190</h>
     </coordinates>
@@ -73,7 +73,7 @@ TabelloneManager</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>740</x>
-      <y>130</y>
+      <y>190</y>
       <w>120</w>
       <h>40</h>
     </coordinates>
@@ -85,18 +85,18 @@ Tabellone</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>790</x>
-      <y>160</y>
+      <y>220</y>
       <w>30</w>
-      <h>400</h>
+      <h>310</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;380.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;290.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
       <x>790</x>
-      <y>210</y>
+      <y>270</y>
       <w>20</w>
       <h>120</h>
     </coordinates>
@@ -107,7 +107,7 @@ Tabellone</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>520</x>
-      <y>190</y>
+      <y>250</y>
       <w>290</w>
       <h>40</h>
     </coordinates>
@@ -119,7 +119,7 @@ consultaTabellone()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>800</x>
-      <y>200</y>
+      <y>260</y>
       <w>260</w>
       <h>40</h>
     </coordinates>
@@ -131,7 +131,7 @@ get()</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>980</x>
-      <y>130</y>
+      <y>190</y>
       <w>140</w>
       <h>40</h>
     </coordinates>
@@ -143,18 +143,18 @@ ArrayList&lt;Turno&gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1040</x>
-      <y>160</y>
+      <y>220</y>
       <w>30</w>
-      <h>400</h>
+      <h>310</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;380.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;290.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
       <x>1040</x>
-      <y>220</y>
+      <y>280</y>
       <w>20</w>
       <h>70</h>
     </coordinates>
@@ -165,7 +165,7 @@ ArrayList&lt;Turno&gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>800</x>
-      <y>270</y>
+      <y>330</y>
       <w>260</w>
       <h>40</h>
     </coordinates>
@@ -177,7 +177,7 @@ turni</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>520</x>
-      <y>310</y>
+      <y>370</y>
       <w>290</w>
       <h>40</h>
     </coordinates>
@@ -189,7 +189,7 @@ turni</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>140</x>
-      <y>370</y>
+      <y>430</y>
       <w>390</w>
       <h>40</h>
     </coordinates>
@@ -201,7 +201,7 @@ turni</panel_attributes>
     <id>UMLNote</id>
     <coordinates>
       <x>20</x>
-      <y>20</y>
+      <y>80</y>
       <w>170</w>
       <h>70</h>
     </coordinates>

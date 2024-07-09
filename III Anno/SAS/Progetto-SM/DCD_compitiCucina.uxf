@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.1">
-  <zoom_level>8</zoom_level>
+  <zoom_level>5</zoom_level>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>0</x>
-      <y>0</y>
-      <w>1488</w>
-      <h>752</h>
+      <x>60</x>
+      <y>25</y>
+      <w>1140</w>
+      <h>560</h>
     </coordinates>
     <panel_attributes>KitchenJobManagement</panel_attributes>
     <additional_attributes/>
@@ -15,10 +15,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>32</x>
-      <y>48</y>
-      <w>528</w>
-      <h>192</h>
+      <x>80</x>
+      <y>55</y>
+      <w>330</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>FoglioRiepilogativoController
 --
@@ -42,10 +42,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>760</x>
-      <y>48</y>
-      <w>536</w>
-      <h>144</h>
+      <x>535</x>
+      <y>55</y>
+      <w>335</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>																																																																									      																																																									1	
 FoglioRiepilogativo
@@ -62,10 +62,10 @@ FoglioRiepilogativo
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>552</x>
-      <y>104</y>
-      <w>224</w>
-      <h>40</h>
+      <x>405</x>
+      <y>90</y>
+      <w>140</w>
+      <h>25</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 currentFoglio
@@ -75,10 +75,10 @@ m1=0..1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>800</x>
-      <y>184</y>
-      <w>64</w>
-      <h>120</h>
+      <x>560</x>
+      <y>140</y>
+      <w>40</w>
+      <h>75</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 compiti
@@ -88,10 +88,10 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>592</x>
-      <y>288</y>
-      <w>448</w>
-      <h>176</h>
+      <x>430</x>
+      <y>205</y>
+      <w>295</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes>Compito
 --
@@ -105,18 +105,17 @@ m1=0..n</panel_attributes>
 +addMansione(mansione: Mansione)
 +impostaTurno(turno: Turno)
 +impostaCuoco(cuoco: Cuoco)
---
-setDaPreparare(daPreparare: boolean)
-setCompletato(completato: boolean)</panel_attributes>
+-setDaPreparare(daPreparare: boolean)
+-setCompletato(completato: boolean)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1160</x>
-      <y>288</y>
-      <w>304</w>
-      <h>184</h>
+      <x>785</x>
+      <y>190</y>
+      <w>190</w>
+      <h>130</h>
     </coordinates>
     <panel_attributes>Mansione
 --
@@ -127,41 +126,33 @@ setCompletato(completato: boolean)</panel_attributes>
 -tempo: int
 -quantita: String
 -porzioni: String
-
 --
 +create(nome: String, descrizione: String, 
-														tempo: int, quantita: String, porzioni: String)
---
+													tempo: int, quantita: String, porzioni: String)
 +setDifficolta(difficolta: int)
-+setImportanza(importanza: int)
---
-+public metohds
-/+can have abstract methods/
---
-*Can have several method sections*
-+ other methods</panel_attributes>
++setImportanza(importanza: int)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1032</x>
-      <y>384</y>
-      <w>144</w>
-      <h>40</h>
+      <x>720</x>
+      <y>265</y>
+      <w>75</w>
+      <h>25</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-mansioni
-m1=0..n</panel_attributes>
-    <additional_attributes>160.0;20.0;10.0;20.0</additional_attributes>
+mansione
+m1=1</panel_attributes>
+    <additional_attributes>130.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>32</x>
-      <y>320</y>
-      <w>528</w>
-      <h>72</h>
+      <x>80</x>
+      <y>225</y>
+      <w>325</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>FoglioRiepilogativoEventReceiver
 {interface}
@@ -173,10 +164,10 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>288</x>
-      <y>232</y>
-      <w>104</w>
-      <h>104</h>
+      <x>240</x>
+      <y>170</y>
+      <w>65</w>
+      <h>65</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 eventReceivers
@@ -184,25 +175,12 @@ m1=0..n</panel_attributes>
     <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
   </element>
   <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>800</x>
-      <y>456</y>
-      <w>56</w>
-      <h>184</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-
-turno
-m1=0..1</panel_attributes>
-    <additional_attributes>10.0;210.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>688</x>
-      <y>624</y>
-      <w>232</w>
-      <h>96</h>
+      <x>450</x>
+      <y>515</y>
+      <w>145</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>Turno
 --
@@ -212,22 +190,24 @@ m1=0..1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1096</x>
-      <y>592</y>
-      <w>112</w>
-      <h>56</h>
+      <x>745</x>
+      <y>395</y>
+      <w>70</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>Cuoco
+--
+nome: String
 --</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>984</x>
-      <y>456</y>
-      <w>128</w>
-      <h>192</h>
+      <x>675</x>
+      <y>310</y>
+      <w>80</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 cuochi
@@ -237,23 +217,23 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>912</x>
-      <y>640</y>
-      <w>264</w>
-      <h>72</h>
+      <x>590</x>
+      <y>430</y>
+      <w>210</w>
+      <h>135</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 cuochi
 m1=1..n</panel_attributes>
-    <additional_attributes>10.0;60.0;310.0;60.0;310.0;10.0</additional_attributes>
+    <additional_attributes>380.0;10.0;380.0;250.0;10.0;250.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1600</x>
-      <y>32</y>
-      <w>152</w>
-      <h>96</h>
+      <x>1080</x>
+      <y>170</y>
+      <w>95</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>Preparazioni
 --</panel_attributes>
@@ -262,14 +242,200 @@ m1=1..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1456</x>
-      <y>80</y>
-      <w>160</w>
-      <h>256</h>
+      <x>970</x>
+      <y>185</y>
+      <w>120</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 preparazioni
 m1=0..n</panel_attributes>
-    <additional_attributes>180.0;10.0;80.0;10.0;80.0;300.0;10.0;300.0</additional_attributes>
+    <additional_attributes>220.0;20.0;80.0;20.0;80.0;50.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>350</x>
+      <y>355</y>
+      <w>145</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>TurnoServizio
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>520</x>
+      <y>355</y>
+      <w>145</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>TurnoCucina
+--
+- luogo: testo</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>515</x>
+      <y>485</y>
+      <w>15</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>430</x>
+      <y>410</y>
+      <w>185</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;160.0;350.0;160.0;350.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>585</x>
+      <y>310</y>
+      <w>40</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+compiti
+m1=0..n</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1015</x>
+      <y>215</y>
+      <w>75</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;80.0;10.0;10.0;130.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1015</x>
+      <y>250</y>
+      <w>75</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0;130.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>970</x>
+      <y>250</y>
+      <w>60</w>
+      <h>15</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;100.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1080</x>
+      <y>260</y>
+      <w>95</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Ricetta
+
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1270</x>
+      <y>220</y>
+      <w>95</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Voce
+--
+- descrizione: String
+
+
+
+
+
+
+
+
+
+
+
+
+fg=gray</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1170</x>
+      <y>255</y>
+      <w>110</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+voci
+m1=0..1
+fg=gray</panel_attributes>
+    <additional_attributes>200.0;10.0;130.0;10.0;130.0;70.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>320</x>
+      <y>605</y>
+      <w>95</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>MembroStaff
+--
+- nome: String
+
+
+
+
+
+
+
+
+
+
+
+
+fg=gray</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>365</x>
+      <y>410</y>
+      <w>30</w>
+      <h>205</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+staff
+m1=0..n
+fg=gray</panel_attributes>
+    <additional_attributes>10.0;390.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>
