@@ -4,8 +4,8 @@
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>153</x>
-      <y>72</y>
+      <x>135</x>
+      <y>108</y>
       <w>90</w>
       <h>63</h>
     </coordinates>
@@ -15,8 +15,8 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>189</x>
-      <y>126</y>
+      <x>171</x>
+      <y>162</y>
       <w>27</w>
       <h>405</h>
     </coordinates>
@@ -26,8 +26,8 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>189</x>
-      <y>153</y>
+      <x>171</x>
+      <y>189</y>
       <w>306</w>
       <h>36</h>
     </coordinates>
@@ -38,8 +38,8 @@ modificaFoglioRiepilogativo(foglio)</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>423</x>
-      <y>90</y>
+      <x>405</x>
+      <y>126</y>
       <w>126</w>
       <h>45</h>
     </coordinates>
@@ -50,8 +50,8 @@ FoglioRiepilogativo</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>477</x>
-      <y>126</y>
+      <x>459</x>
+      <y>162</y>
       <w>27</w>
       <h>414</h>
     </coordinates>
@@ -61,8 +61,8 @@ FoglioRiepilogativo</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>477</x>
-      <y>171</y>
+      <x>459</x>
+      <y>207</y>
       <w>18</w>
       <h>315</h>
     </coordinates>
@@ -72,8 +72,8 @@ FoglioRiepilogativo</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>189</x>
-      <y>468</y>
+      <x>171</x>
+      <y>504</y>
       <w>306</w>
       <h>36</h>
     </coordinates>
@@ -85,7 +85,7 @@ foglio</panel_attributes>
     <id>UMLNote</id>
     <coordinates>
       <x>18</x>
-      <y>0</y>
+      <y>36</y>
       <w>225</w>
       <h>54</h>
     </coordinates>
@@ -98,8 +98,8 @@ fontsize=18</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>486</x>
-      <y>243</y>
+      <x>468</x>
+      <y>279</y>
       <w>180</w>
       <h>63</h>
     </coordinates>
@@ -110,8 +110,8 @@ this.foglio = foglio</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>486</x>
-      <y>171</y>
+      <x>468</x>
+      <y>207</y>
       <w>333</w>
       <h>36</h>
     </coordinates>
@@ -122,8 +122,8 @@ getOwner()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>486</x>
-      <y>198</y>
+      <x>468</x>
+      <y>234</y>
       <w>333</w>
       <h>36</h>
     </coordinates>
@@ -134,8 +134,8 @@ owner</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>801</x>
-      <y>189</y>
+      <x>783</x>
+      <y>225</y>
       <w>18</w>
       <h>27</h>
     </coordinates>
@@ -145,8 +145,8 @@ owner</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>801</x>
-      <y>126</y>
+      <x>783</x>
+      <y>162</y>
       <w>27</w>
       <h>414</h>
     </coordinates>
@@ -156,8 +156,8 @@ owner</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>747</x>
-      <y>99</y>
+      <x>729</x>
+      <y>135</y>
       <w>126</w>
       <h>36</h>
     </coordinates>
@@ -168,8 +168,8 @@ FoglioRiepilogativo</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>288</x>
-      <y>225</y>
+      <x>270</x>
+      <y>261</y>
       <w>378</w>
       <h>144</h>
     </coordinates>
@@ -188,8 +188,8 @@ lw=2
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>189</x>
-      <y>333</y>
+      <x>171</x>
+      <y>369</y>
       <w>306</w>
       <h>36</h>
     </coordinates>
@@ -201,8 +201,8 @@ fg=red</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1017</x>
-      <y>441</y>
+      <x>999</x>
+      <y>477</y>
       <w>18</w>
       <h>18</h>
     </coordinates>
@@ -212,8 +212,8 @@ fg=red</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1017</x>
-      <y>126</y>
+      <x>999</x>
+      <y>162</y>
       <w>27</w>
       <h>405</h>
     </coordinates>
@@ -223,8 +223,8 @@ fg=red</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>918</x>
-      <y>99</y>
+      <x>900</x>
+      <y>135</y>
       <w>207</w>
       <h>36</h>
     </coordinates>
@@ -235,8 +235,8 @@ FoglioRiepilogativoEventReceiver</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>486</x>
-      <y>369</y>
+      <x>468</x>
+      <y>405</y>
       <w>135</w>
       <h>63</h>
     </coordinates>
@@ -247,8 +247,8 @@ notifyFoglio()</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>486</x>
-      <y>414</y>
+      <x>468</x>
+      <y>450</y>
       <w>18</w>
       <h>27</h>
     </coordinates>
@@ -258,8 +258,8 @@ notifyFoglio()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>495</x>
-      <y>423</y>
+      <x>477</x>
+      <y>459</y>
       <w>540</w>
       <h>36</h>
     </coordinates>
@@ -270,8 +270,8 @@ updateFoglio()</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>243</x>
-      <y>423</y>
+      <x>225</x>
+      <y>459</y>
       <w>819</w>
       <h>45</h>
     </coordinates>

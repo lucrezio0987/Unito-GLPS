@@ -32,7 +32,7 @@
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-definisciCompito(titolo, daPreparare, completato, mansione)</panel_attributes>
+aggiungiCompito(titolo, daPreparare, completato, mansione)</panel_attributes>
     <additional_attributes>10.0;20.0;430.0;20.0</additional_attributes>
   </element>
   <element>
@@ -54,8 +54,8 @@ definisciCompito(titolo, daPreparare, completato, mansione)</panel_attributes>
       <w>154</w>
       <h>28</h>
     </coordinates>
-    <panel_attributes>foglioRiepilogativoCtrl: 
-FoglioRiepilogativoController</panel_attributes>
+    <panel_attributes>mgr: 
+FoglioRiepilogativoManager</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -296,7 +296,7 @@ fg=blue
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-updateCompitoAggiunto(foglioRiepilogativoCtrl.currentFoglio, compito)</panel_attributes>
+updateCompitoAggiunto(compito)</panel_attributes>
     <additional_attributes>10.0;20.0;1090.0;20.0</additional_attributes>
   </element>
   <element>
