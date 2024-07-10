@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.1">
-  <zoom_level>4</zoom_level>
+  <zoom_level>7</zoom_level>
   <element>
     <id>UMLNote</id>
     <coordinates>
       <x>0</x>
-      <y>60</y>
-      <w>92</w>
-      <h>28</h>
+      <y>0</y>
+      <w>161</w>
+      <h>49</h>
     </coordinates>
     <panel_attributes>DSD per l'operazione:
 creaFoglioRiepilogativo
@@ -18,10 +18,10 @@ fontsize=18</panel_attributes>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>20</x>
-      <y>104</y>
-      <w>44</w>
-      <h>32</h>
+      <x>35</x>
+      <y>56</y>
+      <w>77</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>UI</panel_attributes>
     <additional_attributes/>
@@ -29,33 +29,33 @@ fontsize=18</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>36</x>
-      <y>132</y>
-      <w>12</w>
-      <h>792</h>
+      <x>63</x>
+      <y>105</y>
+      <w>21</w>
+      <h>1456</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;1960.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;2060.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>36</x>
-      <y>140</y>
-      <w>216</w>
-      <h>16</h>
+      <x>63</x>
+      <y>119</y>
+      <w>371</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 creaFoglio(servizio)</panel_attributes>
-    <additional_attributes>10.0;20.0;520.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;510.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>212</x>
-      <y>112</y>
-      <w>84</w>
-      <h>24</h>
+      <x>371</x>
+      <y>70</y>
+      <w>147</w>
+      <h>42</h>
     </coordinates>
     <panel_attributes>mgr: 
 FoglioRiepilogativoManager</panel_attributes>
@@ -64,21 +64,21 @@ FoglioRiepilogativoManager</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>240</x>
-      <y>132</y>
-      <w>12</w>
-      <h>788</h>
+      <x>420</x>
+      <y>105</y>
+      <w>21</w>
+      <h>1484</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;1950.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;2100.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>240</x>
-      <y>156</y>
-      <w>8</w>
-      <h>752</h>
+      <x>420</x>
+      <y>133</y>
+      <w>14</w>
+      <h>1435</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -86,10 +86,10 @@ FoglioRiepilogativoManager</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>244</x>
-      <y>164</y>
-      <w>140</w>
-      <h>16</h>
+      <x>427</x>
+      <y>161</y>
+      <w>245</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 create(servizio)</panel_attributes>
@@ -98,10 +98,10 @@ create(servizio)</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>376</x>
-      <y>160</y>
-      <w>56</w>
-      <h>16</h>
+      <x>658</x>
+      <y>161</y>
+      <w>98</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>foglio:
 FoglioRiepilogativo</panel_attributes>
@@ -110,21 +110,21 @@ FoglioRiepilogativo</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>400</x>
-      <y>172</y>
-      <w>12</w>
-      <h>660</h>
+      <x>700</x>
+      <y>182</y>
+      <w>21</w>
+      <h>1190</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;1630.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;1680.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>400</x>
-      <y>180</y>
-      <w>8</w>
-      <h>640</h>
+      <x>700</x>
+      <y>196</y>
+      <w>14</w>
+      <h>1120</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -132,22 +132,23 @@ FoglioRiepilogativo</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>404</x>
-      <y>180</y>
-      <w>112</w>
-      <h>28</h>
+      <x>707</x>
+      <y>259</y>
+      <w>196</w>
+      <h>49</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-this.servizio = servizio.nome</panel_attributes>
+this.servizio = servizio.nome
+this.owner = user</panel_attributes>
     <additional_attributes>10.0;10.0;60.0;10.0;60.0;50.0;10.0;50.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>488</x>
-      <y>236</y>
-      <w>8</w>
-      <h>392</h>
+      <x>868</x>
+      <y>357</y>
+      <w>14</w>
+      <h>679</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -155,21 +156,21 @@ this.servizio = servizio.nome</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>488</x>
-      <y>220</y>
-      <w>12</w>
-      <h>432</h>
+      <x>868</x>
+      <y>329</y>
+      <w>21</w>
+      <h>728</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;1060.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;1020.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>556</x>
-      <y>232</y>
-      <w>48</w>
-      <h>16</h>
+      <x>987</x>
+      <y>343</y>
+      <w>84</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>menu:
 Menu</panel_attributes>
@@ -178,10 +179,10 @@ Menu</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1084</x>
-      <y>116</y>
-      <w>96</w>
-      <h>24</h>
+      <x>2044</x>
+      <y>77</y>
+      <w>168</w>
+      <h>42</h>
     </coordinates>
     <panel_attributes>er:
 FoglioRiepilogativoEventReceiver:
@@ -189,23 +190,12 @@ FoglioRiepilogativo</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1136</x>
-      <y>136</y>
-      <w>12</w>
-      <h>788</h>
-    </coordinates>
-    <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;1950.0</additional_attributes>
-  </element>
-  <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1136</x>
-      <y>868</y>
-      <w>8</w>
-      <h>8</h>
+      <x>2135</x>
+      <y>1470</y>
+      <w>14</w>
+      <h>14</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -213,22 +203,22 @@ FoglioRiepilogativo</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>248</x>
-      <y>860</y>
-      <w>896</w>
-      <h>16</h>
+      <x>434</x>
+      <y>1456</y>
+      <w>1715</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 updateFoglioRiepilogativoCreato(foglio)</panel_attributes>
-    <additional_attributes>10.0;20.0;2220.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;2430.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>36</x>
-      <y>880</y>
-      <w>212</w>
-      <h>16</h>
+      <x>63</x>
+      <y>1498</y>
+      <w>371</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 foglio</panel_attributes>
@@ -237,10 +227,10 @@ foglio</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>36</x>
-      <y>896</y>
-      <w>212</w>
-      <h>16</h>
+      <x>63</x>
+      <y>1540</y>
+      <w>371</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 throw UseCaseLogicException
@@ -250,15 +240,23 @@ fg=red</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>92</x>
-      <y>156</y>
-      <w>1184</w>
-      <h>760</h>
+      <x>175</x>
+      <y>147</y>
+      <w>2072</w>
+      <h>1435</h>
     </coordinates>
-    <panel_attributes>ALT [!foglioRiepilogativoCtrl.currentFoglio]
+    <panel_attributes>ALT [ev contains servizio &amp;&amp; ch isAssigned(ev)]
 fg=#761C8C
 lw=2
 --
+
+
+
+
+
+
+
+
 
 
 
@@ -380,10 +378,10 @@ lw=2
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>472</x>
-      <y>208</y>
-      <w>40</w>
-      <h>16</h>
+      <x>840</x>
+      <y>308</y>
+      <w>70</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>servizio:
 Servizio</panel_attributes>
@@ -392,10 +390,10 @@ Servizio</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>652</x>
-      <y>220</y>
-      <w>68</w>
-      <h>16</h>
+      <x>1162</x>
+      <y>350</y>
+      <w>119</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>menu.freeItems:
 ArrayList&lt;MenuItems&gt;</panel_attributes>
@@ -404,32 +402,32 @@ ArrayList&lt;MenuItems&gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>576</x>
-      <y>244</y>
-      <w>12</w>
-      <h>396</h>
+      <x>1022</x>
+      <y>364</y>
+      <w>21</w>
+      <h>679</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;970.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;950.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>684</x>
-      <y>232</y>
-      <w>12</w>
-      <h>108</h>
+      <x>1211</x>
+      <y>371</y>
+      <w>21</w>
+      <h>140</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;250.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;180.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>244</x>
-      <y>772</y>
-      <w>164</w>
-      <h>16</h>
+      <x>427</x>
+      <y>1302</y>
+      <w>287</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 foglio</panel_attributes>
@@ -438,22 +436,22 @@ foglio</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>404</x>
-      <y>620</y>
-      <w>92</w>
-      <h>16</h>
+      <x>707</x>
+      <y>1022</y>
+      <w>175</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 mansioni</panel_attributes>
-    <additional_attributes>10.0;20.0;210.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;230.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>576</x>
-      <y>276</y>
-      <w>8</w>
-      <h>344</h>
+      <x>1022</x>
+      <y>399</y>
+      <w>14</w>
+      <h>623</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -461,10 +459,10 @@ mansioni</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>684</x>
-      <y>304</y>
-      <w>8</w>
-      <h>20</h>
+      <x>1211</x>
+      <y>455</y>
+      <w>14</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -472,10 +470,10 @@ mansioni</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>736</x>
-      <y>312</y>
-      <w>60</w>
-      <h>16</h>
+      <x>1302</x>
+      <y>483</y>
+      <w>105</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>menu.sections:
 ArrayList&lt;Section&gt;</panel_attributes>
@@ -484,10 +482,10 @@ ArrayList&lt;Section&gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>764</x>
-      <y>324</y>
-      <w>12</w>
-      <h>44</h>
+      <x>1351</x>
+      <y>504</y>
+      <w>21</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
@@ -495,10 +493,10 @@ ArrayList&lt;Section&gt;</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>764</x>
-      <y>340</y>
-      <w>8</w>
-      <h>16</h>
+      <x>1351</x>
+      <y>532</y>
+      <w>14</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -506,10 +504,10 @@ ArrayList&lt;Section&gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>580</x>
-      <y>348</y>
-      <w>192</w>
-      <h>16</h>
+      <x>1029</x>
+      <y>546</y>
+      <w>336</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 sections</panel_attributes>
@@ -518,10 +516,10 @@ sections</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>580</x>
-      <y>388</y>
-      <w>260</w>
-      <h>16</h>
+      <x>1029</x>
+      <y>616</y>
+      <w>455</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 getSectionItems()</panel_attributes>
@@ -530,10 +528,10 @@ getSectionItems()</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>812</x>
-      <y>376</y>
-      <w>64</w>
-      <h>16</h>
+      <x>1435</x>
+      <y>595</y>
+      <w>112</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>section:
 Section</panel_attributes>
@@ -542,10 +540,10 @@ Section</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>532</x>
-      <y>368</y>
-      <w>352</w>
-      <h>60</h>
+      <x>924</x>
+      <y>581</y>
+      <w>637</w>
+      <h>105</h>
     </coordinates>
     <panel_attributes>LOOP for each section in sections
 fg=blue
@@ -555,10 +553,10 @@ fg=blue
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>832</x>
-      <y>388</y>
-      <w>12</w>
-      <h>40</h>
+      <x>1470</x>
+      <y>616</y>
+      <w>21</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
@@ -566,10 +564,10 @@ fg=blue
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>832</x>
-      <y>396</y>
-      <w>8</w>
-      <h>12</h>
+      <x>1470</x>
+      <y>630</y>
+      <w>14</w>
+      <h>21</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -577,10 +575,10 @@ fg=blue
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>580</x>
-      <y>400</y>
-      <w>260</w>
-      <h>16</h>
+      <x>1029</x>
+      <y>637</y>
+      <w>455</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 sectionItems</panel_attributes>
@@ -589,10 +587,10 @@ sectionItems</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>580</x>
-      <y>272</y>
-      <w>336</w>
-      <h>16</h>
+      <x>1029</x>
+      <y>413</y>
+      <w>588</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 create</panel_attributes>
@@ -601,10 +599,10 @@ create</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>892</x>
-      <y>260</y>
-      <w>64</w>
-      <h>16</h>
+      <x>1575</x>
+      <y>350</y>
+      <w>112</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>menuItems:
 ArrayList&lt;MenuItem&gt;</panel_attributes>
@@ -613,21 +611,21 @@ ArrayList&lt;MenuItem&gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>908</x>
-      <y>272</y>
-      <w>12</w>
-      <h>188</h>
+      <x>1603</x>
+      <y>371</y>
+      <w>21</w>
+      <h>371</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;450.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;510.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>908</x>
-      <y>280</y>
-      <w>8</w>
-      <h>8</h>
+      <x>1603</x>
+      <y>427</y>
+      <w>14</w>
+      <h>14</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -635,10 +633,10 @@ ArrayList&lt;MenuItem&gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>580</x>
-      <y>412</y>
-      <w>336</w>
-      <h>16</h>
+      <x>1029</x>
+      <y>658</y>
+      <w>588</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 addAll(sectionItems)</panel_attributes>
@@ -647,10 +645,10 @@ addAll(sectionItems)</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>908</x>
-      <y>420</y>
-      <w>8</w>
-      <h>8</h>
+      <x>1603</x>
+      <y>672</y>
+      <w>14</w>
+      <h>14</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -658,10 +656,10 @@ addAll(sectionItems)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>580</x>
-      <y>432</y>
-      <w>336</w>
-      <h>16</h>
+      <x>1029</x>
+      <y>686</y>
+      <w>588</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 addAll(freeItems)</panel_attributes>
@@ -670,10 +668,10 @@ addAll(freeItems)</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>908</x>
-      <y>440</y>
-      <w>8</w>
-      <h>8</h>
+      <x>1603</x>
+      <y>700</y>
+      <w>14</w>
+      <h>14</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -681,10 +679,10 @@ addAll(freeItems)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>492</x>
-      <y>612</y>
-      <w>92</w>
-      <h>16</h>
+      <x>875</x>
+      <y>1008</y>
+      <w>161</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 mansioni</panel_attributes>
@@ -693,10 +691,10 @@ mansioni</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>580</x>
-      <y>480</y>
-      <w>144</w>
-      <h>16</h>
+      <x>1029</x>
+      <y>777</y>
+      <w>252</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 getMansioni()</panel_attributes>
@@ -705,10 +703,10 @@ getMansioni()</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>532</x>
-      <y>448</y>
-      <w>424</w>
-      <h>88</h>
+      <x>924</x>
+      <y>721</y>
+      <w>763</w>
+      <h>154</h>
     </coordinates>
     <panel_attributes>LOOP for each menuItem in menuItems
 fg=blue
@@ -718,10 +716,10 @@ fg=blue
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>688</x>
-      <y>464</y>
-      <w>64</w>
-      <h>16</h>
+      <x>1218</x>
+      <y>749</y>
+      <w>112</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>menuItem:
 MenuItem</panel_attributes>
@@ -730,10 +728,10 @@ MenuItem</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>716</x>
-      <y>476</y>
-      <w>12</w>
-      <h>68</h>
+      <x>1267</x>
+      <y>770</y>
+      <w>21</w>
+      <h>119</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
@@ -741,10 +739,10 @@ MenuItem</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>716</x>
-      <y>488</y>
-      <w>8</w>
-      <h>28</h>
+      <x>1267</x>
+      <y>791</y>
+      <w>14</w>
+      <h>49</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -752,10 +750,10 @@ MenuItem</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>720</x>
-      <y>484</y>
-      <w>104</w>
-      <h>16</h>
+      <x>1274</x>
+      <y>784</y>
+      <w>182</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 getMansione()</panel_attributes>
@@ -764,10 +762,10 @@ getMansione()</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>788</x>
-      <y>464</y>
-      <w>64</w>
-      <h>16</h>
+      <x>1393</x>
+      <y>749</y>
+      <w>112</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>menuItem.recipe:
 Recipe</panel_attributes>
@@ -776,10 +774,10 @@ Recipe</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>816</x>
-      <y>476</y>
-      <w>12</w>
-      <h>48</h>
+      <x>1442</x>
+      <y>770</y>
+      <w>21</w>
+      <h>84</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
@@ -787,10 +785,10 @@ Recipe</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>816</x>
-      <y>492</y>
-      <w>8</w>
-      <h>20</h>
+      <x>1442</x>
+      <y>798</y>
+      <w>14</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -798,10 +796,10 @@ Recipe</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>532</x>
-      <y>540</y>
-      <w>496</w>
-      <h>64</h>
+      <x>924</x>
+      <y>882</y>
+      <w>889</w>
+      <h>112</h>
     </coordinates>
     <panel_attributes>LOOP for each mansione in mansioni
 fg=blue
@@ -811,21 +809,21 @@ fg=blue
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>916</x>
-      <y>480</y>
-      <w>12</w>
-      <h>140</h>
+      <x>1617</x>
+      <y>763</y>
+      <w>21</w>
+      <h>259</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;330.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;350.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>720</x>
-      <y>504</y>
-      <w>104</w>
-      <h>16</h>
+      <x>1274</x>
+      <y>819</y>
+      <w>182</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 mansione</panel_attributes>
@@ -834,10 +832,10 @@ mansione</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>580</x>
-      <y>568</y>
-      <w>400</w>
-      <h>16</h>
+      <x>1029</x>
+      <y>931</y>
+      <w>700</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 preparation</panel_attributes>
@@ -846,10 +844,10 @@ preparation</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>916</x>
-      <y>592</y>
-      <w>8</w>
-      <h>8</h>
+      <x>1617</x>
+      <y>973</y>
+      <w>14</w>
+      <h>14</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -857,10 +855,10 @@ preparation</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>580</x>
-      <y>584</y>
-      <w>344</w>
-      <h>16</h>
+      <x>1029</x>
+      <y>959</y>
+      <w>602</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 add(preparation)</panel_attributes>
@@ -869,10 +867,10 @@ add(preparation)</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>940</x>
-      <y>544</y>
-      <w>68</w>
-      <h>16</h>
+      <x>1659</x>
+      <y>889</y>
+      <w>119</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>mansione.preparation:
 Preparation</panel_attributes>
@@ -881,10 +879,10 @@ Preparation</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>972</x>
-      <y>556</y>
-      <w>12</w>
-      <h>32</h>
+      <x>1715</x>
+      <y>910</y>
+      <w>21</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
@@ -892,10 +890,10 @@ Preparation</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>972</x>
-      <y>564</y>
-      <w>8</w>
-      <h>12</h>
+      <x>1715</x>
+      <y>924</y>
+      <w>14</w>
+      <h>21</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -903,34 +901,34 @@ Preparation</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>580</x>
-      <y>316</y>
-      <w>116</w>
-      <h>16</h>
+      <x>1029</x>
+      <y>476</y>
+      <w>196</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 freeItems</panel_attributes>
-    <additional_attributes>10.0;20.0;270.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;260.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>404</x>
-      <y>228</y>
-      <w>92</w>
-      <h>16</h>
+      <x>707</x>
+      <y>343</y>
+      <w>175</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-getMansioni()</panel_attributes>
-    <additional_attributes>10.0;20.0;210.0;20.0</additional_attributes>
+getMenu()</panel_attributes>
+    <additional_attributes>10.0;20.0;230.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>492</x>
-      <y>268</y>
-      <w>92</w>
-      <h>16</h>
+      <x>875</x>
+      <y>385</y>
+      <w>161</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 getMenuItems()</panel_attributes>
@@ -939,10 +937,10 @@ getMenuItems()</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>888</x>
-      <y>468</y>
-      <w>64</w>
-      <h>16</h>
+      <x>1568</x>
+      <y>742</y>
+      <w>112</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>mansioni
 ArrayList&lt;Mansione&gt;</panel_attributes>
@@ -951,10 +949,10 @@ ArrayList&lt;Mansione&gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>580</x>
-      <y>516</y>
-      <w>344</w>
-      <h>16</h>
+      <x>1029</x>
+      <y>840</y>
+      <w>602</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 add(mansione)</panel_attributes>
@@ -963,10 +961,10 @@ add(mansione)</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>916</x>
-      <y>524</y>
-      <w>8</w>
-      <h>8</h>
+      <x>1617</x>
+      <y>854</y>
+      <w>14</w>
+      <h>14</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -974,10 +972,10 @@ add(mansione)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>580</x>
-      <y>508</y>
-      <w>144</w>
-      <h>16</h>
+      <x>1029</x>
+      <y>826</y>
+      <w>252</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 mansione</panel_attributes>
@@ -986,10 +984,10 @@ mansione</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>580</x>
-      <y>296</y>
-      <w>112</w>
-      <h>16</h>
+      <x>1029</x>
+      <y>441</y>
+      <w>196</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 get()</panel_attributes>
@@ -998,10 +996,10 @@ get()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>580</x>
-      <y>332</y>
-      <w>192</w>
-      <h>16</h>
+      <x>1029</x>
+      <y>518</y>
+      <w>336</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 get()</panel_attributes>
@@ -1010,10 +1008,10 @@ get()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>404</x>
-      <y>636</y>
-      <w>256</w>
-      <h>16</h>
+      <x>707</x>
+      <y>1050</y>
+      <w>448</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 create</panel_attributes>
@@ -1022,10 +1020,10 @@ create</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>652</x>
-      <y>636</y>
-      <w>84</w>
-      <h>20</h>
+      <x>1141</x>
+      <y>1043</y>
+      <w>147</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>foglioRiepilogativo.compiti:
 ArrayList&lt;Compito&gt;</panel_attributes>
@@ -1034,21 +1032,21 @@ ArrayList&lt;Compito&gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>692</x>
-      <y>652</y>
-      <w>12</w>
-      <h>128</h>
+      <x>1211</x>
+      <y>1071</y>
+      <w>21</w>
+      <h>231</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;300.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;310.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>404</x>
-      <y>672</y>
-      <w>140</w>
-      <h>16</h>
+      <x>707</x>
+      <y>1113</y>
+      <w>245</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 create(mansione)</panel_attributes>
@@ -1057,10 +1055,10 @@ create(mansione)</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>536</x>
-      <y>672</y>
-      <w>40</w>
-      <h>16</h>
+      <x>938</x>
+      <y>1113</y>
+      <w>70</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>compito:
 Compito</panel_attributes>
@@ -1069,21 +1067,21 @@ Compito</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>552</x>
-      <y>684</y>
-      <w>12</w>
-      <h>100</h>
+      <x>966</x>
+      <y>1134</y>
+      <w>21</w>
+      <h>154</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;230.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;200.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>552</x>
-      <y>696</y>
-      <w>8</w>
-      <h>48</h>
+      <x>966</x>
+      <y>1155</y>
+      <w>14</w>
+      <h>84</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -1091,10 +1089,10 @@ Compito</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>556</x>
-      <y>692</y>
-      <w>120</w>
-      <h>56</h>
+      <x>973</x>
+      <y>1148</y>
+      <w>210</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 this.titolo = mansione.titolo
@@ -1110,10 +1108,10 @@ this.mansione = mansione
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>356</x>
-      <y>660</y>
-      <w>396</w>
-      <h>116</h>
+      <x>497</x>
+      <y>1092</y>
+      <w>819</w>
+      <h>203</h>
     </coordinates>
     <panel_attributes>LOOP for each mansione in mansioni
 fg=blue
@@ -1123,10 +1121,10 @@ fg=blue
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>692</x>
-      <y>756</y>
-      <w>8</w>
-      <h>8</h>
+      <x>1211</x>
+      <y>1253</y>
+      <w>14</w>
+      <h>14</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -1134,10 +1132,10 @@ fg=blue
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>404</x>
-      <y>748</y>
-      <w>296</w>
-      <h>16</h>
+      <x>707</x>
+      <y>1239</y>
+      <w>518</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 add(compito)</panel_attributes>
@@ -1146,10 +1144,10 @@ add(compito)</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>244</x>
-      <y>844</y>
-      <w>8</w>
-      <h>24</h>
+      <x>427</x>
+      <y>1428</y>
+      <w>14</w>
+      <h>42</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -1157,10 +1155,10 @@ add(compito)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>244</x>
-      <y>820</y>
-      <w>100</w>
-      <h>32</h>
+      <x>427</x>
+      <y>1386</y>
+      <w>175</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 notifyFoglioCreato(foglio)</panel_attributes>
@@ -1169,10 +1167,10 @@ notifyFoglioCreato(foglio)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>580</x>
-      <y>556</y>
-      <w>400</w>
-      <h>16</h>
+      <x>1029</x>
+      <y>910</y>
+      <w>700</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 get()</panel_attributes>
@@ -1181,10 +1179,10 @@ get()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>404</x>
-      <y>736</y>
-      <w>156</w>
-      <h>16</h>
+      <x>707</x>
+      <y>1225</y>
+      <w>273</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 compito</panel_attributes>
@@ -1193,10 +1191,10 @@ compito</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>116</x>
-      <y>852</y>
-      <w>1036</w>
-      <h>28</h>
+      <x>203</x>
+      <y>1442</y>
+      <w>1974</w>
+      <h>49</h>
     </coordinates>
     <panel_attributes>LOOP for all er in eventReceivers
 fg=blue
@@ -1207,13 +1205,82 @@ fg=blue
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>244</x>
-      <y>788</y>
-      <w>84</w>
-      <h>32</h>
+      <x>427</x>
+      <y>1330</y>
+      <w>147</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 this.foglio = foglio</panel_attributes>
     <additional_attributes>10.0;10.0;60.0;10.0;60.0;60.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>707</x>
+      <y>189</y>
+      <w>1022</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;
+getUser()</panel_attributes>
+    <additional_attributes>10.0;20.0;1440.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>1659</x>
+      <y>84</y>
+      <w>119</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>user:
+LoginManager</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1715</x>
+      <y>112</y>
+      <w>21</w>
+      <h>161</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;210.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>1715</x>
+      <y>203</y>
+      <w>14</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>707</x>
+      <y>231</y>
+      <w>1022</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+user</panel_attributes>
+    <additional_attributes>10.0;20.0;1440.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2135</x>
+      <y>112</y>
+      <w>21</w>
+      <h>1407</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;1990.0</additional_attributes>
   </element>
 </diagram>

@@ -41,10 +41,10 @@ assegnaCompito(compito, turno, ch, porzioni, tempo)</panel_attributes>
       <x>276</x>
       <y>96</y>
       <w>18</w>
-      <h>720</h>
+      <h>684</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;1180.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;1120.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -62,7 +62,7 @@ CompitoManager</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>444</x>
-      <y>90</y>
+      <y>78</y>
       <w>78</w>
       <h>24</h>
     </coordinates>
@@ -74,12 +74,12 @@ Compito</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>474</x>
-      <y>108</y>
+      <y>96</y>
       <w>18</w>
-      <h>708</h>
+      <h>684</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;1160.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;1120.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
@@ -87,7 +87,7 @@ Compito</panel_attributes>
       <x>276</x>
       <y>120</y>
       <w>12</w>
-      <h>618</h>
+      <h>594</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -107,19 +107,19 @@ Compito</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>282</x>
-      <y>594</y>
-      <w>186</w>
+      <y>552</y>
+      <w>216</w>
       <h>48</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-notifyCompitoAssegnato(compito)</panel_attributes>
+notifyCompitoAssegnato(compito, turno)</panel_attributes>
     <additional_attributes>10.0;10.0;60.0;10.0;60.0;60.0;20.0;60.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
       <x>282</x>
-      <y>630</y>
+      <y>588</y>
       <w>12</w>
       <h>54</h>
     </coordinates>
@@ -130,7 +130,7 @@ notifyCompitoAssegnato(compito)</panel_attributes>
     <id>UMLFrame</id>
     <coordinates>
       <x>126</x>
-      <y>660</y>
+      <y>618</y>
       <w>1152</w>
       <h>66</h>
     </coordinates>
@@ -144,12 +144,12 @@ fg=blue
     <id>Relation</id>
     <coordinates>
       <x>288</x>
-      <y>672</y>
+      <y>630</y>
       <w>942</w>
       <h>24</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-updateCompitoAssegnato(compito)</panel_attributes>
+updateCompitoAssegnato(compito, turno)</panel_attributes>
     <additional_attributes>10.0;20.0;1550.0;20.0</additional_attributes>
   </element>
   <element>
@@ -171,16 +171,16 @@ Compito</panel_attributes>
       <x>1218</x>
       <y>108</y>
       <w>18</w>
-      <h>708</h>
+      <h>672</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;1160.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;1100.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
       <x>1218</x>
-      <y>684</y>
+      <y>642</y>
       <w>12</w>
       <h>12</h>
     </coordinates>
@@ -191,7 +191,7 @@ Compito</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>18</x>
-      <y>726</y>
+      <y>702</y>
       <w>270</w>
       <h>24</h>
     </coordinates>
@@ -203,7 +203,7 @@ compito</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>18</x>
-      <y>756</y>
+      <y>738</y>
       <w>270</w>
       <h>30</h>
     </coordinates>
@@ -219,15 +219,12 @@ fg=red
       <x>102</x>
       <y>138</y>
       <w>1206</w>
-      <h>666</h>
+      <h>630</h>
     </coordinates>
     <panel_attributes>ALT [mgr.foglio]
 fg=#761C8C
 layer=-1
 --
-
-
-
 
 
 
@@ -418,7 +415,7 @@ isChAssigned(c)
     <id>UMLGeneric</id>
     <coordinates>
       <x>858</x>
-      <y>90</y>
+      <y>78</y>
       <w>90</w>
       <h>24</h>
     </coordinates>
@@ -430,12 +427,12 @@ TurnoDiCucina</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>894</x>
-      <y>108</y>
+      <y>96</y>
       <w>18</w>
-      <h>708</h>
+      <h>684</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;1160.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;1120.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
@@ -452,7 +449,7 @@ TurnoDiCucina</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>996</x>
-      <y>90</y>
+      <y>78</y>
       <w>90</w>
       <h>24</h>
     </coordinates>
@@ -464,12 +461,12 @@ ArrayList&lt;Cuoco&gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1038</x>
-      <y>108</y>
+      <y>96</y>
       <w>18</w>
-      <h>708</h>
+      <h>684</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;1160.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;1120.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -536,7 +533,7 @@ true</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>708</x>
-      <y>90</y>
+      <y>78</y>
       <w>84</w>
       <h>24</h>
     </coordinates>
@@ -548,12 +545,12 @@ ArrayList&lt;Cuoco&gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>744</x>
-      <y>108</y>
+      <y>96</y>
       <w>18</w>
-      <h>702</h>
+      <h>684</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;1150.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;1120.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>

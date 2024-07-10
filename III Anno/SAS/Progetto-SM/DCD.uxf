@@ -18,7 +18,7 @@
       <x>36</x>
       <y>48</y>
       <w>414</w>
-      <h>186</h>
+      <h>162</h>
     </coordinates>
     <panel_attributes>FoglioRiepilogativoManager
 --
@@ -29,7 +29,6 @@
 +removeReceiver(er: FoglioRiepilofativoEventReceiver)
 -notifyCompitoAggiunto(compito: Compito)
 -notifyFoglioCreato(foglio: Foglio)
--notifyCompitoAssegnato(compito: Compito, turno: Turno)
 -notifyCompitoDeleted(foglio: FoglioRiepilogativo)
 --
 *operations methods*
@@ -37,7 +36,6 @@
 +modificaFoglioRiepilogativo(foglio: FoglioRiepilogativo)
 +eliminaFoglioRiepilogativo(foglio: FoglioRiepilogativo)
 +aggiungiCompito(titolo: String, daPreparare: boolean, completato: boolean, mansione: Mansione)
-+assegnaCompito(compito: Compito, turno: Turno, ch?: Cuoco, porzioni?: String, tempo?: int)
 +aggiornaCompito(compito: Compito, turno?: Turno, ch?: Cuoco, porzioni?: String, tempo?: int)
 +ordinaCompiti(ordinamento: String)
 </panel_attributes>
@@ -159,7 +157,7 @@ m1=1</panel_attributes>
       <x>36</x>
       <y>294</y>
       <w>420</w>
-      <h>90</h>
+      <h>78</h>
     </coordinates>
     <panel_attributes>FoglioRiepilogativoEventReceiver
 {interface}
@@ -168,22 +166,21 @@ m1=1</panel_attributes>
 +updateFoglioModificato(foglio)
 +updateFoglioDeleted(foglio: FoglioRiepilogativo)
 +updateCompitoAggiunto(compito: Compito)
-+updateCompitoAggiornato(compito: Compito)
-+updateCompitoAssegnato(compito : Compito, turno: Turno)</panel_attributes>
++updateCompitoAggiornato(compito: Compito)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>228</x>
-      <y>228</y>
+      <y>204</y>
       <w>78</w>
-      <h>78</h>
+      <h>102</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 eventReceivers
 m1=0..n</panel_attributes>
-    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;150.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -457,7 +454,7 @@ fg=gray</panel_attributes>
       <x>36</x>
       <y>414</y>
       <w>408</w>
-      <h>102</h>
+      <h>96</h>
     </coordinates>
     <panel_attributes>CompitoController
 --
@@ -489,7 +486,7 @@ m1=0..n</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>36</x>
-      <y>594</y>
+      <y>570</y>
       <w>420</w>
       <h>54</h>
     </coordinates>
@@ -503,13 +500,13 @@ m1=0..n</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>210</x>
-      <y>510</y>
+      <y>504</y>
       <w>78</w>
-      <h>96</h>
+      <h>78</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 eventReceivers
 m1=0..n</panel_attributes>
-    <additional_attributes>10.0;140.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>
