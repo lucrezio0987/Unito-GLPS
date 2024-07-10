@@ -32,7 +32,7 @@
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-consultaTabellone()</panel_attributes>
+showBoard(event)</panel_attributes>
     <additional_attributes>10.0;20.0;370.0;20.0</additional_attributes>
   </element>
   <element>
@@ -77,8 +77,8 @@ TabelloneManager</panel_attributes>
       <w>120</w>
       <h>40</h>
     </coordinates>
-    <panel_attributes>tab: 
-Tabellone</panel_attributes>
+    <panel_attributes>board: 
+Board</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -112,7 +112,7 @@ Tabellone</panel_attributes>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-consultaTabellone()</panel_attributes>
+showBoard(event)</panel_attributes>
     <additional_attributes>10.0;20.0;270.0;20.0</additional_attributes>
   </element>
   <element>
@@ -135,8 +135,8 @@ get()</panel_attributes>
       <w>140</w>
       <h>40</h>
     </coordinates>
-    <panel_attributes>this.turni:
-ArrayList&lt;Turno&gt;</panel_attributes>
+    <panel_attributes>this.shifts:
+ArrayList&lt;Shift&gt;</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -170,7 +170,7 @@ ArrayList&lt;Turno&gt;</panel_attributes>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
-turni</panel_attributes>
+shifts</panel_attributes>
     <additional_attributes>10.0;20.0;240.0;20.0</additional_attributes>
   </element>
   <element>
@@ -182,7 +182,7 @@ turni</panel_attributes>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
-turni</panel_attributes>
+shifts</panel_attributes>
     <additional_attributes>10.0;20.0;270.0;20.0</additional_attributes>
   </element>
   <element>
@@ -194,7 +194,7 @@ turni</panel_attributes>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
-turni</panel_attributes>
+shifts</panel_attributes>
     <additional_attributes>10.0;20.0;370.0;20.0</additional_attributes>
   </element>
   <element>

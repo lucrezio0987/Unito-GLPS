@@ -32,7 +32,7 @@
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-aggiungiCompito(titolo, daPreparare, completato, mansione)</panel_attributes>
+addJob(title, prepare, completed, duty)</panel_attributes>
     <additional_attributes>10.0;20.0;430.0;20.0</additional_attributes>
   </element>
   <element>
@@ -55,20 +55,19 @@ aggiungiCompito(titolo, daPreparare, completato, mansione)</panel_attributes>
       <h>28</h>
     </coordinates>
     <panel_attributes>mgr: 
-FoglioRiepilogativoManager</panel_attributes>
+SummarySheetManager</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>343</x>
-      <y>147</y>
+      <y>154</y>
       <w>294</w>
-      <h>35</h>
+      <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-aggiungiCompito(titolo, daPreparare, 
-completato, mansione)</panel_attributes>
+addJob(title, prepare, completed, duty)</panel_attributes>
     <additional_attributes>10.0;20.0;400.0;20.0</additional_attributes>
   </element>
   <element>
@@ -90,8 +89,8 @@ completato, mansione)</panel_attributes>
       <w>112</w>
       <h>35</h>
     </coordinates>
-    <panel_attributes>foglio:
-FoglioRiepilogativo</panel_attributes>
+    <panel_attributes>sheet:
+SummarySheet</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -103,8 +102,8 @@ FoglioRiepilogativo</panel_attributes>
       <h>35</h>
     </coordinates>
     <panel_attributes>lt=.&gt;
-create(titolo, daPreparare, 
-completato, mansione)</panel_attributes>
+create(title, prepare, 
+completed, duty)</panel_attributes>
     <additional_attributes>10.0;20.0;330.0;20.0</additional_attributes>
   </element>
   <element>
@@ -115,8 +114,8 @@ completato, mansione)</panel_attributes>
       <w>91</w>
       <h>28</h>
     </coordinates>
-    <panel_attributes>compito:
-Compito</panel_attributes>
+    <panel_attributes>job:
+Job</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -135,16 +134,16 @@ Compito</panel_attributes>
     <coordinates>
       <x>903</x>
       <y>196</y>
-      <w>217</w>
+      <w>196</w>
       <h>77</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-this.titolo = titolo
-this.tempo = mansione.tempo
-this.porzioni = mansione.porzioni
-this.mansione = mansione
-this.daPreparare = daPreparare
-this.completato = completato</panel_attributes>
+this.title = title
+this.time = duty.time
+this.portions = duty.portions
+this.duty = duty
+this.prepare = prepare
+this.completed = completed</panel_attributes>
     <additional_attributes>10.0;10.0;60.0;10.0;60.0;80.0;10.0;80.0</additional_attributes>
   </element>
   <element>
@@ -162,9 +161,9 @@ this.completato = completato</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>623</x>
-      <y>161</y>
+      <y>168</y>
       <w>14</w>
-      <h>175</h>
+      <h>168</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -177,8 +176,8 @@ this.completato = completato</panel_attributes>
       <w>154</w>
       <h>28</h>
     </coordinates>
-    <panel_attributes>foglio.compiti : 
-ArrayList&lt;Compito&gt;</panel_attributes>
+    <panel_attributes>sheet.jobs : 
+ArrayList&lt;Job&gt;</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -201,7 +200,7 @@ ArrayList&lt;Compito&gt;</panel_attributes>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-add(compito)</panel_attributes>
+add(job)</panel_attributes>
     <additional_attributes>10.0;20.0;840.0;20.0</additional_attributes>
   </element>
   <element>
@@ -224,7 +223,7 @@ add(compito)</panel_attributes>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
-compito</panel_attributes>
+job</panel_attributes>
     <additional_attributes>10.0;20.0;400.0;20.0</additional_attributes>
   </element>
   <element>
@@ -247,7 +246,7 @@ compito</panel_attributes>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
-compito</panel_attributes>
+job</panel_attributes>
     <additional_attributes>10.0;20.0;380.0;20.0</additional_attributes>
   </element>
   <element>
@@ -255,11 +254,11 @@ compito</panel_attributes>
     <coordinates>
       <x>343</x>
       <y>357</y>
-      <w>210</w>
+      <w>147</w>
       <h>56</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-notifyCompitoAggiunto(compito)</panel_attributes>
+notifyJobAdded(job)</panel_attributes>
     <additional_attributes>10.0;10.0;60.0;10.0;60.0;60.0;20.0;60.0</additional_attributes>
   </element>
   <element>
@@ -296,7 +295,7 @@ fg=blue
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-updateCompitoAggiunto(compito)</panel_attributes>
+updateJobAdded(job)</panel_attributes>
     <additional_attributes>10.0;20.0;1090.0;20.0</additional_attributes>
   </element>
   <element>
@@ -308,8 +307,8 @@ updateCompitoAggiunto(compito)</panel_attributes>
       <h>42</h>
     </coordinates>
     <panel_attributes>er:
-FoglioRiepilogativoEventReceiver:
-FoglioRiepilogativo</panel_attributes>
+SummarySheetEventReceiver:
+SummarySheet</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -343,7 +342,7 @@ FoglioRiepilogativo</panel_attributes>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
-compito</panel_attributes>
+job</panel_attributes>
     <additional_attributes>10.0;20.0;430.0;20.0</additional_attributes>
   </element>
   <element>
@@ -368,7 +367,7 @@ fg=red
       <w>1225</w>
       <h>420</h>
     </coordinates>
-    <panel_attributes>ALT [mgr.foglio]
+    <panel_attributes>ALT [mgr.sheet]
 fg=#761C8C
 layer=-1
 --

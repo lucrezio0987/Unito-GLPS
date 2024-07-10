@@ -46,7 +46,7 @@ fontsize=18</panel_attributes>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-creaFoglio(servizio)</panel_attributes>
+createSheet(service)</panel_attributes>
     <additional_attributes>10.0;20.0;510.0;20.0</additional_attributes>
   </element>
   <element>
@@ -58,7 +58,7 @@ creaFoglio(servizio)</panel_attributes>
       <h>42</h>
     </coordinates>
     <panel_attributes>mgr: 
-FoglioRiepilogativoManager</panel_attributes>
+SummarySheetManager</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -92,7 +92,7 @@ FoglioRiepilogativoManager</panel_attributes>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-create(servizio)</panel_attributes>
+create(service)</panel_attributes>
     <additional_attributes>10.0;20.0;330.0;20.0</additional_attributes>
   </element>
   <element>
@@ -103,8 +103,8 @@ create(servizio)</panel_attributes>
       <w>98</w>
       <h>28</h>
     </coordinates>
-    <panel_attributes>foglio:
-FoglioRiepilogativo</panel_attributes>
+    <panel_attributes>sheet:
+SummarySheet</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -134,11 +134,11 @@ FoglioRiepilogativo</panel_attributes>
     <coordinates>
       <x>707</x>
       <y>259</y>
-      <w>196</w>
+      <w>182</w>
       <h>49</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-this.servizio = servizio.nome
+this.service = service.name
 this.owner = user</panel_attributes>
     <additional_attributes>10.0;10.0;60.0;10.0;60.0;50.0;10.0;50.0</additional_attributes>
   </element>
@@ -209,7 +209,7 @@ FoglioRiepilogativo</panel_attributes>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-updateFoglioRiepilogativoCreato(foglio)</panel_attributes>
+updateSheetCreated(sheet)</panel_attributes>
     <additional_attributes>10.0;20.0;2430.0;20.0</additional_attributes>
   </element>
   <element>
@@ -221,7 +221,7 @@ updateFoglioRiepilogativoCreato(foglio)</panel_attributes>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
-foglio</panel_attributes>
+sheet</panel_attributes>
     <additional_attributes>10.0;20.0;510.0;20.0</additional_attributes>
   </element>
   <element>
@@ -240,12 +240,12 @@ fg=red</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>175</x>
+      <x>147</x>
       <y>147</y>
-      <w>2072</w>
+      <w>2100</w>
       <h>1435</h>
     </coordinates>
-    <panel_attributes>ALT [ev contains servizio &amp;&amp; ch isAssigned(ev)]
+    <panel_attributes>ALT [ev contains service &amp;&amp; cook isCookAssigned(ev)]
 fg=#761C8C
 lw=2
 --
@@ -383,8 +383,8 @@ lw=2
       <w>70</w>
       <h>28</h>
     </coordinates>
-    <panel_attributes>servizio:
-Servizio</panel_attributes>
+    <panel_attributes>service:
+Service</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -430,7 +430,7 @@ ArrayList&lt;MenuItems&gt;</panel_attributes>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
-foglio</panel_attributes>
+sheet</panel_attributes>
     <additional_attributes>10.0;20.0;390.0;20.0</additional_attributes>
   </element>
   <element>
@@ -442,7 +442,7 @@ foglio</panel_attributes>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
-mansioni</panel_attributes>
+duties</panel_attributes>
     <additional_attributes>10.0;20.0;230.0;20.0</additional_attributes>
   </element>
   <element>
@@ -685,7 +685,7 @@ addAll(freeItems)</panel_attributes>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
-mansioni</panel_attributes>
+duties</panel_attributes>
     <additional_attributes>10.0;20.0;210.0;20.0</additional_attributes>
   </element>
   <element>
@@ -697,7 +697,7 @@ mansioni</panel_attributes>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-getMansioni()</panel_attributes>
+getDuty()</panel_attributes>
     <additional_attributes>10.0;20.0;340.0;20.0</additional_attributes>
   </element>
   <element>
@@ -756,7 +756,7 @@ MenuItem</panel_attributes>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-getMansione()</panel_attributes>
+getDuty()</panel_attributes>
     <additional_attributes>10.0;20.0;240.0;20.0</additional_attributes>
   </element>
   <element>
@@ -801,7 +801,7 @@ Recipe</panel_attributes>
       <w>889</w>
       <h>112</h>
     </coordinates>
-    <panel_attributes>LOOP for each mansione in mansioni
+    <panel_attributes>LOOP for each duty in duties
 fg=blue
 </panel_attributes>
     <additional_attributes/>
@@ -826,7 +826,7 @@ fg=blue
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
-mansione</panel_attributes>
+duty</panel_attributes>
     <additional_attributes>10.0;20.0;240.0;20.0</additional_attributes>
   </element>
   <element>
@@ -872,7 +872,7 @@ add(preparation)</panel_attributes>
       <w>119</w>
       <h>28</h>
     </coordinates>
-    <panel_attributes>mansione.preparation:
+    <panel_attributes>duty.preparation:
 Preparation</panel_attributes>
     <additional_attributes/>
   </element>
@@ -942,8 +942,8 @@ getMenuItems()</panel_attributes>
       <w>112</w>
       <h>28</h>
     </coordinates>
-    <panel_attributes>mansioni
-ArrayList&lt;Mansione&gt;</panel_attributes>
+    <panel_attributes>duties
+ArrayList&lt;Duty&gt;</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -955,7 +955,7 @@ ArrayList&lt;Mansione&gt;</panel_attributes>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-add(mansione)</panel_attributes>
+add(duty)</panel_attributes>
     <additional_attributes>10.0;20.0;840.0;20.0</additional_attributes>
   </element>
   <element>
@@ -978,7 +978,7 @@ add(mansione)</panel_attributes>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
-mansione</panel_attributes>
+duty</panel_attributes>
     <additional_attributes>10.0;20.0;340.0;20.0</additional_attributes>
   </element>
   <element>
@@ -1025,8 +1025,8 @@ create</panel_attributes>
       <w>147</w>
       <h>35</h>
     </coordinates>
-    <panel_attributes>foglioRiepilogativo.compiti:
-ArrayList&lt;Compito&gt;</panel_attributes>
+    <panel_attributes>sheet.jobs:
+ArrayList&lt;Job&gt;</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -1049,7 +1049,7 @@ ArrayList&lt;Compito&gt;</panel_attributes>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-create(mansione)</panel_attributes>
+create(duty)</panel_attributes>
     <additional_attributes>10.0;20.0;330.0;20.0</additional_attributes>
   </element>
   <element>
@@ -1060,8 +1060,8 @@ create(mansione)</panel_attributes>
       <w>70</w>
       <h>28</h>
     </coordinates>
-    <panel_attributes>compito:
-Compito</panel_attributes>
+    <panel_attributes>job:
+Job</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -1091,16 +1091,16 @@ Compito</panel_attributes>
     <coordinates>
       <x>973</x>
       <y>1148</y>
-      <w>210</w>
+      <w>189</w>
       <h>98</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-this.titolo = mansione.titolo
-this.tempo = mansione.tempo
-this.porzioni = mansione.porzioni
-this.daPreparare = true
-this.completato = false
-this.mansione = mansione
+this.title = duty.title
+this.time = duty.time
+this.portions = duty.portions
+this.prepare = true
+this.completed = false
+this.duty = duty
 
 </panel_attributes>
     <additional_attributes>10.0;20.0;50.0;20.0;50.0;110.0;10.0;110.0</additional_attributes>
@@ -1133,12 +1133,12 @@ fg=blue
     <id>Relation</id>
     <coordinates>
       <x>707</x>
-      <y>1239</y>
+      <y>1246</y>
       <w>518</w>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-add(compito)</panel_attributes>
+add(job)</panel_attributes>
     <additional_attributes>10.0;20.0;720.0;20.0</additional_attributes>
   </element>
   <element>
@@ -1161,7 +1161,7 @@ add(compito)</panel_attributes>
       <h>56</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-notifyFoglioCreato(foglio)</panel_attributes>
+notifySheetCreated(sheet)</panel_attributes>
     <additional_attributes>10.0;10.0;60.0;10.0;60.0;60.0;20.0;60.0</additional_attributes>
   </element>
   <element>
@@ -1185,7 +1185,7 @@ get()</panel_attributes>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
-compito</panel_attributes>
+job</panel_attributes>
     <additional_attributes>10.0;20.0;370.0;20.0</additional_attributes>
   </element>
   <element>
@@ -1207,11 +1207,11 @@ fg=blue
     <coordinates>
       <x>427</x>
       <y>1330</y>
-      <w>147</w>
+      <w>140</w>
       <h>56</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-this.foglio = foglio</panel_attributes>
+this.sheet = sheet</panel_attributes>
     <additional_attributes>10.0;10.0;60.0;10.0;60.0;60.0;10.0;60.0</additional_attributes>
   </element>
   <element>

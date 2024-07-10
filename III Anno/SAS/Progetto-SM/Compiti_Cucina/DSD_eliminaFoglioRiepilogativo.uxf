@@ -5,7 +5,7 @@
     <id>UMLPackage</id>
     <coordinates>
       <x>70</x>
-      <y>119</y>
+      <y>112</y>
       <w>70</w>
       <h>49</h>
     </coordinates>
@@ -16,19 +16,19 @@
     <id>UMLGeneric</id>
     <coordinates>
       <x>259</x>
-      <y>133</y>
+      <y>126</y>
       <w>105</w>
       <h>28</h>
     </coordinates>
     <panel_attributes>mgr:
-FoglioRiepilogativo</panel_attributes>
+SummarySheet</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>301</x>
-      <y>154</y>
+      <y>147</y>
       <w>21</w>
       <h>595</h>
     </coordinates>
@@ -39,7 +39,7 @@ FoglioRiepilogativo</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>91</x>
-      <y>161</y>
+      <y>154</y>
       <w>21</w>
       <h>581</h>
     </coordinates>
@@ -50,19 +50,19 @@ FoglioRiepilogativo</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>91</x>
-      <y>175</y>
+      <y>168</y>
       <w>224</w>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-eliminaFoglioRiepilogativo(foglio)</panel_attributes>
+deleteSheet(sheet)</panel_attributes>
     <additional_attributes>10.0;20.0;300.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
       <x>301</x>
-      <y>189</y>
+      <y>182</y>
       <w>14</w>
       <h>525</h>
     </coordinates>
@@ -73,19 +73,19 @@ eliminaFoglioRiepilogativo(foglio)</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>497</x>
-      <y>133</y>
+      <y>126</y>
       <w>98</w>
       <h>28</h>
     </coordinates>
-    <panel_attributes>foglio:
-FoglioRiepilogativo</panel_attributes>
+    <panel_attributes>sheet:
+SummarySheet</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>539</x>
-      <y>154</y>
+      <y>147</y>
       <w>21</w>
       <h>595</h>
     </coordinates>
@@ -96,19 +96,19 @@ FoglioRiepilogativo</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>700</x>
-      <y>133</y>
+      <y>126</y>
       <w>105</w>
       <h>35</h>
     </coordinates>
-    <panel_attributes>this.compiti:
-ArrayList&lt;Compito&gt;</panel_attributes>
+    <panel_attributes>this.jobs:
+ArrayList&lt;Job&gt;</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>742</x>
-      <y>161</y>
+      <y>154</y>
       <w>21</w>
       <h>588</h>
     </coordinates>
@@ -119,7 +119,7 @@ ArrayList&lt;Compito&gt;</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>742</x>
-      <y>350</y>
+      <y>343</y>
       <w>14</w>
       <h>21</h>
     </coordinates>
@@ -130,7 +130,7 @@ ArrayList&lt;Compito&gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>546</x>
-      <y>336</y>
+      <y>329</y>
       <w>210</w>
       <h>28</h>
     </coordinates>
@@ -142,19 +142,19 @@ get()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>546</x>
-      <y>357</y>
+      <y>350</y>
       <w>210</w>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
-compiti</panel_attributes>
+jobs</panel_attributes>
     <additional_attributes>10.0;20.0;280.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
       <x>742</x>
-      <y>399</y>
+      <y>392</y>
       <w>14</w>
       <h>21</h>
     </coordinates>
@@ -165,19 +165,19 @@ compiti</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>546</x>
-      <y>385</y>
+      <y>378</y>
       <w>210</w>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-delete(comp)</panel_attributes>
+delete(job)</panel_attributes>
     <additional_attributes>10.0;20.0;280.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>546</x>
-      <y>406</y>
+      <y>399</y>
       <w>210</w>
       <h>28</h>
     </coordinates>
@@ -189,19 +189,19 @@ true</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>308</x>
-      <y>518</y>
-      <w>196</w>
+      <y>511</y>
+      <w>189</w>
       <h>63</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-notifyCompitoDeleted(foglio)</panel_attributes>
+notifyCompitoDeleted(sheet)</panel_attributes>
     <additional_attributes>10.0;10.0;60.0;10.0;60.0;70.0;20.0;70.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>91</x>
-      <y>644</y>
+      <y>637</y>
       <w>224</w>
       <h>28</h>
     </coordinates>
@@ -213,7 +213,7 @@ true</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>308</x>
-      <y>434</y>
+      <y>427</y>
       <w>245</w>
       <h>28</h>
     </coordinates>
@@ -225,11 +225,11 @@ true</panel_attributes>
     <id>UMLFrame</id>
     <coordinates>
       <x>357</x>
-      <y>378</y>
+      <y>371</y>
       <w>420</w>
       <h>56</h>
     </coordinates>
-    <panel_attributes>LOOP for each comp in this.compiti
+    <panel_attributes>LOOP for each job in this.jobs
 fg=blue</panel_attributes>
     <additional_attributes/>
   </element>
@@ -237,19 +237,19 @@ fg=blue</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>308</x>
-      <y>329</y>
+      <y>322</y>
       <w>245</w>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-svuotaFoglioRiepilogativo()</panel_attributes>
+clearSummarySheet()</panel_attributes>
     <additional_attributes>10.0;20.0;330.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLFrame</id>
     <coordinates>
       <x>119</x>
-      <y>231</y>
+      <y>224</y>
       <w>455</w>
       <h>84</h>
     </coordinates>
@@ -267,7 +267,7 @@ lw=2
     <id>Relation</id>
     <coordinates>
       <x>308</x>
-      <y>238</y>
+      <y>231</y>
       <w>245</w>
       <h>28</h>
     </coordinates>
@@ -279,7 +279,7 @@ isNotUsed()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>308</x>
-      <y>259</y>
+      <y>252</y>
       <w>245</w>
       <h>28</h>
     </coordinates>
@@ -291,7 +291,7 @@ true</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>308</x>
-      <y>287</y>
+      <y>280</y>
       <w>245</w>
       <h>28</h>
     </coordinates>
@@ -303,7 +303,7 @@ false</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>308</x>
-      <y>189</y>
+      <y>182</y>
       <w>245</w>
       <h>28</h>
     </coordinates>
@@ -315,7 +315,7 @@ getOwner()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>308</x>
-      <y>210</y>
+      <y>203</y>
       <w>245</w>
       <h>28</h>
     </coordinates>
@@ -327,7 +327,7 @@ owner</panel_attributes>
     <id>UMLFrame</id>
     <coordinates>
       <x>119</x>
-      <y>322</y>
+      <y>315</y>
       <w>896</w>
       <h>413</h>
     </coordinates>
@@ -373,7 +373,7 @@ lw=2
     <id>Relation</id>
     <coordinates>
       <x>91</x>
-      <y>700</y>
+      <y>693</y>
       <w>224</w>
       <h>28</h>
     </coordinates>
@@ -386,7 +386,7 @@ fg=red</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>539</x>
-      <y>203</y>
+      <y>196</y>
       <w>14</w>
       <h>21</h>
     </coordinates>
@@ -397,7 +397,7 @@ fg=red</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>539</x>
-      <y>252</y>
+      <y>245</y>
       <w>14</w>
       <h>49</h>
     </coordinates>
@@ -408,7 +408,7 @@ fg=red</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>539</x>
-      <y>343</y>
+      <y>336</y>
       <w>14</w>
       <h>105</h>
     </coordinates>
@@ -419,7 +419,7 @@ fg=red</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>91</x>
-      <y>294</y>
+      <y>287</y>
       <w>224</w>
       <h>28</h>
     </coordinates>
@@ -432,7 +432,7 @@ fg=red</panel_attributes>
     <id>UMLNote</id>
     <coordinates>
       <x>0</x>
-      <y>49</y>
+      <y>42</y>
       <w>175</w>
       <h>42</h>
     </coordinates>
@@ -446,7 +446,7 @@ fontsize=18</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>1582</x>
-      <y>1813</y>
+      <y>1806</y>
       <w>14</w>
       <h>14</h>
     </coordinates>
@@ -457,7 +457,7 @@ fontsize=18</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>28</x>
-      <y>1799</y>
+      <y>1792</y>
       <w>1568</w>
       <h>28</h>
     </coordinates>
@@ -469,7 +469,7 @@ updateFoglioRiepilogativoCreato(foglioRiepilogativoCtrl.currentFoglio)</panel_at
     <id>UMLGeneric</id>
     <coordinates>
       <x>21</x>
-      <y>1771</y>
+      <y>1764</y>
       <w>14</w>
       <h>42</h>
     </coordinates>
@@ -480,7 +480,7 @@ updateFoglioRiepilogativoCreato(foglioRiepilogativoCtrl.currentFoglio)</panel_at
     <id>Relation</id>
     <coordinates>
       <x>21</x>
-      <y>1729</y>
+      <y>1722</y>
       <w>175</w>
       <h>56</h>
     </coordinates>
@@ -492,20 +492,20 @@ notifyFoglioCreato(foglio)</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>854</x>
-      <y>133</y>
+      <y>126</y>
       <w>168</w>
       <h>42</h>
     </coordinates>
     <panel_attributes>er:
-FoglioRiepilogativoEventReceiver:
-FoglioRiepilogativo</panel_attributes>
+SummarySheetEventReceiver:
+SummarySheet</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
       <x>945</x>
-      <y>609</y>
+      <y>602</y>
       <w>14</w>
       <h>14</h>
     </coordinates>
@@ -516,7 +516,7 @@ FoglioRiepilogativo</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>945</x>
-      <y>168</y>
+      <y>161</y>
       <w>21</w>
       <h>595</h>
     </coordinates>
@@ -527,19 +527,19 @@ FoglioRiepilogativo</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>315</x>
-      <y>595</y>
+      <y>588</y>
       <w>644</w>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-updateFoglioDeleted(foglio)</panel_attributes>
+updateSheetDeleted(sheet)</panel_attributes>
     <additional_attributes>10.0;20.0;900.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
       <x>308</x>
-      <y>567</y>
+      <y>560</y>
       <w>14</w>
       <h>42</h>
     </coordinates>
@@ -550,7 +550,7 @@ updateFoglioDeleted(foglio)</panel_attributes>
     <id>UMLFrame</id>
     <coordinates>
       <x>126</x>
-      <y>588</y>
+      <y>581</y>
       <w>847</w>
       <h>42</h>
     </coordinates>
@@ -564,12 +564,12 @@ fg=blue
     <id>Relation</id>
     <coordinates>
       <x>308</x>
-      <y>462</y>
+      <y>455</y>
       <w>119</w>
       <h>56</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-delete(foglio)</panel_attributes>
+delete(sheet)</panel_attributes>
     <additional_attributes>10.0;10.0;60.0;10.0;60.0;60.0;10.0;60.0</additional_attributes>
   </element>
 </diagram>

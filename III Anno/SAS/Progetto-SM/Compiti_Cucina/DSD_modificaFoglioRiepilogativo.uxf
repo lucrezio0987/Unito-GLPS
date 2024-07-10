@@ -32,7 +32,7 @@
       <h>36</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-modificaFoglioRiepilogativo(foglio)</panel_attributes>
+modifySummarySheet(sheet)</panel_attributes>
     <additional_attributes>10.0;20.0;320.0;20.0</additional_attributes>
   </element>
   <element>
@@ -44,7 +44,7 @@ modificaFoglioRiepilogativo(foglio)</panel_attributes>
       <h>45</h>
     </coordinates>
     <panel_attributes>mgr:
-FoglioRiepilogativo</panel_attributes>
+SummarySheet</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -78,7 +78,7 @@ FoglioRiepilogativo</panel_attributes>
       <h>36</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
-foglio</panel_attributes>
+sheet</panel_attributes>
     <additional_attributes>10.0;20.0;320.0;20.0</additional_attributes>
   </element>
   <element>
@@ -100,11 +100,11 @@ fontsize=18</panel_attributes>
     <coordinates>
       <x>468</x>
       <y>279</y>
-      <w>180</w>
+      <w>171</w>
       <h>63</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-this.foglio = foglio</panel_attributes>
+this.sheet = sheet</panel_attributes>
     <additional_attributes>10.0;10.0;50.0;10.0;50.0;50.0;10.0;50.0</additional_attributes>
   </element>
   <element>
@@ -161,8 +161,8 @@ owner</panel_attributes>
       <w>126</w>
       <h>36</h>
     </coordinates>
-    <panel_attributes>foglio:
-FoglioRiepilogativo</panel_attributes>
+    <panel_attributes>sheet:
+SummarySheet</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -229,7 +229,7 @@ fg=red</panel_attributes>
       <h>36</h>
     </coordinates>
     <panel_attributes>er:
-FoglioRiepilogativoEventReceiver</panel_attributes>
+SummarySheetEventReceiver</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -237,11 +237,11 @@ FoglioRiepilogativoEventReceiver</panel_attributes>
     <coordinates>
       <x>468</x>
       <y>405</y>
-      <w>135</w>
+      <w>216</w>
       <h>63</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-notifyFoglio()</panel_attributes>
+notifySheetModified(sheet)</panel_attributes>
     <additional_attributes>10.0;10.0;40.0;10.0;40.0;50.0;20.0;50.0</additional_attributes>
   </element>
   <element>
@@ -264,7 +264,7 @@ notifyFoglio()</panel_attributes>
       <h>36</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-updateFoglio()</panel_attributes>
+updateSheetModified(sheet)</panel_attributes>
     <additional_attributes>10.0;20.0;580.0;20.0</additional_attributes>
   </element>
   <element>
