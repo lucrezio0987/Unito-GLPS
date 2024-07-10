@@ -1048,7 +1048,7 @@ ArrayList&lt;Job&gt;</panel_attributes>
       <w>245</w>
       <h>28</h>
     </coordinates>
-    <panel_attributes>lt=-&gt;&gt;&gt;
+    <panel_attributes>lt=.&gt;
 create(duty)</panel_attributes>
     <additional_attributes>10.0;20.0;330.0;20.0</additional_attributes>
   </element>

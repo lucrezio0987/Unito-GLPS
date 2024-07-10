@@ -4,7 +4,7 @@
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>96</x>
+      <x>0</x>
       <y>0</y>
       <w>60</w>
       <h>36</h>
@@ -15,7 +15,7 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>120</x>
+      <x>24</x>
       <y>30</y>
       <w>18</w>
       <h>1122</h>
@@ -26,7 +26,7 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>120</x>
+      <x>24</x>
       <y>102</y>
       <w>264</w>
       <h>30</h>
@@ -39,7 +39,7 @@ quantity, time)</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>348</x>
+      <x>252</x>
       <y>78</y>
       <w>84</w>
       <h>24</h>
@@ -51,7 +51,7 @@ SummarySheet</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>372</x>
+      <x>276</x>
       <y>96</y>
       <w>18</w>
       <h>1068</h>
@@ -62,7 +62,7 @@ SummarySheet</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>372</x>
+      <x>276</x>
       <y>114</y>
       <w>12</w>
       <h>948</h>
@@ -73,7 +73,7 @@ SummarySheet</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>378</x>
+      <x>282</x>
       <y>120</y>
       <w>198</w>
       <h>30</h>
@@ -86,7 +86,7 @@ quantity, time)</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>528</x>
+      <x>432</x>
       <y>78</y>
       <w>90</w>
       <h>24</h>
@@ -98,7 +98,7 @@ SummarySheet</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>564</x>
+      <x>468</x>
       <y>96</y>
       <w>18</w>
       <h>924</h>
@@ -109,7 +109,7 @@ SummarySheet</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>564</x>
+      <x>468</x>
       <y>132</y>
       <w>12</w>
       <h>804</h>
@@ -120,7 +120,7 @@ SummarySheet</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>570</x>
+      <x>474</x>
       <y>132</y>
       <w>216</w>
       <h>24</h>
@@ -132,7 +132,7 @@ updateJob(shift, cook, quantity, time)</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>750</x>
+      <x>654</x>
       <y>84</y>
       <w>66</w>
       <h>24</h>
@@ -145,7 +145,7 @@ Job
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>774</x>
+      <x>678</x>
       <y>102</y>
       <w>18</w>
       <h>918</h>
@@ -156,7 +156,7 @@ Job
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>774</x>
+      <x>678</x>
       <y>144</y>
       <w>12</w>
       <h>774</h>
@@ -167,7 +167,7 @@ Job
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>594</x>
+      <x>498</x>
       <y>156</y>
       <w>816</w>
       <h>318</h>
@@ -179,7 +179,7 @@ fg=#128C86</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>780</x>
+      <x>684</x>
       <y>162</y>
       <w>108</w>
       <h>42</h>
@@ -191,7 +191,7 @@ this.shift = shift</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>864</x>
+      <x>768</x>
       <y>84</y>
       <w>96</w>
       <h>30</h>
@@ -203,7 +203,7 @@ ArrayList&lt;Cook&gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>906</x>
+      <x>810</x>
       <y>108</y>
       <w>18</w>
       <h>912</h>
@@ -214,7 +214,7 @@ ArrayList&lt;Cook&gt;</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>906</x>
+      <x>810</x>
       <y>210</y>
       <w>12</w>
       <h>24</h>
@@ -225,7 +225,7 @@ ArrayList&lt;Cook&gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>780</x>
+      <x>684</x>
       <y>198</y>
       <w>138</w>
       <h>24</h>
@@ -237,7 +237,7 @@ get()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>780</x>
+      <x>684</x>
       <y>222</y>
       <w>138</w>
       <h>24</h>
@@ -249,7 +249,7 @@ cooksAssigned</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>618</x>
+      <x>522</x>
       <y>246</y>
       <w>774</w>
       <h>216</h>
@@ -262,7 +262,7 @@ fg=blue
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>780</x>
+      <x>684</x>
       <y>252</y>
       <w>372</w>
       <h>24</h>
@@ -274,7 +274,7 @@ isCookAssigned(c)</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1110</x>
+      <x>1014</x>
       <y>84</y>
       <w>72</w>
       <h>24</h>
@@ -286,7 +286,7 @@ KitchenShift</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1134</x>
+      <x>1038</x>
       <y>102</y>
       <w>24</w>
       <h>912</h>
@@ -297,7 +297,7 @@ KitchenShift</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1140</x>
+      <x>1044</x>
       <y>264</y>
       <w>12</w>
       <h>102</h>
@@ -308,7 +308,7 @@ KitchenShift</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1146</x>
+      <x>1050</x>
       <y>282</y>
       <w>198</w>
       <h>24</h>
@@ -320,7 +320,7 @@ get()</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1284</x>
+      <x>1188</x>
       <y>84</y>
       <w>96</w>
       <h>24</h>
@@ -332,7 +332,7 @@ ArrayList&lt;Cook&gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1332</x>
+      <x>1236</x>
       <y>102</y>
       <w>18</w>
       <h>918</h>
@@ -343,7 +343,7 @@ ArrayList&lt;Cook&gt;</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1332</x>
+      <x>1236</x>
       <y>294</y>
       <w>12</w>
       <h>24</h>
@@ -354,7 +354,7 @@ ArrayList&lt;Cook&gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1146</x>
+      <x>1050</x>
       <y>306</y>
       <w>198</w>
       <h>24</h>
@@ -366,7 +366,7 @@ cooksAssigned</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>978</x>
+      <x>882</x>
       <y>276</y>
       <w>396</w>
       <h>102</h>
@@ -387,7 +387,7 @@ lw=2
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>780</x>
+      <x>684</x>
       <y>324</y>
       <w>372</w>
       <h>24</h>
@@ -399,7 +399,7 @@ true</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>780</x>
+      <x>684</x>
       <y>354</y>
       <w>372</w>
       <h>24</h>
@@ -411,7 +411,7 @@ false</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>666</x>
+      <x>570</x>
       <y>390</y>
       <w>288</w>
       <h>60</h>
@@ -423,7 +423,7 @@ fg=#128C86</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>906</x>
+      <x>810</x>
       <y>414</y>
       <w>12</w>
       <h>24</h>
@@ -434,7 +434,7 @@ fg=#128C86</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>780</x>
+      <x>684</x>
       <y>402</y>
       <w>138</w>
       <h>24</h>
@@ -446,7 +446,7 @@ remove(c)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>780</x>
+      <x>684</x>
       <y>426</y>
       <w>138</w>
       <h>24</h>
@@ -458,7 +458,7 @@ true</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>594</x>
+      <x>498</x>
       <y>486</y>
       <w>822</w>
       <h>258</h>
@@ -470,7 +470,7 @@ fg=#128C86</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>612</x>
+      <x>516</x>
       <y>510</y>
       <w>780</w>
       <h>222</h>
@@ -483,7 +483,7 @@ fg=blue
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>780</x>
+      <x>684</x>
       <y>522</y>
       <w>372</w>
       <h>24</h>
@@ -495,7 +495,7 @@ isCookAssigned(c)</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1140</x>
+      <x>1044</x>
       <y>534</y>
       <w>12</w>
       <h>102</h>
@@ -506,7 +506,7 @@ isCookAssigned(c)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1146</x>
+      <x>1050</x>
       <y>552</y>
       <w>198</w>
       <h>24</h>
@@ -518,7 +518,7 @@ get()</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1332</x>
+      <x>1236</x>
       <y>564</y>
       <w>12</w>
       <h>24</h>
@@ -529,7 +529,7 @@ get()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1146</x>
+      <x>1050</x>
       <y>576</y>
       <w>198</w>
       <h>24</h>
@@ -541,7 +541,7 @@ cooksAssigned</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>978</x>
+      <x>882</x>
       <y>546</y>
       <w>396</w>
       <h>102</h>
@@ -562,7 +562,7 @@ lw=2
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>780</x>
+      <x>684</x>
       <y>594</y>
       <w>372</w>
       <h>24</h>
@@ -574,7 +574,7 @@ true</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>780</x>
+      <x>684</x>
       <y>624</y>
       <w>372</w>
       <h>24</h>
@@ -586,7 +586,7 @@ false</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>666</x>
+      <x>570</x>
       <y>660</y>
       <w>288</w>
       <h>60</h>
@@ -598,7 +598,7 @@ fg=#128C86</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>906</x>
+      <x>810</x>
       <y>684</y>
       <w>12</w>
       <h>24</h>
@@ -609,7 +609,7 @@ fg=#128C86</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>780</x>
+      <x>684</x>
       <y>672</y>
       <w>138</w>
       <h>24</h>
@@ -621,7 +621,7 @@ add(c)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>780</x>
+      <x>684</x>
       <y>696</y>
       <w>138</w>
       <h>24</h>
@@ -633,7 +633,7 @@ true</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>684</x>
+      <x>588</x>
       <y>756</y>
       <w>270</w>
       <h>60</h>
@@ -645,7 +645,7 @@ fg=#128C86</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>780</x>
+      <x>684</x>
       <y>768</y>
       <w>138</w>
       <h>48</h>
@@ -657,7 +657,7 @@ this.quantity = quantity</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>684</x>
+      <x>588</x>
       <y>828</y>
       <w>270</w>
       <h>60</h>
@@ -669,7 +669,7 @@ fg=#128C86</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>780</x>
+      <x>684</x>
       <y>840</y>
       <w>108</w>
       <h>48</h>
@@ -681,7 +681,7 @@ this.time = time</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>570</x>
+      <x>474</x>
       <y>906</y>
       <w>216</w>
       <h>24</h>
@@ -693,7 +693,7 @@ job</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>378</x>
+      <x>282</x>
       <y>924</y>
       <w>198</w>
       <h>24</h>
@@ -705,7 +705,7 @@ job</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>192</x>
+      <x>96</x>
       <y>66</y>
       <w>1464</w>
       <h>1104</h>
@@ -824,7 +824,7 @@ lw=2
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>378</x>
+      <x>282</x>
       <y>954</y>
       <w>132</w>
       <h>42</h>
@@ -836,7 +836,7 @@ notifyJobUpdated(job)</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>378</x>
+      <x>282</x>
       <y>984</y>
       <w>12</w>
       <h>30</h>
@@ -847,7 +847,7 @@ notifyJobUpdated(job)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>384</x>
+      <x>288</x>
       <y>1002</y>
       <w>1182</w>
       <h>24</h>
@@ -859,7 +859,7 @@ updateJob(job)</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1482</x>
+      <x>1386</x>
       <y>90</y>
       <w>144</w>
       <h>36</h>
@@ -872,7 +872,7 @@ SummarySheet</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1554</x>
+      <x>1458</x>
       <y>120</y>
       <w>18</w>
       <h>930</h>
@@ -883,7 +883,7 @@ SummarySheet</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1554</x>
+      <x>1458</x>
       <y>1014</y>
       <w>12</w>
       <h>12</h>
@@ -894,7 +894,7 @@ SummarySheet</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>210</x>
+      <x>114</x>
       <y>990</y>
       <w>1386</w>
       <h>60</h>
@@ -908,7 +908,7 @@ fg=blue
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>120</x>
+      <x>24</x>
       <y>1050</y>
       <w>264</w>
       <h>24</h>
@@ -920,7 +920,7 @@ job</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>120</x>
+      <x>24</x>
       <y>1080</y>
       <w>270</w>
       <h>24</h>

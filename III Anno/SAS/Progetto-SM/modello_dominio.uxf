@@ -355,7 +355,7 @@ blocco: si/no</panel_attributes>
       <w>112</w>
       <h>91</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+    <panel_attributes>lt=-
 m1=0..n
 m2=1
 segnato in v</panel_attributes>
@@ -677,11 +677,11 @@ fontsize= 17
       <w>77</w>
       <h>91</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+    <panel_attributes>lt=-
 m1=1..n
 m2=0..n
 contiene ^</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -754,16 +754,16 @@ m2=0..n
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>203</x>
+      <x>161</x>
       <y>112</y>
-      <w>70</w>
-      <h>462</h>
+      <w>98</w>
+      <h>511</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 m1=0..n
 m2=0..n
 fa parte v</panel_attributes>
-    <additional_attributes>60.0;10.0;10.0;10.0;10.0;640.0</additional_attributes>
+    <additional_attributes>120.0;10.0;10.0;10.0;10.0;700.0;60.0;700.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>

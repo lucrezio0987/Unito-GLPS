@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>9</zoom_level>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>63</x>
+      <y>72</y>
+      <w>90</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>UI</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>99</x>
+      <y>126</y>
+      <w>27</w>
+      <h>558</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;600.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>99</x>
+      <y>144</y>
+      <w>315</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;
+createServiceShift(description,date,
+time)</panel_attributes>
+    <additional_attributes>10.0;20.0;330.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>351</x>
+      <y>99</y>
+      <w>108</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>mgr:
+ShiftManager</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>396</x>
+      <y>126</y>
+      <w>27</w>
+      <h>576</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;620.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>396</x>
+      <y>162</y>
+      <w>18</w>
+      <h>468</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLFrame</id>
+    <coordinates>
+      <x>135</x>
+      <y>297</y>
+      <w>945</w>
+      <h>387</h>
+    </coordinates>
+    <panel_attributes>ALT board != null &amp;&amp; isOrganizer(user)
+fg=#761C8C
+lw=2
+--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>405</x>
+      <y>306</y>
+      <w>207</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>lt=.&gt;
+create(description, date, 
+time, place)
+</panel_attributes>
+    <additional_attributes>10.0;20.0;210.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>594</x>
+      <y>306</y>
+      <w>108</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>sShift:
+ServiceShift</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>639</x>
+      <y>333</y>
+      <w>27</w>
+      <h>369</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;390.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>639</x>
+      <y>351</y>
+      <w>18</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>648</x>
+      <y>351</y>
+      <w>225</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;
+this.descrition = description
+this.date = date
+this.time = time</panel_attributes>
+    <additional_attributes>10.0;10.0;40.0;10.0;40.0;50.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>405</x>
+      <y>405</y>
+      <w>252</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+sShift</panel_attributes>
+    <additional_attributes>10.0;20.0;260.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>99</x>
+      <y>612</y>
+      <w>315</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+throw UseCaseLogicException
+fg=red</panel_attributes>
+    <additional_attributes>10.0;20.0;330.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>63</x>
+      <y>9</y>
+      <w>189</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>DSD per l'operazione:
+creaTurnoDiServizio
+bg=yellow
+fontsize=18</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>405</x>
+      <y>162</y>
+      <w>234</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;
+getCurrentUser()</panel_attributes>
+    <additional_attributes>10.0;20.0;240.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>585</x>
+      <y>99</y>
+      <w>99</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>userMgr:
+LoginManager</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>621</x>
+      <y>126</y>
+      <w>27</w>
+      <h>117</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>621</x>
+      <y>180</y>
+      <w>18</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>405</x>
+      <y>198</y>
+      <w>234</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+user</panel_attributes>
+    <additional_attributes>10.0;20.0;240.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>405</x>
+      <y>225</y>
+      <w>414</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;
+getBoard()</panel_attributes>
+    <additional_attributes>10.0;20.0;440.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>756</x>
+      <y>99</y>
+      <w>108</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>mgr:
+BoardManager</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>801</x>
+      <y>126</y>
+      <w>27</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;180.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>801</x>
+      <y>243</y>
+      <w>18</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>405</x>
+      <y>261</y>
+      <w>414</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+board</panel_attributes>
+    <additional_attributes>10.0;20.0;440.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>99</x>
+      <y>576</y>
+      <w>315</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+sShift</panel_attributes>
+    <additional_attributes>10.0;20.0;330.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>405</x>
+      <y>432</y>
+      <w>252</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;
+notifyServiceShiftAdded(sShift)</panel_attributes>
+    <additional_attributes>10.0;10.0;50.0;10.0;50.0;40.0;20.0;40.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>405</x>
+      <y>468</y>
+      <w>18</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>414</x>
+      <y>504</y>
+      <w>576</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;
+updateServiceShiftAdded(sShift)</panel_attributes>
+    <additional_attributes>10.0;20.0;620.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>972</x>
+      <y>522</y>
+      <w>18</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLFrame</id>
+    <coordinates>
+      <x>180</x>
+      <y>486</y>
+      <w>837</w>
+      <h>81</h>
+    </coordinates>
+    <panel_attributes>LOOP for all er in eventReceiver
+fg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>972</x>
+      <y>144</y>
+      <w>27</w>
+      <h>558</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;600.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>918</x>
+      <y>99</y>
+      <w>126</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>er:
+ShiftEventReceiver:
+Shift
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
