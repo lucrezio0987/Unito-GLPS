@@ -18,10 +18,10 @@
       <x>136</x>
       <y>152</y>
       <w>24</w>
-      <h>552</h>
+      <h>528</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;670.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;640.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
@@ -41,10 +41,10 @@ BoardManager</panel_attributes>
       <x>368</x>
       <y>152</y>
       <w>24</w>
-      <h>584</h>
+      <h>520</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;710.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;630.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
@@ -52,7 +52,7 @@ BoardManager</panel_attributes>
       <x>368</x>
       <y>184</y>
       <w>16</w>
-      <h>504</h>
+      <h>440</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -73,7 +73,7 @@ createBoard(event)</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>520</x>
-      <y>352</y>
+      <y>288</y>
       <w>104</w>
       <h>32</h>
     </coordinates>
@@ -85,7 +85,7 @@ Board</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>376</x>
-      <y>352</y>
+      <y>288</y>
       <w>160</w>
       <h>32</h>
     </coordinates>
@@ -97,7 +97,7 @@ create(event)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>560</x>
-      <y>376</y>
+      <y>312</y>
       <w>24</w>
       <h>360</h>
     </coordinates>
@@ -108,7 +108,7 @@ create(event)</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>560</x>
-      <y>392</y>
+      <y>328</y>
       <w>16</w>
       <h>112</h>
     </coordinates>
@@ -119,7 +119,7 @@ create(event)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>568</x>
-      <y>392</y>
+      <y>328</y>
       <w>144</w>
       <h>56</h>
     </coordinates>
@@ -131,7 +131,7 @@ this.event = event</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>568</x>
-      <y>440</y>
+      <y>376</y>
       <w>232</w>
       <h>32</h>
     </coordinates>
@@ -143,11 +143,11 @@ create()</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>784</x>
-      <y>440</y>
+      <y>376</y>
       <w>104</w>
       <h>32</h>
     </coordinates>
-    <panel_attributes>tab.shifts:
+    <panel_attributes>board.shifts:
 ArrayList&lt;Shift&gt;</panel_attributes>
     <additional_attributes/>
   </element>
@@ -155,7 +155,7 @@ ArrayList&lt;Shift&gt;</panel_attributes>
     <id>UMLFrame</id>
     <coordinates>
       <x>160</x>
-      <y>328</y>
+      <y>264</y>
       <w>872</w>
       <h>392</h>
     </coordinates>
@@ -195,7 +195,7 @@ lw=2
     <id>Relation</id>
     <coordinates>
       <x>376</x>
-      <y>488</y>
+      <y>424</y>
       <w>200</w>
       <h>32</h>
     </coordinates>
@@ -207,7 +207,7 @@ board</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>376</x>
-      <y>512</y>
+      <y>448</y>
       <w>200</w>
       <h>56</h>
     </coordinates>
@@ -219,7 +219,7 @@ notifyBoardCreated(board)</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>376</x>
-      <y>552</y>
+      <y>488</y>
       <w>16</w>
       <h>48</h>
     </coordinates>
@@ -230,7 +230,7 @@ notifyBoardCreated(board)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>384</x>
-      <y>584</y>
+      <y>520</y>
       <w>576</w>
       <h>32</h>
     </coordinates>
@@ -257,16 +257,16 @@ Board</panel_attributes>
       <x>944</x>
       <y>152</y>
       <w>24</w>
-      <h>584</h>
+      <h>520</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;710.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;630.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
       <x>944</x>
-      <y>600</y>
+      <y>536</y>
       <w>16</w>
       <h>16</h>
     </coordinates>
@@ -277,7 +277,7 @@ Board</panel_attributes>
     <id>UMLFrame</id>
     <coordinates>
       <x>176</x>
-      <y>576</y>
+      <y>512</y>
       <w>840</w>
       <h>56</h>
     </coordinates>
@@ -289,7 +289,7 @@ fg=blue</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>136</x>
-      <y>640</y>
+      <y>576</y>
       <w>248</w>
       <h>32</h>
     </coordinates>
@@ -301,7 +301,7 @@ board</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>136</x>
-      <y>672</y>
+      <y>608</y>
       <w>256</w>
       <h>32</h>
     </coordinates>
@@ -340,7 +340,7 @@ getCurrentUser()</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>536</x>
-      <y>128</y>
+      <y>120</y>
       <w>88</w>
       <h>32</h>
     </coordinates>
@@ -352,12 +352,12 @@ LoginManager</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>568</x>
-      <y>152</y>
+      <y>144</y>
       <w>24</w>
-      <h>120</h>
+      <h>128</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;130.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
@@ -381,63 +381,5 @@ LoginManager</panel_attributes>
     <panel_attributes>lt=&lt;.
 user</panel_attributes>
     <additional_attributes>10.0;20.0;240.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>376</x>
-      <y>256</y>
-      <w>368</w>
-      <h>32</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;&gt;&gt;
-getBoard()</panel_attributes>
-    <additional_attributes>10.0;20.0;440.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLGeneric</id>
-    <coordinates>
-      <x>688</x>
-      <y>128</y>
-      <w>96</w>
-      <h>32</h>
-    </coordinates>
-    <panel_attributes>mgr:
-BoardManager</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLGeneric</id>
-    <coordinates>
-      <x>728</x>
-      <y>272</y>
-      <w>16</w>
-      <h>32</h>
-    </coordinates>
-    <panel_attributes/>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>376</x>
-      <y>288</y>
-      <w>368</w>
-      <h>32</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;.
-board</panel_attributes>
-    <additional_attributes>10.0;20.0;440.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>728</x>
-      <y>152</y>
-      <w>24</w>
-      <h>176</h>
-    </coordinates>
-    <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;200.0</additional_attributes>
   </element>
 </diagram>

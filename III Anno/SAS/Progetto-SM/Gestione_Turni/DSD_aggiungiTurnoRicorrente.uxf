@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>8</zoom_level>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>32</x>
+      <y>72</y>
+      <w>80</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>UI</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>64</x>
+      <y>120</y>
+      <w>24</w>
+      <h>592</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;720.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>288</x>
+      <y>96</y>
+      <w>96</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>mgr:
+ShiftManager</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>320</x>
+      <y>120</y>
+      <w>24</w>
+      <h>576</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;700.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>320</x>
+      <y>152</y>
+      <w>16</w>
+      <h>504</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>328</x>
+      <y>152</y>
+      <w>264</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;
+getBoard()</panel_attributes>
+    <additional_attributes>10.0;20.0;310.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>544</x>
+      <y>96</y>
+      <w>88</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>boardMgr:
+BoardManager
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>576</x>
+      <y>120</y>
+      <w>24</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>576</x>
+      <y>168</y>
+      <w>16</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>328</x>
+      <y>184</y>
+      <w>264</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+board</panel_attributes>
+    <additional_attributes>10.0;20.0;310.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>728</x>
+      <y>96</y>
+      <w>88</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>userMgr:
+UserManager
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>760</x>
+      <y>224</y>
+      <w>16</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>760</x>
+      <y>120</y>
+      <w>24</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;180.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>64</x>
+      <y>136</y>
+      <w>272</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;
+addShiftRecurrent(shift, recurrence)</panel_attributes>
+    <additional_attributes>10.0;20.0;320.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>328</x>
+      <y>208</y>
+      <w>448</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;
+getUser()</panel_attributes>
+    <additional_attributes>10.0;20.0;540.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>328</x>
+      <y>240</y>
+      <w>448</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+user</panel_attributes>
+    <additional_attributes>10.0;20.0;540.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLFrame</id>
+    <coordinates>
+      <x>88</x>
+      <y>272</y>
+      <w>984</w>
+      <h>408</h>
+    </coordinates>
+    <panel_attributes>ALT board != null &amp;&amp; isOrganizer(user)
+fg=#761C8C
+lw=2
+--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>520</x>
+      <y>280</y>
+      <w>88</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>recurrence:
+Recurrence</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>328</x>
+      <y>312</y>
+      <w>240</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;
+addShift(shift)</panel_attributes>
+    <additional_attributes>10.0;20.0;280.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>552</x>
+      <y>304</y>
+      <w>24</w>
+      <h>392</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;470.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>552</x>
+      <y>328</y>
+      <w>16</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>800</x>
+      <y>280</y>
+      <w>112</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>this.shifts:
+ArrayList&lt;Shift&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>848</x>
+      <y>304</y>
+      <w>24</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;160.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>848</x>
+      <y>344</y>
+      <w>16</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>560</x>
+      <y>328</y>
+      <w>304</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;
+add(shift)</panel_attributes>
+    <additional_attributes>10.0;20.0;360.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>560</x>
+      <y>400</y>
+      <w>304</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+true</panel_attributes>
+    <additional_attributes>10.0;20.0;360.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>328</x>
+      <y>424</y>
+      <w>240</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+recurrence</panel_attributes>
+    <additional_attributes>10.0;20.0;280.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>64</x>
+      <y>600</y>
+      <w>272</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+recurrence</panel_attributes>
+    <additional_attributes>10.0;20.0;320.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>64</x>
+      <y>640</y>
+      <w>272</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+throw UseCaseLogicException
+fg=red</panel_attributes>
+    <additional_attributes>10.0;20.0;320.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>32</x>
+      <y>16</y>
+      <w>184</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>DSD per l'operazione:
+aggiungiTurnoRicorrente
+bg=yellow
+fontsize=18</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLFrame</id>
+    <coordinates>
+      <x>112</x>
+      <y>528</y>
+      <w>944</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>LOOP for all er in eventReceivers
+fg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>1000</x>
+      <y>552</y>
+      <w>16</w>
+      <h>16</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1000</x>
+      <y>128</y>
+      <w>24</w>
+      <h>568</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;690.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>952</x>
+      <y>88</y>
+      <w>112</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>er:
+eventReceiver:
+Shift
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>336</x>
+      <y>536</y>
+      <w>680</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;
+updateShiftRecurrentAdded(recurrence)</panel_attributes>
+    <additional_attributes>10.0;20.0;830.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>328</x>
+      <y>456</y>
+      <w>256</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;
+notifyShiftRecurrentAdded(recurrence)</panel_attributes>
+    <additional_attributes>10.0;10.0;40.0;10.0;40.0;60.0;20.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>328</x>
+      <y>504</y>
+      <w>16</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+</diagram>
