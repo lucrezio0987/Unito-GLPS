@@ -74,9 +74,9 @@ ShiftManager</panel_attributes>
     <id>UMLFrame</id>
     <coordinates>
       <x>72</x>
-      <y>288</y>
+      <y>279</y>
       <w>900</w>
-      <h>459</h>
+      <h>468</h>
     </coordinates>
     <panel_attributes>ALT board != null &amp;&amp; isOrganizer(user)
 fg=#761C8C
@@ -114,13 +114,13 @@ lw=2
     <id>Relation</id>
     <coordinates>
       <x>342</x>
-      <y>297</y>
+      <y>288</y>
       <w>207</w>
       <h>54</h>
     </coordinates>
     <panel_attributes>lt=.&gt;
 create(description, date, 
-time, place)
+time, duration, place)
 </panel_attributes>
     <additional_attributes>10.0;20.0;210.0;20.0</additional_attributes>
   </element>
@@ -128,7 +128,7 @@ time, place)
     <id>UMLGeneric</id>
     <coordinates>
       <x>531</x>
-      <y>297</y>
+      <y>288</y>
       <w>108</w>
       <h>36</h>
     </coordinates>
@@ -140,12 +140,12 @@ KitchenShift</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>576</x>
-      <y>324</y>
+      <y>315</y>
       <w>27</w>
-      <h>441</h>
+      <h>450</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;470.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;480.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
@@ -153,7 +153,7 @@ KitchenShift</panel_attributes>
       <x>576</x>
       <y>342</y>
       <w>18</w>
-      <h>135</h>
+      <h>144</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -162,21 +162,24 @@ KitchenShift</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>585</x>
-      <y>342</y>
+      <y>324</y>
       <w>225</w>
-      <h>63</h>
+      <h>99</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 this.descrition = description
 this.date = date
-this.time = time</panel_attributes>
-    <additional_attributes>10.0;10.0;40.0;10.0;40.0;50.0;10.0;50.0</additional_attributes>
+this.time = time
+this.duration = duration
+this.expire = null
+this.lock = false</panel_attributes>
+    <additional_attributes>10.0;30.0;40.0;30.0;40.0;70.0;10.0;70.0</additional_attributes>
   </element>
   <element>
     <id>UMLFrame</id>
     <coordinates>
       <x>486</x>
-      <y>396</y>
+      <y>414</y>
       <w>270</w>
       <h>63</h>
     </coordinates>
@@ -188,7 +191,7 @@ fg=#128C86</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>585</x>
-      <y>396</y>
+      <y>414</y>
       <w>171</w>
       <h>63</h>
     </coordinates>
@@ -200,7 +203,7 @@ this.place = place</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>342</x>
-      <y>459</y>
+      <y>468</y>
       <w>252</w>
       <h>36</h>
     </coordinates>

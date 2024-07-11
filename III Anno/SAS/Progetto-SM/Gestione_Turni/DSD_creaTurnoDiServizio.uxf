@@ -65,7 +65,7 @@ ShiftManager</panel_attributes>
       <x>396</x>
       <y>162</y>
       <w>18</w>
-      <h>468</h>
+      <h>486</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -74,14 +74,15 @@ ShiftManager</panel_attributes>
     <id>UMLFrame</id>
     <coordinates>
       <x>135</x>
-      <y>297</y>
+      <y>288</y>
       <w>945</w>
-      <h>387</h>
+      <h>396</h>
     </coordinates>
     <panel_attributes>ALT board != null &amp;&amp; isOrganizer(user)
 fg=#761C8C
 lw=2
 --
+
 
 
 
@@ -109,13 +110,13 @@ lw=2
     <id>Relation</id>
     <coordinates>
       <x>405</x>
-      <y>306</y>
+      <y>297</y>
       <w>207</w>
       <h>54</h>
     </coordinates>
     <panel_attributes>lt=.&gt;
 create(description, date, 
-time, place)
+time, duration)
 </panel_attributes>
     <additional_attributes>10.0;20.0;210.0;20.0</additional_attributes>
   </element>
@@ -123,7 +124,7 @@ time, place)
     <id>UMLGeneric</id>
     <coordinates>
       <x>594</x>
-      <y>306</y>
+      <y>297</y>
       <w>108</w>
       <h>36</h>
     </coordinates>
@@ -135,12 +136,12 @@ ServiceShift</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>639</x>
-      <y>333</y>
+      <y>324</y>
       <w>27</w>
-      <h>369</h>
+      <h>378</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;390.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;400.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
@@ -152,20 +153,6 @@ ServiceShift</panel_attributes>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>648</x>
-      <y>351</y>
-      <w>225</w>
-      <h>63</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;&gt;&gt;
-this.descrition = description
-this.date = date
-this.time = time</panel_attributes>
-    <additional_attributes>10.0;10.0;40.0;10.0;40.0;50.0;10.0;50.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -183,7 +170,7 @@ sShift</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>99</x>
-      <y>612</y>
+      <y>630</y>
       <w>315</w>
       <h>36</h>
     </coordinates>
@@ -416,5 +403,22 @@ ShiftEventReceiver:
 Shift
 </panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>648</x>
+      <y>333</y>
+      <w>225</w>
+      <h>99</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;
+this.descrition = description
+this.date = date
+this.time = time
+this.duration = duration
+this.expire = null
+this.lock = false</panel_attributes>
+    <additional_attributes>10.0;30.0;40.0;30.0;40.0;70.0;10.0;70.0</additional_attributes>
   </element>
 </diagram>
