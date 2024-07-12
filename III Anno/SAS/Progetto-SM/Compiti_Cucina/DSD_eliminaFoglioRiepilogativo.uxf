@@ -16,7 +16,7 @@
     <id>UMLGeneric</id>
     <coordinates>
       <x>259</x>
-      <y>126</y>
+      <y>133</y>
       <w>105</w>
       <h>28</h>
     </coordinates>
@@ -28,12 +28,12 @@ SummarySheet</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>301</x>
-      <y>147</y>
+      <y>154</y>
       <w>21</w>
-      <h>595</h>
+      <h>588</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;830.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;820.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -73,7 +73,7 @@ deleteSheet(sheet)</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>497</x>
-      <y>126</y>
+      <y>133</y>
       <w>98</w>
       <h>28</h>
     </coordinates>
@@ -85,18 +85,18 @@ SummarySheet</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>539</x>
-      <y>147</y>
+      <y>154</y>
       <w>21</w>
-      <h>595</h>
+      <h>588</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;830.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;820.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
       <x>700</x>
-      <y>126</y>
+      <y>175</y>
       <w>105</w>
       <h>35</h>
     </coordinates>
@@ -108,12 +108,12 @@ ArrayList&lt;Job&gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>742</x>
-      <y>154</y>
+      <y>203</y>
       <w>21</w>
-      <h>588</h>
+      <h>539</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;820.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;750.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
@@ -492,7 +492,7 @@ notifyFoglioCreato(foglio)</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>854</x>
-      <y>126</y>
+      <y>168</y>
       <w>168</w>
       <h>42</h>
     </coordinates>
@@ -516,12 +516,12 @@ SummarySheet</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>945</x>
-      <y>161</y>
+      <y>203</y>
       <w>21</w>
-      <h>595</h>
+      <h>553</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;830.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;770.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>

@@ -161,7 +161,7 @@ UserManager
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 createRecurrence(frequency, 
-duration, days)</panel_attributes>
+duration, info)</panel_attributes>
     <additional_attributes>10.0;20.0;320.0;20.0</additional_attributes>
   </element>
   <element>
@@ -235,7 +235,7 @@ lw=2
     <id>UMLGeneric</id>
     <coordinates>
       <x>512</x>
-      <y>312</y>
+      <y>304</y>
       <w>88</w>
       <h>32</h>
     </coordinates>
@@ -253,19 +253,19 @@ Recurrence</panel_attributes>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 create(frequency, 
-duration, days)</panel_attributes>
+duration, info)</panel_attributes>
     <additional_attributes>10.0;20.0;240.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>544</x>
-      <y>336</y>
+      <y>328</y>
       <w>24</w>
-      <h>440</h>
+      <h>448</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;530.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;540.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
@@ -311,7 +311,7 @@ create</panel_attributes>
       <w>112</w>
       <h>32</h>
     </coordinates>
-    <panel_attributes>this.days:
+    <panel_attributes>this.info:
 ArrayList&lt;String&gt;</panel_attributes>
     <additional_attributes/>
   </element>
@@ -346,7 +346,7 @@ ArrayList&lt;String&gt;</panel_attributes>
       <h>32</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-addAll(days)</panel_attributes>
+addAll(info)</panel_attributes>
     <additional_attributes>10.0;20.0;360.0;20.0</additional_attributes>
   </element>
   <element>
@@ -499,7 +499,7 @@ notifyRecurrenceCreated(recurrence)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>552</x>
-      <y>352</y>
+      <y>336</y>
       <w>400</w>
       <h>32</h>
     </coordinates>
@@ -511,7 +511,7 @@ create</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>936</x>
-      <y>352</y>
+      <y>336</y>
       <w>96</w>
       <h>32</h>
     </coordinates>

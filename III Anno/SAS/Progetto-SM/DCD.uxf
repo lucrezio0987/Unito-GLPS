@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.1">
-  <zoom_level>4</zoom_level>
+  <zoom_level>6</zoom_level>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>80</x>
-      <y>4</y>
-      <w>816</w>
-      <h>392</h>
+      <x>0</x>
+      <y>0</y>
+      <w>1224</w>
+      <h>594</h>
     </coordinates>
-    <panel_attributes>KitchenJobManagement</panel_attributes>
+    <panel_attributes>KitchenJobManagement
+fontsize=18</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>148</x>
-      <y>28</y>
-      <w>232</w>
-      <h>120</h>
+      <x>102</x>
+      <y>30</y>
+      <w>348</w>
+      <h>186</h>
     </coordinates>
     <panel_attributes>SummarySheetManager
 --
@@ -35,6 +36,7 @@
 --
 *operations methods*
 +createSheet(service: Service) : SummarySheet
++isChef(user: User)
 +modifySheet(sheet: SummarySheet)
 +deleteSheet(sheet: SummarySheet)
 +addJob(title: String, prepare: boolean, completed: boolean, duty: Duty)
@@ -46,10 +48,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>532</x>
-      <y>52</y>
-      <w>268</w>
-      <h>72</h>
+      <x>678</x>
+      <y>72</y>
+      <w>402</w>
+      <h>108</h>
     </coordinates>
     <panel_attributes>																																																																									      																																																									1	
 SummarySheet
@@ -67,10 +69,10 @@ SummarySheet
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>376</x>
-      <y>56</y>
-      <w>164</w>
-      <h>20</h>
+      <x>444</x>
+      <y>72</y>
+      <w>246</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 sheet
@@ -80,23 +82,23 @@ m1=0..1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>552</x>
-      <y>120</y>
-      <w>24</w>
-      <h>144</h>
+      <x>708</x>
+      <y>174</y>
+      <w>36</w>
+      <h>186</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 jobs
 m1=0..n</panel_attributes>
-    <additional_attributes>10.0;340.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;290.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>448</x>
-      <y>256</y>
-      <w>236</w>
-      <h>88</h>
+      <x>552</x>
+      <y>348</y>
+      <w>354</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>Job
 --
@@ -108,19 +110,16 @@ m1=0..n</panel_attributes>
 --
 +create(title: String, portions?: int, prepare: boolean, completed: boolean)
 +assignJob(shift: Shift, cook?: Cook, portions?: String, time?: int)
-+setSift(shift: Shift)
-+setCook(cook: Cook)
-+setPrepare(prepare: boolean)
-+setCompleted(completed: boolean)</panel_attributes>
+</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>732</x>
-      <y>236</y>
-      <w>152</w>
-      <h>88</h>
+      <x>978</x>
+      <y>348</y>
+      <w>228</w>
+      <h>108</h>
     </coordinates>
     <panel_attributes>Duty
 --
@@ -133,18 +132,16 @@ m1=0..n</panel_attributes>
 -portions: String
 --
 +create(name: String, description: String, 
-													time: int, quantity: String, portions: String)
-+setDifficult(difficult: int)
-+setImportance(importance: int)</panel_attributes>
+													time: int, quantity: String, portions: String)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>680</x>
-      <y>292</y>
-      <w>60</w>
-      <h>20</h>
+      <x>900</x>
+      <y>408</y>
+      <w>90</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 duty
@@ -154,10 +151,10 @@ m1=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>152</x>
-      <y>180</y>
-      <w>180</w>
-      <h>52</h>
+      <x>108</x>
+      <y>270</y>
+      <w>270</w>
+      <h>78</h>
     </coordinates>
     <panel_attributes>SummarySheetEventReceiver
 {interface}
@@ -173,22 +170,22 @@ m1=1</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>240</x>
-      <y>144</y>
-      <w>52</w>
-      <h>44</h>
+      <y>210</y>
+      <w>78</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 eventReceivers
 m1=0..n</panel_attributes>
-    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>452</x>
-      <y>548</y>
-      <w>160</w>
-      <h>80</h>
+      <x>558</x>
+      <y>816</y>
+      <w>240</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>Shift
 --
@@ -208,37 +205,37 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>752</x>
-      <y>456</y>
-      <w>80</w>
-      <h>56</h>
+      <x>1008</x>
+      <y>678</y>
+      <w>120</w>
+      <h>84</h>
     </coordinates>
     <panel_attributes>Cook
 --
-name: String
+-name: String
 --</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>664</x>
-      <y>340</y>
-      <w>132</w>
-      <h>124</h>
+      <x>876</x>
+      <y>438</y>
+      <w>198</w>
+      <h>252</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 cooks
 m1=1..n</panel_attributes>
-    <additional_attributes>290.0;290.0;290.0;60.0;10.0;60.0;10.0;10.0</additional_attributes>
+    <additional_attributes>290.0;400.0;290.0;170.0;10.0;170.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>608</x>
-      <y>508</y>
-      <w>188</w>
-      <h>64</h>
+      <x>792</x>
+      <y>756</y>
+      <w>282</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 cooks
@@ -248,10 +245,10 @@ m1=1..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>968</x>
-      <y>216</y>
-      <w>76</w>
-      <h>48</h>
+      <x>1332</x>
+      <y>318</y>
+      <w>114</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>Preparation
 --
@@ -261,10 +258,10 @@ fg=gray</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>880</x>
-      <y>228</y>
-      <w>96</w>
-      <h>28</h>
+      <x>1200</x>
+      <y>336</y>
+      <w>144</w>
+      <h>42</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 preparation
@@ -275,26 +272,26 @@ fg=gray</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>412</x>
-      <y>456</y>
-      <w>124</w>
-      <h>56</h>
+      <x>498</x>
+      <y>684</y>
+      <w>186</w>
+      <h>66</h>
     </coordinates>
     <panel_attributes>ServiceShift
 -
 
 -
 +create(description: String, date: Date, 
-			time: Time, duration: Time): ServiceShift</panel_attributes>
+			time: Time, duration: Time)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>556</x>
-      <y>456</y>
-      <w>120</w>
-      <h>56</h>
+      <x>714</x>
+      <y>684</y>
+      <w>180</w>
+      <h>66</h>
     </coordinates>
     <panel_attributes>KitchenShift
 --
@@ -308,45 +305,45 @@ fg=gray</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>536</x>
-      <y>520</y>
-      <w>12</w>
-      <h>36</h>
+      <x>684</x>
+      <y>780</y>
+      <w>18</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>464</x>
-      <y>508</y>
-      <w>156</w>
-      <h>24</h>
+      <x>576</x>
+      <y>744</y>
+      <w>234</w>
+      <h>54</h>
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;40.0;370.0;40.0;370.0;10.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0;370.0;70.0;370.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>608</x>
-      <y>340</y>
-      <w>24</w>
-      <h>124</h>
+      <x>792</x>
+      <y>438</y>
+      <w>36</w>
+      <h>258</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 jobs
 m1=0..n</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;290.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;410.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>916</x>
-      <y>252</y>
-      <w>60</w>
-      <h>76</h>
+      <x>1254</x>
+      <y>372</y>
+      <w>90</w>
+      <h>114</h>
     </coordinates>
     <panel_attributes>lt=-
 fg=gray</panel_attributes>
@@ -355,10 +352,10 @@ fg=gray</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>880</x>
-      <y>284</y>
-      <w>48</w>
-      <h>12</h>
+      <x>1200</x>
+      <y>420</y>
+      <w>72</w>
+      <h>18</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-
 fg=gray</panel_attributes>
@@ -367,10 +364,10 @@ fg=gray</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>968</x>
-      <y>288</y>
-      <w>76</w>
-      <h>48</h>
+      <x>1332</x>
+      <y>426</y>
+      <w>114</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>Receipe
 --
@@ -380,10 +377,10 @@ fg=gray</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1120</x>
-      <y>256</y>
-      <w>76</w>
-      <h>48</h>
+      <x>1560</x>
+      <y>378</y>
+      <w>114</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>MenuItems
 --
@@ -406,10 +403,10 @@ fg=gray</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1040</x>
-      <y>284</y>
-      <w>88</w>
-      <h>36</h>
+      <x>1440</x>
+      <y>420</y>
+      <w>132</w>
+      <h>54</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 menuItem
@@ -420,10 +417,10 @@ fg=gray</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>300</x>
-      <y>452</y>
-      <w>76</w>
-      <h>48</h>
+      <x>330</x>
+      <y>678</y>
+      <w>114</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>StaffMember
 --
@@ -434,10 +431,10 @@ fg=gray</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>372</x>
-      <y>468</y>
-      <w>48</w>
-      <h>20</h>
+      <x>438</x>
+      <y>702</y>
+      <w>72</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 staff
@@ -447,10 +444,10 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>124</x>
-      <y>248</y>
-      <w>240</w>
-      <h>68</h>
+      <x>66</x>
+      <y>366</y>
+      <w>360</w>
+      <h>108</h>
     </coordinates>
     <panel_attributes>JobController
 --
@@ -463,16 +460,17 @@ m1=0..n</panel_attributes>
 --
 *operations methods*
 +createJob(title: String, portions?: int, prepare: boolean, completed: boolean)
-+assignJob(job: Job, shift: Shift, cook?: Cook, portions?: String, time?: int)</panel_attributes>
++assignJob(job: Job, shift: Shift, cook?: Cook, portions?: String, time?: int)
++isChef(user: User)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>360</x>
-      <y>268</y>
-      <w>96</w>
-      <h>20</h>
+      <x>420</x>
+      <y>408</y>
+      <w>144</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 jobs
@@ -482,10 +480,10 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>168</x>
-      <y>344</y>
-      <w>148</w>
-      <h>36</h>
+      <x>132</x>
+      <y>522</y>
+      <w>222</w>
+      <h>54</h>
     </coordinates>
     <panel_attributes>JobEventReceiver
 {interface}
@@ -497,22 +495,22 @@ m1=0..n</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>240</x>
-      <y>312</y>
-      <w>52</w>
-      <h>40</h>
+      <y>468</y>
+      <w>78</w>
+      <h>66</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 eventReceivers
 m1=0..n</panel_attributes>
-    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>900</x>
-      <y>180</y>
-      <w>180</w>
-      <h>168</h>
+      <x>1230</x>
+      <y>264</y>
+      <w>270</w>
+      <h>252</h>
     </coordinates>
     <panel_attributes>RecipeManagement
 fg=gray</panel_attributes>
@@ -521,21 +519,22 @@ fg=gray</panel_attributes>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>80</x>
-      <y>416</y>
-      <w>848</w>
-      <h>456</h>
+      <x>0</x>
+      <y>618</y>
+      <w>1266</w>
+      <h>552</h>
     </coordinates>
-    <panel_attributes>ShiftManagement</panel_attributes>
+    <panel_attributes>ShiftManagement
+fontsize=18</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>92</x>
-      <y>456</y>
-      <w>184</w>
-      <h>132</h>
+      <x>18</x>
+      <y>678</y>
+      <w>276</w>
+      <h>204</h>
     </coordinates>
     <panel_attributes>ShiftManager
 --
@@ -558,16 +557,17 @@ fg=gray</panel_attributes>
 +addShiftRecurrent(shift: Shift, recurrence: Recurrence)
 +removeShiftFromRecurrence(shift: Shift, recurrence: Recurrence)
 +createRecurrence(frequency: String, 
-			duration: Time, days: ArrayList&lt;String&gt;):Recurrence</panel_attributes>
+			duration: Time, info: ArrayList&lt;String&gt;):Recurrence
++isOrganizer(user: User)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>100</x>
-      <y>644</y>
-      <w>184</w>
-      <h>52</h>
+      <x>30</x>
+      <y>972</y>
+      <w>276</w>
+      <h>78</h>
     </coordinates>
     <panel_attributes>ShiftEventReceiver
 {interface}
@@ -583,23 +583,23 @@ fg=gray</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>172</x>
-      <y>584</y>
-      <w>52</w>
-      <h>68</h>
+      <x>138</x>
+      <y>876</y>
+      <w>78</w>
+      <h>108</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 eventReceivers
 m1=0..n</panel_attributes>
-    <additional_attributes>10.0;150.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;160.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>272</x>
-      <y>556</y>
-      <w>188</w>
-      <h>20</h>
+      <x>288</x>
+      <y>828</y>
+      <w>282</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 shifts
@@ -609,10 +609,10 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>716</x>
-      <y>632</y>
-      <w>184</w>
-      <h>68</h>
+      <x>954</x>
+      <y>942</y>
+      <w>276</w>
+      <h>108</h>
     </coordinates>
     <panel_attributes>BoardManager
 --
@@ -625,16 +625,17 @@ m2=0..n</panel_attributes>
 -
 *operations methods*
 +createBoard(event: String): Board
-+showBoard(event: String)</panel_attributes>
++showBoard(event: String)
++isOrganizer(user: User)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>716</x>
-      <y>736</y>
-      <w>184</w>
-      <h>28</h>
+      <x>954</x>
+      <y>1098</y>
+      <w>276</w>
+      <h>42</h>
     </coordinates>
     <panel_attributes>BoardEventReceiver
 {interface}
@@ -645,23 +646,23 @@ m2=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>796</x>
-      <y>696</y>
-      <w>52</w>
-      <h>48</h>
+      <x>1074</x>
+      <y>1044</y>
+      <w>78</w>
+      <h>66</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 eventReceivers
 m1=0..n</panel_attributes>
-    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>512</x>
-      <y>696</y>
-      <w>112</w>
-      <h>64</h>
+      <x>648</x>
+      <y>1038</y>
+      <w>168</w>
+      <h>66</h>
     </coordinates>
     <panel_attributes>Board
 --
@@ -673,10 +674,10 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>560</x>
-      <y>624</y>
-      <w>28</w>
-      <h>80</h>
+      <x>720</x>
+      <y>930</y>
+      <w>42</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 shifts
@@ -686,10 +687,10 @@ m2=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>620</x>
-      <y>668</y>
-      <w>104</w>
-      <h>72</h>
+      <x>810</x>
+      <y>996</y>
+      <w>156</w>
+      <h>108</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 board
@@ -699,10 +700,10 @@ m1=0..1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>340</x>
-      <y>696</y>
-      <w>132</w>
-      <h>64</h>
+      <x>390</x>
+      <y>1038</y>
+      <w>198</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>Recurrence
 --
@@ -711,17 +712,17 @@ m1=0..1</panel_attributes>
 -days: ArrayList&lt;String&gt;
 -
 +create(frequency: String, 
-			duration: Time, days: ArrayList&lt;String&gt;)
+			duration: Time, info: ArrayList&lt;String&gt;)
 +removeShift(shift: Shift)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>392</x>
-      <y>624</y>
-      <w>116</w>
-      <h>80</h>
+      <x>468</x>
+      <y>930</y>
+      <w>174</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 shifts
@@ -731,14 +732,14 @@ m2=1..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>224</x>
-      <y>584</y>
-      <w>152</w>
-      <h>120</h>
+      <x>216</x>
+      <y>876</y>
+      <w>228</w>
+      <h>174</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 recurrences
 m2=0..n</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;60.0;340.0;60.0;340.0;280.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0;340.0;50.0;340.0;270.0</additional_attributes>
   </element>
 </diagram>
