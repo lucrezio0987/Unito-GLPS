@@ -1,5 +1,7 @@
 package catering.businesslogic.KitchenJobManagement;
 
+import catering.businesslogic.recipe.Recipe;
+
 import java.util.ArrayList;
 
 public class Duty {
@@ -33,6 +35,12 @@ public class Duty {
         this.quantity = quantity;
         this.portions = portions;
     }
+
+    public Duty(String title){
+        this.title = title;
+    }
+
+    public Duty(){}
 
     // Getters and Setters
     public String getTitle() {

@@ -65,7 +65,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.TestCatERing.executor": "Run",
+    "Application.TestCatERing.executor": "Debug",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -109,8 +109,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-20.0.2-azul-20.0.2-f644763e9732-d86f2a68" />
-        <option value="jdk-21.0.1-openjdk-21.0.1-f644763e9732-f98dd351" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
       </set>
     </attachedChunks>
   </component>
@@ -126,6 +126,7 @@
       <workItem from="1716216972469" duration="217000" />
       <workItem from="1720857930840" duration="10476000" />
       <workItem from="1720896164082" duration="8198000" />
+      <workItem from="1720914379017" duration="416000" />
     </task>
     <servers />
   </component>

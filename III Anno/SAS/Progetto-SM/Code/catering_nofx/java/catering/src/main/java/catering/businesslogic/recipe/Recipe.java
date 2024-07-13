@@ -20,6 +20,15 @@ public class Recipe extends Duty {
         this.name = name;
     }
 
+    public Recipe(String title){
+        super(title);
+        this.name = title;
+    }
+
+    public Recipe(){
+        super();
+    }
+
     public String getTitle() {
         return name;
     }
