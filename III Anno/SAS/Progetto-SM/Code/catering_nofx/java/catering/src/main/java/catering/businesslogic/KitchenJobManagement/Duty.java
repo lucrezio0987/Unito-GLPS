@@ -78,8 +78,21 @@ public class Duty {
     }
 
     // Create method
-    public void create(String name, String description, int time, String quantity, String portions) {
-
+    public static Duty create(String name, String description, int time, String quantity, String portions) {
+        return new Duty(name, description, 0, 0, time, quantity, portions);
     }
 
+    // toString method
+    @Override
+    public String toString() {
+        return "Duty{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", difficult=" + difficult +
+                ", importance=" + importance +
+                ", time=" + time +
+                ", quantity='" + quantity + '\'' +
+                ", portions='" + portions + '\'' +
+                '}';
+    }
 }
