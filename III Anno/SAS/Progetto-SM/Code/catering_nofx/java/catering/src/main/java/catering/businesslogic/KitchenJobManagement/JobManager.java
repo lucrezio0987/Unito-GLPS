@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JobController {
-
     // Event sender methods
     public void addReceiver(SummarySheetEventReceiver er) {
 
@@ -33,7 +32,6 @@ public class JobController {
     }
 
     public boolean isChef(User user) {
-
 
     }
 }
