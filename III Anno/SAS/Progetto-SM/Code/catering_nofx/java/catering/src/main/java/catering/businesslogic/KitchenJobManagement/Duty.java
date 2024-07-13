@@ -8,12 +8,12 @@ public class Duty {
     private int difficult;
     private int importance;
     private int time;
-    private String quantity;
+    private int quantity;
     private int portions;
     private ArrayList<Preparation> preparations;
 
     // Constructor
-    public Duty(String name, String description, int difficult, int importance, int time, String quantity, int portions, ArrayList<Preparation> preparations) {
+    public Duty(String name, String description, int difficult, int importance, int time, int quantity, int portions, ArrayList<Preparation> preparations) {
         this.title = name;
         this.description = description;
         this.difficult = difficult;
@@ -22,6 +22,16 @@ public class Duty {
         this.quantity = quantity;
         this.portions = portions;
         this.preparations = preparations;
+    }
+
+    public Duty(String name, String description, int difficult, int importance, int time, int quantity, int portions) {
+        this.title = name;
+        this.description = description;
+        this.difficult = difficult;
+        this.importance = importance;
+        this.time = time;
+        this.quantity = quantity;
+        this.portions = portions;
     }
 
     // Getters and Setters
@@ -65,11 +75,11 @@ public class Duty {
         this.time = time;
     }
 
-    public String getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 

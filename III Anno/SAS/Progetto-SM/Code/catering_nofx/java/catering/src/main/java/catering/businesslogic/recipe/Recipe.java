@@ -14,7 +14,7 @@ public class Recipe extends Duty {
     private int id;
     private String name;
 
-    public Recipe(String name, String description, int difficult, int importance, int time, String quantity, String portions) {
+    public Recipe(String name, String description, int difficult, int importance, int time, int quantity, int portions) {
         super(name, description, difficult, importance, time, quantity, portions);
         id = 0;
         this.name = name;
