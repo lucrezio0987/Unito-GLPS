@@ -30,7 +30,7 @@ public class SummarySheet {
     }
 
     // Create method
-    public void create(Service service) {
+    public void create(ServiceInfo service) {
         this.service = service.getName(); // assuming Service class has a method getServiceName()
     }
 

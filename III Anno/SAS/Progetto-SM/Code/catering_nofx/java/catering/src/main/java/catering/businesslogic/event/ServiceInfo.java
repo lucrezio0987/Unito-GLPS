@@ -25,6 +25,9 @@ public class ServiceInfo implements EventItemInfo {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
 
     public String toString() {
         return name + ": " + date + " (" + timeStart + "-" + timeEnd + "), " + participants + " pp.";

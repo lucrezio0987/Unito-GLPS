@@ -63,7 +63,7 @@ public class SummarySheetManager {
     }
 
     // Operations methods
-    public SummarySheet createSheet(Service service) {
+    public SummarySheet createSheet(ServiceInfo service) {
         // Implementation for creating a summary sheet
         return null;
     }
