@@ -9,16 +9,10 @@ public class Job {
     private int portions;
     private boolean prepare;
     private boolean completed;
-    private Shift shift;
-    private Cook cook;
+
     public Job(String title, int portions, boolean prepare, boolean completed) {
         this.title = title;
         this.portions = portions;
-        this.prepare = prepare;
-        this.completed = completed;
-    }
-    public Job(String title, boolean prepare, boolean completed) {
-        this.title = title;
         this.prepare = prepare;
         this.completed = completed;
     }
@@ -63,19 +57,11 @@ public class Job {
         this.completed = completed;
     }
 
-    public Shift getShift() {
-        return shift;
+    public void create(String title, int portions, boolean prepare, boolean completed) {
+
     }
 
-    public void setShift(Shift shift) {
-        this.shift = shift;
-    }
+    public void assign(Shift shift, Cook cook, String portions, int time) {
 
-    public Cook getCook() {
-        return cook;
-    }
-
-    public void setCook(Cook cook) {
-        this.cook = cook;
     }
 }

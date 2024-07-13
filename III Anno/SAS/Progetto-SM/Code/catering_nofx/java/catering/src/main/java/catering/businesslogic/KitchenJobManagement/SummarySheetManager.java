@@ -1,28 +1,15 @@
 package catering.businesslogic.KitchenJobManagement;
 
 import catering.businesslogic.user.User;
+import catering.businessLogic.KitchenJobManager.Duty;
+import catering.businessLogic.KitchenJobManager.Job;
+import catering.businessLogic.shiftManagement.*;
 
 import java.security.Provider;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SummarySheetManager {
-    private List<SummarySheetEventReceiver> receivers;
-
-    // Constructor
-    public SummarySheetManager() {
-        this.receivers = new ArrayList<>();
-    }
-
-    // Getters and Setters
-    public List<SummarySheetEventReceiver> getReceivers() {
-        return receivers;
-    }
-
-    public void setReceivers(List<SummarySheetEventReceiver> receivers) {
-        this.receivers = receivers;
-    }
-
     // Event sender methods
     public void addReceiver(SummarySheetEventReceiver er) {
         this.receivers.add(er);
@@ -33,33 +20,23 @@ public class SummarySheetManager {
     }
 
     private void notifySheetCreated(SummarySheet sheet) {
-        for (SummarySheetEventReceiver receiver : receivers) {
-            receiver.sheetCreated(sheet);
-        }
+
     }
 
     private void notifySheetModified(SummarySheet sheet) {
-        for (SummarySheetEventReceiver receiver : receivers) {
-            receiver.sheetModified(sheet);
-        }
+
     }
 
     private void notifyJobAdded(Job job) {
-        for (SummarySheetEventReceiver receiver : receivers) {
-            receiver.jobAdded(job);
-        }
+
     }
 
     private void notifyJobUpdated(Job job) {
-        for (SummarySheetEventReceiver receiver : receivers) {
-            receiver.jobUpdated(job);
-        }
+
     }
 
     private void notifySheetDeleted(SummarySheet sheet) {
-        for (SummarySheetEventReceiver receiver : receivers) {
-            receiver.sheetDeleted(sheet);
-        }
+
     }
 
     // Operations methods
@@ -79,6 +56,18 @@ public class SummarySheetManager {
 
     public void deleteSheet(SummarySheet sheet) {
         // Implementation for deleting a summary sheet
+    }
+
+    public void addJob(String title, boolean prepare, boolean completed, Duty duty) {
+
+    }
+
+    public void updateJob(Job job, Shift shift, Cook cook, String portions, int time) {
+
+    }
+
+    public void sortJobs(String sorting) {
+
     }
 }
 
