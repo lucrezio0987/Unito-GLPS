@@ -390,13 +390,13 @@ completato: si/no</panel_attributes>
     </coordinates>
     <panel_attributes>Mansione
 --
-nome:testo
+title:testo
 descrizione: testo
 difficolta': numero
 importanza: numero
 tempo: numero
-quantità: testo
-porzioni: testo
+quantità: numero
+porzioni: numero
 fg=black</panel_attributes>
     <additional_attributes/>
   </element>
