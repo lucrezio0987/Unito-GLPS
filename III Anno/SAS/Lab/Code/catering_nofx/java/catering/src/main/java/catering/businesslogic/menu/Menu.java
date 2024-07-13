@@ -49,7 +49,6 @@ public class Menu {
 
         this.sections = new ArrayList<>();
         this.freeItems = new ArrayList<>();
-
     }
 
     public Menu(User owner, Menu m) {
