@@ -1,32 +1,36 @@
 package catering.businesslogic.KitchenJobManagement;
 
+import java.util.ArrayList;
+
 public class Duty {
-    private String name;
+    private String title;
     private String description;
     private int difficult;
     private int importance;
     private int time;
     private String quantity;
-    private String portions;
+    private int portions;
+    private ArrayList<Preparation> preparations;
 
     // Constructor
-    public Duty(String name, String description, int difficult, int importance, int time, String quantity, String portions) {
-        this.name = name;
+    public Duty(String name, String description, int difficult, int importance, int time, String quantity, int portions, ArrayList<Preparation> preparations) {
+        this.title = name;
         this.description = description;
         this.difficult = difficult;
         this.importance = importance;
         this.time = time;
         this.quantity = quantity;
         this.portions = portions;
+        this.preparations = preparations;
     }
 
     // Getters and Setters
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
@@ -69,24 +73,27 @@ public class Duty {
         this.quantity = quantity;
     }
 
-    public String getPortions() {
+    public int getPortions() {
         return portions;
     }
 
-    public void setPortions(String portions) {
+    public void setPortions(int portions) {
         this.portions = portions;
     }
 
-    // Create method
-    public static Duty create(String name, String description, int time, String quantity, String portions) {
-        return new Duty(name, description, 0, 0, time, quantity, portions);
+    public ArrayList<Preparation> getPreparations() {
+        return preparations;
+    }
+
+    public void setPreparations(ArrayList<Preparation> preparations) {
+        this.preparations = preparations;
     }
 
     // toString method
     @Override
     public String toString() {
         return "Duty{" +
-                "name='" + name + '\'' +
+                "name='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", difficult=" + difficult +
                 ", importance=" + importance +

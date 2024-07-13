@@ -1,6 +1,7 @@
 package catering.businesslogic.menu;
 
 import catering.businesslogic.CatERing;
+import catering.businesslogic.KitchenJobManagement.Duty;
 import catering.businesslogic.recipe.Recipe;
 import catering.businesslogic.user.User;
 import catering.persistence.BatchUpdateHandler;
@@ -135,6 +136,23 @@ public class Menu {
         freeItems.add(new MenuItem(all[4]));
         freeItems.add(new MenuItem(all[5]));
     }
+
+    public ArrayList<Duty> getDuties() {
+        ArrayList<Duty> duties = new ArrayList<>();
+        ArrayList<MenuItem> menuItems = new ArrayList<>();
+        menuItems.addAll(freeItems);
+        for (Section section: sections) {
+            menuItems.addAll( section.getItems());
+        }
+        for (MenuItem menuItem: menuItems) {
+            duties.add(menuItem.getItemRecipe());
+        }
+        for (Duty duty: duties) {
+            duties.addAll(duty.getPreparations());
+        }
+        return duties;
+    }
+
 
 
     public Section addSection(String name) {

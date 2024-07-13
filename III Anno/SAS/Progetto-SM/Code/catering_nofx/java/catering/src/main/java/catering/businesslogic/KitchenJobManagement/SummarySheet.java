@@ -1,42 +1,49 @@
 package catering.businesslogic.KitchenJobManagement;
 
+import catering.businesslogic.event.ServiceInfo;
 import catering.businesslogic.shiftManagement.Cook;
 import catering.businesslogic.shiftManagement.Shift;
+import catering.businesslogic.user.User;
+
+import java.util.ArrayList;
 
 public class SummarySheet {
-    private String service;
-    private Job job;
+    private ServiceInfo service;
+    private User owner;
+    private ArrayList<Job> jobs;
 
     // Constructor
-    public SummarySheet(String service) {
+    public SummarySheet(ServiceInfo service, User owner) {
         this.service = service;
+        this.owner = owner;
+
+        ArrayList<Duty> duties = service.getDuties();
+        for (Duty duty: duties) {
+            Job job = new Job(duty.getTitle(), duty.getPortions(), duty.getTime(), true, false, duty);
+            jobs.add(job);
+        }
     }
 
     // Getters and Setters
-    public String getService() {
+    public ServiceInfo getService() {
         return service;
     }
 
-    public void setService(String service) {
+    public void setService(ServiceInfo service) {
         this.service = service;
     }
 
-    public Job getJob() {
-        return job;
+    public ArrayList<Job> getJobs() {
+        return jobs;
     }
 
-    public void setJob(Job job) {
-        this.job = job;
-    }
-
-    // Create method
-    public void create(ServiceInfo service) {
-        this.service = service.getName(); // assuming Service class has a method getServiceName()
+    public void setJobs(ArrayList<Job> jobs) {
+        this.jobs = jobs;
     }
 
     // Method to add a job
     public void addJob(String title, boolean prepare, boolean completed) {
-        this.job = new Job(title, prepare, completed);
+        this.jobs.add(new Job(title, prepare, completed));
     }
 
     // Method to update a job
@@ -58,7 +65,7 @@ public class SummarySheet {
     // Method to delete the summary sheet
     public void deleteSummarySheet() {
         this.service = null;
-        this.job = null;
+        this.jobs = null;
     }
 
     // Method to get the owner
@@ -70,7 +77,7 @@ public class SummarySheet {
     // Method to print summary sheet details
     public void printSummary() {
         System.out.println("Service: " + service);
-        System.out.println("Job: " + job);
+        System.out.println("Job: " + jobs);
     }
 
     // toString method
@@ -78,7 +85,7 @@ public class SummarySheet {
     public String toString() {
         return "SummarySheet{" +
                 "service='" + service + '\'' +
-                ", job=" + job +
+                ", job=" + jobs +
                 '}';
     }
 }

@@ -1,5 +1,6 @@
 package catering.businesslogic.recipe;
 
+import catering.businesslogic.KitchenJobManagement.Duty;
 import catering.persistence.PersistenceManager;
 import catering.persistence.ResultHandler;
 
@@ -7,22 +8,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-public class Recipe {
+public class Recipe extends Duty {
     private static Map<Integer, Recipe> all = new HashMap<>();
 
     private int id;
     private String name;
 
-    private Recipe() {
-
-    }
-
-    public Recipe(String name) {
+    public Recipe(String name, String description, int difficult, int importance, int time, String quantity, String portions) {
+        super(name, description, difficult, importance, time, quantity, portions);
         id = 0;
         this.name = name;
     }
 
-    public String getName() {
+    public String getTitle() {
         return name;
     }
 
@@ -56,7 +54,7 @@ public class Recipe {
         Collections.sort(ret, new Comparator<Recipe>() {
             @Override
             public int compare(Recipe o1, Recipe o2) {
-                return (o1.getName().compareTo(o2.getName()));
+                return (o1.getTitle().compareTo(o2.getTitle()));
             }
         });
         return ret;

@@ -7,11 +7,11 @@ import catering.businesslogic.user.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JobController {
+public class JobManager {
     private List<SummarySheetEventReceiver> receivers;
 
     // Constructor
-    public JobController() {
+    public JobManager() {
         this.receivers = new ArrayList<>();
     }
 

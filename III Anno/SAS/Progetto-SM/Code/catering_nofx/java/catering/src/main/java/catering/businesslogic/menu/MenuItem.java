@@ -16,12 +16,9 @@ public class MenuItem {
     private String description;
     private Recipe itemRecipe;
 
-    private MenuItem() {
-
-    }
 
     public MenuItem(Recipe rec) {
-        this(rec, rec.getName());
+        this(rec, rec.getTitle());
     }
 
     public MenuItem(Recipe rec, String desc) {
@@ -36,15 +33,17 @@ public class MenuItem {
         this.itemRecipe = mi.itemRecipe;
     }
 
+    public MenuItem() {
+
+    }
+
     public int getId() {
         return id;
     }
 
-
     public String toString() {
         return description;
     }
-
 
     public String getDescription() {
         return description;
@@ -61,8 +60,6 @@ public class MenuItem {
     public void setItemRecipe(Recipe itemRecipe) {
         this.itemRecipe = itemRecipe;
     }
-
-
 
     // STATIC METHODS FOR PERSISTENCE
 

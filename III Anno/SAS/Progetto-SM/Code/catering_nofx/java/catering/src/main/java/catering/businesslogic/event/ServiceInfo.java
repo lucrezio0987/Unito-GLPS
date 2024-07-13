@@ -1,5 +1,8 @@
 package catering.businesslogic.event;
 
+import catering.businesslogic.CatERing;
+import catering.businesslogic.KitchenJobManagement.Duty;
+import catering.businesslogic.menu.Menu;
 import catering.persistence.PersistenceManager;
 import catering.persistence.ResultHandler;
 
@@ -32,7 +35,10 @@ public class ServiceInfo implements EventItemInfo {
     public String toString() {
         return name + ": " + date + " (" + timeStart + "-" + timeEnd + "), " + participants + " pp.";
     }
-
+    public ArrayList<Duty> getDuties() {
+        Menu m = CatERing.getInstance().getMenuManager().getCurrentMenu();
+        return m.getDuties();
+    }
     // STATIC METHODS FOR PERSISTENCE
 
     public static ArrayList<ServiceInfo> loadServiceInfoForEvent(int event_id) {

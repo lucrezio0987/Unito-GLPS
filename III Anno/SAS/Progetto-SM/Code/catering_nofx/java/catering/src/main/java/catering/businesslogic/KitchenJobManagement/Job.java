@@ -11,11 +11,15 @@ public class Job {
     private boolean completed;
     private Shift shift;
     private Cook cook;
-    public Job(String title, int portions, boolean prepare, boolean completed) {
+    private Duty duty;
+
+    public Job(String title, int portions, int time, boolean prepare, boolean completed, Duty duty) {
         this.title = title;
         this.portions = portions;
+        this.time = time;
         this.prepare = prepare;
         this.completed = completed;
+        this.duty = duty;
     }
     public Job(String title, boolean prepare, boolean completed) {
         this.title = title;
@@ -77,5 +81,13 @@ public class Job {
 
     public void setCook(Cook cook) {
         this.cook = cook;
+    }
+
+    public Duty getDuty() {
+        return duty;
+    }
+
+    public void setDuty(Duty duty) {
+        this.duty = duty;
     }
 }

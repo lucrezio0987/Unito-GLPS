@@ -21,7 +21,7 @@ public class MenuManager {
     }
 
     public Menu createMenu(String title) throws UseCaseLogicException {
-        User user = CatERing.getInstance().getUserManager().getCurrentUser();
+        User user = CatERing.getInstance().getUserManager().getUser();
 
         if (!user.isChef()) {
             throw new UseCaseLogicException();
@@ -55,11 +55,11 @@ public class MenuManager {
     }
 
     public MenuItem insertItem(Recipe recipe, Section sec) throws UseCaseLogicException {
-        return this.insertItem(recipe, sec, recipe.getName());
+        return this.insertItem(recipe, sec, recipe.getTitle());
     }
 
     public MenuItem insertItem(Recipe rec) throws UseCaseLogicException {
-        return this.insertItem(rec, null, rec.getName());
+        return this.insertItem(rec, null, rec.getTitle());
     }
 
     public MenuItem insertItem(Recipe rec, String desc) throws UseCaseLogicException {
@@ -88,7 +88,7 @@ public class MenuManager {
     }
 
     public void deleteMenu(Menu m) throws UseCaseLogicException, MenuException {
-        User u = CatERing.getInstance().getUserManager().getCurrentUser();
+        User u = CatERing.getInstance().getUserManager().getUser();
         if (!u.isChef()) throw new UseCaseLogicException();
         if (m.isInUse() || !m.isOwner(u)) {
             throw new MenuException();
@@ -97,7 +97,7 @@ public class MenuManager {
     }
 
     public void chooseMenu(Menu m) throws UseCaseLogicException, MenuException {
-        User u = CatERing.getInstance().getUserManager().getCurrentUser();
+        User u = CatERing.getInstance().getUserManager().getUser();
         if (!u.isChef()) throw new UseCaseLogicException();
         if (m.isInUse() || !m.isOwner(u)) {
             throw new MenuException();
@@ -106,7 +106,7 @@ public class MenuManager {
     }
 
     public Menu copyMenu(Menu toCopy) throws UseCaseLogicException {
-        User user = CatERing.getInstance().getUserManager().getCurrentUser();
+        User user = CatERing.getInstance().getUserManager().getUser();
 
         if (!user.isChef()) {
             throw new UseCaseLogicException();

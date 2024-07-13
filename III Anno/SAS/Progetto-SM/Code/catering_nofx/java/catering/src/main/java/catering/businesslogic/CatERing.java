@@ -1,5 +1,7 @@
 package catering.businesslogic;
 
+import catering.businesslogic.KitchenJobManagement.JobManager;
+import catering.businesslogic.KitchenJobManagement.SummarySheetManager;
 import catering.businesslogic.event.EventManager;
 import catering.businesslogic.menu.MenuManager;
 import catering.businesslogic.recipe.RecipeManager;
@@ -20,7 +22,8 @@ public class CatERing {
     private RecipeManager recipeMgr;
     private UserManager userMgr;
     private EventManager eventMgr;
-
+    private SummarySheetManager sheetMgr;
+    private JobManager jobMgr;
     private MenuPersistence menuPersistence;
 
     private CatERing() {
@@ -28,6 +31,8 @@ public class CatERing {
         recipeMgr = new RecipeManager();
         userMgr = new UserManager();
         eventMgr = new EventManager();
+        sheetMgr = new SummarySheetManager();
+        jobMgr = new JobManager();
         menuPersistence = new MenuPersistence();
         menuMgr.addEventReceiver(menuPersistence);
     }
@@ -47,4 +52,7 @@ public class CatERing {
 
     public EventManager getEventManager() { return eventMgr; }
 
+    public SummarySheetManager getSheetMgr() {return sheetMgr;}
+
+    public JobManager getJobMgr() {return jobMgr;}
 }
