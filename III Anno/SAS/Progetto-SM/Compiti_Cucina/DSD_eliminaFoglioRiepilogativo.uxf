@@ -30,10 +30,10 @@ SummarySheet</panel_attributes>
       <x>357</x>
       <y>91</y>
       <w>21</w>
-      <h>840</h>
+      <h>777</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;1180.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;1090.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -64,7 +64,7 @@ deleteSheet(sheet)</panel_attributes>
       <x>357</x>
       <y>119</y>
       <w>14</w>
-      <h>784</h>
+      <h>714</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -73,7 +73,7 @@ deleteSheet(sheet)</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>553</x>
-      <y>259</y>
+      <y>238</y>
       <w>98</w>
       <h>28</h>
     </coordinates>
@@ -85,12 +85,12 @@ SummarySheet</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>595</x>
-      <y>280</y>
+      <y>259</y>
       <w>21</w>
-      <h>651</h>
+      <h>602</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;910.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;840.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
@@ -110,10 +110,10 @@ ArrayList&lt;Job&gt;</panel_attributes>
       <x>798</x>
       <y>329</y>
       <w>21</w>
-      <h>581</h>
+      <h>532</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;810.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;740.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
@@ -248,16 +248,16 @@ clearSummarySheet()</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>175</x>
-      <y>350</y>
-      <w>455</w>
+      <x>161</x>
+      <y>336</y>
+      <w>469</w>
       <h>84</h>
     </coordinates>
-    <panel_attributes>ALT if owner equals to 
-user
+    <panel_attributes>ALT user equals owner
 fg=#761C8C
 lw=2
 --
+
 
 
 -.</panel_attributes>
@@ -267,7 +267,7 @@ lw=2
     <id>Relation</id>
     <coordinates>
       <x>364</x>
-      <y>357</y>
+      <y>343</y>
       <w>245</w>
       <h>28</h>
     </coordinates>
@@ -279,7 +279,7 @@ isNotUsed()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>364</x>
-      <y>378</y>
+      <y>364</y>
       <w>245</w>
       <h>28</h>
     </coordinates>
@@ -291,7 +291,7 @@ true</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>364</x>
-      <y>406</y>
+      <y>392</y>
       <w>245</w>
       <h>28</h>
     </coordinates>
@@ -303,7 +303,7 @@ false</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>364</x>
-      <y>308</y>
+      <y>287</y>
       <w>245</w>
       <h>28</h>
     </coordinates>
@@ -315,7 +315,7 @@ getOwner()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>364</x>
-      <y>329</y>
+      <y>308</y>
       <w>245</w>
       <h>28</h>
     </coordinates>
@@ -370,23 +370,10 @@ lw=2
     <additional_attributes/>
   </element>
   <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>119</x>
-      <y>889</y>
-      <w>252</w>
-      <h>28</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;.
-throw UseCaseLogicException
-fg=red</panel_attributes>
-    <additional_attributes>10.0;20.0;340.0;20.0</additional_attributes>
-  </element>
-  <element>
     <id>UMLGeneric</id>
     <coordinates>
       <x>595</x>
-      <y>322</y>
+      <y>301</y>
       <w>14</w>
       <h>21</h>
     </coordinates>
@@ -397,7 +384,7 @@ fg=red</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>595</x>
-      <y>371</y>
+      <y>357</y>
       <w>14</w>
       <h>49</h>
     </coordinates>
@@ -419,7 +406,7 @@ fg=red</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>119</x>
-      <y>413</y>
+      <y>392</y>
       <w>252</w>
       <h>28</h>
     </coordinates>
@@ -518,10 +505,10 @@ SummarySheet</panel_attributes>
       <x>1001</x>
       <y>329</y>
       <w>21</w>
-      <h>602</h>
+      <h>539</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;840.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;750.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -614,76 +601,6 @@ UserManager</panel_attributes>
       <h>42</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLFrame</id>
-    <coordinates>
-      <x>140</x>
-      <y>238</y>
-      <w>980</w>
-      <h>679</h>
-    </coordinates>
-    <panel_attributes>ALT isChef(user)
-fg=#761C8C
-lw=2
---
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--.</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
