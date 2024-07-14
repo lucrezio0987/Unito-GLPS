@@ -15,20 +15,23 @@ DROP TABLE IF EXISTS "roles" CASCADE;
 DROP TABLE IF EXISTS "services" CASCADE;
 DROP TABLE IF EXISTS "userroles" CASCADE;
 DROP TABLE IF EXISTS "users" CASCADE;
-DROP TABLE IF EXISTS "sheet" CASCADE;
+DROP TABLE IF EXISTS "sheets" CASCADE;
 DROP TABLE IF EXISTS "jobs" CASCADE;
 DROP TABLE IF EXISTS "cooks" CASCADE;
 DROP TABLE IF EXISTS "shifts" CASCADE;
 DROP TABLE IF EXISTS "shift_cook" CASCADE;
+DROP TABLE IF EXISTS "preparations" CASCADE;
+DROP TABLE IF EXISTS "recipes" CASCADE;
+DROP TABLE IF EXISTS "duties" CASCADE;
 
--- Table structure for table 'board'
-DROP TABLE IF EXISTS "board";
-CREATE TABLE "board" (
+-- Table structure for table 'boards'
+DROP TABLE IF EXISTS "boards";
+CREATE TABLE "boards" (
     "id" SERIAL PRIMARY KEY,
     "name" VARCHAR(128)
 );
 
-INSERT INTO "board" VALUES
+INSERT INTO "boards" VALUES
     (1, 'Convegno Agile Community'),
     (2, 'Compleanno di Manuela'),
     (3, 'Fiera del Sedano Rapa');
@@ -43,7 +46,7 @@ CREATE TABLE "events" (
     "expected_participants" INTEGER,
     "organizer_id" INTEGER NOT NULL,
     "board" INTEGER,
-     CONSTRAINT fk_board_id FOREIGN KEY ("board") REFERENCES "board"("id")
+     CONSTRAINT fk_board_id FOREIGN KEY ("board") REFERENCES "boards"("id")
 );
 
 -- Dumping data for table 'events'
@@ -128,7 +131,7 @@ INSERT INTO "menusections" VALUES
 DROP TABLE IF EXISTS "menus";
 CREATE TABLE "menus" (
     "id" SERIAL PRIMARY KEY,
-    "title" TEXT,
+    "name" TEXT,
     "owner_id" INTEGER,
     "published" BOOLEAN DEFAULT FALSE
 );
@@ -140,34 +143,91 @@ INSERT INTO "menus" VALUES
     (86, 'Cena di compleanno pesce', 3, TRUE);
 
 -- Table structure for table 'recipes'
-DROP TABLE IF EXISTS "recipes";
-CREATE TABLE "recipes" (
+CREATE TABLE "duties" (
     "id" SERIAL PRIMARY KEY,
-    "name" TEXT
+    "name" TEXT,
+    "description" TEXT,
+    "difficult" INTEGER,
+    "importance" INTEGER,
+    "time" INTEGER,
+    "quantity" INTEGER,
+    "portions" INTEGER,
+    "type" TEXT CHECK (type IN ('recipe', 'preparation'))
 );
 
--- Dumping data for table 'recipes'
-INSERT INTO "recipes" VALUES
-    (1, 'Vitello tonnato'),
-    (2, 'Carpaccio di spada'),
-    (3, 'Alici marinate'),
-    (4, 'Insalata di riso'),
-    (5, 'Penne al sugo di baccalà'),
-    (6, 'Pappa al pomodoro'),
-    (7, 'Hamburger con bacon e cipolla caramellata'),
-    (8, 'Salmone al forno'),
-    (9, 'Croissant'),
-    (10, 'Pane al cioccolato'),
-    (11, 'Girelle all''uvetta'),
-    (12, 'Panini al latte'),
-    (13, 'Biscotti di pasta frolla'),
-    (14, 'Lingue di gatto'),
-    (15, 'Bigné farciti'),
-    (16, 'Pizzette'),
-    (17, 'Tramezzini'),
-    (18, 'Sorbetto al limone'),
-    (19, 'Torta Saint Honoré'),
-    (20, 'Risotto alla zucca');
+CREATE TABLE "recipes" (
+    "id" SERIAL PRIMARY KEY,
+    "duty_id" INTEGER REFERENCES "duties"("id")
+);
+
+CREATE TABLE "preparations" (
+    "id" SERIAL PRIMARY KEY,
+    "duty_id" INTEGER REFERENCES "duties"("id")
+);
+
+-- Dumping data for table 'duties' (generalized table)
+INSERT INTO "duties" ("name", "description", "difficult", "importance", "time", "quantity", "portions", "type")
+VALUES
+    ('Vitello tonnato', 'Piatto tradizionale italiano di vitello freddo a fette coperto con una salsa cremosa simile alla maionese aromatizzata al tonno.', 3, 4, 45, 4, 4, 'recipe'),
+    ('Carpaccio di spada', 'Pesce spada crudo a fette sottili, condito con olio d oliva, limone e rucola.', 2, 3, 15, 1, 2, 'recipe'),
+    ('Alici marinate', 'Alici marinate servite come antipasto.', 1, 3, 60, 1, 4, 'recipe'),
+    ('Insalata di riso', 'Insalata di riso fredda con verdure e a volte frutti di mare.', 1, 2, 30, 4, 6, 'recipe'),
+    ('Penne al sugo di baccalà', 'Pasta con sugo di baccalà.', 3, 4, 50, 4, 4, 'recipe'),
+    ('Pappa al pomodoro', 'Zuppa toscana di pane e pomodoro.', 2, 3, 40, 4, 4, 'recipe'),
+    ('Hamburger con bacon e cipolla caramellata', 'Hamburger con bacon e cipolla caramellata.', 3, 5, 30, 2, 2, 'recipe'),
+    ('Salmone al forno', 'Salmone al forno.', 2, 4, 25, 2, 2, 'recipe'),
+    ('Croissant', 'Pasta sfoglia francese burrosa e croccante.', 5, 4, 180, 12, 12, 'preparation'),
+    ('Pane al cioccolato', 'Pane al cioccolato.', 3, 5, 120, 8, 8, 'preparation'),
+    ('Girelle all uvetta', 'Rotoli all uvetta.', 3, 4, 90, 10, 10, 'preparation'),
+    ('Panini al latte', 'Panini al latte.', 3, 3, 70, 10, 10, 'preparation'),
+    ('Biscotti di pasta frolla', 'Biscotti di pasta frolla.', 2, 3, 45, 20, 20, 'preparation'),
+    ('Lingue di gatto', 'Biscotti sottili e croccanti.', 1, 4, 35, 30, 30, 'preparation'),
+    ('Bigné farciti', 'Bignè ripieni di crema.', 3, 4, 60, 12, 12, 'preparation'),
+    ('Pizzette', 'Piccole pizze.', 3, 3, 60, 15, 15, 'preparation'),
+    ('Tramezzini', 'Tramezzini italiani.', 2, 1, 20, 10, 10, 'preparation'),
+    ('Sorbetto al limone', 'Sorbetto al limone.', 1, 3, 20, 4, 4, 'preparation'),
+    ('Torta Saint Honoré', 'Classica torta francese intitolata al patrono dei panettieri.', 5, 5, 120, 8, 8, 'preparation'),
+    ('Risotto alla zucca', 'Risotto alla zucca.', 4, 5, 40, 4, 4, 'recipe'),
+    ('Crema pasticcera', 'Crema per farcire i bignè.', 3, 4, 30, 1, 1, 'preparation'),
+    ('Ragù alla bolognese', 'Sugo di carne per le lasagne.', 4, 3, 120, 1, 1, 'preparation'),
+    ('Salsa tonnata', 'Salsa cremosa al tonno per il vitello tonnato.', 2, 2, 20, 1, 1, 'preparation'),
+    ('Salsa di acciughe', 'Salsa di acciughe per le alici marinate.', 1, 3, 15, 1, 1, 'preparation'),
+    ('Maionese', 'Maionese per gli hamburger.', 2, 3, 10, 1, 1, 'preparation'),
+    ('Salsa al limone', 'Salsa al limone per il salmone al forno.', 2, 4, 15, 1, 1, 'preparation'),
+    ('Besciamella', 'Salsa bianca per lasagne e cannelloni.', 3, 3, 20, 1, 1, 'preparation'),
+    ('Pesto alla genovese', 'Salsa di basilico, pinoli, aglio e formaggio.', 2, 4, 15, 1, 1, 'preparation'),
+    ('Salsa al cioccolato', 'Salsa di cioccolato per decorare dolci e gelati.', 1, 2, 10, 1, 1, 'preparation');
+;
+
+
+-- Inserting data for table 'recipes'
+INSERT INTO "recipes" ("id", "duty_id")
+VALUES
+    (1, 1),
+    (2, 2),
+    (3, 3),
+    (4, 4),
+    (5, 5),
+    (6, 6),
+    (7, 7),
+    (8, 8),
+    (9, 20);
+
+-- Inserting data for table 'preparations'
+INSERT INTO "preparations" ("id", "duty_id")
+VALUES
+    (1, 9),
+    (2, 10),
+    (3, 11),
+    (4, 12),
+    (5, 13),
+    (6, 14),
+    (7, 15),
+    (8, 16),
+    (9, 17),
+    (10, 18),
+    (11, 19);
+
 
 -- Table structure for table 'roles'
 DROP TABLE IF EXISTS "roles";
@@ -209,7 +269,6 @@ INSERT INTO "services" VALUES
     (8, 3, 'Pranzo giorno 3', 0, 0, '2020-10-04', '12:00:00', '15:00:00', 400);
 
 -- Table structure for table 'userroles'
-DROP TABLE IF EXISTS "userroles";
 CREATE TABLE "userroles" (
     "user_id" INTEGER NOT NULL,
     "role_id" CHAR(1) NOT NULL
@@ -232,7 +291,6 @@ INSERT INTO "userroles" VALUES
     (7, 's');
 
 -- Table structure for table 'users'
-DROP TABLE IF EXISTS "users";
 CREATE TABLE "users" (
     "id" SERIAL PRIMARY KEY,
     "username" VARCHAR(128) NOT NULL
@@ -251,32 +309,35 @@ INSERT INTO "users" VALUES
     (9, 'Marco'),
     (10, 'Piergiorgio');
 
--- Table structure for table 'sheet'
-DROP TABLE IF EXISTS "sheet";
-CREATE TABLE "sheet" (
-    sheet_id SERIAL PRIMARY KEY,
+-- Table structure for table 'sheets'
+CREATE TABLE "sheets" (
+    id SERIAL PRIMARY KEY,
     service INTEGER,
-    CONSTRAINT fk_service_id FOREIGN KEY (service) REFERENCES services(id)
+    owner_id INTEGER,
+    CONSTRAINT fk_service_id FOREIGN KEY (service) REFERENCES services(id),
+    CONSTRAINT fk_owner_id FOREIGN KEY (owner_id) REFERENCES users(id)
 );
 
-INSERT INTO "sheet" VALUES
-    (1, 3),
-    (2, 2),
-    (3, 6),
-    (4, 5),
-    (5, 1);
+INSERT INTO "sheets" VALUES
+    (1, 3, 2),
+    (2, 2, 3),
+    (3, 6, 4),
+    (4, 5, 4),
+    (5, 1, 2);
 
 -- Table structure for table 'jobs'
 DROP TABLE IF EXISTS "jobs";
 CREATE TABLE "jobs" (
     "id" SERIAL PRIMARY KEY,
-    "title" VARCHAR(128),
+    "name" VARCHAR(128),
     "time" INTEGER,
     "portions" INTEGER,
     "prepare" BOOLEAN DEFAULT TRUE,
     "completed" BOOLEAN DEFAULT TRUE,
-    "service_id" INTEGER,
-    CONSTRAINT fk_service_id FOREIGN KEY (service_id) REFERENCES services(id)
+    "duty_id" INTEGER,
+    "sheet_id" INTEGER,
+    CONSTRAINT fk_duty_id FOREIGN KEY (duty_id) REFERENCES duties(id),
+    CONSTRAINT fk_sheet_id FOREIGN KEY (sheet_id) REFERENCES sheets(id)
 );
 
 INSERT INTO "jobs" VALUES
@@ -311,7 +372,7 @@ CREATE TABLE "shifts" (
     "expire" DATE,
     "lock" BOOLEAN DEFAULT FALSE,
     "board" INTEGER,
-    CONSTRAINT fk_board_id FOREIGN KEY ("board") REFERENCES "board"("id")
+    CONSTRAINT fk_board_id FOREIGN KEY ("board") REFERENCES "boards"("id")
 );
 
 INSERT INTO "shifts" VALUES

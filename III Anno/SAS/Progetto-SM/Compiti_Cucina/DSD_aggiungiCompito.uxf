@@ -254,11 +254,11 @@ job</panel_attributes>
     <coordinates>
       <x>343</x>
       <y>525</y>
-      <w>147</w>
+      <w>182</w>
       <h>56</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-notifyJobAdded(job)</panel_attributes>
+notifyJobAdded(job, sheet)</panel_attributes>
     <additional_attributes>10.0;10.0;60.0;10.0;60.0;60.0;20.0;60.0</additional_attributes>
   </element>
   <element>
@@ -295,7 +295,7 @@ fg=blue
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-updateJobAdded(job)</panel_attributes>
+updateJobAdded(job, sheet)</panel_attributes>
     <additional_attributes>10.0;20.0;1090.0;20.0</additional_attributes>
   </element>
   <element>

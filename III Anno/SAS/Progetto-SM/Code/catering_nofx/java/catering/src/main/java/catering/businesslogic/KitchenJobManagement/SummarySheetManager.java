@@ -59,9 +59,9 @@ public class SummarySheetManager {
         }
     }
 
-    private void notifyJobAdded(Job job) {
+    private void notifyJobAdded(Job job, SummarySheet sheet) {
         for (SummarySheetEventReceiver er : receivers) {
-            er.updateJobAdded(job);
+            er.updateJobAdded(job, sheet);
         }
     }
 
@@ -124,7 +124,7 @@ public class SummarySheetManager {
         User user = CatERing.getInstance().getUserManager().getUser();
         if (isChef(user) && sheet != null) {
             Job job = sheet.addJob(title, prepare, completed, duty);
-            notifyJobAdded(job);
+            notifyJobAdded(job, sheet);
             return job;
         }
         else

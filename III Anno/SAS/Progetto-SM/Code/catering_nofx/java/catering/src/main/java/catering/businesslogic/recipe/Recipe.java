@@ -29,18 +29,6 @@ public class Recipe extends Duty {
         super();
     }
 
-    public String getTitle() {
-        return name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String toString() {
-        return name;
-    }
-
     // STATIC METHODS FOR PERSISTENCE
 
     public static ArrayList<Recipe> loadAllRecipes() {
@@ -63,7 +51,7 @@ public class Recipe extends Duty {
         Collections.sort(ret, new Comparator<Recipe>() {
             @Override
             public int compare(Recipe o1, Recipe o2) {
-                return (o1.getTitle().compareTo(o2.getTitle()));
+                return (o1.getName().compareTo(o2.getName()));
             }
         });
         return ret;

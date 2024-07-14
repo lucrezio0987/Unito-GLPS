@@ -1,11 +1,16 @@
 package catering.businesslogic.KitchenJobManagement;
 
 import catering.businesslogic.recipe.Recipe;
+import catering.persistence.PersistenceManager;
+import catering.persistence.ResultHandler;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Duty {
-    private String title;
+    private int id = 0;
+    private String name;
     private String description;
     private int difficult;
     private int importance;
@@ -16,7 +21,7 @@ public class Duty {
 
     // Constructor
     public Duty(String name, String description, int difficult, int importance, int time, int quantity, int portions, ArrayList<Preparation> preparations) {
-        this.title = name;
+        this.name = name;
         this.description = description;
         this.difficult = difficult;
         this.importance = importance;
@@ -27,7 +32,7 @@ public class Duty {
     }
 
     public Duty(String name, String description, int difficult, int importance, int time, int quantity, int portions) {
-        this.title = name;
+        this.name = name;
         this.description = description;
         this.difficult = difficult;
         this.importance = importance;
@@ -36,19 +41,26 @@ public class Duty {
         this.portions = portions;
     }
 
-    public Duty(String title){
-        this.title = title;
+    public Duty(String name){
+        this.name = name;
     }
 
     public Duty(){}
 
+
     // Getters and Setters
-    public String getTitle() {
-        return title;
+
+
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public int getId() {
+        return id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -69,6 +81,10 @@ public class Duty {
 
     public int getImportance() {
         return importance;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setImportance(int importance) {
@@ -111,7 +127,7 @@ public class Duty {
     @Override
     public String toString() {
         return "Duty{" +
-                "name='" + title + '\'' +
+                "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", difficult=" + difficult +
                 ", importance=" + importance +
@@ -119,5 +135,16 @@ public class Duty {
                 ", quantity='" + quantity + '\'' +
                 ", portions='" + portions + '\'' +
                 '}';
+    }
+
+    public int loadIdByName(String name) {
+        String query = "SELECT id FROM duties WHERE name = " + name;
+        PersistenceManager.executeQuery(query, new ResultHandler() {
+            @Override
+            public void handle(ResultSet rs) throws SQLException {
+                setId(rs.getInt("id"));
+            }
+        });
+        return id;
     }
 }

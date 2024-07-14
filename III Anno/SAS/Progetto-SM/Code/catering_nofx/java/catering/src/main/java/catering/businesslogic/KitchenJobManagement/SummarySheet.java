@@ -3,7 +3,6 @@ package catering.businesslogic.KitchenJobManagement;
 import catering.businesslogic.event.ServiceInfo;
 import catering.businesslogic.shiftManagement.Cook;
 import catering.businesslogic.shiftManagement.KitchenShift;
-import catering.businesslogic.shiftManagement.Shift;
 import catering.businesslogic.user.User;
 
 import catering.persistence.BatchUpdateHandler;
@@ -15,7 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Comparator;
 
 public class SummarySheet {
@@ -31,13 +29,18 @@ public class SummarySheet {
         this.owner = owner;
 
         ArrayList<Duty> duties = service.getDuties();
-        for (Duty duty: duties) {
-            Job job = new Job(duty.getTitle(), duty.getPortions(), duty.getTime(), true, false, duty);
+        for (Duty duty : duties) {
+            Job job = new Job(duty.getName(), duty.getPortions(), duty.getTime(), true, false, duty);
             jobs.add(job);
         }
     }
-
     // Getters and Setters
+
+    public int getId() {
+        return id;
+    }
+
+
     public ServiceInfo getService() {
         return service;
     }
@@ -103,12 +106,14 @@ public class SummarySheet {
     }
 
     public static void createSheet(SummarySheet sheet) {
-        String sheetCreate = "INSERT INTO sheets (service) VALUES (?);";
+        String sheetCreate = "INSERT INTO sheets (service, owner_id) VALUES (?, ?);";
         int[] result = PersistenceManager.executeBatchUpdate(sheetCreate, 1, new BatchUpdateHandler() {
             @Override
             public void handleBatchItem(PreparedStatement ps, int batchCount) throws SQLException {
                 ps.setInt(1, sheet.service.getId());
+                ps.setInt(1, sheet.owner.getId());
             }
+
             @Override
             public void handleGeneratedIds(ResultSet rs, int count) throws SQLException {
                 if (count == 0) {
@@ -118,9 +123,37 @@ public class SummarySheet {
         });
 
         if (result[0] > 0) {
-            
+            for (Job job : sheet.jobs) {
+                Job.saveJob(job, sheet);
+            }
         }
     }
 
+    public static void modifySheet(SummarySheet sheet) {
+        String sheetModify = "UPDATE sheets SET service = " + sheet.service + ", owner_id = " + sheet.owner + " WHERE id = " + sheet.id;
+        int row = PersistenceManager.executeUpdate(sheetModify);
+        if (row > 0) {
+            for (Job job : sheet.jobs) {
+                Job.modifyJob(job);
+            }
+        }
+    }
+
+    public static void deleteSheet(SummarySheet sheet){
+        String sheetDelete = "DELETE FROM sheets WHERE id = " + sheet.getId();
+        int row = PersistenceManager.executeUpdate(sheetDelete);
+        if(row > 0){
+            for(Job job : sheet.jobs)
+                Job.deleteJob(job);
+        }
+    }
+
+    public static void addJobToDB(Job job, SummarySheet sheet) {
+        Job.saveJob(job, sheet);
+    }
+
+    public static void updateJobToDB(Job job){
+        Job.modifyJob(job);
+    }
 }
 

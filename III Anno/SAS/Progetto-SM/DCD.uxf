@@ -31,7 +31,7 @@ fontsize=18</panel_attributes>
 -notifySheetCreated(sheet: SummarySheet)
 -notifySheetModified(sheet: SummarySheet)
 -notifySheetDeleted(sheet: SummarySheet)
--notifyJobAdded(job: Job)
+-notifyJobAdded(job: Job. sheet: SummarySheet)
 -notifyJobUpdated(job: Job)
 --
 *operations methods*

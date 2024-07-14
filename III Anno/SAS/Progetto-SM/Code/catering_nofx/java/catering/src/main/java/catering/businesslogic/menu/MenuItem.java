@@ -18,7 +18,7 @@ public class MenuItem {
 
 
     public MenuItem(Recipe rec) {
-        this(rec, rec.getTitle());
+        this(rec, rec.getName());
     }
 
     public MenuItem(Recipe rec, String desc) {

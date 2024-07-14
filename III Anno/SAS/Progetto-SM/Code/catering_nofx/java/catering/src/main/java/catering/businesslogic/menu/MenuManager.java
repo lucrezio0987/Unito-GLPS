@@ -55,11 +55,11 @@ public class MenuManager {
     }
 
     public MenuItem insertItem(Recipe recipe, Section sec) throws UseCaseLogicException {
-        return this.insertItem(recipe, sec, recipe.getTitle());
+        return this.insertItem(recipe, sec, recipe.getName());
     }
 
     public MenuItem insertItem(Recipe rec) throws UseCaseLogicException {
-        return this.insertItem(rec, null, rec.getTitle());
+        return this.insertItem(rec, null, rec.getName());
     }
 
     public MenuItem insertItem(Recipe rec, String desc) throws UseCaseLogicException {

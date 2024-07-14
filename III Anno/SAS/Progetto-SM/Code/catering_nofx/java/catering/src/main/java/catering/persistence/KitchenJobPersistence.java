@@ -13,22 +13,22 @@ public class KitchenJobPersistence implements SummarySheetEventReceiver {
 
     @Override
     public void updateSheetModified(SummarySheet sheet) {
-
+        SummarySheet.modifySheet(sheet);
     }
 
     @Override
-    public void updateJobAdded(Job job) {
-
+    public void updateJobAdded(Job job, SummarySheet sheet) {
+        SummarySheet.addJobToDB(job, sheet);
     }
 
     @Override
     public void updateJobUpdated(Job job) {
-
+        SummarySheet.updateJobToDB(job);
     }
 
     @Override
     public void updateSheetDeleted(SummarySheet sheet) {
-
+        SummarySheet.deleteSheet(sheet);
     }
 
     @Override
