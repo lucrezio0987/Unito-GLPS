@@ -96,7 +96,7 @@ SummarySheet</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>756</x>
-      <y>301</y>
+      <y>385</y>
       <w>105</w>
       <h>35</h>
     </coordinates>
@@ -108,12 +108,12 @@ ArrayList&lt;Job&gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>798</x>
-      <y>329</y>
+      <y>413</y>
       <w>21</w>
-      <h>532</h>
+      <h>448</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;740.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;620.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
@@ -190,11 +190,11 @@ true</panel_attributes>
     <coordinates>
       <x>364</x>
       <y>637</y>
-      <w>189</w>
+      <w>175</w>
       <h>63</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-notifyCompitoDeleted(sheet)</panel_attributes>
+notifySheetDeleted(sheet)</panel_attributes>
     <additional_attributes>10.0;10.0;60.0;10.0;60.0;70.0;20.0;70.0</additional_attributes>
   </element>
   <element>
@@ -326,9 +326,9 @@ owner</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>175</x>
+      <x>161</x>
       <y>441</y>
-      <w>896</w>
+      <w>910</w>
       <h>413</h>
     </coordinates>
     <panel_attributes>ALT if isNotUsed()
@@ -538,11 +538,11 @@ updateSheetDeleted(sheet)</panel_attributes>
     <coordinates>
       <x>364</x>
       <y>581</y>
-      <w>119</w>
+      <w>133</w>
       <h>56</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-delete(sheet)</panel_attributes>
+this.sheet = null</panel_attributes>
     <additional_attributes>10.0;10.0;60.0;10.0;60.0;60.0;10.0;60.0</additional_attributes>
   </element>
   <element>
@@ -615,5 +615,17 @@ UserManager</panel_attributes>
 throw UseCaseLogicException
 fg=red</panel_attributes>
     <additional_attributes>10.0;20.0;340.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLFrame</id>
+    <coordinates>
+      <x>175</x>
+      <y>700</y>
+      <w>882</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>LOOP for all er in eventReceivers
+fg=blue</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>

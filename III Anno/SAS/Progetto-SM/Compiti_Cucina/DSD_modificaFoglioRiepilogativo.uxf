@@ -4,7 +4,7 @@
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>117</x>
+      <x>108</x>
       <y>63</y>
       <w>90</w>
       <h>63</h>
@@ -15,30 +15,30 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>153</x>
+      <x>144</x>
       <y>117</y>
       <w>27</w>
-      <h>675</h>
+      <h>459</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;730.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;490.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>153</x>
+      <x>144</x>
       <y>126</y>
       <w>306</w>
       <h>36</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-modifySummarySheet(sheet)</panel_attributes>
+modifySheet(sheet)</panel_attributes>
     <additional_attributes>10.0;20.0;320.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>369</x>
+      <x>360</x>
       <y>81</y>
       <w>171</w>
       <h>45</h>
@@ -50,21 +50,21 @@ SummarySheetManager</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>441</x>
+      <x>432</x>
       <y>117</y>
       <w>27</w>
-      <h>675</h>
+      <h>477</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;730.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;510.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>441</x>
+      <x>432</x>
       <y>144</y>
       <w>18</w>
-      <h>585</h>
+      <h>405</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -72,8 +72,8 @@ SummarySheetManager</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>153</x>
-      <y>657</y>
+      <x>144</x>
+      <y>468</y>
       <w>306</w>
       <h>36</h>
     </coordinates>
@@ -84,7 +84,7 @@ sheet</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>0</x>
+      <x>108</x>
       <y>0</y>
       <w>225</w>
       <h>54</h>
@@ -98,8 +98,8 @@ fontsize=18</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>450</x>
-      <y>432</y>
+      <x>441</x>
+      <y>306</y>
       <w>171</w>
       <h>63</h>
     </coordinates>
@@ -108,101 +108,10 @@ this.sheet = sheet</panel_attributes>
     <additional_attributes>10.0;10.0;50.0;10.0;50.0;50.0;10.0;50.0</additional_attributes>
   </element>
   <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>450</x>
-      <y>360</y>
-      <w>333</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;&gt;&gt;
-getOwner()</panel_attributes>
-    <additional_attributes>10.0;20.0;350.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>450</x>
-      <y>387</y>
-      <w>333</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;.
-owner</panel_attributes>
-    <additional_attributes>10.0;20.0;350.0;20.0</additional_attributes>
-  </element>
-  <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>765</x>
-      <y>378</y>
-      <w>18</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes/>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>765</x>
-      <y>333</y>
-      <w>27</w>
-      <h>459</h>
-    </coordinates>
-    <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;490.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLGeneric</id>
-    <coordinates>
-      <x>711</x>
-      <y>306</y>
-      <w>126</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>sheet:
-SummarySheet</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLFrame</id>
-    <coordinates>
-      <x>252</x>
-      <y>414</y>
-      <w>378</w>
-      <h>144</h>
-    </coordinates>
-    <panel_attributes>ALT owner equals to
-user
-fg=#761C8C
-lw=2
---
-
-
-
-
--.</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>153</x>
-      <y>522</y>
-      <w>306</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;.
-throw UseCaseLogicException
-fg=red</panel_attributes>
-    <additional_attributes>10.0;20.0;320.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLGeneric</id>
-    <coordinates>
-      <x>981</x>
-      <y>630</y>
+      <x>972</x>
+      <y>441</y>
       <w>18</w>
       <h>18</h>
     </coordinates>
@@ -212,19 +121,19 @@ fg=red</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>981</x>
-      <y>333</y>
+      <x>972</x>
+      <y>270</y>
       <w>27</w>
-      <h>387</h>
+      <h>324</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;410.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;340.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>882</x>
-      <y>306</y>
+      <x>873</x>
+      <y>243</y>
       <w>207</w>
       <h>36</h>
     </coordinates>
@@ -235,22 +144,22 @@ SummarySheetEventReceiver</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>450</x>
-      <y>558</y>
+      <x>441</x>
+      <y>369</y>
       <w>216</w>
-      <h>63</h>
+      <h>54</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 notifySheetModified(sheet)</panel_attributes>
-    <additional_attributes>10.0;10.0;40.0;10.0;40.0;50.0;20.0;50.0</additional_attributes>
+    <additional_attributes>10.0;10.0;40.0;10.0;40.0;40.0;20.0;40.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>450</x>
-      <y>603</y>
+      <x>441</x>
+      <y>405</y>
       <w>18</w>
-      <h>27</h>
+      <h>36</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -258,8 +167,8 @@ notifySheetModified(sheet)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>459</x>
-      <y>612</y>
+      <x>450</x>
+      <y>423</y>
       <w>540</w>
       <h>36</h>
     </coordinates>
@@ -270,8 +179,8 @@ updateSheetModified(sheet)</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>207</x>
-      <y>612</y>
+      <x>198</x>
+      <y>423</y>
       <w>819</w>
       <h>45</h>
     </coordinates>
@@ -284,7 +193,7 @@ fg=blue
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>450</x>
+      <x>441</x>
       <y>153</y>
       <w>495</w>
       <h>36</h>
@@ -296,7 +205,7 @@ getUser()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>450</x>
+      <x>441</x>
       <y>207</y>
       <w>495</w>
       <h>36</h>
@@ -308,18 +217,18 @@ user</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>927</x>
+      <x>918</x>
       <y>126</y>
       <w>27</w>
-      <h>135</h>
+      <h>126</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;130.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>927</x>
+      <x>918</x>
       <y>171</y>
       <w>18</w>
       <h>54</h>
@@ -330,7 +239,7 @@ user</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>846</x>
+      <x>837</x>
       <y>90</y>
       <w>189</w>
       <h>45</h>
@@ -342,10 +251,10 @@ UserManager</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>198</x>
-      <y>243</y>
+      <x>189</x>
+      <y>297</y>
       <w>963</w>
-      <h>531</h>
+      <h>279</h>
     </coordinates>
     <panel_attributes>ALT isOwner(user)
 fg=#761C8C
@@ -373,22 +282,14 @@ lw=2
 
 
 
-
-
-
-
-
-
-
-
 -.</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>153</x>
-      <y>711</y>
+      <x>144</x>
+      <y>531</y>
       <w>306</w>
       <h>36</h>
     </coordinates>

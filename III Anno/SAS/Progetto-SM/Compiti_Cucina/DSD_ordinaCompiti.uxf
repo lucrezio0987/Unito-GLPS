@@ -86,9 +86,9 @@ SummarySheet</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>693</x>
-      <y>414</y>
+      <y>378</y>
       <w>18</w>
-      <h>144</h>
+      <h>180</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -97,7 +97,7 @@ SummarySheet</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>441</x>
-      <y>396</y>
+      <y>360</y>
       <w>270</w>
       <h>36</h>
     </coordinates>
@@ -121,7 +121,7 @@ get()</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>855</x>
-      <y>315</y>
+      <y>324</y>
       <w>135</w>
       <h>45</h>
     </coordinates>
@@ -133,12 +133,12 @@ ArrayList&lt;Job&gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>918</x>
-      <y>351</y>
+      <y>360</y>
       <w>27</w>
-      <h>351</h>
+      <h>342</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;370.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;360.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
