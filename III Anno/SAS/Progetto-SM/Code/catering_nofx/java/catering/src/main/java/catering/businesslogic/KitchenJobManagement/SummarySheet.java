@@ -6,11 +6,11 @@ import catering.businesslogic.shiftManagement.KitchenShift;
 import catering.businesslogic.shiftManagement.Shift;
 import catering.businesslogic.user.User;
 
+import org.apache.commons.lang3.time.DateUtils;
+import java.util.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Comparator;
-
-import static catering.businesslogic.KitchenJobManagement.SummarySheetManager.Sorting.DIFFICOLTA;
-import static catering.businesslogic.KitchenJobManagement.SummarySheetManager.Sorting.IMPORTANZA;
 
 public class SummarySheet {
     private ServiceInfo service;
@@ -67,6 +67,15 @@ public class SummarySheet {
     // Method to get the owner
     public User getOwner() {
         return owner;
+    }
+
+    public boolean isNotUsed() {
+        return !DateUtils.isSameDay(this.service.getDate(), new Date());
+    }
+
+    public boolean clearSummarySheet() {
+        this.jobs = null;
+        return true;
     }
 
     public ArrayList<Job> sortJobs(String sorting) {

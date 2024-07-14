@@ -94,11 +94,30 @@ public class SummarySheetManager {
         return user.isChef();
     }
 
-    public void modifySheet(SummarySheet sheet) {
+    public SummarySheet modifySheet(SummarySheet sheet) throws UseCaseLogicException {
+        User user = CatERing.getInstance().getUserManager().getUser();
+
+        if (CatERing.getInstance().getSheetMgr().isOwner(user)) {
+            this.sheet = sheet;
+            notifySheetModified(sheet);
+            return this.sheet;
+        } else
+            throw new UseCaseLogicException();
     }
 
-    public void deleteSheet(SummarySheet sheet) {
+    public boolean deleteSheet(SummarySheet sheet) throws UseCaseLogicException {
+        User user = CatERing.getInstance().getUserManager().getUser();
 
+        if (CatERing.getInstance().getSheetMgr().isOwner(user)) {
+            if (sheet.isNotUsed()) {
+                sheet.clearSummarySheet();
+                this.sheet = null;
+                notifySheetDeleted(sheet);
+                return true;
+            } else
+                throw new UseCaseLogicException();
+        } else
+            throw new UseCaseLogicException();
     }
 
     public Job addJob(String title, boolean prepare, boolean completed, Duty duty) throws UseCaseLogicException {
