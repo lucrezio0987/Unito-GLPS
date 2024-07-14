@@ -6,19 +6,27 @@ import catering.businesslogic.shiftManagement.KitchenShift;
 import catering.businesslogic.shiftManagement.Shift;
 import catering.businesslogic.user.User;
 
+import catering.persistence.BatchUpdateHandler;
+import catering.persistence.PersistenceManager;
 import org.apache.commons.lang3.time.DateUtils;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 
 public class SummarySheet {
+    private int id;
     private ServiceInfo service;
     private User owner;
     private ArrayList<Job> jobs;
 
     // Constructor
     public SummarySheet(ServiceInfo service, User owner) {
+        this.id = 0;
         this.service = service;
         this.owner = owner;
 
@@ -94,6 +102,25 @@ public class SummarySheet {
         }
     }
 
+    public static void createSheet(SummarySheet sheet) {
+        String sheetCreate = "INSERT INTO sheets (service) VALUES (?);";
+        int[] result = PersistenceManager.executeBatchUpdate(sheetCreate, 1, new BatchUpdateHandler() {
+            @Override
+            public void handleBatchItem(PreparedStatement ps, int batchCount) throws SQLException {
+                ps.setInt(1, sheet.service.getId());
+            }
+            @Override
+            public void handleGeneratedIds(ResultSet rs, int count) throws SQLException {
+                if (count == 0) {
+                    sheet.id = rs.getInt(1);
+                }
+            }
+        });
+
+        if (result[0] > 0) {
+            
+        }
+    }
 
 }
 
