@@ -347,7 +347,7 @@ UserManager</panel_attributes>
       <w>963</w>
       <h>531</h>
     </coordinates>
-    <panel_attributes>ALT isOwner(user)
+    <panel_attributes>ALT isChef(user)
 fg=#761C8C
 lw=2
 --
