@@ -3,11 +3,11 @@ package catering.businesslogic.KitchenJobManagement;
 import catering.businesslogic.CatERing;
 import catering.businesslogic.UseCaseLogicException;
 import catering.businesslogic.event.ServiceInfo;
-import catering.businesslogic.shiftManagement.Cook;
-import catering.businesslogic.shiftManagement.KitchenShift;
-import catering.businesslogic.shiftManagement.Shift;
+import catering.businesslogic.menu.Menu;
 import catering.businesslogic.user.User;
+import catering.businesslogic.user.UserManager;
 
+import java.security.Provider;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,32 +48,32 @@ public class SummarySheetManager {
     }
 
     private void notifySheetCreated(SummarySheet sheet) {
-        for (SummarySheetEventReceiver er : receivers) {
-            er.updateSheetCreated(sheet);
+        for (SummarySheetEventReceiver receiver : receivers) {
+            receiver.sheetCreated(sheet);
         }
     }
 
     private void notifySheetModified(SummarySheet sheet) {
-        for (SummarySheetEventReceiver er : receivers) {
-            er.updateSheetModified(sheet);
+        for (SummarySheetEventReceiver receiver : receivers) {
+            receiver.sheetModified(sheet);
         }
     }
 
     private void notifyJobAdded(Job job) {
-        for (SummarySheetEventReceiver er : receivers) {
-            er.updateJobAdded(job);
+        for (SummarySheetEventReceiver receiver : receivers) {
+            receiver.jobAdded(job);
         }
     }
 
     private void notifyJobUpdated(Job job) {
-        for (SummarySheetEventReceiver er : receivers) {
-            er.updateJobUpdated(job);
+        for (SummarySheetEventReceiver receiver : receivers) {
+            receiver.jobUpdated(job);
         }
     }
 
     private void notifySheetDeleted(SummarySheet sheet) {
-        for (SummarySheetEventReceiver er : receivers) {
-            er.updateSheetDeleted(sheet);
+        for (SummarySheetEventReceiver receiver : receivers) {
+            receiver.sheetDeleted(sheet);
         }
     }
 
@@ -91,39 +91,16 @@ public class SummarySheetManager {
     }
 
     public boolean isChef(User user) {
+        // Implementation to check if the user is a chef
         return user.isChef();
     }
 
     public void modifySheet(SummarySheet sheet) {
+        // Implementation for modifying a summary sheet
     }
 
     public void deleteSheet(SummarySheet sheet) {
-
-    }
-
-    public Job addJob(String title, boolean prepare, boolean completed, Duty duty) throws UseCaseLogicException {
-        User user = CatERing.getInstance().getUserManager().getUser();
-        if (isChef(user) && sheet != null) {
-            Job job = sheet.addJob(title, prepare, completed, duty);
-            notifyJobAdded(job);
-            return job;
-        }
-        else
-            throw new UseCaseLogicException();
-    }
-
-    public Job updateJob(Job job, KitchenShift shift, ArrayList<Cook> cooks, int portions, int time) throws UseCaseLogicException {
-        User user = CatERing.getInstance().getUserManager().getUser();
-        if (isChef(user) && sheet != null) {
-           job = sheet.updateJob(job, shift, cooks, portions, time);
-           notifyJobUpdated(job);
-           return job;
-        } else
-            throw new UseCaseLogicException();
-    }
-
-    public void sortJobs(String sorting) {
-
+        // Implementation for deleting a summary sheet
     }
 }
 
