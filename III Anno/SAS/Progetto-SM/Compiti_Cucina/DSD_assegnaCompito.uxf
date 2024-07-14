@@ -221,7 +221,7 @@ fg=red
       <w>1206</w>
       <h>630</h>
     </coordinates>
-    <panel_attributes>ALT [sheet &amp;&amp; isChef(user)]
+    <panel_attributes>ALT [sheet &amp;&amp; isOwner(user)]
 fg=#761C8C
 layer=-1
 --
