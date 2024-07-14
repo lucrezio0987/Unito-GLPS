@@ -1,17 +1,13 @@
-<<<<<<< HEAD
-<diagram program="umletino" version="15.1"><zoom_level>11</zoom_level><element><id>UMLPackage</id><coordinates><x>0</x><y>0</y><w>2244</w><h>1089</h></coordinates><panel_attributes>KitchenJobManagement
-fontsize=18</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>187</x><y>55</y><w>638</w><h>341</h></coordinates><panel_attributes>SummarySheetManager
-=======
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.1">
-  <zoom_level>7</zoom_level>
+  <zoom_level>5</zoom_level>
   <element>
     <id>UMLPackage</id>
     <coordinates>
       <x>0</x>
       <y>0</y>
-      <w>1428</w>
-      <h>693</h>
+      <w>1020</w>
+      <h>495</h>
     </coordinates>
     <panel_attributes>KitchenJobManagement
 fontsize=18</panel_attributes>
@@ -20,13 +16,12 @@ fontsize=18</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>119</x>
-      <y>35</y>
-      <w>406</w>
-      <h>217</h>
+      <x>85</x>
+      <y>25</y>
+      <w>290</w>
+      <h>155</h>
     </coordinates>
     <panel_attributes>SummarySheetManager
->>>>>>> bd90e3ab01d19d6c236fbd8d27a888f8a529f1a0
 --
 
 --
@@ -47,49 +42,38 @@ fontsize=18</panel_attributes>
 +addJob(title: String, prepare: boolean, completed: boolean, duty: Duty)
 +updateJob(job: Job, shift?: Shift, cook?: Cook, portions?: String, time?: int)
 +sortJobs(sorting: String)
-<<<<<<< HEAD
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1243</x><y>132</y><w>737</w><h>198</h></coordinates><panel_attributes>																																																																									      																																																									1	
-=======
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>791</x>
-      <y>84</y>
-      <w>469</w>
-      <h>126</h>
+      <x>565</x>
+      <y>60</y>
+      <w>335</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>																																																																									      																																																									1	
->>>>>>> bd90e3ab01d19d6c236fbd8d27a888f8a529f1a0
 SummarySheet
 --
 -service: Service
 -owner: User
 --
 +create(service: Service)
-+addJob(title: String, time: int, portions?: int, prepare: boolean, completed: boolean, duty: Duty)
++addJob(title: String, prepare: boolean, completed: boolean)
 +updateJob(job: Job, 
-																																																shift?: Shift, cooks: ArrayList&lt;Cook&gt;, quantity?: String, time?: int)
+																																																shift?: Shift, cook?: Cook, portions?: String, time?: int)
 +deleteSummarySheet()	
-<<<<<<< HEAD
-+getOwner()																																		</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>814</x><y>132</y><w>451</w><h>55</h></coordinates><panel_attributes>lt=&lt;-
-sheet
-m1=0..1</panel_attributes><additional_attributes>390;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>1298</x><y>319</y><w>55</w><h>341</h></coordinates><panel_attributes>lt=&lt;-
-jobs
-m1=0..n</panel_attributes><additional_attributes>10;290;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1012</x><y>638</y><w>649</w><h>176</h></coordinates><panel_attributes>Job
-=======
 +getOwner()																																		</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>518</x>
-      <y>84</y>
-      <w>287</w>
-      <h>35</h>
+      <x>370</x>
+      <y>60</y>
+      <w>205</w>
+      <h>25</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 sheet
@@ -99,10 +83,10 @@ m1=0..1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>826</x>
-      <y>203</y>
-      <w>42</w>
-      <h>217</h>
+      <x>590</x>
+      <y>145</y>
+      <w>30</w>
+      <h>155</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 jobs
@@ -112,13 +96,12 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>644</x>
-      <y>406</y>
-      <w>413</w>
-      <h>140</h>
+      <x>460</x>
+      <y>290</y>
+      <w>295</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>Job
->>>>>>> bd90e3ab01d19d6c236fbd8d27a888f8a529f1a0
 --
 -title: String
 -time: int
@@ -126,28 +109,20 @@ m1=0..n</panel_attributes>
 -prepare: boolean
 -completed: boolean
 --
-<<<<<<< HEAD
 +create(title: String, time: int, portions?: int, prepare: boolean, completed: boolean)
 +assignJob(shift: Shift, cook?: Cook, portions?: String, time?: int)
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1793</x><y>638</y><w>418</w><h>198</h></coordinates><panel_attributes>Duty
-=======
-+create(title: String, time: int, portions?: int, 
-													prepare: boolean, completed: boolean, duty: Duty)
-+assignJob(shift: KitchenShift, cook?: Cook, portions?: String, time?: int)
-+updateJob(shift: KitchenShift, cooks: ArrayList&lt;Cook&gt;, quantity?: int, time?: int)
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1141</x>
-      <y>406</y>
-      <w>266</w>
-      <h>126</h>
+      <x>815</x>
+      <y>290</y>
+      <w>190</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>Duty
->>>>>>> bd90e3ab01d19d6c236fbd8d27a888f8a529f1a0
 --
 -title: String
 -description: String
@@ -158,21 +133,16 @@ m1=0..n</panel_attributes>
 -portions: int
 --
 +create(title: String, description: String, 
-<<<<<<< HEAD
-													time: int, quantity: String, portions: String)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1650</x><y>748</y><w>165</w><h>55</h></coordinates><panel_attributes>lt=&lt;-
-duty
-m1=1</panel_attributes><additional_attributes>130;20;10;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>198</x><y>495</y><w>495</w><h>143</h></coordinates><panel_attributes>SummarySheetEventReceiver
-=======
 													time: int, quantity: String, portions: String)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1050</x>
-      <y>476</y>
-      <w>105</w>
-      <h>35</h>
+      <x>750</x>
+      <y>340</y>
+      <w>75</w>
+      <h>25</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 duty
@@ -182,34 +152,28 @@ m1=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>126</x>
-      <y>315</y>
-      <w>315</w>
-      <h>91</h>
+      <x>90</x>
+      <y>225</y>
+      <w>225</w>
+      <h>65</h>
     </coordinates>
     <panel_attributes>SummarySheetEventReceiver
->>>>>>> bd90e3ab01d19d6c236fbd8d27a888f8a529f1a0
 {interface}
 --
 +updateSheetCreated(sheet: SummarySheet)
 +updateSheetModified(sheet: SummarySheet)
 +updateSheetDeleted(sheet: SummarySheet)
 +updateJobAdded(job: Job)
-<<<<<<< HEAD
-+updateJobUpdated(job: Job)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>440</x><y>385</y><w>121</w><h>132</h></coordinates><panel_attributes>lt=&lt;-
-eventReceivers
-m1=0..n</panel_attributes><additional_attributes>10;100;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1023</x><y>1496</y><w>440</w><h>220</h></coordinates><panel_attributes>Shift
-=======
 +updateJobUpdated(job: Job)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>280</x>
-      <y>245</y>
-      <w>91</w>
-      <h>84</h>
+      <x>200</x>
+      <y>175</y>
+      <w>65</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 eventReceivers
@@ -219,13 +183,12 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>651</x>
-      <y>952</y>
-      <w>280</w>
-      <h>140</h>
+      <x>465</x>
+      <y>680</y>
+      <w>200</w>
+      <h>100</h>
     </coordinates>
     <panel_attributes>Shift
->>>>>>> bd90e3ab01d19d6c236fbd8d27a888f8a529f1a0
 --
 -description: String
 -date: Date
@@ -237,31 +200,16 @@ m1=0..n</panel_attributes>
 +create(description: String, date: Date, 
 			time: Time, duration: Time): ServiceShift
 +create(description: String, date: Date, 
-<<<<<<< HEAD
-			time: Time, duration: Time, place: String): KitchenShift</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1848</x><y>1243</y><w>220</w><h>154</h></coordinates><panel_attributes>Cook
---
--name: String
---</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1606</x><y>803</y><w>363</w><h>462</h></coordinates><panel_attributes>lt=&lt;-
-cooks
-m1=1..n</panel_attributes><additional_attributes>290;400;290;170;10;170;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1452</x><y>1386</y><w>517</w><h>176</h></coordinates><panel_attributes>lt=&lt;-
-cooks
-m1=1..n</panel_attributes><additional_attributes>430;10;430;140;10;140</additional_attributes></element><element><id>UMLClass</id><coordinates><x>2442</x><y>583</y><w>209</w><h>132</h></coordinates><panel_attributes>Preparation
---
-fg=gray</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>2200</x><y>616</y><w>264</w><h>77</h></coordinates><panel_attributes>lt=&lt;-
-preparation
-m1=0..n
-fg=gray</panel_attributes><additional_attributes>220;20;80;20;80;50;10;50</additional_attributes></element><element><id>UMLClass</id><coordinates><x>913</x><y>1254</y><w>341</w><h>121</h></coordinates><panel_attributes>ServiceShift
-=======
 			time: Time, duration: Time, place: String): KitchenShift</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1176</x>
-      <y>791</y>
-      <w>140</w>
-      <h>98</h>
+      <x>840</x>
+      <y>565</y>
+      <w>100</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>Cook
 --
@@ -272,23 +220,23 @@ fg=gray</panel_attributes><additional_attributes>220;20;80;20;80;50;10;50</addit
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1022</x>
-      <y>539</y>
-      <w>231</w>
-      <h>266</h>
+      <x>730</x>
+      <y>365</y>
+      <w>165</w>
+      <h>210</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-cooksAssigned
+cooks
 m1=1..n</panel_attributes>
-    <additional_attributes>290.0;360.0;290.0;130.0;10.0;130.0;10.0;10.0</additional_attributes>
+    <additional_attributes>290.0;400.0;290.0;170.0;10.0;170.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>924</x>
-      <y>882</y>
-      <w>329</w>
-      <h>112</h>
+      <x>660</x>
+      <y>630</y>
+      <w>235</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 cooks
@@ -298,10 +246,10 @@ m1=1..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1554</x>
-      <y>371</y>
-      <w>133</w>
-      <h>84</h>
+      <x>1110</x>
+      <y>265</y>
+      <w>95</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>Preparation
 --
@@ -311,10 +259,10 @@ fg=gray</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1400</x>
-      <y>392</y>
-      <w>168</w>
-      <h>49</h>
+      <x>1000</x>
+      <y>280</y>
+      <w>120</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 preparation
@@ -325,62 +273,43 @@ fg=gray</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>581</x>
-      <y>798</y>
-      <w>217</w>
-      <h>77</h>
+      <x>415</x>
+      <y>570</y>
+      <w>155</w>
+      <h>55</h>
     </coordinates>
     <panel_attributes>ServiceShift
->>>>>>> bd90e3ab01d19d6c236fbd8d27a888f8a529f1a0
 -
 
 -
 +create(description: String, date: Date, 
-<<<<<<< HEAD
-			time: Time, duration: Time)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1309</x><y>1254</y><w>330</w><h>121</h></coordinates><panel_attributes>KitchenShift
-=======
 			time: Time, duration: Time)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>833</x>
-      <y>798</y>
-      <w>210</w>
-      <h>77</h>
+      <x>595</x>
+      <y>570</y>
+      <w>150</w>
+      <h>55</h>
     </coordinates>
     <panel_attributes>KitchenShift
->>>>>>> bd90e3ab01d19d6c236fbd8d27a888f8a529f1a0
 --
 - place: String
 --
 +isCookAssigned(c: Cook)
 +create(description: String, date: Date, 
-<<<<<<< HEAD
-	time: Time, duration: Time, place: String)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1254</x><y>1430</y><w>33</w><h>88</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;60;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1056</x><y>1364</y><w>429</w><h>99</h></coordinates><panel_attributes>lt=-</panel_attributes><additional_attributes>10;10;10;70;370;70;370;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1452</x><y>803</y><w>55</w><h>473</h></coordinates><panel_attributes>lt=&lt;-
-jobs
-m1=0..n</panel_attributes><additional_attributes>10;10;10;410</additional_attributes></element><element><id>Relation</id><coordinates><x>2299</x><y>682</y><w>165</w><h>209</h></coordinates><panel_attributes>lt=-
-fg=gray</panel_attributes><additional_attributes>130;170;10;170;10;10;130;10</additional_attributes></element><element><id>Relation</id><coordinates><x>2200</x><y>770</y><w>132</w><h>33</h></coordinates><panel_attributes>lt=&lt;&lt;-
-fg=gray</panel_attributes><additional_attributes>10;10;100;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>2442</x><y>781</y><w>209</w><h>132</h></coordinates><panel_attributes>Receipe
---
-fg=gray</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>605</x><y>1243</y><w>209</w><h>132</h></coordinates><panel_attributes>StaffMember
---
-- name: String
--</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>803</x><y>1287</y><w>132</w><h>55</h></coordinates><panel_attributes>lt=&lt;-
-staff
-m1=0..n</panel_attributes><additional_attributes>10;20;100;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>121</x><y>671</y><w>660</w><h>198</h></coordinates><panel_attributes>JobManager
-=======
 	time: Time, duration: Time, place: String)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>798</x>
-      <y>910</y>
-      <w>21</w>
-      <h>56</h>
+      <x>570</x>
+      <y>650</y>
+      <w>15</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
@@ -388,10 +317,10 @@ m1=0..n</panel_attributes><additional_attributes>10;20;100;20</additional_attrib
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>672</x>
-      <y>868</y>
-      <w>273</w>
-      <h>63</h>
+      <x>480</x>
+      <y>620</y>
+      <w>195</w>
+      <h>45</h>
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;70.0;370.0;70.0;370.0;10.0</additional_attributes>
@@ -399,23 +328,23 @@ m1=0..n</panel_attributes><additional_attributes>10;20;100;20</additional_attrib
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>896</x>
-      <y>539</y>
-      <w>42</w>
-      <h>273</h>
+      <x>660</x>
+      <y>365</y>
+      <w>30</w>
+      <h>215</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-shift
-m1=1</panel_attributes>
-    <additional_attributes>10.0;370.0;10.0;10.0</additional_attributes>
+jobs
+m1=0..n</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;410.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1463</x>
-      <y>434</y>
-      <w>105</w>
-      <h>133</h>
+      <x>1045</x>
+      <y>310</y>
+      <w>75</w>
+      <h>95</h>
     </coordinates>
     <panel_attributes>lt=-
 fg=gray</panel_attributes>
@@ -424,10 +353,10 @@ fg=gray</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1400</x>
-      <y>490</y>
-      <w>84</w>
-      <h>21</h>
+      <x>1000</x>
+      <y>350</y>
+      <w>60</w>
+      <h>15</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-
 fg=gray</panel_attributes>
@@ -436,10 +365,10 @@ fg=gray</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1554</x>
-      <y>497</y>
-      <w>133</w>
-      <h>84</h>
+      <x>1110</x>
+      <y>355</y>
+      <w>95</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>Receipe
 --
@@ -449,10 +378,10 @@ fg=gray</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>385</x>
-      <y>791</y>
-      <w>133</w>
-      <h>84</h>
+      <x>275</x>
+      <y>565</y>
+      <w>95</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>StaffMember
 --
@@ -463,10 +392,10 @@ fg=gray</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>511</x>
-      <y>819</y>
-      <w>84</w>
-      <h>35</h>
+      <x>365</x>
+      <y>585</y>
+      <w>60</w>
+      <h>25</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 staff
@@ -476,60 +405,46 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>77</x>
-      <y>427</y>
-      <w>441</w>
-      <h>133</h>
+      <x>55</x>
+      <y>305</y>
+      <w>300</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>JobManager
->>>>>>> bd90e3ab01d19d6c236fbd8d27a888f8a529f1a0
 --
 
 --
 *event sender methods*
 +addReceiver(er: SummarySheetEventReceiver)
 +removeReceiver(er: SummarySheetEventReceiver)
--notifyJobAssigned(job: Job, shift: KitchenShift)
+-notifyJobAssigned(job: Job, shift: Shift)
 --
 *operations methods*
-<<<<<<< HEAD
 +createJob(title: String, portions?: int, prepare: boolean, completed: boolean)
 +assignJob(job: Job, shift: Shift, cook?: Cook, portions?: String, time?: int)
-+isChef(user: User)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>770</x><y>748</y><w>264</w><h>55</h></coordinates><panel_attributes>lt=&lt;-
-jobs
-m1=0..n</panel_attributes><additional_attributes>220;20;10;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>242</x><y>957</y><w>407</w><h>99</h></coordinates><panel_attributes>JobEventReceiver
-{interface}
---
-+updateJobAssigned(job : Job, shift: Shift)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>440</x><y>858</y><w>121</w><h>121</h></coordinates><panel_attributes>lt=&lt;-
-eventReceivers
-m1=0..n</panel_attributes><additional_attributes>10;90;10;10</additional_attributes></element><element><id>UMLPackage</id><coordinates><x>2255</x><y>484</y><w>495</w><h>462</h></coordinates><panel_attributes>RecipeManagement
-fg=gray</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>0</x><y>1133</y><w>2321</w><h>1012</h></coordinates><panel_attributes>ShiftManagement
-fontsize=18</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>33</x><y>1243</y><w>506</w><h>374</h></coordinates><panel_attributes>ShiftManager
-=======
-+assignJob(job: Job, shift: KitchenShift, cooks: ArrayList&lt;Cook&gt;, portions?: String, time?: int)
 +isChef(user: User)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>511</x>
-      <y>476</y>
-      <w>147</w>
-      <h>35</h>
+      <x>350</x>
+      <y>340</y>
+      <w>120</w>
+      <h>25</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 jobs
 m1=0..n</panel_attributes>
-    <additional_attributes>190.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>220.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>154</x>
-      <y>616</y>
-      <w>259</w>
-      <h>63</h>
+      <x>110</x>
+      <y>435</y>
+      <w>185</w>
+      <h>45</h>
     </coordinates>
     <panel_attributes>JobEventReceiver
 {interface}
@@ -540,10 +455,10 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>280</x>
-      <y>553</y>
-      <w>91</w>
-      <h>77</h>
+      <x>200</x>
+      <y>390</y>
+      <w>65</w>
+      <h>55</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 eventReceivers
@@ -553,10 +468,10 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>1435</x>
-      <y>308</y>
-      <w>315</w>
-      <h>294</h>
+      <x>1025</x>
+      <y>220</y>
+      <w>225</w>
+      <h>210</h>
     </coordinates>
     <panel_attributes>RecipeManagement
 fg=gray</panel_attributes>
@@ -566,9 +481,9 @@ fg=gray</panel_attributes>
     <id>UMLPackage</id>
     <coordinates>
       <x>0</x>
-      <y>721</y>
-      <w>1477</w>
-      <h>644</h>
+      <y>515</y>
+      <w>1055</w>
+      <h>460</h>
     </coordinates>
     <panel_attributes>ShiftManagement
 fontsize=18</panel_attributes>
@@ -577,13 +492,12 @@ fontsize=18</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>21</x>
-      <y>791</y>
-      <w>322</w>
-      <h>238</h>
+      <x>15</x>
+      <y>565</y>
+      <w>230</w>
+      <h>170</h>
     </coordinates>
     <panel_attributes>ShiftManager
->>>>>>> bd90e3ab01d19d6c236fbd8d27a888f8a529f1a0
 --
 
 --
@@ -605,22 +519,18 @@ fontsize=18</panel_attributes>
 +removeShiftFromRecurrence(shift: Shift, recurrence: Recurrence)
 +createRecurrence(frequency: String, 
 			duration: Time, info: ArrayList&lt;String&gt;):Recurrence
-<<<<<<< HEAD
-+isOrganizer(user: User)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>55</x><y>1782</y><w>506</w><h>143</h></coordinates><panel_attributes>ShiftEventReceiver
-=======
 +isOrganizer(user: User)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>35</x>
-      <y>1134</y>
-      <w>322</w>
-      <h>91</h>
+      <x>25</x>
+      <y>810</y>
+      <w>230</w>
+      <h>65</h>
     </coordinates>
     <panel_attributes>ShiftEventReceiver
->>>>>>> bd90e3ab01d19d6c236fbd8d27a888f8a529f1a0
 {interface}
 --
 +updateRecurrenceCreated(recurrence: Recurrence)
@@ -628,23 +538,16 @@ fontsize=18</panel_attributes>
 +updateShiftRecurrentAdded(recurrence: Recurrence)
 +updateShiftRecurrentRemoved(shift: Shift)
 +updateServiceShiftAdded(shift: Shift)
-<<<<<<< HEAD
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>253</x><y>1606</y><w>121</w><h>198</h></coordinates><panel_attributes>lt=&lt;-
-eventReceivers
-m1=0..n</panel_attributes><additional_attributes>10;160;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>528</x><y>1518</y><w>517</w><h>55</h></coordinates><panel_attributes>lt=-&gt;
-shifts
-m2=0..n</panel_attributes><additional_attributes>10;20;450;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1749</x><y>1727</y><w>506</w><h>198</h></coordinates><panel_attributes>BoardManager
-=======
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>161</x>
-      <y>1022</y>
-      <w>91</w>
-      <h>126</h>
+      <x>115</x>
+      <y>730</y>
+      <w>65</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 eventReceivers
@@ -654,10 +557,10 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>336</x>
-      <y>966</y>
-      <w>329</w>
-      <h>35</h>
+      <x>240</x>
+      <y>690</y>
+      <w>235</w>
+      <h>25</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 shifts
@@ -667,13 +570,12 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1113</x>
-      <y>1099</y>
-      <w>322</w>
-      <h>126</h>
+      <x>795</x>
+      <y>785</y>
+      <w>230</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>BoardManager
->>>>>>> bd90e3ab01d19d6c236fbd8d27a888f8a529f1a0
 --
 
 --
@@ -685,32 +587,16 @@ m2=0..n</panel_attributes>
 *operations methods*
 +createBoard(event: String): Board
 +showBoard(event: String)
-<<<<<<< HEAD
-+isOrganizer(user: User)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1749</x><y>2013</y><w>506</w><h>77</h></coordinates><panel_attributes>BoardEventReceiver
-{interface}
---
-+updateBoardCreated(board: Board)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1969</x><y>1914</y><w>121</w><h>121</h></coordinates><panel_attributes>lt=&lt;-
-eventReceivers
-m1=0..n</panel_attributes><additional_attributes>10;90;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1188</x><y>1903</y><w>308</w><h>121</h></coordinates><panel_attributes>Board
---
--event: String
--
-+create(event: String)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1320</x><y>1705</y><w>66</w><h>220</h></coordinates><panel_attributes>lt=-&gt;
-shifts
-m2=0..n</panel_attributes><additional_attributes>10;180;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1485</x><y>1826</y><w>286</w><h>198</h></coordinates><panel_attributes>lt=&lt;-
-board
-m1=0..1</panel_attributes><additional_attributes>10;150;180;150;180;10;240;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>715</x><y>1903</y><w>363</w><h>176</h></coordinates><panel_attributes>Recurrence
-=======
 +isOrganizer(user: User)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1113</x>
-      <y>1281</y>
-      <w>322</w>
-      <h>49</h>
+      <x>795</x>
+      <y>915</y>
+      <w>230</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>BoardEventReceiver
 {interface}
@@ -721,10 +607,10 @@ m1=0..1</panel_attributes><additional_attributes>10;150;180;150;180;10;240;10</a
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1253</x>
-      <y>1218</y>
-      <w>91</w>
-      <h>77</h>
+      <x>895</x>
+      <y>870</y>
+      <w>65</w>
+      <h>55</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 eventReceivers
@@ -734,10 +620,10 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>756</x>
-      <y>1211</y>
-      <w>196</w>
-      <h>77</h>
+      <x>540</x>
+      <y>865</y>
+      <w>140</w>
+      <h>55</h>
     </coordinates>
     <panel_attributes>Board
 --
@@ -749,10 +635,10 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>840</x>
-      <y>1085</y>
-      <w>49</w>
-      <h>140</h>
+      <x>600</x>
+      <y>775</y>
+      <w>35</w>
+      <h>100</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 shifts
@@ -762,10 +648,10 @@ m2=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>945</x>
-      <y>1162</y>
-      <w>182</w>
-      <h>126</h>
+      <x>675</x>
+      <y>830</y>
+      <w>130</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 board
@@ -775,13 +661,12 @@ m1=0..1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>455</x>
-      <y>1211</y>
-      <w>231</w>
-      <h>112</h>
+      <x>325</x>
+      <y>865</y>
+      <w>165</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>Recurrence
->>>>>>> bd90e3ab01d19d6c236fbd8d27a888f8a529f1a0
 --
 -frequency: String
 -duration: Time
@@ -789,21 +674,16 @@ m1=0..1</panel_attributes>
 -
 +create(frequency: String, 
 			duration: Time, info: ArrayList&lt;String&gt;)
-<<<<<<< HEAD
-+removeShift(shift: Shift)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>858</x><y>1705</y><w>319</w><h>220</h></coordinates><panel_attributes>lt=-&gt;
-shifts
-m2=1..n</panel_attributes><additional_attributes>10;180;10;120;250;120;250;10</additional_attributes></element><element><id>Relation</id><coordinates><x>396</x><y>1606</y><w>418</w><h>319</h></coordinates><panel_attributes>lt=-&gt;
-=======
 +removeShift(shift: Shift)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>546</x>
-      <y>1085</y>
-      <w>203</w>
-      <h>140</h>
+      <x>390</x>
+      <y>775</y>
+      <w>145</w>
+      <h>100</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 shifts
@@ -813,12 +693,14 @@ m2=1..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>252</x>
-      <y>1022</y>
-      <w>266</w>
-      <h>203</h>
+      <x>180</x>
+      <y>730</y>
+      <w>190</w>
+      <h>145</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
->>>>>>> bd90e3ab01d19d6c236fbd8d27a888f8a529f1a0
 recurrences
-m2=0..n</panel_attributes><additional_attributes>10;10;10;50;340;50;340;270</additional_attributes></element></diagram>
+m2=0..n</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0;340.0;50.0;340.0;270.0</additional_attributes>
+  </element>
+</diagram>
