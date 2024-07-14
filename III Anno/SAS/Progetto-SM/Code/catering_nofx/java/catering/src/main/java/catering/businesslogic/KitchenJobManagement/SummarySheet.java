@@ -7,6 +7,10 @@ import catering.businesslogic.shiftManagement.Shift;
 import catering.businesslogic.user.User;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+
+import static catering.businesslogic.KitchenJobManagement.SummarySheetManager.Sorting.DIFFICOLTA;
+import static catering.businesslogic.KitchenJobManagement.SummarySheetManager.Sorting.IMPORTANZA;
 
 public class SummarySheet {
     private ServiceInfo service;
@@ -62,23 +66,25 @@ public class SummarySheet {
 
     // Method to get the owner
     public User getOwner() {
-        // Assuming there's a way to determine the owner of the service
-        return owner; // Placeholder, replace with actual logic to get the owner
+        return owner;
     }
 
-    // Method to print summary sheet details
-    public void printSummary() {
-        System.out.println("Service: " + service);
-        System.out.println("Job: " + jobs);
+    public ArrayList<Job> sortJobs(String sorting) {
+        jobs.sort(getJobComparator(sorting));
+        return jobs;
     }
 
-    // toString method
-    @Override
-    public String toString() {
-        return "SummarySheet{" +
-                "service='" + service + '\'' +
-                ", job=" + jobs +
-                '}';
+    private Comparator<Job> getJobComparator(String sorting) {
+        switch (sorting) {
+            case "IMPORTANZA":
+                return Comparator.comparing(job -> job.getDuty().getImportance());
+            case "DIFFICOLTA":
+                return Comparator.comparing(job -> job.getDuty().getDifficult());
+            default:
+                return null;
+        }
     }
+
+
 }
 

@@ -122,8 +122,18 @@ public class SummarySheetManager {
             throw new UseCaseLogicException();
     }
 
-    public void sortJobs(String sorting) {
+    public ArrayList<Job> sortJobs(String sorting) throws UseCaseLogicException {
+        User user = CatERing.getInstance().getUserManager().getUser();
 
+        if (isChef(user) && sheet != null) {
+            return sheet.sortJobs(sorting);
+        } else {
+            throw new UseCaseLogicException();
+        }
+    }
+
+    public boolean isOwner(User user) {
+        return this.sheet.getOwner().equals(user);
     }
 }
 

@@ -5,20 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d2ee6eda-2202-4414-a1f1-bf4dc9a41b58" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/java/catering/src/main/java/catering/businesslogic/shiftManagement/KitchenShift.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/java/catering/src/main/java/catering/businesslogic/shiftManagement/ServiceShift.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/java/catering/src/main/java/catering/businesslogic/shiftManagement/StaffMember.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/134a77e4-f4e8-4f16-8600-4f5b7a45cff5.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/java/catering/src/main/java/catering/businesslogic/shiftManagement/Board.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/java/catering/src/main/java/catering/businesslogic/shiftManagement/BoardManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/java/catering/src/main/java/catering/businesslogic/KitchenJobManagement/Job.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/catering/src/main/java/catering/businesslogic/KitchenJobManagement/Job.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/java/catering/src/main/java/catering/businesslogic/KitchenJobManagement/JobManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/catering/src/main/java/catering/businesslogic/KitchenJobManagement/JobManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/java/catering/src/main/java/catering/businesslogic/KitchenJobManagement/SummarySheet.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/catering/src/main/java/catering/businesslogic/KitchenJobManagement/SummarySheet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/java/catering/src/main/java/catering/businesslogic/KitchenJobManagement/SummarySheetEventReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/catering/src/main/java/catering/businesslogic/KitchenJobManagement/SummarySheetEventReceiver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/java/catering/src/main/java/catering/businesslogic/KitchenJobManagement/SummarySheetManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/catering/src/main/java/catering/businesslogic/KitchenJobManagement/SummarySheetManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/catering/src/main/java/catering/businesslogic/shiftManagement/Shift.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/catering/src/main/java/catering/businesslogic/shiftManagement/Shift.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Compiti_Cucina/DSD_creaFoglio.uxf" beforeDir="false" afterPath="$PROJECT_DIR$/../../Compiti_Cucina/DSD_creaFoglio.uxf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../DCD.uxf" beforeDir="false" afterPath="$PROJECT_DIR$/../../DCD.uxf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Compiti_Cucina/DSD_aggiornaCompito.uxf" beforeDir="false" afterPath="$PROJECT_DIR$/../../Compiti_Cucina/DSD_aggiornaCompito.uxf" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

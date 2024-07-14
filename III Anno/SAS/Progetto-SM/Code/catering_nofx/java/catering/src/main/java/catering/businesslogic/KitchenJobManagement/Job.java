@@ -129,4 +129,21 @@ public class Job {
 
         return this;
     }
+
+    public Job assignJob(KitchenShift shift, ArrayList<Cook> cooks, int portions, int time) {
+        this.shift = shift;
+
+        if (cooks != null && !cooks.isEmpty()) {
+            for (Cook c: cooks) {
+                if (this.shift.isCookAssigned(c))
+                    this.cooksAssigned.add(c);
+            }
+        }
+        if (portions > 0)
+            this.portions = portions;
+        if (time > 0)
+            this.time = time;
+
+        return this;
+    }
 }
