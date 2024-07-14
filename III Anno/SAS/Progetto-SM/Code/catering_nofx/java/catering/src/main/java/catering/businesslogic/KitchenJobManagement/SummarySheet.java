@@ -2,6 +2,7 @@ package catering.businesslogic.KitchenJobManagement;
 
 import catering.businesslogic.event.ServiceInfo;
 import catering.businesslogic.shiftManagement.Cook;
+import catering.businesslogic.shiftManagement.KitchenShift;
 import catering.businesslogic.shiftManagement.Shift;
 import catering.businesslogic.user.User;
 
@@ -42,24 +43,15 @@ public class SummarySheet {
     }
 
     // Method to add a job
-    public void addJob(String title, boolean prepare, boolean completed) {
-        this.jobs.add(new Job(title, prepare, completed));
+    public Job addJob(String title, boolean prepare, boolean completed, Duty duty) {
+        Job job = new Job(title, prepare, completed, duty);
+        this.jobs.add(job);
+        return job;
     }
 
     // Method to update a job
-    public void updateJob(Job job, Shift shift, Cook cook, String portions, int time) {
-        if (shift != null) {
-            job.setShift(shift); // assuming Job class has a method setShift()
-        }
-        if (cook != null) {
-            job.setCook(cook); // assuming Job class has a method setCook()
-        }
-        if (portions != null) {
-            job.setPortions(Integer.parseInt(portions));
-        }
-        if (time > 0) {
-            job.setTime(time);
-        }
+    public Job updateJob(Job job, KitchenShift shift, ArrayList<Cook> cooks, int quantity, int time) {
+        return job.updateJob(shift, cooks, quantity, time);
     }
 
     // Method to delete the summary sheet
@@ -69,9 +61,9 @@ public class SummarySheet {
     }
 
     // Method to get the owner
-    public String getOwner() {
+    public User getOwner() {
         // Assuming there's a way to determine the owner of the service
-        return "Owner"; // Placeholder, replace with actual logic to get the owner
+        return owner; // Placeholder, replace with actual logic to get the owner
     }
 
     // Method to print summary sheet details

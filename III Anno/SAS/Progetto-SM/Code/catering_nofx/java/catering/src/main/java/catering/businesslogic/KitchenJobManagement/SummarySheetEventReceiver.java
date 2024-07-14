@@ -1,10 +1,10 @@
 package catering.businesslogic.KitchenJobManagement;
 
 public interface SummarySheetEventReceiver {
-    void sheetCreated(SummarySheet sheet);
-    void sheetModified(SummarySheet sheet);
-    void jobAdded(Job job);
-    void jobUpdated(Job job);
-    void sheetDeleted(SummarySheet sheet);
+    void updateSheetCreated(SummarySheet sheet);
+    void updateSheetModified(SummarySheet sheet);
+    void updateJobAdded(Job job);
+    void updateJobUpdated(Job job);
+    void updateSheetDeleted(SummarySheet sheet);
 }
 
