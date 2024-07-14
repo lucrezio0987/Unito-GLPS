@@ -4,8 +4,8 @@
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>126</x>
-      <y>126</y>
+      <x>135</x>
+      <y>99</y>
       <w>90</w>
       <h>63</h>
     </coordinates>
@@ -15,19 +15,19 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>162</x>
-      <y>180</y>
+      <x>171</x>
+      <y>153</y>
       <w>27</w>
-      <h>360</h>
+      <h>531</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;380.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;570.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>162</x>
-      <y>234</y>
+      <x>171</x>
+      <y>162</y>
       <w>279</w>
       <h>36</h>
     </coordinates>
@@ -38,8 +38,8 @@ sortJobs(sorting)</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>351</x>
-      <y>135</y>
+      <x>360</x>
+      <y>126</y>
       <w>162</w>
       <h>36</h>
     </coordinates>
@@ -51,10 +51,10 @@ SummarySheetManager
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>423</x>
-      <y>252</y>
+      <x>432</x>
+      <y>180</y>
       <w>18</w>
-      <h>207</h>
+      <h>441</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -62,8 +62,8 @@ SummarySheetManager
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>648</x>
-      <y>135</y>
+      <x>657</x>
+      <y>324</y>
       <w>126</w>
       <h>36</h>
     </coordinates>
@@ -74,19 +74,19 @@ SummarySheet</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>684</x>
-      <y>162</y>
+      <x>693</x>
+      <y>351</y>
       <w>27</w>
-      <h>396</h>
+      <h>351</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;420.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;370.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>684</x>
-      <y>270</y>
+      <x>693</x>
+      <y>414</y>
       <w>18</w>
       <h>144</h>
     </coordinates>
@@ -96,8 +96,8 @@ SummarySheet</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>432</x>
-      <y>252</y>
+      <x>441</x>
+      <y>396</y>
       <w>270</w>
       <h>36</h>
     </coordinates>
@@ -108,8 +108,8 @@ sortJobs(sorting)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>693</x>
-      <y>270</y>
+      <x>702</x>
+      <y>414</y>
       <w>234</w>
       <h>36</h>
     </coordinates>
@@ -120,8 +120,8 @@ get()</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>846</x>
-      <y>135</y>
+      <x>855</x>
+      <y>315</y>
       <w>135</w>
       <h>45</h>
     </coordinates>
@@ -132,19 +132,19 @@ ArrayList&lt;Job&gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>909</x>
-      <y>171</y>
+      <x>918</x>
+      <y>351</y>
       <w>27</w>
-      <h>387</h>
+      <h>351</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;410.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;370.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>909</x>
-      <y>288</y>
+      <x>918</x>
+      <y>432</y>
       <w>18</w>
       <h>45</h>
     </coordinates>
@@ -154,8 +154,8 @@ ArrayList&lt;Job&gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>693</x>
-      <y>315</y>
+      <x>702</x>
+      <y>459</y>
       <w>234</w>
       <h>36</h>
     </coordinates>
@@ -166,8 +166,8 @@ jobs</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>432</x>
-      <y>396</y>
+      <x>441</x>
+      <y>540</y>
       <w>270</w>
       <h>36</h>
     </coordinates>
@@ -178,8 +178,8 @@ jobsSorted</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>162</x>
-      <y>414</y>
+      <x>171</x>
+      <y>558</y>
       <w>279</w>
       <h>36</h>
     </coordinates>
@@ -190,8 +190,8 @@ jobsSorted</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>693</x>
-      <y>351</y>
+      <x>702</x>
+      <y>495</y>
       <w>171</w>
       <h>63</h>
     </coordinates>
@@ -202,15 +202,20 @@ jobs.sort(sorting)</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>198</x>
-      <y>198</y>
+      <x>207</x>
+      <y>279</y>
       <w>837</w>
-      <h>297</h>
+      <h>360</h>
     </coordinates>
-    <panel_attributes>ALT [mgr.sheet]
+    <panel_attributes>ALT [mgr.sheet &amp;&amp; isChef(user)]
 fg=#761C8C
 lw=2
 --
+
+
+
+
+
 
 
 
@@ -232,8 +237,8 @@ lw=2
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>18</x>
-      <y>45</y>
+      <x>36</x>
+      <y>27</y>
       <w>198</w>
       <h>54</h>
     </coordinates>
@@ -246,8 +251,8 @@ fontsize=18</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>162</x>
-      <y>441</y>
+      <x>171</x>
+      <y>603</y>
       <w>279</w>
       <h>36</h>
     </coordinates>
@@ -259,12 +264,70 @@ fg=red</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>423</x>
-      <y>162</y>
+      <x>432</x>
+      <y>153</y>
       <w>27</w>
-      <h>378</h>
+      <h>531</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;400.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;570.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>441</x>
+      <y>180</y>
+      <w>495</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;
+getUser()</panel_attributes>
+    <additional_attributes>10.0;20.0;530.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>441</x>
+      <y>234</y>
+      <w>495</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+user</panel_attributes>
+    <additional_attributes>10.0;20.0;530.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>918</x>
+      <y>153</y>
+      <w>27</w>
+      <h>126</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>918</x>
+      <y>198</y>
+      <w>18</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>837</x>
+      <y>117</y>
+      <w>189</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>userMgr: 
+UserManager</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>
