@@ -324,11 +324,11 @@ m2=0..n
       <x>455</x>
       <y>700</y>
       <w>112</w>
-      <h>63</h>
+      <h>56</h>
     </coordinates>
     <panel_attributes>Tabellone
 --
-evento: testo</panel_attributes>
+nome: testo</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -344,7 +344,7 @@ evento: testo</panel_attributes>
 descrizione: testo
 data: data
 ora: ora
-durata: tempo
+durata: numero
 scadenza: data
 blocco: si/no</panel_attributes>
     <additional_attributes/>
@@ -721,7 +721,7 @@ relativo a &gt;</panel_attributes>
     </coordinates>
     <panel_attributes>lt=-
 m1=0..n
-m2=0..1
+m2=1..n
 assegnato a &gt;</panel_attributes>
     <additional_attributes>10.0;170.0;10.0;80.0;220.0;80.0;220.0;10.0</additional_attributes>
   </element>
@@ -766,8 +766,8 @@ contiene &gt;</panel_attributes>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 m1=1
 m2=1
-associato a ^</panel_attributes>
-    <additional_attributes>260.0;10.0;10.0;10.0;10.0;1000.0;580.0;1000.0;580.0;960.0</additional_attributes>
+ha associato v</panel_attributes>
+    <additional_attributes>260.0;10.0;10.0;10.0;10.0;1000.0;580.0;1000.0;580.0;950.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>

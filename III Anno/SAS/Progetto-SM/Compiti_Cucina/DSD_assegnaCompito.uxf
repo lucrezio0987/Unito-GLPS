@@ -32,7 +32,7 @@
       <h>24</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-assignJob(job, shift, cook, portions, time)</panel_attributes>
+assignJob(job, shift, cooks, portions, time)</panel_attributes>
     <additional_attributes>10.0;20.0;430.0;20.0</additional_attributes>
   </element>
   <element>
@@ -297,7 +297,7 @@ layer=-1
       <h>24</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-assignJob(shift, cook, portions, time)</panel_attributes>
+assignJob(shift, cooks, portions, time)</panel_attributes>
     <additional_attributes>10.0;20.0;320.0;20.0</additional_attributes>
   </element>
   <element>
