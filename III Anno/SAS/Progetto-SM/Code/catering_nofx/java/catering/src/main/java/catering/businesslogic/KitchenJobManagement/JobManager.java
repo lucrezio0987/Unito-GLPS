@@ -28,23 +28,8 @@ public class JobManager {
 
     }
 
-    // Operations methods
-    public Job createJob(String title, int portions, boolean prepare, boolean completed) {
-        return new Job(title, portions, prepare, completed);
-    }
-
     public void assignJob(Job job, Shift shift, Cook cook, String portions, int time) {
-        if (cook != null) {
-            job.setCook(cook);
-        }
-        if (portions != null) {
-            job.setPortions(Integer.parseInt(portions));
-        }
-        if (time > 0) {
-            job.setTime(time);
-        }
-        job.setShift(shift);
-        notifyJobAssigned(job, shift);
+
     }
 
     public boolean isChef(User user) {
