@@ -252,22 +252,14 @@ UserManager</panel_attributes>
     <id>UMLFrame</id>
     <coordinates>
       <x>189</x>
-      <y>297</y>
+      <y>288</y>
       <w>963</w>
-      <h>279</h>
+      <h>288</h>
     </coordinates>
     <panel_attributes>ALT isOwner(user)
 fg=#761C8C
 lw=2
 --
-
-
-
-
-
-
-
-
 
 
 
