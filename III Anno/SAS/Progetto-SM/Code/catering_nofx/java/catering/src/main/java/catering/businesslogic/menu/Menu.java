@@ -2,7 +2,7 @@ package catering.businesslogic.menu;
 
 import catering.businesslogic.CatERing;
 import catering.businesslogic.KitchenJobManagement.Duty;
-import catering.businesslogic.KitchenJobManagement.Preparation;
+import catering.businesslogic.recipe.Preparation;
 import catering.businesslogic.event.ServiceInfo;
 import catering.businesslogic.recipe.Recipe;
 import catering.businesslogic.user.User;
@@ -144,13 +144,16 @@ public class Menu {
         ArrayList<MenuItem> menuItems = new ArrayList<>();
         menuItems.addAll(freeItems);
 
-        for (Section section : sections) {
-            menuItems.addAll(section.getItems());
+        if (!sections.isEmpty()) {
+            for (Section section : sections) {
+                menuItems.addAll(section.getItems());
+            }
         }
 
-
-        for (MenuItem menuItem : menuItems) {
-            duties.add(menuItem.getItemRecipe());
+        if (!menuItems.isEmpty()) {
+            for (MenuItem menuItem : menuItems) {
+                duties.add(menuItem.getItemRecipe());
+            }
         }
 
         ArrayList<Duty> allDuties = new ArrayList<>(duties); // Copia iniziale di tutte le duties
@@ -174,6 +177,7 @@ public class Menu {
 
         return allPreparations;
     }
+
 
 
     public Section addSection(String name) {

@@ -1,6 +1,6 @@
 package catering.businesslogic.KitchenJobManagement;
 
-import catering.businesslogic.recipe.Recipe;
+import catering.businesslogic.recipe.Preparation;
 import catering.persistence.PersistenceManager;
 import catering.persistence.ResultHandler;
 
@@ -51,94 +51,62 @@ public class Duty {
 
 
     // Getters and Setters
-
-
-    public String getName() {
-        return name;
-    }
-
     public int getId() {
         return id;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getDifficult() {
-        return difficult;
-    }
-
-    public void setDifficult(int difficult) {
-        this.difficult = difficult;
-    }
-
-    public int getImportance() {
-        return importance;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
-
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public int getDifficult() {
+        return difficult;
+    }
+    public void setDifficult(int difficult) {
+        this.difficult = difficult;
+    }
+    public int getImportance() {
+        return importance;
+    }
     public void setImportance(int importance) {
         this.importance = importance;
     }
-
     public int getTime() {
         return time;
     }
-
     public void setTime(int time) {
         this.time = time;
     }
-
     public int getQuantity() {
         return quantity;
     }
-
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-
     public int getPortions() {
         return portions;
     }
-
     public void setPortions(int portions) {
         this.portions = portions;
     }
-
     public ArrayList<Preparation> getPreparations() {
         return preparations;
     }
-
     public void setPreparations(ArrayList<Preparation> preparations) {
         this.preparations = preparations;
     }
 
-    // toString method
-    @Override
-    public String toString() {
-        return "Duty{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", difficult=" + difficult +
-                ", importance=" + importance +
-                ", time=" + time +
-                ", quantity='" + quantity + '\'' +
-                ", portions='" + portions + '\'' +
-                '}';
-    }
-
+    // Utility methods
     public static Duty loadDutyById(int dutyId) {
         final Duty[] duty = {null};
         String query = "SELECT * FROM duties WHERE id = ?";

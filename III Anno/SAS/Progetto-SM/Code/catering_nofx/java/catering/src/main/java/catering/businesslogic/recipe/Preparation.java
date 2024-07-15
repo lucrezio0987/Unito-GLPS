@@ -1,4 +1,6 @@
-package catering.businesslogic.KitchenJobManagement;
+package catering.businesslogic.recipe;
+
+import catering.businesslogic.KitchenJobManagement.Duty;
 
 import java.util.ArrayList;
 
