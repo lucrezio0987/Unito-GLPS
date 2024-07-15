@@ -7,6 +7,7 @@ import catering.businesslogic.user.User;
 
 import catering.persistence.BatchUpdateHandler;
 import catering.persistence.PersistenceManager;
+import catering.persistence.ResultHandler;
 import org.apache.commons.lang3.time.DateUtils;
 
 import java.sql.PreparedStatement;
@@ -35,6 +36,14 @@ public class SummarySheet {
         }
     }
     // Getters and Setters
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
 
     public int getId() {
         return id;
@@ -131,8 +140,8 @@ public class SummarySheet {
 
     public static void modifySheet(SummarySheet sheet) {
         String sheetModify = "UPDATE sheets SET service = " + sheet.service + ", owner_id = " + sheet.owner + " WHERE id = " + sheet.id;
-        int row = PersistenceManager.executeUpdate(sheetModify);
-        if (row > 0) {
+        int result = PersistenceManager.executeUpdate(sheetModify);
+        if (result > 0) {
             for (Job job : sheet.jobs) {
                 Job.modifyJobDB(job);
             }

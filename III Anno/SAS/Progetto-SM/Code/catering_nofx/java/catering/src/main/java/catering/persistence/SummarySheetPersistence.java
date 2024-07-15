@@ -12,9 +12,7 @@ public class SummarySheetPersistence implements SummarySheetEventReceiver {
     }
 
     @Override
-    public void updateSheetModified(SummarySheet sheet) {
-        SummarySheet.modifySheet(sheet);
-    }
+    public void updateSheetModified(SummarySheet sheet) { SummarySheet.modifySheet(sheet);}
 
     @Override
     public void updateJobAdded(Job job, SummarySheet sheet) {

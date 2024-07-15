@@ -6,7 +6,11 @@ import catering.businesslogic.event.ServiceInfo;
 import catering.businesslogic.shiftManagement.Cook;
 import catering.businesslogic.shiftManagement.KitchenShift;
 import catering.businesslogic.user.User;
+import catering.persistence.PersistenceManager;
+import catering.persistence.ResultHandler;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -152,6 +156,25 @@ public class SummarySheetManager {
 
     public boolean isOwner(User user) {
         return this.sheet.getOwner().equals(user);
+    }
+
+    public ArrayList<SummarySheet> getAllSheet(User user) {
+        String getAllSheet = "SELECT * FROM sheets WHERE owner_id = " + user.getId();
+        System.out.println(getAllSheet);
+        ArrayList<SummarySheet> sheets = new ArrayList<>();
+        PersistenceManager.executeQuery(getAllSheet, new ResultHandler() {
+            @Override
+            public void handle(ResultSet rs) throws SQLException {
+                System.out.println("handle");
+                while (rs.next()) {
+                    System.out.println("while");
+                    SummarySheet sheet = new SummarySheet(ServiceInfo.getService(rs.getInt("service")), user);
+                    sheet.setId(rs.getInt("id"));
+                    sheets.add(sheet);
+                }
+            }
+        });
+        return sheets;
     }
 }
 

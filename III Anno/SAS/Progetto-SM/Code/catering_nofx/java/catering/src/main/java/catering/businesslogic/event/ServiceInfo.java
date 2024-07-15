@@ -2,6 +2,7 @@ package catering.businesslogic.event;
 
 import catering.businesslogic.CatERing;
 import catering.businesslogic.KitchenJobManagement.Duty;
+import catering.businesslogic.KitchenJobManagement.SummarySheet;
 import catering.businesslogic.menu.Menu;
 import catering.persistence.PersistenceManager;
 import catering.persistence.ResultHandler;
@@ -99,5 +100,19 @@ public class ServiceInfo implements EventItemInfo {
             }
         });
         return result;
+    }
+
+    public static ServiceInfo getService(int id) {
+        String getService = "SELECT * FROM services WHERE id = " + id;
+        final ServiceInfo[] service = new ServiceInfo[1];
+        PersistenceManager.executeQuery(getService, new ResultHandler() {
+            @Override
+            public void handle(ResultSet rs) throws SQLException {
+                while (rs.next()) {
+                    service[0] = new ServiceInfo(rs.getString("name"));
+                }
+            }
+        });
+        return service[0];
     }
 }

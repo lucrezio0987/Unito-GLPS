@@ -5,10 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d2ee6eda-2202-4414-a1f1-bf4dc9a41b58" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/java/catering/src/main/java/catering/persistence/KitchenJobPersistence.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/java/catering/src/main/java/catering/TestDeleteSheet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/java/catering/src/main/java/catering/TestModifiedSheet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/3f9026c1-2fec-49b9-a938-6e34fdf29ae9.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/java/catering/src/main/java/catering/Test1.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/catering/src/main/java/catering/TestCreateSheet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/java/catering/src/main/java/catering/businesslogic/KitchenJobManagement/SummarySheet.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/catering/src/main/java/catering/businesslogic/KitchenJobManagement/SummarySheet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/java/catering/src/main/java/catering/persistence/PersistenceManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/catering/src/main/java/catering/persistence/PersistenceManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/java/catering/src/main/java/catering/businesslogic/KitchenJobManagement/SummarySheetManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/catering/src/main/java/catering/businesslogic/KitchenJobManagement/SummarySheetManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/java/catering/src/main/java/catering/businesslogic/event/ServiceInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/catering/src/main/java/catering/businesslogic/event/ServiceInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/java/catering/src/main/java/catering/persistence/SummarySheetPersistence.java" beforeDir="false" afterPath="$PROJECT_DIR$/java/catering/src/main/java/catering/persistence/SummarySheetPersistence.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,12 +56,14 @@
     "Application.TestCatERing2a.executor": "Run",
     "Application.TestCatERing2b.executor": "Run",
     "Application.TestCatERing2c.executor": "Run",
+    "Application.TestDeleteSheet.executor": "Run",
+    "Application.TestModifiedSheet.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/mariocorrao/Desktop/Git/Unito-GLPS/III Anno/SAS/Progetto-SM/Code/catering_nofx/java/catering/src/main/java/catering",
+    "last_opened_file_path": "C:/Users/simob/Documents/Repository/Unito-GLPS/III Anno/SAS/Progetto-SM/Code/catering_nofx/database/script_sas.sql",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -74,7 +83,7 @@
       <recent name="$PROJECT_DIR$/java/catering/src/main/java/catering" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.TestDeleteSheet">
     <configuration name="TestCatERing" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="catering.TestCatERing" />
       <module name="catering" />
@@ -88,8 +97,50 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestCreateSheet" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="catering.TestCreateSheet" />
+      <module name="catering" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="catering.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestDeleteSheet" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="catering.TestDeleteSheet" />
+      <module name="catering" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="catering.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestModifiedSheet" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="catering.TestModifiedSheet" />
+      <module name="catering" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="catering.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.TestDeleteSheet" />
+        <item itemvalue="Application.TestModifiedSheet" />
+        <item itemvalue="Application.TestCreateSheet" />
         <item itemvalue="Application.TestCatERing" />
       </list>
     </recent_temporary>
