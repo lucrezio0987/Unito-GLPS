@@ -1,5 +1,5 @@
-<diagram program="umletino" version="15.1"><zoom_level>7</zoom_level><element><id>UMLPackage</id><coordinates><x>0</x><y>0</y><w>1428</w><h>721</h></coordinates><panel_attributes>KitchenJobManagement
-fontsize=18</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>119</x><y>63</y><w>434</w><h>217</h></coordinates><panel_attributes>SummarySheetManager
+<diagram program="umletino" version="15.1"><zoom_level>6</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLPackage</id><coordinates><x>114</x><y>0</y><w>1224</w><h>618</h></coordinates><panel_attributes>KitchenJobManagement
+fontsize=18</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>216</x><y>54</y><w>372</w><h>186</h></coordinates><panel_attributes>SummarySheetManager
 --
 
 --
@@ -21,7 +21,7 @@ fontsize=18</panel_attributes><additional_attributes></additional_attributes></e
 +addJob(title: String, prepare: boolean, completed: boolean, duty: Duty) : Job
 +updateJob(job: Job, shift?: KitchenShiftShift, cooks?: ArrayList&lt;Cook&gt;, portions?: String, time?: int) : Job
 +sortJobs(sorting: String) : ArrayList&lt;Job&gt;
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>791</x><y>112</y><w>469</w><h>105</h></coordinates><panel_attributes>SummarySheet
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>792</x><y>96</y><w>402</w><h>90</h></coordinates><panel_attributes>SummarySheet
 --
 -service: ServiceInfo
 --
@@ -30,11 +30,11 @@ fontsize=18</panel_attributes><additional_attributes></additional_attributes></e
 +updateJob(job: Job, shift?: KitchenShiftShift, cooks?: ArrayList&lt;Cook&gt;, quantity?: int, time?: int) : Job
 +clearSummarySheet()	
 +sortJobs(sorting: String) : ArrayList&lt;Job&gt;
-+ isNotUsed() : boolean																																		</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>546</x><y>112</y><w>259</w><h>35</h></coordinates><panel_attributes>lt=&lt;-
++ isNotUsed() : boolean																																		</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>582</x><y>96</y><w>222</w><h>30</h></coordinates><panel_attributes>lt=&lt;-
 sheet
-m1=0..1</panel_attributes><additional_attributes>350;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>826</x><y>210</y><w>35</w><h>238</h></coordinates><panel_attributes>lt=&lt;-
+m1=0..1</panel_attributes><additional_attributes>350;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>822</x><y>180</y><w>30</w><h>204</h></coordinates><panel_attributes>lt=&lt;-
 jobs
-m1=0..n</panel_attributes><additional_attributes>10;320;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>644</x><y>434</y><w>420</w><h>105</h></coordinates><panel_attributes>Job
+m1=0..n</panel_attributes><additional_attributes>10;320;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>666</x><y>372</y><w>360</w><h>90</h></coordinates><panel_attributes>Job
 --
 -title: String
 -time: int
@@ -45,7 +45,7 @@ m1=0..n</panel_attributes><additional_attributes>10;320;10;10</additional_attrib
 +create(title: String, time: int, portions?: int, prepare: boolean, completed: boolean)
 +updateJob(shift: KitchenShift, cooks: ArrayList&lt;Cook&gt;, quantity: int, time: int) : Job
 +assignJob(shift: KitchenShiftShift, cooks?: ArrayList&lt;Cook&gt;, portions?: int, time?: int)
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1141</x><y>434</y><w>266</w><h>140</h></coordinates><panel_attributes>Duty
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1092</x><y>372</y><w>228</w><h>120</h></coordinates><panel_attributes>Duty
 --
 -name: String
 -description: String
@@ -58,18 +58,18 @@ m1=0..n</panel_attributes><additional_attributes>10;320;10;10</additional_attrib
 +create(name: String, description: String, difficult: int, 
 importance: int, time: int, quantity: int, portions: int)	
 + create(name: String)
-+ create()						</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1057</x><y>504</y><w>98</w><h>35</h></coordinates><panel_attributes>lt=&lt;-
++ create()						</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1020</x><y>432</y><w>84</w><h>30</h></coordinates><panel_attributes>lt=&lt;-
 duty
-m1=1</panel_attributes><additional_attributes>120;20;10;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>126</x><y>343</y><w>315</w><h>91</h></coordinates><panel_attributes>SummarySheetEventReceiver
+m1=1</panel_attributes><additional_attributes>120;20;10;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>222</x><y>294</y><w>270</w><h>78</h></coordinates><panel_attributes>SummarySheetEventReceiver
 {interface}
 --
 +updateSheetCreated(sheet: SummarySheet)
 +updateSheetModified(sheet: SummarySheet)
 +updateSheetDeleted(sheet: SummarySheet)
 +updateJobAdded(job: Job, sheet: SummarySheet)
-+updateJobUpdated(job: Job)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>280</x><y>273</y><w>77</w><h>84</h></coordinates><panel_attributes>lt=&lt;-
++updateJobUpdated(job: Job)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>354</x><y>234</y><w>66</w><h>72</h></coordinates><panel_attributes>lt=&lt;-
 eventReceivers
-m1=0..n</panel_attributes><additional_attributes>10;100;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>651</x><y>980</y><w>280</w><h>140</h></coordinates><panel_attributes>Shift
+m1=0..n</panel_attributes><additional_attributes>10;100;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>672</x><y>840</y><w>240</w><h>120</h></coordinates><panel_attributes>Shift
 --
 -description: String
 -date: Date
@@ -80,67 +80,67 @@ m1=0..n</panel_attributes><additional_attributes>10;100;10;10</additional_attrib
 -
 +create(description: String, date: Date, 
 			time: Time, duration: Time, cooks: ArrayList&lt;cook&gt;)
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1176</x><y>819</y><w>140</w><h>98</h></coordinates><panel_attributes>Cook
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1122</x><y>702</y><w>120</w><h>84</h></coordinates><panel_attributes>Cook
 --
 -name: String
---</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1022</x><y>532</y><w>231</w><h>301</h></coordinates><panel_attributes>lt=&lt;-
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>990</x><y>456</y><w>198</w><h>258</h></coordinates><panel_attributes>lt=&lt;-
 cooks
-m1=1..n</panel_attributes><additional_attributes>290;410;290;180;10;180;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>924</x><y>910</y><w>329</w><h>112</h></coordinates><panel_attributes>lt=&lt;-
+m1=1..n</panel_attributes><additional_attributes>290;410;290;180;10;180;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>906</x><y>780</y><w>282</w><h>96</h></coordinates><panel_attributes>lt=&lt;-
 cooks
-m1=1..n</panel_attributes><additional_attributes>430;10;430;140;10;140</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1554</x><y>399</y><w>133</w><h>84</h></coordinates><panel_attributes>Preparation
+m1=1..n</panel_attributes><additional_attributes>430;10;430;140;10;140</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1446</x><y>342</y><w>114</w><h>72</h></coordinates><panel_attributes>Preparation
 --
-fg=gray</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1400</x><y>420</y><w>168</w><h>49</h></coordinates><panel_attributes>lt=&lt;-
+fg=gray</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1314</x><y>360</y><w>144</w><h>42</h></coordinates><panel_attributes>lt=&lt;-
 preparation
-m1=0..n</panel_attributes><additional_attributes>220;20;80;20;80;50;10;50</additional_attributes></element><element><id>UMLClass</id><coordinates><x>581</x><y>826</y><w>217</w><h>77</h></coordinates><panel_attributes>ServiceShift
+m1=0..n</panel_attributes><additional_attributes>220;20;80;20;80;50;10;50</additional_attributes></element><element><id>UMLClass</id><coordinates><x>612</x><y>708</y><w>186</w><h>66</h></coordinates><panel_attributes>ServiceShift
 -
 
 -
 +create(description: String, date: Date, 
-			time: Time, duration: int, cooks: ArrayList&lt;cooks&gt;)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>833</x><y>826</y><w>210</w><h>77</h></coordinates><panel_attributes>KitchenShift
+			time: Time, duration: int, cooks: ArrayList&lt;cooks&gt;)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>828</x><y>708</y><w>180</w><h>66</h></coordinates><panel_attributes>KitchenShift
 --
 - place: String
 --
 +isCookAssigned(c: Cook)
 +create(description: String, date: Date, 
-	time: Time, duration: int, cooks: ArrayList&lt;cooks&gt;, place: String)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>798</x><y>938</y><w>21</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;60;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>672</x><y>896</y><w>273</w><h>63</h></coordinates><panel_attributes>lt=-</panel_attributes><additional_attributes>10;10;10;70;370;70;370;10</additional_attributes></element><element><id>Relation</id><coordinates><x>924</x><y>532</y><w>35</w><h>308</h></coordinates><panel_attributes>lt=&lt;-
+	time: Time, duration: int, cooks: ArrayList&lt;cooks&gt;, place: String)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>798</x><y>804</y><w>18</w><h>48</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;60;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>690</x><y>768</y><w>234</w><h>54</h></coordinates><panel_attributes>lt=-</panel_attributes><additional_attributes>10;10;10;70;370;70;370;10</additional_attributes></element><element><id>Relation</id><coordinates><x>906</x><y>456</y><w>30</w><h>264</h></coordinates><panel_attributes>lt=&lt;-
 shift
-m1=1</panel_attributes><additional_attributes>10;420;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1463</x><y>462</y><w>105</w><h>133</h></coordinates><panel_attributes>lt=-
-fg=gray</panel_attributes><additional_attributes>130;170;10;170;10;10;130;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1400</x><y>518</y><w>84</w><h>21</h></coordinates><panel_attributes>lt=&lt;&lt;-
-fg=gray</panel_attributes><additional_attributes>10;10;100;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1554</x><y>525</y><w>133</w><h>84</h></coordinates><panel_attributes>Receipe
+m1=1</panel_attributes><additional_attributes>10;420;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1368</x><y>396</y><w>90</w><h>114</h></coordinates><panel_attributes>lt=-
+fg=gray</panel_attributes><additional_attributes>130;170;10;170;10;10;130;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1314</x><y>444</y><w>72</w><h>18</h></coordinates><panel_attributes>lt=&lt;&lt;-
+fg=gray</panel_attributes><additional_attributes>10;10;100;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1446</x><y>450</y><w>114</w><h>72</h></coordinates><panel_attributes>Receipe
 --
-fg=gray</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>385</x><y>819</y><w>133</w><h>84</h></coordinates><panel_attributes>StaffMember
+fg=gray</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>444</x><y>702</y><w>114</w><h>72</h></coordinates><panel_attributes>StaffMember
 --
 - name: String
--</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>511</x><y>847</y><w>84</w><h>35</h></coordinates><panel_attributes>lt=&lt;-
+-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>552</x><y>726</y><w>72</w><h>30</h></coordinates><panel_attributes>lt=&lt;-
 staff
-m1=0..n</panel_attributes><additional_attributes>10;20;100;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>77</x><y>455</y><w>420</w><h>126</h></coordinates><panel_attributes>JobManager
+m1=0..n</panel_attributes><additional_attributes>10;20;100;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>180</x><y>390</y><w>360</w><h>108</h></coordinates><panel_attributes>JobManager
 --
 
 --
 *event sender methods*
-+addReceiver(er: SummarySheetEventReceiver)
-+removeReceiver(er: SummarySheetEventReceiver)
++addReceiver(er: JobEventReceiver)
++removeReceiver(er: JobEventReceiver)
 -notifyJobAssigned(job: Job, shift: KitchenShift)
 --
 *operations methods*
 +createJob(title: String, portions?: int, prepare: boolean, completed: boolean)
 +assignJob(job: Job, shift: KitchenShiftShift, cooks?: ArrayList&lt;Cook&gt;, portions?: String, time?: int) : Job
-+isChef(user: User) : boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>490</x><y>504</y><w>168</w><h>35</h></coordinates><panel_attributes>lt=&lt;-
++isChef(user: User) : boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>534</x><y>432</y><w>144</w><h>30</h></coordinates><panel_attributes>lt=&lt;-
 jobs
-m1=0..n</panel_attributes><additional_attributes>220;20;10;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>154</x><y>644</y><w>259</w><h>63</h></coordinates><panel_attributes>JobEventReceiver
+m1=0..n</panel_attributes><additional_attributes>220;20;10;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>246</x><y>552</y><w>222</w><h>54</h></coordinates><panel_attributes>JobEventReceiver
 {interface}
 --
-+updateJobAssigned(job : Job, shift: KitchenShift)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>280</x><y>574</y><w>77</w><h>84</h></coordinates><panel_attributes>lt=&lt;-
++updateJobAssigned(job : Job, shift: KitchenShift)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>354</x><y>492</y><w>66</w><h>72</h></coordinates><panel_attributes>lt=&lt;-
 eventReceivers
-m1=0..n</panel_attributes><additional_attributes>10;100;10;10</additional_attributes></element><element><id>UMLPackage</id><coordinates><x>1435</x><y>336</y><w>315</w><h>294</h></coordinates><panel_attributes>RecipeManagement
-fg=gray</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>0</x><y>763</y><w>1477</w><h>644</h></coordinates><panel_attributes>ShiftManagement
-fontsize=18</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>21</x><y>819</y><w>322</w><h>238</h></coordinates><panel_attributes>ShiftManager
+m1=0..n</panel_attributes><additional_attributes>10;100;10;10</additional_attributes></element><element><id>UMLPackage</id><coordinates><x>1344</x><y>288</y><w>270</w><h>252</h></coordinates><panel_attributes>RecipeManagement
+fg=gray</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>114</x><y>654</y><w>1266</w><h>552</h></coordinates><panel_attributes>ShiftManagement
+fontsize=18</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>132</x><y>702</y><w>276</w><h>204</h></coordinates><panel_attributes>ShiftManager
 --
 
 --
 *event sender methods*
-+addReceiver(er: SummarySheetEventReceiver)
-+removeReceiver(er: SummarySheetEventReceiver)
++addReceiver(er: ShiftEventReceiver)
++removeReceiver(er: ShiftEventReceiver)
 -notifyRecurrenceCreated(recurrence: Recurrence)
 -notifyServiceShiftAdded(shift: Shift)
 -notifyShiftRecurrentAdded(recurrence: Recurrence)
@@ -156,7 +156,7 @@ fontsize=18</panel_attributes><additional_attributes></additional_attributes></e
 +removeShiftFromRecurrence(shift: Shift, recurrence: Recurrence)
 +createRecurrence(frequency: String, 
 			duration: Time, info: ArrayList&lt;String&gt;):Recurrence
-+isOrganizer(user: User)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>35</x><y>1162</y><w>322</w><h>91</h></coordinates><panel_attributes>ShiftEventReceiver
++isOrganizer(user: User)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>144</x><y>996</y><w>276</w><h>78</h></coordinates><panel_attributes>ShiftEventReceiver
 {interface}
 --
 +updateRecurrenceCreated(recurrence: Recurrence)
@@ -164,37 +164,25 @@ fontsize=18</panel_attributes><additional_attributes></additional_attributes></e
 +updateShiftRecurrentAdded(recurrence: Recurrence)
 +updateShiftRecurrentRemoved(shift: Shift)
 +updateServiceShiftAdded(shift: Shift)
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>161</x><y>1050</y><w>77</w><h>126</h></coordinates><panel_attributes>lt=&lt;-
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>252</x><y>900</y><w>66</w><h>108</h></coordinates><panel_attributes>lt=&lt;-
 eventReceivers
-m1=0..n</panel_attributes><additional_attributes>10;160;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>336</x><y>994</y><w>329</w><h>35</h></coordinates><panel_attributes>lt=-&gt;
+m1=0..n</panel_attributes><additional_attributes>10;160;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>402</x><y>852</y><w>282</w><h>30</h></coordinates><panel_attributes>lt=-&gt;
 shifts
-m2=0..n</panel_attributes><additional_attributes>10;20;450;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1113</x><y>1127</y><w>322</w><h>126</h></coordinates><panel_attributes>BoardManager
---
-
---
-*event sender methods*
-+addReceiver(er: SummarySheetEventReceiver)
-+removeReceiver(er: SummarySheetEventReceiver)
--notifyBoardCreated(board)
--
-*operations methods*
-+createBoard(name: String, event: String, shifts: ArrayList&lt;Shift&gt;): Board
-+showBoard(event: String) : ArrayList&lt;Shift&gt;
-+isOrganizer(user: User) : Boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1113</x><y>1309</y><w>322</w><h>49</h></coordinates><panel_attributes>BoardEventReceiver
+m2=0..n</panel_attributes><additional_attributes>10;20;450;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1068</x><y>1122</y><w>276</w><h>42</h></coordinates><panel_attributes>BoardEventReceiver
 {interface}
 --
-+updateBoardCreated(board: Board)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1253</x><y>1246</y><w>77</w><h>77</h></coordinates><panel_attributes>lt=&lt;-
++updateBoardCreated(board: Board)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1188</x><y>1068</y><w>66</w><h>66</h></coordinates><panel_attributes>lt=&lt;-
 eventReceivers
-m1=0..n</panel_attributes><additional_attributes>10;90;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>721</x><y>1239</y><w>287</w><h>98</h></coordinates><panel_attributes>Board
+m1=0..n</panel_attributes><additional_attributes>10;90;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>732</x><y>1062</y><w>246</w><h>84</h></coordinates><panel_attributes>Board
 --
 -name: String
 --
 +create(name: String, event: Event, shifts: ArrayList&lt;Shift&gt;)
-+showBoard(event: Event) : ArrayList&lt;Shift&gt;</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>840</x><y>1113</y><w>42</w><h>140</h></coordinates><panel_attributes>lt=-&gt;
++showBoard(event: Event) : ArrayList&lt;Shift&gt;</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>834</x><y>954</y><w>36</w><h>120</h></coordinates><panel_attributes>lt=-&gt;
 shifts
-m2=0..n</panel_attributes><additional_attributes>10;180;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1001</x><y>1190</y><w>126</w><h>119</h></coordinates><panel_attributes>lt=&lt;-
+m2=0..n</panel_attributes><additional_attributes>10;180;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>972</x><y>1020</y><w>108</w><h>102</h></coordinates><panel_attributes>lt=&lt;-
 board
-m1=0..1</panel_attributes><additional_attributes>10;140;100;140;100;10;160;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>455</x><y>1239</y><w>231</w><h>112</h></coordinates><panel_attributes>Recurrence
+m1=0..1</panel_attributes><additional_attributes>10;140;100;140;100;10;160;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>504</x><y>1062</y><w>198</w><h>96</h></coordinates><panel_attributes>Recurrence
 --
 -frequency: String
 -duration: Time
@@ -202,23 +190,35 @@ m1=0..1</panel_attributes><additional_attributes>10;140;100;140;100;10;160;10</a
 -
 +create(frequency: String, 
 			duration: Time, info: ArrayList&lt;String&gt;)
-+removeShift(shift: Shift)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>546</x><y>1113</y><w>203</w><h>140</h></coordinates><panel_attributes>lt=-&gt;
++removeShift(shift: Shift)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>582</x><y>954</y><w>174</w><h>120</h></coordinates><panel_attributes>lt=-&gt;
 shifts
-m2=1..n</panel_attributes><additional_attributes>10;180;10;120;250;120;250;10</additional_attributes></element><element><id>Relation</id><coordinates><x>252</x><y>1050</y><w>266</w><h>203</h></coordinates><panel_attributes>lt=-&gt;
+m2=1..n</panel_attributes><additional_attributes>10;180;10;120;250;120;250;10</additional_attributes></element><element><id>Relation</id><coordinates><x>330</x><y>900</y><w>228</w><h>174</h></coordinates><panel_attributes>lt=-&gt;
 recurrences
-m2=0..n</panel_attributes><additional_attributes>10;10;10;50;340;50;340;270</additional_attributes></element><element><id>UMLPackage</id><coordinates><x>1456</x><y>0</y><w>315</w><h>294</h></coordinates><panel_attributes>UserManagement
-fg=gray</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1568</x><y>126</y><w>133</w><h>84</h></coordinates><panel_attributes>User
+m2=0..n</panel_attributes><additional_attributes>10;10;10;50;340;50;340;270</additional_attributes></element><element><id>UMLPackage</id><coordinates><x>1362</x><y>0</y><w>270</w><h>252</h></coordinates><panel_attributes>UserManagement
+fg=gray</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1458</x><y>108</y><w>114</w><h>72</h></coordinates><panel_attributes>User
 --
 -name: String
 --
 getUser()
-fg=gray</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1253</x><y>154</y><w>329</w><h>49</h></coordinates><panel_attributes>lt=&lt;-
+fg=gray</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1188</x><y>132</y><w>282</w><h>42</h></coordinates><panel_attributes>lt=&lt;-
 owner
-m1=1</panel_attributes><additional_attributes>450;20;80;20;80;50;10;50</additional_attributes></element><element><id>Relation</id><coordinates><x>826</x><y>1330</y><w>42</w><h>140</h></coordinates><panel_attributes>lt=-&gt;
+m1=1</panel_attributes><additional_attributes>450;20;80;20;80;50;10;50</additional_attributes></element><element><id>Relation</id><coordinates><x>822</x><y>1140</y><w>36</w><h>120</h></coordinates><panel_attributes>lt=-&gt;
 event
-m2=1</panel_attributes><additional_attributes>10;10;10;180</additional_attributes></element><element><id>UMLClass</id><coordinates><x>777</x><y>1456</y><w>140</w><h>98</h></coordinates><panel_attributes>Event
+m2=1</panel_attributes><additional_attributes>10;10;10;180</additional_attributes></element><element><id>UMLClass</id><coordinates><x>780</x><y>1248</y><w>120</w><h>84</h></coordinates><panel_attributes>Event
 fg=gray
 --
 -name: String
---</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>693</x><y>1414</y><w>273</w><h>182</h></coordinates><panel_attributes>EventManagement
-fg=gray</panel_attributes><additional_attributes></additional_attributes></element></diagram>
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>708</x><y>1212</y><w>234</w><h>156</h></coordinates><panel_attributes>EventManagement
+fg=gray</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1074</x><y>972</y><w>276</w><h>108</h></coordinates><panel_attributes>BoardManager
+--
+
+--
+*event sender methods*
++addReceiver(br: BoardEventReceiver)
++removeReceiver(er: BoardEventReceiver)
+-notifyBoardCreated(board)
+-
+*operations methods*
++createBoard(name: String, event: String, shifts: ArrayList&lt;Shift&gt;): Board
++showBoard() : ArrayList&lt;Shift&gt;
++isOrganizer(user: User) : Boolean</panel_attributes><additional_attributes></additional_attributes></element></diagram>
