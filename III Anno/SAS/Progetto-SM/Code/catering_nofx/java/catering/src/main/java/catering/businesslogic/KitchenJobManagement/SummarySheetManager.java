@@ -15,22 +15,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SummarySheetManager {
-    private List<SummarySheetEventReceiver> receivers;
+    private List<SummarySheetEventReceiver> eventReceivers;
     private SummarySheet sheet;
 
 
     // Constructor
     public SummarySheetManager() {
-        this.receivers = new ArrayList<>();
+        this.eventReceivers = new ArrayList<>();
     }
 
     // Getters and Setters
-    public List<SummarySheetEventReceiver> getReceivers() {
-        return receivers;
+    public List<SummarySheetEventReceiver> getEventReceivers() {
+        return eventReceivers;
     }
 
-    public void setReceivers(List<SummarySheetEventReceiver> receivers) {
-        this.receivers = receivers;
+    public void setEventReceivers(List<SummarySheetEventReceiver> eventReceivers) {
+        this.eventReceivers = eventReceivers;
     }
 
     public SummarySheet getSheet() {
@@ -43,40 +43,40 @@ public class SummarySheetManager {
 
     // Event sender methods
     public void addEventReceiver(SummarySheetEventReceiver er) {
-        this.receivers.add(er);
+        this.eventReceivers.add(er);
     }
 
     public void removeEventReceiver(SummarySheetEventReceiver er) {
-        this.receivers.remove(er);
+        this.eventReceivers.remove(er);
     }
 
     private void notifySheetCreated(SummarySheet sheet) {
-        for (SummarySheetEventReceiver er : receivers) {
+        for (SummarySheetEventReceiver er : eventReceivers) {
             er.updateSheetCreated(sheet);
         }
     }
 
     private void notifySheetModified(SummarySheet sheet) {
-        for (SummarySheetEventReceiver er : receivers) {
+        for (SummarySheetEventReceiver er : eventReceivers) {
             er.updateSheetModified(sheet);
         }
     }
 
+    private void notifySheetDeleted(SummarySheet sheet) {
+        for (SummarySheetEventReceiver er : eventReceivers) {
+            er.updateSheetDeleted(sheet);
+        }
+    }
+
     private void notifyJobAdded(Job job, SummarySheet sheet) {
-        for (SummarySheetEventReceiver er : receivers) {
+        for (SummarySheetEventReceiver er : eventReceivers) {
             er.updateJobAdded(job, sheet);
         }
     }
 
     private void notifyJobUpdated(Job job) {
-        for (SummarySheetEventReceiver er : receivers) {
+        for (SummarySheetEventReceiver er : eventReceivers) {
             er.updateJobUpdated(job);
-        }
-    }
-
-    private void notifySheetDeleted(SummarySheet sheet) {
-        for (SummarySheetEventReceiver er : receivers) {
-            er.updateSheetDeleted(sheet);
         }
     }
 
@@ -95,6 +95,10 @@ public class SummarySheetManager {
 
     public boolean isChef(User user) {
         return user.isChef();
+    }
+
+    public boolean isOwner(User user) {
+        return this.sheet.getOwner().equals(user);
     }
 
     public SummarySheet modifySheet(SummarySheet sheet) throws UseCaseLogicException {
@@ -154,10 +158,7 @@ public class SummarySheetManager {
         }
     }
 
-    public boolean isOwner(User user) {
-        return this.sheet.getOwner().equals(user);
-    }
-
+    // utility methods
     public ArrayList<SummarySheet> getAllSheet(User user) {
         String getAllSheet = "SELECT * FROM sheets WHERE owner_id = " + user.getId();
         ArrayList<SummarySheet> sheets = new ArrayList<>();

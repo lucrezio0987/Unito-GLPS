@@ -35,32 +35,27 @@ public class SummarySheet {
         }
     }
     // Getters and Setters
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
-
     public int getId() {
         return id;
     }
-
-
+    public void setId(int id) {
+        this.id = id;
+    }
     public ServiceInfo getService() {
         return service;
     }
-
     public void setService(ServiceInfo service) {
         this.service = service;
     }
-
+    public User getOwner() {
+        return owner;
+    }
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
     public ArrayList<Job> getJobs() {
         return jobs;
     }
-
     public void setJobs(ArrayList<Job> jobs) {
         this.jobs = jobs;
     }
@@ -78,29 +73,22 @@ public class SummarySheet {
     }
 
     // Method to delete the summary sheet
-    public void deleteSummarySheet() {
-        this.service = null;
-        this.jobs = null;
-    }
-
-    // Method to get the owner
-    public User getOwner() {
-        return owner;
-    }
-
-    public boolean isNotUsed() {
-        return !DateUtils.isSameDay(this.service.getDate(), new Date());
-    }
-
     public void clearSummarySheet() {
         this.jobs = null;
     }
 
+    // Method to sort
     public ArrayList<Job> sortJobs(String sorting) {
         jobs.sort(getJobComparator(sorting));
         return jobs;
     }
 
+    // Method to check if the sheet is in use
+    public boolean isNotUsed() {
+        return !DateUtils.isSameDay(this.service.getDate(), new Date());
+    }
+
+    // Utility methods
     private Comparator<Job> getJobComparator(String sorting) {
         switch (sorting) {
             case "IMPORTANZA":
