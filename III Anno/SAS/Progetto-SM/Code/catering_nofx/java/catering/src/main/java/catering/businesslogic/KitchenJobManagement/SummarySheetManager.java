@@ -105,6 +105,7 @@ public class SummarySheetManager {
         User user = CatERing.getInstance().getUserManager().getUser();
 
         if (CatERing.getInstance().getSheetMgr().isOwner(user)) {
+            sheet.setId(this.sheet.getId());
             this.sheet = sheet;
             notifySheetModified(sheet);
             return this.sheet;

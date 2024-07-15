@@ -3,7 +3,6 @@ package catering.businesslogic.menu;
 import catering.businesslogic.CatERing;
 import catering.businesslogic.KitchenJobManagement.Duty;
 import catering.businesslogic.recipe.Preparation;
-import catering.businesslogic.event.ServiceInfo;
 import catering.businesslogic.recipe.Recipe;
 import catering.businesslogic.user.User;
 import catering.persistence.BatchUpdateHandler;

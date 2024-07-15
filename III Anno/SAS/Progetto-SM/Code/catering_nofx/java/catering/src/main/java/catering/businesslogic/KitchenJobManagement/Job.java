@@ -199,8 +199,7 @@ public class Job {
         });
     }
     public static void modifyJobDB(Job job) {
-        String modifyJob = "UPDATE jobs SET (name = ?, time = ?, portions = ?, prepare = ?, completed = ?, duty_id = ?, shift_id = ?) WHERE " +
-                "id = ?";
+        String modifyJob = "UPDATE jobs SET name = ?, time = ?, portions = ?, prepare = ?, completed = ?, duty_id = ?, shift_id = ? WHERE id = ?";
         PersistenceManager.executeBatchUpdate(modifyJob, 1, new BatchUpdateHandler() {
             @Override
             public void handleBatchItem(PreparedStatement ps, int batchCount) throws SQLException {
@@ -210,11 +209,19 @@ public class Job {
                 ps.setBoolean(4, job.isPrepare());
                 ps.setBoolean(5, job.isCompleted());
                 ps.setInt(6, job.getDuty().loadIdByName(job.getDuty().getName()));
-                ps.setInt(7, job.getShift().getId());
+
+                if (job.getShift() != null) {
+                    ps.setInt(7, job.getShift().getId());
+                } else {
+                    ps.setNull(7, java.sql.Types.INTEGER);
+                }
+
                 ps.setInt(8, job.getId());
             }
             @Override
-            public void handleGeneratedIds(ResultSet rs, int count) throws SQLException {}
+            public void handleGeneratedIds(ResultSet rs, int count) throws SQLException {
+                // Handle generated IDs if needed
+            }
         });
     }
 

@@ -125,7 +125,7 @@ public class SummarySheet {
     }
 
     public static void modifySheet(SummarySheet sheet) {
-        String sheetModify = "UPDATE sheets SET service = ? , owner_id = ?  WHERE id = ?";
+        String sheetModify = "UPDATE sheets SET service = ?, owner_id = ?  WHERE id = ?";
         int[] result = PersistenceManager.executeBatchUpdate(sheetModify, 1, new BatchUpdateHandler() {
             @Override
             public void handleBatchItem(PreparedStatement ps, int batchCount) throws SQLException {

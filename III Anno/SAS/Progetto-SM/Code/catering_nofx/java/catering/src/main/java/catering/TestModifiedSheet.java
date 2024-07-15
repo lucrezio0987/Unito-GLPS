@@ -70,6 +70,11 @@ public class TestModifiedSheet {
                 System.out.println(job.getTitle());
             }
 
+            //NUOVO FOGLIO RIEPILOGATIVO
+            event = CatERing.getInstance().getEventManager().getEventInfo().get(0);
+            ServiceInfo service2 = event.getServices().get(1);
+            SummarySheet s2 = new SummarySheet(service2, user);
+
             System.out.println("\nTEST GET ALL SHEET");
             ArrayList<SummarySheet> allSheets = CatERing.getInstance().getSheetMgr().getAllSheet(user);
             System.out.println("Fogli riepilogativi relativi all'utente: " + user);
@@ -79,37 +84,33 @@ public class TestModifiedSheet {
                 for (SummarySheet sheet : allSheets)
                     System.out.println(sheet.getService().getName());
 
-            System.out.println("\nTEST CREATE SHEET");
-            event = CatERing.getInstance().getEventManager().getEventInfo().get(1);
-            service = event.getServices().get(0);
-            SummarySheet s2 = CatERing.getInstance().getSheetMgr().createSheet(service);
-
-            System.out.println("Foglio riepilogativo creato relativo al servizio: " + s.getService());
-            System.out.println("Owner: " + s.getOwner());
-            System.out.println("Compiti:");
-            for (Job job : s.getJobs()) {
-                System.out.println(job.getTitle());
-            }
 
             System.out.println("\nTEST MODIFY SHEET");
-            System.out.println("Foglio riepilogativo relativo al servizio: " + s.getService());
+            System.out.println("Foglio riepilogativo da modificare relativo al servizio:\n" + s.getService());
             System.out.println("Owner: " + s.getOwner());
             System.out.println("Compiti:");
             for (Job job : s.getJobs()) {
                 System.out.println(job.getTitle());
             }
-            s2 = CatERing.getInstance().getSheetMgr().modifySheet(s2);
-            System.out.println("Foglio riepilogativo modificato. Valore del foglio: " + s2.getService().getName());
+            System.out.println("");
+
+            CatERing.getInstance().getSheetMgr().modifySheet(s2);
+            s = CatERing.getInstance().getSheetMgr().getSheet();
+            System.out.println("Foglio riepilogativo modificato. Valore del foglio:\n" + s.getService());
+            System.out.println("Owner: " + s.getOwner());
+            System.out.println("Compiti:");
+            for (Job job : s.getJobs()) {
+                System.out.println(job.getTitle());
+            }
 
             System.out.println("\nTEST GET ALL SHEET");
             allSheets = CatERing.getInstance().getSheetMgr().getAllSheet(user);
             System.out.println("Fogli riepilogativi relativi all'utente: " + user);
             if (allSheets.isEmpty())
-                System.out.println("NESSUN FOGLIO RIEPILOGATIVO PRESENTE!");
+                System.out.println("Nessun foglio riepilogativo presente");
             else
                 for (SummarySheet sheet : allSheets)
                     System.out.println(sheet.getService().getName());
-
 
         } catch (UseCaseLogicException e) {
             System.out.println("Errore di logica nello use case");

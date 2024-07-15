@@ -126,11 +126,11 @@ public class Duty {
     }
 
     public int loadIdByName(String name) {
-        String query = "SELECT id FROM duties WHERE name = " + name;
+        String query = "SELECT id FROM duties WHERE name = '" + name + "'";
         PersistenceManager.executeQuery(query, new ResultHandler() {
             @Override
             public void handle(ResultSet rs) throws SQLException {
-                setId(rs.getInt("id"));
+                id = rs.getInt("id");
             }
         });
         return id;
