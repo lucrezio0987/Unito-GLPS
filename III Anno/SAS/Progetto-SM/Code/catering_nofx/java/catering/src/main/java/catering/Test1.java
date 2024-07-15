@@ -71,7 +71,6 @@ public class Test1 {
                 System.out.println(job.getTitle());
             }
 
-
         } catch (UseCaseLogicException e) {
             System.out.println("Errore di logica nello use case");
         }
