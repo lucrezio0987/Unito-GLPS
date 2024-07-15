@@ -108,15 +108,15 @@ public class SummarySheetManager {
             throw new UseCaseLogicException();
     }
 
-    public boolean deleteSheet(SummarySheet sheet) throws UseCaseLogicException {
+    public SummarySheet deleteSheet(SummarySheet sheet) throws UseCaseLogicException {
         User user = CatERing.getInstance().getUserManager().getUser();
 
-        if (CatERing.getInstance().getSheetMgr().isOwner(user)) {
+        if (isOwner(user)) {
             if (sheet.isNotUsed()) {
                 sheet.clearSummarySheet();
                 this.sheet = null;
                 notifySheetDeleted(sheet);
-                return true;
+                return this.sheet;
             } else
                 throw new UseCaseLogicException();
         } else
@@ -160,7 +160,6 @@ public class SummarySheetManager {
 
     public ArrayList<SummarySheet> getAllSheet(User user) {
         String getAllSheet = "SELECT * FROM sheets WHERE owner_id = " + user.getId();
-        System.out.println(getAllSheet);
         ArrayList<SummarySheet> sheets = new ArrayList<>();
         PersistenceManager.executeQuery(getAllSheet, new ResultHandler() {
             @Override

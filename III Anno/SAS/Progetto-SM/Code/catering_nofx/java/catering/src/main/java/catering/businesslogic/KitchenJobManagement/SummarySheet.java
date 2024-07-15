@@ -7,7 +7,6 @@ import catering.businesslogic.user.User;
 
 import catering.persistence.BatchUpdateHandler;
 import catering.persistence.PersistenceManager;
-import catering.persistence.ResultHandler;
 import org.apache.commons.lang3.time.DateUtils;
 
 import java.sql.PreparedStatement;
@@ -93,9 +92,8 @@ public class SummarySheet {
         return !DateUtils.isSameDay(this.service.getDate(), new Date());
     }
 
-    public boolean clearSummarySheet() {
+    public void clearSummarySheet() {
         this.jobs = null;
-        return true;
     }
 
     public ArrayList<Job> sortJobs(String sorting) {
@@ -139,29 +137,41 @@ public class SummarySheet {
     }
 
     public static void modifySheet(SummarySheet sheet) {
-        String sheetModify = "UPDATE sheets SET service = " + sheet.service + ", owner_id = " + sheet.owner + " WHERE id = " + sheet.id;
-        int result = PersistenceManager.executeUpdate(sheetModify);
-        if (result > 0) {
+        String sheetModify = "UPDATE sheets SET service = ? , owner_id = ?  WHERE id = ?";
+        int[] result = PersistenceManager.executeBatchUpdate(sheetModify, 1, new BatchUpdateHandler() {
+            @Override
+            public void handleBatchItem(PreparedStatement ps, int batchCount) throws SQLException {
+                ps.setInt(1, sheet.service.getId());
+                ps.setInt(2, sheet.owner.getId());
+                ps.setInt(3, sheet.id);
+            }
+            @Override
+            public void handleGeneratedIds(ResultSet rs, int count) throws SQLException {
+                if (count == 0) {
+                    sheet.id = rs.getInt(1);
+                }
+            }
+        });
+
+        if (result[0] > 0) {
             for (Job job : sheet.jobs) {
                 Job.modifyJobDB(job);
             }
         }
     }
 
-    public static void deleteSheet(SummarySheet sheet){
+    public static void deleteSheet(SummarySheet sheet) {
+        Job.deleteJobDB(sheet);
+        sheet.clearSummarySheet();
         String sheetDelete = "DELETE FROM sheets WHERE id = " + sheet.getId();
-        int row = PersistenceManager.executeUpdate(sheetDelete);
-        if(row > 0){
-            for(Job job : sheet.jobs)
-                Job.deleteJobDB(job);
-        }
+        PersistenceManager.executeUpdate(sheetDelete);
     }
 
     public static void addJobToDB(Job job, SummarySheet sheet) {
         Job.saveJobDB(job, sheet);
     }
 
-    public static void updateJobToDB(Job job){
+    public static void updateJobToDB(Job job) {
         Job.modifyJobDB(job);
     }
 }

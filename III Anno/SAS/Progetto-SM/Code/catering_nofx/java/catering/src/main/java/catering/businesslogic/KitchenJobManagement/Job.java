@@ -224,8 +224,8 @@ public class Job {
         });
     }
 
-    public static void deleteJobDB(Job job) {
-        String deleteJob = "DELETE FROM jobs WHERE id = " + job.getId();
+    public static void deleteJobDB(SummarySheet sheet) {
+        String deleteJob = "DELETE FROM jobs WHERE sheet_id = " + sheet.getId();
         PersistenceManager.executeUpdate(deleteJob);
     }
 

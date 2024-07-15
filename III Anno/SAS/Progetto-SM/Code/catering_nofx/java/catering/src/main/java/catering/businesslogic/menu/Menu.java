@@ -144,16 +144,13 @@ public class Menu {
         ArrayList<MenuItem> menuItems = new ArrayList<>();
         menuItems.addAll(freeItems);
 
-        if (!sections.isEmpty()) {
-            for (Section section : sections) {
-                menuItems.addAll(section.getItems());
-            }
+        for (Section section : sections) {
+            menuItems.addAll(section.getItems());
         }
 
-        if (!menuItems.isEmpty()) {
-            for (MenuItem menuItem : menuItems) {
-                duties.add(menuItem.getItemRecipe());
-            }
+
+        for (MenuItem menuItem : menuItems) {
+            duties.add(menuItem.getItemRecipe());
         }
 
         ArrayList<Duty> allDuties = new ArrayList<>(duties); // Copia iniziale di tutte le duties
@@ -177,7 +174,6 @@ public class Menu {
 
         return allPreparations;
     }
-
 
 
     public Section addSection(String name) {
