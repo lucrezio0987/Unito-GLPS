@@ -19,7 +19,7 @@ public class Job {
     private boolean prepare;
     private boolean completed;
     private KitchenShift shift;
-    private ArrayList<Cook> cooksAssigned;
+    private ArrayList<Cook> cooksAssigned = new ArrayList<>();
     private Duty duty;
 
     public Job(String title, int portions, int time, boolean prepare, boolean completed, Duty duty) {
@@ -99,7 +99,7 @@ public class Job {
     }
 
     public Duty getDuty() {
-            return duty;
+        return duty;
     }
 
     public void setDuty(Duty duty) {
@@ -118,7 +118,6 @@ public class Job {
     public Job updateJob(KitchenShift shift, ArrayList<Cook> cooks, int quantity, int time) {
         if (shift != null) {
             this.shift = shift;
-
             for (Cook c : cooksAssigned) {
                 if (shift.isCookAssigned(c)) {
                     this.cooksAssigned.remove(c);
@@ -127,11 +126,11 @@ public class Job {
         }
         if (cooks != null && !cooks.isEmpty()) {
             for (Cook c : cooks) {
-                if (this.shift.isCookAssigned(c)) {
+                if (this.shift == null || this.shift.isCookAssigned(c))
                     this.cooksAssigned.add(c);
                 }
             }
-        }
+
         if (quantity > 0)
             this.portions = quantity;
         if (time > 0)
@@ -159,7 +158,7 @@ public class Job {
     }
 
     // utility method
-    public ArrayList<Job> getAllJobs(){
+    public ArrayList<Job> getAllJobs() {
         ArrayList<Job> jobs = new ArrayList<>();
         String query = "SELECT * FROM jobs";
         PersistenceManager.executeQuery(query, new ResultHandler() {
@@ -193,11 +192,12 @@ public class Job {
 
             @Override
             public void handleGeneratedIds(ResultSet rs, int count) throws SQLException {
-                if(count == 0)
+                if (count == 0)
                     job.id = rs.getInt(1); // Assuming 1 is the index of generated ID column
             }
         });
     }
+
     public static void modifyJobDB(Job job) {
         String modifyJob = "UPDATE jobs SET name = ?, time = ?, portions = ?, prepare = ?, completed = ?, duty_id = ?, shift_id = ? WHERE id = ?";
         PersistenceManager.executeBatchUpdate(modifyJob, 1, new BatchUpdateHandler() {
@@ -210,19 +210,38 @@ public class Job {
                 ps.setBoolean(5, job.isCompleted());
                 ps.setInt(6, job.getDuty().loadIdByName(job.getDuty().getName()));
 
-                if (job.getShift() != null) {
+                if (job.shift != null) {
                     ps.setInt(7, job.getShift().getId());
                 } else {
                     ps.setNull(7, java.sql.Types.INTEGER);
                 }
 
                 ps.setInt(8, job.getId());
+
             }
+
             @Override
             public void handleGeneratedIds(ResultSet rs, int count) throws SQLException {
                 // Handle generated IDs if needed
             }
         });
+        if (job.cooksAssigned == null || job.cooksAssigned.isEmpty()) {
+            return;
+        }
+        for(Cook c : job.cooksAssigned) {
+            String insertJobCook = "INSERT INTO job_cook (job_id, cook_id) VALUES (?, ?)";
+            PersistenceManager.executeBatchUpdate(insertJobCook, 1, new BatchUpdateHandler() {
+                @Override
+                public void handleBatchItem(PreparedStatement ps, int batchCount) throws SQLException {
+                    ps.setInt(1, job.id);
+                    ps.setInt(2, c.getId());
+                }
+                @Override
+                public void handleGeneratedIds(ResultSet rs, int count) throws SQLException {
+                    // Handle generated IDs if needed
+                }
+            });
+        }
     }
 
     public static void deleteJobDB(SummarySheet sheet) {
@@ -230,20 +249,22 @@ public class Job {
         PersistenceManager.executeUpdate(deleteJob);
     }
 
-    public static void assignJobDB(Job job, KitchenShift shift){
+    public static void assignJobDB(Job job, KitchenShift shift) {
         String assignJob = "UPDATE jobs SET shift_id = " + shift.getId() + " WHERE id = " + job.getId();
         int row = PersistenceManager.executeUpdate(assignJob);
-        if(row > 0 && job.cooksAssigned != null){
+        if (row > 0 && job.cooksAssigned != null) {
             String assignCook = "INSERT INTO cooks_jobs (job_id, cook_id) VALUES (?, ?);";
-            for(Cook c : job.getCooksAssigned()){
+            for (Cook c : job.getCooksAssigned()) {
                 PersistenceManager.executeBatchUpdate(assignCook, 1, new BatchUpdateHandler() {
                     @Override
                     public void handleBatchItem(PreparedStatement ps, int batchCount) throws SQLException {
                         ps.setInt(1, job.getId());
                         ps.setInt(2, c.getId());
                     }
+
                     @Override
-                    public void handleGeneratedIds(ResultSet rs, int count) throws SQLException {}
+                    public void handleGeneratedIds(ResultSet rs, int count) throws SQLException {
+                    }
                 });
             }
         }

@@ -17,7 +17,7 @@ public class Shift {
     private Time duration;
     private Date expire;
     private boolean lock;
-    private ArrayList<Cook> cooks;
+    private ArrayList<Cook> cooks = new ArrayList<>();
 
     // constructor
     public Shift(String description, Date date, Time time, Time duration, ArrayList<Cook> cooks) {
