@@ -14,6 +14,10 @@ public class KitchenShift extends Shift{
         this.place = place;
     }
 
+    public KitchenShift(String description, Date date, Time time, Time duration, ArrayList<Cook> cooks) {
+        super(description, date, time, duration, cooks);
+    }
+
     public String getPlace() {return place;}
 
     public void setPlace(String place) {this.place = place;}

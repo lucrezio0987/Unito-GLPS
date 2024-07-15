@@ -31,7 +31,7 @@ public class Board {
     public void setShifts(ArrayList<Shift> shifts) {this.shifts = shifts;}
 
     // method to show the board
-    public ArrayList<Shift> showBoard(String event) {
+    public ArrayList<Shift> showBoard() {
         return shifts;
     }
 }

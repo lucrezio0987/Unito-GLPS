@@ -25,6 +25,10 @@ public class EventInfo implements EventItemInfo {
         id = 0;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public ArrayList<ServiceInfo> getServices() {
         return this.services;
     }

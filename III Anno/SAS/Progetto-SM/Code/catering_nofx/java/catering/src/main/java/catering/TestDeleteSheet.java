@@ -81,14 +81,14 @@ public class TestDeleteSheet {
 
 
             System.out.println("\nTEST DELETE SHEET");
-            System.out.println("Foglio riepilogativo relativo al servizio: " + s.getService());
+            System.out.println("Foglio riepilogativo da elimanare relativo al servizio: " + s.getService());
             System.out.println("Owner: " + s.getOwner());
             System.out.println("Compiti:");
             for (Job job : s.getJobs()) {
                 System.out.println(job.getTitle());
             }
             s = CatERing.getInstance().getSheetMgr().deleteSheet(s);
-            System.out.println("Foglio riepilogativo eliminato. Valore del foglio: " + s);
+            System.out.println("\nFoglio riepilogativo eliminato. Valore del foglio: " + s);
 
             System.out.println("\nTEST GET ALL SHEET");
             allSheets = CatERing.getInstance().getSheetMgr().getAllSheet(user);
