@@ -108,9 +108,7 @@ public class ServiceInfo implements EventItemInfo {
         PersistenceManager.executeQuery(getService, new ResultHandler() {
             @Override
             public void handle(ResultSet rs) throws SQLException {
-                while (rs.next()) {
-                    service[0] = new ServiceInfo(rs.getString("name"));
-                }
+                service[0] = new ServiceInfo(rs.getString("name"));
             }
         });
         return service[0];
