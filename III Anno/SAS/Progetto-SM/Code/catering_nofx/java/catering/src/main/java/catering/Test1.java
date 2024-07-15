@@ -1,6 +1,7 @@
 package catering;
 
 import catering.businesslogic.CatERing;
+import catering.businesslogic.KitchenJobManagement.Job;
 import catering.businesslogic.KitchenJobManagement.SummarySheet;
 import catering.businesslogic.UseCaseLogicException;
 import catering.businesslogic.event.EventInfo;
@@ -62,6 +63,14 @@ public class Test1 {
             EventInfo event = CatERing.getInstance().getEventManager().getEventInfo().get(0);
             ServiceInfo service = event.getServices().get(0);
             SummarySheet s = CatERing.getInstance().getSheetMgr().createSheet(service);
+
+            System.out.println("Foglio riepilogativo creato relativo al servizio: " + s.getService());
+            System.out.println("Owner: " + s.getOwner());
+            System.out.println("Compiti:");
+            for(Job job : s.getJobs()) {
+                System.out.println(job.getTitle());
+            }
+
 
         } catch (UseCaseLogicException e) {
             System.out.println("Errore di logica nello use case");
