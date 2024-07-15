@@ -43,7 +43,8 @@ m1=0..n</panel_attributes><additional_attributes>10;320;10;10</additional_attrib
 -completed: boolean
 --
 +create(title: String, time: int, portions?: int, prepare: boolean, completed: boolean)
-+assignJob(shift: KitchenShiftShift, cooks?: ArrayList&lt;Cook&gt;, portions?: String, time?: int)
++updateJob(shift: KitchenShift, cooks: ArrayList&lt;Cook&gt;, quantity: int, time: int) : Job
++assignJob(shift: KitchenShiftShift, cooks?: ArrayList&lt;Cook&gt;, portions?: int, time?: int)
 </panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1304</x><y>496</y><w>304</w><h>144</h></coordinates><panel_attributes>Duty
 --
 -title: String
@@ -118,12 +119,12 @@ m1=0..n</panel_attributes><additional_attributes>10;20;100;20</additional_attrib
 *event sender methods*
 +addReceiver(er: SummarySheetEventReceiver)
 +removeReceiver(er: SummarySheetEventReceiver)
--notifyJobAssigned(job: Job, shift: Shift)
+-notifyJobAssigned(job: Job, shift: KitchenShift)
 --
 *operations methods*
 +createJob(title: String, portions?: int, prepare: boolean, completed: boolean)
-+assignJob(job: Job, shift: KitchenShiftShift, cooks?: ArrayList&lt;Cook&gt;, portions?: String, time?: int)
-+isChef(user: User)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>560</x><y>576</y><w>192</w><h>40</h></coordinates><panel_attributes>lt=&lt;-
++assignJob(job: Job, shift: KitchenShiftShift, cooks?: ArrayList&lt;Cook&gt;, portions?: String, time?: int) : Job
++isChef(user: User) : boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>560</x><y>576</y><w>192</w><h>40</h></coordinates><panel_attributes>lt=&lt;-
 jobs
 m1=0..n</panel_attributes><additional_attributes>220;20;10;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>176</x><y>736</y><w>296</w><h>72</h></coordinates><panel_attributes>JobEventReceiver
 {interface}

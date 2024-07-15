@@ -98,14 +98,6 @@ public class Job {
         this.shift = shift;
     }
 
-    public ArrayList<Cook> getCook() {
-        return cooksAssigned;
-    }
-
-    public void setCook(ArrayList<Cook> cooks) {
-        this.cooksAssigned = cooks;
-    }
-
     public Duty getDuty() {
             return duty;
     }
@@ -122,6 +114,7 @@ public class Job {
         this.cooksAssigned = cooksAssigned;
     }
 
+    // method to update a job
     public Job updateJob(KitchenShift shift, ArrayList<Cook> cooks, int quantity, int time) {
         if (shift != null) {
             this.shift = shift;
@@ -147,6 +140,7 @@ public class Job {
         return this;
     }
 
+    //method to assign a job
     public Job assignJob(KitchenShift shift, ArrayList<Cook> cooks, int portions, int time) {
         this.shift = shift;
 
@@ -164,7 +158,7 @@ public class Job {
         return this;
     }
 
-    //PERSISTENCE
+    // utility method
     public ArrayList<Job> getAllJobs(){
         ArrayList<Job> jobs = new ArrayList<>();
         String query = "SELECT * FROM jobs";
