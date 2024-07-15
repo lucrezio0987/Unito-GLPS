@@ -1,6 +1,7 @@
 package catering.businesslogic.shiftManagement;
 
 import catering.businesslogic.CatERing;
+import catering.businesslogic.KitchenJobManagement.SummarySheet;
 import catering.businesslogic.KitchenJobManagement.SummarySheetEventReceiver;
 import catering.businesslogic.KitchenJobManagement.SummarySheetManager;
 import catering.businesslogic.UseCaseLogicException;
@@ -17,6 +18,8 @@ public class BoardManager {
         this.board = board;
     }
 
+    public BoardManager() {}
+
     // getters and setters
     public Board getBoard() {
         return board;
@@ -27,21 +30,28 @@ public class BoardManager {
     }
 
     // event sender methods
-    public void addReceiver(SummarySheetManager er) {}
+   /* public void addReceiver(BoardPersistence er) {}
 
-   public void removeReceiver(SummarySheetManager er) {}
+   public void removeReceiver(BoardPersistence er) {}
+   */
 
    private void notifyBoardCreated(Board board) {}
 
     // operations methods
-   public Board createBoard(String name, String event, ArrayList<Shift> shifts) {
-        return new Board(name, event, shifts);
+   public Board createBoard(String name, String event, ArrayList<Shift> shifts) throws UseCaseLogicException {
+       if (CatERing.getInstance().getUserManager().getUser().isChef()) {
+           this.board = new Board(name,event, shifts);
+         //  notifyBoardCreated(this.board);
+           return this.board;
+       }
+       else
+           throw new UseCaseLogicException();
    }
 
-   public ArrayList<Shift> showBoard(String event) throws UseCaseLogicException {
+   public ArrayList<Shift> showBoard() throws UseCaseLogicException {
        User user = CatERing.getInstance().getUserManager().getUser();
        if (user.isChef()) {
-           return board.showBoard(event);
+           return board.showBoard();
        } else
            throw new UseCaseLogicException();
    }

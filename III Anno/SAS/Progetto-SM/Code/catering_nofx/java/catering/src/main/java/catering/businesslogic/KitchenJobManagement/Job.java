@@ -130,7 +130,6 @@ public class Job {
                     this.cooksAssigned.add(c);
                 }
             }
-
         if (quantity > 0)
             this.portions = quantity;
         if (time > 0)
@@ -250,10 +249,10 @@ public class Job {
     }
 
     public static void assignJobDB(Job job, KitchenShift shift) {
-        String assignJob = "UPDATE jobs SET shift_id = " + shift.getId() + " WHERE id = " + job.getId();
+        String assignJob = "UPDATE jobs SET shift_id = " + shift.getId() + ", time = " + job.time + ", portions = "+ job.portions  + " WHERE id = " + job.getId();
         int row = PersistenceManager.executeUpdate(assignJob);
         if (row > 0 && job.cooksAssigned != null) {
-            String assignCook = "INSERT INTO cooks_jobs (job_id, cook_id) VALUES (?, ?);";
+            String assignCook = "INSERT INTO job_cook (job_id, cook_id) VALUES (?, ?);";
             for (Cook c : job.getCooksAssigned()) {
                 PersistenceManager.executeBatchUpdate(assignCook, 1, new BatchUpdateHandler() {
                     @Override
