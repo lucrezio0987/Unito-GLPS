@@ -115,7 +115,9 @@ public class SummarySheetManager {
     public SummarySheet deleteSheet(SummarySheet sheet) throws UseCaseLogicException {
         User user = CatERing.getInstance().getUserManager().getUser();
 
-        if (isOwner(user)) {
+        if (!isOwner(user))
+            throw new UseCaseLogicException();
+        else{
             if (sheet.isNotUsed()) {
                 sheet.clearSummarySheet();
                 this.sheet = null;
@@ -123,8 +125,7 @@ public class SummarySheetManager {
                 return this.sheet;
             } else
                 throw new UseCaseLogicException();
-        } else
-            throw new UseCaseLogicException();
+        }
     }
 
     public Job addJob(String title, boolean prepare, boolean completed, Duty duty) throws UseCaseLogicException {

@@ -59,7 +59,7 @@ public class TestDeleteSheet {
             System.out.println(m.testString());
 
             System.out.println("\nTEST CREATE SHEET");
-            EventInfo event = CatERing.getInstance().getEventManager().getEventInfo().get(1);
+            EventInfo event = events.get(1);
             ServiceInfo service = event.getServices().get(0);
             SummarySheet s = CatERing.getInstance().getSheetMgr().createSheet(service);
 

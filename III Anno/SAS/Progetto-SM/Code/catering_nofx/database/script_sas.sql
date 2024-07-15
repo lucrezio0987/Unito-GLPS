@@ -384,5 +384,3 @@ INSERT INTO "shift_cook" VALUES
     (3, 3),
     (4, 4),
     (5, 5);
-
-SELECT * FROM sheets WHERE owner_id = 2
