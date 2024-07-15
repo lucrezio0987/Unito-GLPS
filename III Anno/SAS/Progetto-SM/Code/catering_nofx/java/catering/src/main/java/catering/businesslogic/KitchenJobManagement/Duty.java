@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Duty {
-    private int id = 0;
+    private int id;
     private String name;
     private String description;
     private int difficult;
@@ -21,6 +21,7 @@ public class Duty {
 
     // Constructor
     public Duty(String name, String description, int difficult, int importance, int time, int quantity, int portions, ArrayList<Preparation> preparations) {
+        this.id = 0;
         this.name = name;
         this.description = description;
         this.difficult = difficult;
@@ -32,6 +33,7 @@ public class Duty {
     }
 
     public Duty(String name, String description, int difficult, int importance, int time, int quantity, int portions) {
+        this.id = 0;
         this.name = name;
         this.description = description;
         this.difficult = difficult;

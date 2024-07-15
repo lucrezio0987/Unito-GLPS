@@ -20,7 +20,7 @@ public class SummarySheet {
     private int id;
     private ServiceInfo service;
     private User owner;
-    private ArrayList<Job> jobs;
+    private ArrayList<Job> jobs = new ArrayList<>();
 
     // Constructor
     public SummarySheet(ServiceInfo service, User owner) {
@@ -111,7 +111,7 @@ public class SummarySheet {
             @Override
             public void handleBatchItem(PreparedStatement ps, int batchCount) throws SQLException {
                 ps.setInt(1, sheet.service.getId());
-                ps.setInt(1, sheet.owner.getId());
+                ps.setInt(2, sheet.owner.getId());
             }
 
             @Override

@@ -127,7 +127,7 @@ INSERT INTO "menusections" VALUES
 -- Table structure for table 'menus'
 CREATE TABLE "menus" (
     "id" SERIAL PRIMARY KEY,
-    "name" TEXT,
+    "title" TEXT,
     "owner_id" INTEGER,
     "published" BOOLEAN DEFAULT FALSE
 );
@@ -311,14 +311,6 @@ CREATE TABLE "sheets" (
     CONSTRAINT fk_service_id FOREIGN KEY (service) REFERENCES services(id),
     CONSTRAINT fk_owner_id FOREIGN KEY (owner_id) REFERENCES users(id)
 );
-
-INSERT INTO "sheets" VALUES
-    (1, 3, 2),
-    (2, 2, 3),
-    (3, 6, 4),
-    (4, 5, 4),
-    (5, 1, 2);
-
 -- Table structure for table 'shifts'
 CREATE TABLE "shifts" (
     "id" SERIAL PRIMARY KEY,
@@ -354,14 +346,6 @@ CREATE TABLE "jobs" (
     CONSTRAINT fk_sheet_id FOREIGN KEY (sheet_id) REFERENCES sheets(id),
     CONSTRAINT fk_shift_id FOREIGN KEY (shift_id) REFERENCES shifts(id)
 );
-
-INSERT INTO "jobs" VALUES
-    (1, 'Preparare antipasti', 60, 100, TRUE, FALSE, 1, 1),
-    (2, 'Cucinare primi', 90, 80, TRUE, FALSE, 2, 1),
-    (3, 'Preparare secondi', 120, 60, TRUE, FALSE, 3, 1),
-    (4, 'Cucinare dolci', 45, 50, TRUE, FALSE, 4, 2),
-    (5, 'Servire al tavolo', 30, 200, TRUE, FALSE, 5, 2);
-
 -- Table structure for table 'cooks'
 CREATE TABLE "cooks" (
     "id" SERIAL PRIMARY KEY,
@@ -400,5 +384,3 @@ INSERT INTO "shift_cook" VALUES
     (3, 3),
     (4, 4),
     (5, 5);
-
-SELECT * FROM "jobs";

@@ -20,6 +20,20 @@ public class Recipe extends Duty {
         this.name = name;
     }
 
+    public static Map<Integer, Recipe> getAll() {
+        return all;
+    }
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
     public Recipe(String title){
         super(title);
         this.name = title;
@@ -32,7 +46,7 @@ public class Recipe extends Duty {
     // STATIC METHODS FOR PERSISTENCE
 
     public static ArrayList<Recipe> loadAllRecipes() {
-        String query = "SELECT * FROM recipes";
+        String query = "SELECT r.id, duty.name FROM recipes r JOIN duties duty ON r.id = duty.id";
         PersistenceManager.executeQuery(query, new ResultHandler() {
             @Override
             public void handle(ResultSet rs) throws SQLException {

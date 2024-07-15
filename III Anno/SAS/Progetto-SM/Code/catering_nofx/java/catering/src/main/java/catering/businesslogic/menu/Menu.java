@@ -3,6 +3,7 @@ package catering.businesslogic.menu;
 import catering.businesslogic.CatERing;
 import catering.businesslogic.KitchenJobManagement.Duty;
 import catering.businesslogic.KitchenJobManagement.Preparation;
+import catering.businesslogic.event.ServiceInfo;
 import catering.businesslogic.recipe.Recipe;
 import catering.businesslogic.user.User;
 import catering.persistence.BatchUpdateHandler;
@@ -60,17 +61,17 @@ public class Menu {
         this.inUse = false;
         this.owner = owner;
         this.featuresMap = new HashMap<>();
-        for (String feat: m.featuresMap.keySet()) {
+        for (String feat : m.featuresMap.keySet()) {
             this.featuresMap.put(feat, m.featuresMap.get(feat));
         }
 
         this.sections = new ArrayList<>();
-        for (Section original: m.sections) {
+        for (Section original : m.sections) {
             this.sections.add(new Section(original));
         }
 
         this.freeItems = new ArrayList<>();
-        for (MenuItem original: m.freeItems) {
+        for (MenuItem original : m.freeItems) {
             this.freeItems.add(new MenuItem(original));
         }
 
@@ -142,24 +143,38 @@ public class Menu {
         ArrayList<Duty> duties = new ArrayList<>();
         ArrayList<MenuItem> menuItems = new ArrayList<>();
         menuItems.addAll(freeItems);
-        for (Section section: sections) {
-            menuItems.addAll( section.getItems());
+
+        if (!sections.isEmpty()) {
+            for (Section section : sections) {
+                menuItems.addAll(section.getItems());
+            }
         }
-        for (MenuItem menuItem: menuItems) {
-            duties.add(menuItem.getItemRecipe());
+
+        if (!menuItems.isEmpty()) {
+            for (MenuItem menuItem : menuItems) {
+                duties.add(menuItem.getItemRecipe());
+            }
         }
-        for (Duty duty: duties) {
-            duties.addAll(loadAllPreparations(duty));
+
+        ArrayList<Duty> allDuties = new ArrayList<>(duties); // Copia iniziale di tutte le duties
+
+        for (Duty duty : duties) {
+            allDuties.addAll(loadAllPreparations(duty)); // Aggiungi tutte le preparations
         }
-        return duties;
+
+        return allDuties;
     }
 
     private ArrayList<Duty> loadAllPreparations(Duty preparation) {
         ArrayList<Duty> allPreparations = new ArrayList<>();
-        for (Preparation p : preparation.getPreparations()) {
-            allPreparations.add(p);
-            allPreparations.addAll(loadAllPreparations(p));
+
+        if (preparation.getPreparations() != null) {
+            for (Preparation p : preparation.getPreparations()) {
+                allPreparations.add(p);
+                allPreparations.addAll(loadAllPreparations(p));
+            }
         }
+
         return allPreparations;
     }
 
@@ -506,7 +521,7 @@ public class Menu {
             // find if "in use"
             String inuseQ = "SELECT * FROM services WHERE approved_menu_id = " + m.id +
                     " OR " +
-                    "proposed_menu_id = "+ m.id;
+                    "proposed_menu_id = " + m.id;
             PersistenceManager.executeQuery(inuseQ, new ResultHandler() {
                 @Override
                 public void handle(ResultSet rs) throws SQLException {
@@ -515,7 +530,7 @@ public class Menu {
                 }
             });
         }
-        for (Menu m: newMenus) {
+        for (Menu m : newMenus) {
             loadedMenus.put(m.id, m);
         }
         return new ArrayList<Menu>(loadedMenus.values());
@@ -536,7 +551,6 @@ public class Menu {
             }
         });
     }
-
 
     public static void saveFreeItemOrder(Menu m) {
         String upd = "UPDATE menuitems SET position = ? WHERE id = ?";

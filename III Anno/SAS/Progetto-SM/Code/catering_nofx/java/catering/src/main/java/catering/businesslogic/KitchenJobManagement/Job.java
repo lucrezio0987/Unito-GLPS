@@ -107,7 +107,7 @@ public class Job {
     }
 
     public Duty getDuty() {
-        return duty;
+            return duty;
     }
 
     public void setDuty(Duty duty) {
@@ -184,7 +184,7 @@ public class Job {
     }
 
     public static void saveJobDB(Job job, SummarySheet sheet) {
-        String jobAdd = "INSERT INTO jobs (name, time, portios, prepare, completed, duty_id, sheet_id) VALUES (?, ?, ?, ?, ?, ?, ?);";
+        String jobAdd = "INSERT INTO jobs (name, time, portions, prepare, completed, duty_id, sheet_id) VALUES (?, ?, ?, ?, ?, ?, ?);";
         int[] result = PersistenceManager.executeBatchUpdate(jobAdd, 1, new BatchUpdateHandler() {
             @Override
             public void handleBatchItem(PreparedStatement ps, int batchCount) throws SQLException {
@@ -193,7 +193,7 @@ public class Job {
                 ps.setInt(3, job.getPortions());
                 ps.setBoolean(4, job.isPrepare());
                 ps.setBoolean(5, job.isCompleted());
-                ps.setInt(6, job.getDuty().loadIdByName(job.getDuty().getName()));
+                ps.setInt(6, job.getDuty().getId());
                 ps.setInt(7, sheet.getId());
             }
 

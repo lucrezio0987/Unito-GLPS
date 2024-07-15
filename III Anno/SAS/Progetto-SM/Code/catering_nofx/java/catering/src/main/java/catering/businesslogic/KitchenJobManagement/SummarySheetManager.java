@@ -5,7 +5,6 @@ import catering.businesslogic.UseCaseLogicException;
 import catering.businesslogic.event.ServiceInfo;
 import catering.businesslogic.shiftManagement.Cook;
 import catering.businesslogic.shiftManagement.KitchenShift;
-import catering.businesslogic.shiftManagement.Shift;
 import catering.businesslogic.user.User;
 
 import java.util.ArrayList;
@@ -39,11 +38,11 @@ public class SummarySheetManager {
     }
 
     // Event sender methods
-    public void addReceiver(SummarySheetEventReceiver er) {
+    public void addEventReceiver(SummarySheetEventReceiver er) {
         this.receivers.add(er);
     }
 
-    public void removeReceiver(SummarySheetEventReceiver er) {
+    public void removeEventReceiver(SummarySheetEventReceiver er) {
         this.receivers.remove(er);
     }
 

@@ -1,10 +1,12 @@
 package catering;
 
 import catering.businesslogic.CatERing;
+import catering.businesslogic.KitchenJobManagement.SummarySheet;
 import catering.businesslogic.UseCaseLogicException;
 import catering.businesslogic.event.EventInfo;
 import catering.businesslogic.event.ServiceInfo;
 import catering.businesslogic.menu.Menu;
+import catering.businesslogic.menu.MenuException;
 import catering.businesslogic.menu.Section;
 import catering.businesslogic.recipe.Recipe;
 
@@ -15,6 +17,10 @@ import java.util.Map;
 public class Test1 {
     public static void main(String[] args) {
         try {
+            System.out.println("TEST FAKE LOGIN");
+            CatERing.getInstance().getUserManager().fakeLogin("Lidia");
+            System.out.println(CatERing.getInstance().getUserManager().getUser());
+
             System.out.println("\nTEST CREATE MENU");
             Menu m = CatERing.getInstance().getMenuManager().createMenu("Menu Pinco Pallino");
 
@@ -26,9 +32,9 @@ public class Test1 {
 
             System.out.println("\nTEST GET EVENT INFO");
             ArrayList<EventInfo> events = CatERing.getInstance().getEventManager().getEventInfo();
-            for (EventInfo e : events) {
+            for (EventInfo e: events) {
                 System.out.println(e);
-                for (ServiceInfo s : e.getServices()) {
+                for (ServiceInfo s: e.getServices()) {
                     System.out.println("\t" + s);
                 }
             }
@@ -48,21 +54,14 @@ public class Test1 {
             CatERing.getInstance().getMenuManager().insertItem(recipes.get(4));
             System.out.println(m.testString());
 
-            System.out.println("\nTEST EDIT FEATURES");
-            Map<String, Boolean> f = CatERing.getInstance().getMenuManager().getCurrentMenu().getFeatures();
-            String[] fNames = f.keySet().toArray(new String[0]);
-            boolean[] vals = new boolean[fNames.length];
-            Arrays.fill(vals, true);
-            CatERing.getInstance().getMenuManager().setAdditionalFeatures(fNames, vals);
-            System.out.println(m.testString());
-
-            System.out.println("\nTEST EDIT TITLE");
-            CatERing.getInstance().getMenuManager().changeTitle("Titolo Nuovo");
-            System.out.println(m.testString());
-
             System.out.println("\nTEST PUBLISH");
             CatERing.getInstance().getMenuManager().publish();
             System.out.println(m.testString());
+
+            System.out.println("\nTEST CREATE SHEET");
+            EventInfo event = CatERing.getInstance().getEventManager().getEventInfo().get(0);
+            ServiceInfo service = event.getServices().get(0);
+            SummarySheet s = CatERing.getInstance().getSheetMgr().createSheet(service);
 
         } catch (UseCaseLogicException e) {
             System.out.println("Errore di logica nello use case");
