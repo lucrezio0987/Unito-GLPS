@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JobManager {
-    private List<SummarySheetEventReceiver> receivers;
+    private List<JobEventReceiver> receivers;
 
     // Constructor
     public JobManager() {
@@ -19,16 +19,16 @@ public class JobManager {
     }
 
     // Event sender methods
-    public void addReceiver(SummarySheetEventReceiver er) {
+    public void addReceiver(JobEventReceiver er) {
         this.receivers.add(er);
     }
 
-    public void removeReceiver(SummarySheetEventReceiver er) {
+    public void removeReceiver(JobEventReceiver er) {
         this.receivers.remove(er);
     }
 
-    private void updateJobAssigned(Job job, Shift shift) {
-        for (SummarySheetEventReceiver er : receivers) {
+    private void notifyJobAssigned(Job job, KitchenShift shift) {
+        for (JobEventReceiver er : receivers) {
             er.updateJobAssigned(job, shift);
         }
     }
@@ -39,7 +39,7 @@ public class JobManager {
 
         if (sheet != null && CatERing.getInstance().getSheetMgr().isOwner(user)) {
             job = job.assignJob(shift, cooks, portions, time);
-            updateJobAssigned(job, shift);
+            notifyJobAssigned(job, shift);
             return job;
         } else
             throw new UseCaseLogicException();

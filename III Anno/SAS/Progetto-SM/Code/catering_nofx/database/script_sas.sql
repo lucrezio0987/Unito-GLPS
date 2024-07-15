@@ -23,9 +23,10 @@ DROP TABLE IF EXISTS "shift_cook" CASCADE;
 DROP TABLE IF EXISTS "preparations" CASCADE;
 DROP TABLE IF EXISTS "recipes" CASCADE;
 DROP TABLE IF EXISTS "duties" CASCADE;
+DROP TABLE IF EXISTS "boards" CASCADE;
+DROP TABLE IF EXISTS "job_cook" CASCADE;
 
 -- Table structure for table 'boards'
-DROP TABLE IF EXISTS "boards";
 CREATE TABLE "boards" (
     "id" SERIAL PRIMARY KEY,
     "name" VARCHAR(128)
@@ -37,7 +38,6 @@ INSERT INTO "boards" VALUES
     (3, 'Fiera del Sedano Rapa');
 
 -- Table structure for table 'events'
-DROP TABLE IF EXISTS "events";
 CREATE TABLE "events" (
     "id" SERIAL PRIMARY KEY,
     "name" VARCHAR(128),
@@ -56,7 +56,6 @@ INSERT INTO "events" VALUES
     (3, 'Fiera del Sedano Rapa', '2020-10-02', '2020-10-04', 400, 1, 3);
 
 -- Table structure for table 'menufeatures'
-DROP TABLE IF EXISTS "menufeatures";
 CREATE TABLE "menufeatures" (
     "menu_id" INTEGER NOT NULL,
     "name" VARCHAR(128) NOT NULL,
@@ -75,7 +74,6 @@ INSERT INTO "menufeatures" VALUES
     (86, 'Piatti caldi', FALSE);
 
 -- Table structure for table 'menuitems'
-DROP TABLE IF EXISTS "menuitems";
 CREATE TABLE "menuitems" (
     "id" SERIAL PRIMARY KEY,
     "menu_id" INTEGER NOT NULL,
@@ -111,7 +109,6 @@ INSERT INTO "menuitems" VALUES
     (119, 86, 44, 'Torta Saint Honoré', 19, 1);
 
 -- Table structure for table 'menusections'
-DROP TABLE IF EXISTS "menusections";
 CREATE TABLE "menusections" (
     "id" SERIAL PRIMARY KEY,
     "menu_id" INTEGER NOT NULL,
@@ -128,7 +125,6 @@ INSERT INTO "menusections" VALUES
     (45, 87, 'Antipasti', 0);
 
 -- Table structure for table 'menus'
-DROP TABLE IF EXISTS "menus";
 CREATE TABLE "menus" (
     "id" SERIAL PRIMARY KEY,
     "name" TEXT,
@@ -230,7 +226,6 @@ VALUES
 
 
 -- Table structure for table 'roles'
-DROP TABLE IF EXISTS "roles";
 CREATE TABLE "roles" (
     "id" CHAR(1) PRIMARY KEY,
     "role" VARCHAR(128) NOT NULL DEFAULT 'servizio'
@@ -244,7 +239,6 @@ INSERT INTO "roles" VALUES
     ('s', 'servizio');
 
 -- Table structure for table 'services'
-DROP TABLE IF EXISTS "services";
 CREATE TABLE "services" (
     "id" SERIAL PRIMARY KEY,
     "event_id" INTEGER NOT NULL,
@@ -325,44 +319,7 @@ INSERT INTO "sheets" VALUES
     (4, 5, 4),
     (5, 1, 2);
 
--- Table structure for table 'jobs'
-DROP TABLE IF EXISTS "jobs";
-CREATE TABLE "jobs" (
-    "id" SERIAL PRIMARY KEY,
-    "name" VARCHAR(128),
-    "time" INTEGER,
-    "portions" INTEGER,
-    "prepare" BOOLEAN DEFAULT TRUE,
-    "completed" BOOLEAN DEFAULT TRUE,
-    "duty_id" INTEGER,
-    "sheet_id" INTEGER,
-    CONSTRAINT fk_duty_id FOREIGN KEY (duty_id) REFERENCES duties(id),
-    CONSTRAINT fk_sheet_id FOREIGN KEY (sheet_id) REFERENCES sheets(id)
-);
-
-INSERT INTO "jobs" VALUES
-    (1, 'Preparare antipasti', 60, 100, TRUE, FALSE, 1),
-    (2, 'Cucinare primi', 90, 80, TRUE, FALSE, 2),
-    (3, 'Preparare secondi', 120, 60, TRUE, FALSE, 3),
-    (4, 'Cucinare dolci', 45, 50, TRUE, FALSE, 4),
-    (5, 'Servire al tavolo', 30, 200, TRUE, FALSE, 5);
-
--- Table structure for table 'cooks'
-DROP TABLE IF EXISTS  "cooks";
-CREATE TABLE "cooks" (
-    "id" SERIAL PRIMARY KEY,
-    "name" VARCHAR(128)
-);
-
-INSERT INTO "cooks" VALUES
-    (1, 'Mario Rossi'),
-    (2, 'Luigi Bianchi'),
-    (3, 'Giuseppe Verdi'),
-    (4, 'Anna Neri'),
-    (5, 'Paola Gialli');
-
 -- Table structure for table 'shifts'
-DROP TABLE IF EXISTS "shifts";
 CREATE TABLE "shifts" (
     "id" SERIAL PRIMARY KEY,
     "description" VARCHAR(128),
@@ -382,9 +339,45 @@ INSERT INTO "shifts" VALUES
     (4, 'Turno di notte', '2021-07-14', '02:00:00', 480, '2021-07-13', FALSE, 2),
     (5, 'Turno di riposo', '2021-07-14', '00:00:00', 0, '2021-07-13', TRUE, 2);
 
--- Table structure for table 'job-cook'
-DROP TABLE IF EXISTS "job-cook";
-CREATE TABLE "job-cook" (
+-- Table structure for table 'jobs'
+CREATE TABLE "jobs" (
+    "id" SERIAL PRIMARY KEY,
+    "name" VARCHAR(128),
+    "time" INTEGER,
+    "portions" INTEGER,
+    "prepare" BOOLEAN DEFAULT TRUE,
+    "completed" BOOLEAN DEFAULT TRUE,
+    "duty_id" INTEGER,
+    "sheet_id" INTEGER,
+    "shift_id" INTEGER,
+    CONSTRAINT fk_duty_id FOREIGN KEY (duty_id) REFERENCES duties(id),
+    CONSTRAINT fk_sheet_id FOREIGN KEY (sheet_id) REFERENCES sheets(id),
+    CONSTRAINT fk_shift_id FOREIGN KEY (shift_id) REFERENCES shifts(id)
+);
+
+INSERT INTO "jobs" VALUES
+    (1, 'Preparare antipasti', 60, 100, TRUE, FALSE, 1, 1),
+    (2, 'Cucinare primi', 90, 80, TRUE, FALSE, 2, 1),
+    (3, 'Preparare secondi', 120, 60, TRUE, FALSE, 3, 1),
+    (4, 'Cucinare dolci', 45, 50, TRUE, FALSE, 4, 2),
+    (5, 'Servire al tavolo', 30, 200, TRUE, FALSE, 5, 2);
+
+-- Table structure for table 'cooks'
+CREATE TABLE "cooks" (
+    "id" SERIAL PRIMARY KEY,
+    "name" VARCHAR(128)
+);
+
+INSERT INTO "cooks" VALUES
+    (1, 'Mario Rossi'),
+    (2, 'Luigi Bianchi'),
+    (3, 'Giuseppe Verdi'),
+    (4, 'Anna Neri'),
+    (5, 'Paola Gialli');
+
+
+-- Table structure for table 'job_cook'
+CREATE TABLE "job_cook" (
     "job_id" SERIAL NOT NULL,
     "cook_id"  SERIAL NOT NULL,
     PRIMARY KEY ("job_id", "cook_id"),
@@ -392,9 +385,8 @@ CREATE TABLE "job-cook" (
     CONSTRAINT fk_cook FOREIGN KEY ("cook_id") REFERENCES "cooks" ("id")
 );
 
--- Table structure for table 'shift-cook'
-DROP TABLE IF EXISTS "shift-cook";
-CREATE TABLE "shift-cook" (
+-- Table structure for table 'shift_cook'
+CREATE TABLE "shift_cook" (
     "shift_id" SERIAL NOT NULL,
     "cook_id"  SERIAL NOT NULL,
     PRIMARY KEY ("shift_id", "cook_id"),
@@ -402,10 +394,11 @@ CREATE TABLE "shift-cook" (
     CONSTRAINT fk_cook FOREIGN KEY ("cook_id") REFERENCES "cooks" ("id")
 );
 
-INSERT INTO "shift-cook" VALUES
+INSERT INTO "shift_cook" VALUES
     (1, 1),
     (2, 2),
     (3, 3),
     (4, 4),
     (5, 5);
 
+SELECT * FROM "jobs";

@@ -5,7 +5,7 @@ import catering.businesslogic.KitchenJobManagement.SummarySheet;
 import catering.businesslogic.KitchenJobManagement.SummarySheetEventReceiver;
 import catering.businesslogic.shiftManagement.Shift;
 
-public class KitchenJobPersistence implements SummarySheetEventReceiver {
+public class SummarySheetPersistence implements SummarySheetEventReceiver {
     @Override
     public void updateSheetCreated(SummarySheet sheet) {
         SummarySheet.createSheet(sheet);
@@ -29,10 +29,5 @@ public class KitchenJobPersistence implements SummarySheetEventReceiver {
     @Override
     public void updateSheetDeleted(SummarySheet sheet) {
         SummarySheet.deleteSheet(sheet);
-    }
-
-    @Override
-    public void updateJobAssigned(Job job, Shift shift) {
-
     }
 }

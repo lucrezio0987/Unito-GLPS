@@ -137,6 +137,24 @@ public class Duty {
                 '}';
     }
 
+    public static Duty loadDutyById(int dutyId) {
+        final Duty[] duty = {null};
+        String query = "SELECT * FROM duties WHERE id = ?";
+        PersistenceManager.executeQuery(query, new ResultHandler() {
+            @Override
+            public void handle(ResultSet rs) throws SQLException {
+                if (rs.next()) {
+                    duty[0] = new Duty();
+                    duty[0].id = rs.getInt("id");
+                    duty[0].name = rs.getString("name");
+                    duty[0].time = rs.getInt("time");
+                    duty[0].portions = rs.getInt("portions");
+                }
+            }
+        });
+        return duty[0];
+    }
+
     public int loadIdByName(String name) {
         String query = "SELECT id FROM duties WHERE name = " + name;
         PersistenceManager.executeQuery(query, new ResultHandler() {

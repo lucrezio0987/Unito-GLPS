@@ -1,10 +1,16 @@
 package catering.businesslogic.shiftManagement;
 
+import catering.persistence.PersistenceManager;
+import catering.persistence.ResultHandler;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class Shift {
+    private int id;
     private String description;
     private Date date;
     private Time time;
@@ -14,11 +20,20 @@ public class Shift {
     private ArrayList<Cook> cooks;
 
     public Shift(String description, Date date, Time time, Time duration, ArrayList<Cook> cooks) {
+        this.id = 0;
         this.description = description;
         this.date = date;
         this.time = time;
         this.duration = duration;
         this.cooks = cooks;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDescription() {
@@ -75,5 +90,21 @@ public class Shift {
 
     public void setCooks(ArrayList<Cook> cooks) {
         this.cooks = cooks;
+    }
+
+    public ArrayList<Shift> getAllShifts(){
+        ArrayList<Shift> shifts = new ArrayList<>();
+        String query = "SELECT * FROM Shifts";
+        PersistenceManager.executeQuery(query, new ResultHandler() {
+            @Override
+            public void handle(ResultSet rs) throws SQLException {
+                while (rs.next()) {
+                    Shift shift = new Shift(rs.getString("description"), rs.getDate("date"), rs.getTime("time"), rs.getTime("duration"), null);
+                    shift.setId(rs.getInt("id"));
+                    shifts.add(shift);
+                }
+            }
+        });
+        return shifts;
     }
 }

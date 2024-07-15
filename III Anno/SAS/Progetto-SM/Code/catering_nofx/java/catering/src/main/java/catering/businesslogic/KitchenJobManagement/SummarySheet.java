@@ -124,7 +124,7 @@ public class SummarySheet {
 
         if (result[0] > 0) {
             for (Job job : sheet.jobs) {
-                Job.saveJob(job, sheet);
+                Job.saveJobDB(job, sheet);
             }
         }
     }
@@ -134,7 +134,7 @@ public class SummarySheet {
         int row = PersistenceManager.executeUpdate(sheetModify);
         if (row > 0) {
             for (Job job : sheet.jobs) {
-                Job.modifyJob(job);
+                Job.modifyJobDB(job);
             }
         }
     }
@@ -144,16 +144,16 @@ public class SummarySheet {
         int row = PersistenceManager.executeUpdate(sheetDelete);
         if(row > 0){
             for(Job job : sheet.jobs)
-                Job.deleteJob(job);
+                Job.deleteJobDB(job);
         }
     }
 
     public static void addJobToDB(Job job, SummarySheet sheet) {
-        Job.saveJob(job, sheet);
+        Job.saveJobDB(job, sheet);
     }
 
     public static void updateJobToDB(Job job){
-        Job.modifyJob(job);
+        Job.modifyJobDB(job);
     }
 }
 

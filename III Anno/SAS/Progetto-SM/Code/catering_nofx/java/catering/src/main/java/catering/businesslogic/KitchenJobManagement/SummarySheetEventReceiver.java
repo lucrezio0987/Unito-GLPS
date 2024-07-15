@@ -8,6 +8,5 @@ public interface SummarySheetEventReceiver {
     void updateJobAdded(Job job, SummarySheet sheet);
     void updateJobUpdated(Job job);
     void updateSheetDeleted(SummarySheet sheet);
-    void updateJobAssigned(Job job, Shift shift);
 }
 

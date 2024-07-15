@@ -2,9 +2,9 @@ package catering.businesslogic.KitchenJobManagement;
 
 import catering.businesslogic.shiftManagement.Cook;
 import catering.businesslogic.shiftManagement.KitchenShift;
-import catering.businesslogic.shiftManagement.Shift;
 import catering.persistence.BatchUpdateHandler;
 import catering.persistence.PersistenceManager;
+import catering.persistence.ResultHandler;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,6 +44,10 @@ public class Job {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -160,7 +164,26 @@ public class Job {
         return this;
     }
 
-    public static void saveJob(Job job, SummarySheet sheet) {
+    //PERSISTENCE
+    public ArrayList<Job> getAllJobs(){
+        ArrayList<Job> jobs = new ArrayList<>();
+        String query = "SELECT * FROM jobs";
+        PersistenceManager.executeQuery(query, new ResultHandler() {
+            @Override
+            public void handle(ResultSet rs) throws SQLException {
+                while (rs.next()) {
+                    int dutyId = rs.getInt("duty_id");
+                    Duty duty = Duty.loadDutyById(dutyId);
+                    Job job = new Job(rs.getString("name"), rs.getInt("portions"), rs.getInt("time"), rs.getBoolean("prepare"), rs.getBoolean("completed"), duty);
+                    job.setId(rs.getInt("id"));
+                    jobs.add(job);
+                }
+            }
+        });
+        return jobs;
+    }
+
+    public static void saveJobDB(Job job, SummarySheet sheet) {
         String jobAdd = "INSERT INTO jobs (name, time, portios, prepare, completed, duty_id, sheet_id) VALUES (?, ?, ?, ?, ?, ?, ?);";
         int[] result = PersistenceManager.executeBatchUpdate(jobAdd, 1, new BatchUpdateHandler() {
             @Override
@@ -181,8 +204,8 @@ public class Job {
             }
         });
     }
-    public static void modifyJob(Job job) {
-        String modifyJob = "UPDATE jobs SET (name = ?, time = ?, portions = ?, prepare = ?, completed = ?, duty_id = ?) WHERE " +
+    public static void modifyJobDB(Job job) {
+        String modifyJob = "UPDATE jobs SET (name = ?, time = ?, portions = ?, prepare = ?, completed = ?, duty_id = ?, shift_id = ?) WHERE " +
                 "id = ?";
         PersistenceManager.executeBatchUpdate(modifyJob, 1, new BatchUpdateHandler() {
             @Override
@@ -193,15 +216,35 @@ public class Job {
                 ps.setBoolean(4, job.isPrepare());
                 ps.setBoolean(5, job.isCompleted());
                 ps.setInt(6, job.getDuty().loadIdByName(job.getDuty().getName()));
-                ps.setInt(7, job.getId());
+                ps.setInt(7, job.getShift().getId());
+                ps.setInt(8, job.getId());
             }
             @Override
             public void handleGeneratedIds(ResultSet rs, int count) throws SQLException {}
         });
     }
 
-    public static void deleteJob(Job job) {
+    public static void deleteJobDB(Job job) {
         String deleteJob = "DELETE FROM jobs WHERE id = " + job.getId();
         PersistenceManager.executeUpdate(deleteJob);
+    }
+
+    public static void assignJobDB(Job job, KitchenShift shift){
+        String assignJob = "UPDATE jobs SET shift_id = " + shift.getId() + " WHERE id = " + job.getId();
+        int row = PersistenceManager.executeUpdate(assignJob);
+        if(row > 0 && job.cooksAssigned != null){
+            String assignCook = "INSERT INTO cooks_jobs (job_id, cook_id) VALUES (?, ?);";
+            for(Cook c : job.getCooksAssigned()){
+                PersistenceManager.executeBatchUpdate(assignCook, 1, new BatchUpdateHandler() {
+                    @Override
+                    public void handleBatchItem(PreparedStatement ps, int batchCount) throws SQLException {
+                        ps.setInt(1, job.getId());
+                        ps.setInt(2, c.getId());
+                    }
+                    @Override
+                    public void handleGeneratedIds(ResultSet rs, int count) throws SQLException {}
+                });
+            }
+        }
     }
 }
