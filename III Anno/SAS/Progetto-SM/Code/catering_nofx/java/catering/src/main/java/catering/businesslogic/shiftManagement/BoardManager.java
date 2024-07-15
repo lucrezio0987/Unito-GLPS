@@ -10,12 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BoardManager {
-   public Board board;
+    public Board board;
 
+    // constructor
     public BoardManager(Board board) {
         this.board = board;
     }
 
+    // getters and setters
     public Board getBoard() {
         return board;
     }
@@ -24,20 +26,16 @@ public class BoardManager {
         this.board = board;
     }
 
-    public void addReceiver(SummarySheetManager er) {
+    // event sender methods
+    public void addReceiver(SummarySheetManager er) {}
 
-   }
+   public void removeReceiver(SummarySheetManager er) {}
 
-   public void removeReceiver(SummarySheetManager er) {
+   private void notifyBoardCreated(Board board) {}
 
-   }
-
-   private void notifyBoardCreated(Board board) {
-
-   }
-
-   public Board createBoard(String event) {
-       return null;
+    // operations methods
+   public Board createBoard(String name, String event, ArrayList<Shift> shifts) {
+        return new Board(name, event, shifts);
    }
 
    public ArrayList<Shift> showBoard(String event) throws UseCaseLogicException {

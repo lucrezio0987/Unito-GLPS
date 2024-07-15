@@ -32,6 +32,7 @@ public class Cook {
         this.name = name;
     }
 
+    // utility methods
     public ArrayList<Cook> loadAllCooks(){
         ArrayList<Cook> cooks = new ArrayList<>();
         String query = "SELECT * FROM Cooks";

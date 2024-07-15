@@ -19,6 +19,7 @@ public class Shift {
     private boolean lock;
     private ArrayList<Cook> cooks;
 
+    // constructor
     public Shift(String description, Date date, Time time, Time duration, ArrayList<Cook> cooks) {
         this.id = 0;
         this.description = description;
@@ -28,6 +29,7 @@ public class Shift {
         this.cooks = cooks;
     }
 
+    // getters and setters
     public int getId() {
         return id;
     }
@@ -92,6 +94,7 @@ public class Shift {
         this.cooks = cooks;
     }
 
+    // utility methods
     public ArrayList<Shift> getAllShifts(){
         ArrayList<Shift> shifts = new ArrayList<>();
         String query = "SELECT * FROM Shifts";

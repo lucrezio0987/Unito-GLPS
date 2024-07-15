@@ -9,7 +9,7 @@ import java.util.Date;
 
 public class KitchenShift extends Shift{
     String place;
-    public KitchenShift(String description, Date date, Time time, Time duration, ArrayList<Cook> cooks, String place, ArrayList<Job> jobs) {
+    public KitchenShift(String description, Date date, Time time, Time duration, ArrayList<Cook> cooks, String place) {
         super(description, date, time, duration, cooks);
         this.place = place;
     }
