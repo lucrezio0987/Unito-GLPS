@@ -125,7 +125,7 @@ public class SummarySheetManager {
 
     public Job addJob(String title, boolean prepare, boolean completed, Duty duty) throws UseCaseLogicException {
         User user = CatERing.getInstance().getUserManager().getUser();
-        if (isChef(user) && sheet != null) {
+        if (sheet != null && isOwner(user)) {
             Job job = sheet.addJob(title, prepare, completed, duty);
             notifyJobAdded(job, sheet);
             return job;
@@ -136,7 +136,7 @@ public class SummarySheetManager {
 
     public Job updateJob(Job job, KitchenShift shift, ArrayList<Cook> cooks, int portions, int time) throws UseCaseLogicException {
         User user = CatERing.getInstance().getUserManager().getUser();
-        if (isChef(user) && sheet != null) {
+        if (sheet != null && isOwner(user)) {
            job = sheet.updateJob(job, shift, cooks, portions, time);
            notifyJobUpdated(job);
            return job;
