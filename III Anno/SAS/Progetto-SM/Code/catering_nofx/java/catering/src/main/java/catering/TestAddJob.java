@@ -9,6 +9,7 @@ import catering.businesslogic.event.EventInfo;
 import catering.businesslogic.event.ServiceInfo;
 import catering.businesslogic.menu.Menu;
 import catering.businesslogic.menu.Section;
+import catering.businesslogic.recipe.Preparation;
 import catering.businesslogic.recipe.Recipe;
 
 import java.util.ArrayList;
@@ -70,7 +71,7 @@ public class TestAddJob {
             }
             System.out.println("");
 
-            ArrayList<Duty.Preparation> preparations = new ArrayList<>();
+            ArrayList<Preparation> preparations = new ArrayList<>();
 
             Duty saintHonore = new Duty(
                     "Torta Saint Honoré",

@@ -2,6 +2,7 @@ package catering.businesslogic.menu;
 
 import catering.businesslogic.CatERing;
 import catering.businesslogic.KitchenJobManagement.Duty;
+import catering.businesslogic.recipe.Preparation;
 import catering.businesslogic.recipe.Recipe;
 import catering.businesslogic.user.User;
 import catering.persistence.BatchUpdateHandler;
@@ -167,7 +168,7 @@ public class Menu {
         ArrayList<Duty> allPreparations = new ArrayList<>();
 
         if (preparation.getPreparations() != null) {
-            for (Duty.Preparation p : preparation.getPreparations()) {
+            for (Preparation p : preparation.getPreparations()) {
                 allPreparations.add(p);
                 allPreparations.addAll(loadAllPreparations(p));
             }

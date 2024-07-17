@@ -118,9 +118,11 @@ public class Job {
     public Job updateJob(KitchenShift shift, ArrayList<Cook> cooks, int quantity, int time) {
         if (shift != null) {
             this.shift = shift;
-            for (Cook c : cooksAssigned) {
-                if (shift.isCookAssigned(c)) {
-                    this.cooksAssigned.remove(c);
+            if (this.cooksAssigned != null) {
+                for (Cook c : cooksAssigned) {
+                    if (shift.isCookAssigned(c)) {
+                        this.cooksAssigned.remove(c);
+                    }
                 }
             }
         }
@@ -128,8 +130,8 @@ public class Job {
             for (Cook c : cooks) {
                 if (this.shift == null || this.shift.isCookAssigned(c))
                     this.cooksAssigned.add(c);
-                }
             }
+        }
         if (quantity > 0)
             this.portions = quantity;
         if (time > 0)
@@ -227,7 +229,7 @@ public class Job {
         if (job.cooksAssigned == null || job.cooksAssigned.isEmpty()) {
             return;
         }
-        for(Cook c : job.cooksAssigned) {
+        for (Cook c : job.cooksAssigned) {
             String insertJobCook = "INSERT INTO job_cook (job_id, cook_id) VALUES (?, ?)";
             PersistenceManager.executeBatchUpdate(insertJobCook, 1, new BatchUpdateHandler() {
                 @Override
@@ -235,6 +237,7 @@ public class Job {
                     ps.setInt(1, job.id);
                     ps.setInt(2, c.getId());
                 }
+
                 @Override
                 public void handleGeneratedIds(ResultSet rs, int count) throws SQLException {
                     // Handle generated IDs if needed
@@ -249,7 +252,7 @@ public class Job {
     }
 
     public static void assignJobDB(Job job, KitchenShift shift) {
-        String assignJob = "UPDATE jobs SET shift_id = " + shift.getId() + ", time = " + job.time + ", portions = "+ job.portions  + " WHERE id = " + job.getId();
+        String assignJob = "UPDATE jobs SET shift_id = " + shift.getId() + ", time = " + job.time + ", portions = " + job.portions + " WHERE id = " + job.getId();
         int row = PersistenceManager.executeUpdate(assignJob);
         if (row > 0 && job.cooksAssigned != null) {
             String assignCook = "INSERT INTO job_cook (job_id, cook_id) VALUES (?, ?);";

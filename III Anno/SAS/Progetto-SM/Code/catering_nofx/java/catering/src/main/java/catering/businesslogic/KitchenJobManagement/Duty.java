@@ -1,5 +1,6 @@
 package catering.businesslogic.KitchenJobManagement;
 
+import catering.businesslogic.recipe.Preparation;
 import catering.persistence.PersistenceManager;
 import catering.persistence.ResultHandler;
 
@@ -133,12 +134,5 @@ public class Duty {
             }
         });
         return id;
-    }
-
-    public static class Preparation extends Duty {
-        public Preparation(String name, String description, int difficult, int importance, int time, int quantity, int portions, ArrayList<Preparation> preparations) {
-            super(name, description, difficult, importance, time, quantity, portions, preparations);
-        }
-
     }
 }
