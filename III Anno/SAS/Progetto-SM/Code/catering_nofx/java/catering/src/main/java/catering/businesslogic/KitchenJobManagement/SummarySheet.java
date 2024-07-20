@@ -92,13 +92,14 @@ public class SummarySheet {
     private Comparator<Job> getJobComparator(String sorting) {
         switch (sorting) {
             case "IMPORTANZA":
-                return Comparator.comparing(job -> job.getDuty().getImportance());
+                return Comparator.comparing((Job job) -> job.getDuty().getImportance()).reversed();
             case "DIFFICOLTA":
-                return Comparator.comparing(job -> job.getDuty().getDifficult());
+                return Comparator.comparing((Job job) -> job.getDuty().getDifficult()).reversed();
             default:
                 return null;
         }
     }
+
 
     public static void createSheet(SummarySheet sheet) {
         String sheetCreate = "INSERT INTO sheets (service, owner_id) VALUES (?, ?);";
