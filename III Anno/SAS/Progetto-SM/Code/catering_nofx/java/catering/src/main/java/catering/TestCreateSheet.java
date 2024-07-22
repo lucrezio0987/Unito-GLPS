@@ -20,7 +20,7 @@ public class TestCreateSheet {
             System.out.println(CatERing.getInstance().getUserManager().getUser());
 
             System.out.println("\nTEST CREATE MENU");
-            Menu m = CatERing.getInstance().getMenuManager().createMenu("Menu Pinco Pallino");
+            Menu m = CatERing.getInstance().getMenuManager().createMenu("Menu TestCreateSheet");
 
             System.out.println("\nTEST DEFINE SECTION");
             Section antipasti = CatERing.getInstance().getMenuManager().defineSection("Antipasti");
