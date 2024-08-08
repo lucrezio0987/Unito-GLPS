@@ -14,7 +14,7 @@ public class TestCatERing1b {
             /* System.out.println("TEST DATABASE CONNECTION");
             PersistenceManager.testSQLConnection();*/
             CatERing.getInstance().getUserManager().fakeLogin("Lidia");
-            System.out.println(CatERing.getInstance().getUserManager().getCurrentUser());
+            System.out.println(CatERing.getInstance().getUserManager().getUser());
 
             Menu m = CatERing.getInstance().getMenuManager().createMenu("Menu da Cancellare");
 

@@ -4,8 +4,8 @@
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>135</x>
-      <y>108</y>
+      <x>108</x>
+      <y>63</y>
       <w>90</w>
       <h>63</h>
     </coordinates>
@@ -15,56 +15,56 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>171</x>
-      <y>162</y>
+      <x>144</x>
+      <y>117</y>
       <w>27</w>
-      <h>405</h>
+      <h>459</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;430.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;490.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>171</x>
-      <y>189</y>
+      <x>144</x>
+      <y>126</y>
       <w>306</w>
       <h>36</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
-modifySummarySheet(sheet)</panel_attributes>
+modifySheet(sheet)</panel_attributes>
     <additional_attributes>10.0;20.0;320.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>405</x>
-      <y>126</y>
-      <w>126</w>
+      <x>360</x>
+      <y>81</y>
+      <w>171</w>
       <h>45</h>
     </coordinates>
     <panel_attributes>mgr:
-SummarySheet</panel_attributes>
+SummarySheetManager</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>459</x>
-      <y>162</y>
+      <x>432</x>
+      <y>117</y>
       <w>27</w>
-      <h>414</h>
+      <h>477</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;440.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;510.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>459</x>
-      <y>207</y>
+      <x>432</x>
+      <y>144</y>
       <w>18</w>
-      <h>315</h>
+      <h>405</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -72,8 +72,8 @@ SummarySheet</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>171</x>
-      <y>504</y>
+      <x>144</x>
+      <y>468</y>
       <w>306</w>
       <h>36</h>
     </coordinates>
@@ -84,8 +84,8 @@ sheet</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>18</x>
-      <y>36</y>
+      <x>108</x>
+      <y>0</y>
       <w>225</w>
       <h>54</h>
     </coordinates>
@@ -98,8 +98,8 @@ fontsize=18</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>468</x>
-      <y>279</y>
+      <x>441</x>
+      <y>306</y>
       <w>171</w>
       <h>63</h>
     </coordinates>
@@ -108,101 +108,10 @@ this.sheet = sheet</panel_attributes>
     <additional_attributes>10.0;10.0;50.0;10.0;50.0;50.0;10.0;50.0</additional_attributes>
   </element>
   <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>468</x>
-      <y>207</y>
-      <w>333</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;&gt;&gt;
-getOwner()</panel_attributes>
-    <additional_attributes>10.0;20.0;350.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>468</x>
-      <y>234</y>
-      <w>333</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;.
-owner</panel_attributes>
-    <additional_attributes>10.0;20.0;350.0;20.0</additional_attributes>
-  </element>
-  <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>783</x>
-      <y>225</y>
-      <w>18</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes/>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>783</x>
-      <y>162</y>
-      <w>27</w>
-      <h>414</h>
-    </coordinates>
-    <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;440.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLGeneric</id>
-    <coordinates>
-      <x>729</x>
-      <y>135</y>
-      <w>126</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>sheet:
-SummarySheet</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLFrame</id>
-    <coordinates>
-      <x>270</x>
-      <y>261</y>
-      <w>378</w>
-      <h>144</h>
-    </coordinates>
-    <panel_attributes>ALT owner equals to
-currentUser
-fg=#761C8C
-lw=2
---
-
-
-
-
--.</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>171</x>
-      <y>369</y>
-      <w>306</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;.
-throw UseCaseLogicException
-fg=red</panel_attributes>
-    <additional_attributes>10.0;20.0;320.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLGeneric</id>
-    <coordinates>
-      <x>999</x>
-      <y>477</y>
+      <x>972</x>
+      <y>441</y>
       <w>18</w>
       <h>18</h>
     </coordinates>
@@ -212,19 +121,19 @@ fg=red</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>999</x>
-      <y>162</y>
+      <x>972</x>
+      <y>270</y>
       <w>27</w>
-      <h>405</h>
+      <h>324</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;430.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;340.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>900</x>
-      <y>135</y>
+      <x>873</x>
+      <y>243</y>
       <w>207</w>
       <h>36</h>
     </coordinates>
@@ -235,22 +144,22 @@ SummarySheetEventReceiver</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>468</x>
-      <y>405</y>
+      <x>441</x>
+      <y>369</y>
       <w>216</w>
-      <h>63</h>
+      <h>54</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 notifySheetModified(sheet)</panel_attributes>
-    <additional_attributes>10.0;10.0;40.0;10.0;40.0;50.0;20.0;50.0</additional_attributes>
+    <additional_attributes>10.0;10.0;40.0;10.0;40.0;40.0;20.0;40.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>468</x>
-      <y>450</y>
+      <x>441</x>
+      <y>405</y>
       <w>18</w>
-      <h>27</h>
+      <h>36</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -258,8 +167,8 @@ notifySheetModified(sheet)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>477</x>
-      <y>459</y>
+      <x>450</x>
+      <y>423</y>
       <w>540</w>
       <h>36</h>
     </coordinates>
@@ -270,8 +179,8 @@ updateSheetModified(sheet)</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>225</x>
-      <y>459</y>
+      <x>198</x>
+      <y>423</y>
       <w>819</w>
       <h>45</h>
     </coordinates>
@@ -280,5 +189,105 @@ fg=blue
 
 </panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>441</x>
+      <y>153</y>
+      <w>495</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;
+getUser()</panel_attributes>
+    <additional_attributes>10.0;20.0;530.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>441</x>
+      <y>207</y>
+      <w>495</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+user</panel_attributes>
+    <additional_attributes>10.0;20.0;530.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>918</x>
+      <y>126</y>
+      <w>27</w>
+      <h>126</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>918</x>
+      <y>171</y>
+      <w>18</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>837</x>
+      <y>90</y>
+      <w>189</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>userMgr: 
+UserManager</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLFrame</id>
+    <coordinates>
+      <x>189</x>
+      <y>288</y>
+      <w>963</w>
+      <h>288</h>
+    </coordinates>
+    <panel_attributes>ALT isOwner(user)
+fg=#761C8C
+lw=2
+--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>144</x>
+      <y>531</y>
+      <w>306</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+throw UseCaseLogicException
+fg=red</panel_attributes>
+    <additional_attributes>10.0;20.0;320.0;20.0</additional_attributes>
   </element>
 </diagram>

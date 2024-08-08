@@ -138,7 +138,7 @@ DROP TABLE IF EXISTS `Menus`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Menus` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` tinytext,
+  `name` tinytext,
   `owner_id` int(11) DEFAULT NULL,
   `published` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)

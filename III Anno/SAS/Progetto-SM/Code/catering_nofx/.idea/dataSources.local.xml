@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="dataSourceStorageLocal" created-in="IU-233.15026.9">
-    <data-source name="postgres@localhost" uuid="a8df1e3a-aa2b-450a-b372-0cf8e984be22">
-      <database-info product="PostgreSQL" version="16.0" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.6.0" dbms="POSTGRES" exact-version="16.0" exact-driver-version="42.6">
+  <component name="dataSourceStorageLocal" created-in="IU-233.14808.21">
+    <data-source name="postgres@localhost" uuid="f27805ed-46ae-4f20-acf3-3565f9bffa35">
+      <database-info product="PostgreSQL" version="16.3" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.6.0" dbms="POSTGRES" exact-version="16.3" exact-driver-version="42.6">
         <identifier-quote-string>&quot;</identifier-quote-string>
       </database-info>
       <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
@@ -14,8 +14,10 @@
             <node kind="database" qname="@">
               <node kind="schema" qname="@" />
             </node>
-            <node kind="database" qname="catering">
-              <node kind="schema" qname="public" />
+            <node kind="database">
+              <name qname="catering" />
+              <name qname="postgres" />
+              <node kind="schema" negative="1" />
             </node>
           </node>
         </introspection-scope>
