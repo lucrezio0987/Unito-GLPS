@@ -1,0 +1,305 @@
+
+
+TabelloneController
+--
+*event sender methods*
++addReceiver(receiver: TabelloneEventReceiver): void
++removeReceiver(receiver: TabelloneEventReceiver): void
+-notifyOrarioAggiunto(orario: Orario): void
+-notifyOrarioModificato(orario: Orario): void
+-notifyOrarioRimosso(orario: Orario): void
+-notifyTurnoAggiunto(turno: Turno): void
+-notifyTurnoModificato(turno: Turno): void
+-notifyTurnoRimosso(turno: Turno): void
+-notifyRicorrenzaImpostata(orario: Orario, ricorrenza: Ricorrenza): void
+-notifySchemaSalvato(schema: Schema): void
+--
+*operations methods*
+
++creaOrario(tipo: String, titolo?: String, schema?: Schema, durataTurno?: Double): Orario
++modificaOrario(orario: Orario, nuoviDettagli: Map<String, Object>): void
++rimuoviOrario(orario: Orario): void
+
++aggiungiTurno(orario: Orario, data: Date, oraInizio: Time, dettagliAggiuntivi?: Map<String, Object>): Turno
++modificaTurno(turno: Turno, nuoviDettagli: Map<String, Object>): void
++rimuoviTurno(turno: Turno): void
+
++unisciTurni(orario: Orario, turni: List<Turno>): Turno
++separaTurno(turno: Turno, durate: List<Double>): List<Turno>
+
++impostaRicorrenza(orario: Orario, ricorrenza: Ricorrenza): void
+
++salvaSchema(orario: Orario): Schema
+--
+*visualization methods*
++consultaTabellone(): Tabellone
++consultaOrari(tipo?: String): List<Orario>
++consultaTurni(orario?: Orario, intervallo?: DateRange): List<Turno>
++visualizzaOrariPreparazione(): List<Orario>
++visualizzaOrariServizio(): List<Orario>
++visualizzaTurniIntervallo(intervallo: DateRange): List<Turno>
+
+
+---------------
+
+TabelloneEventReceiver
+--
+*event receiver methods*
++onOrarioAggiunto(orario: Orario): void
++onOrarioModificato(orario: Orario): void
++onOrarioRimosso(orario: Orario): void
++onTurnoAggiunto(turno: Turno): void
++onTurnoModificato(turno: Turno): void
++onTurnoRimosso(turno: Turno): void
++onRicorrenzaImpostata(orario: Orario, ricorrenza: Ricorrenza): void
++onSchemaSalvato(schema: Schema): void
+
+---------------
+
+1
+Tabellone
+--
+*event sender methods*
++ addReceiver(receiver: TabelloneEventReceiver): void
++ removeReceiver(receiver: TabelloneEventReceiver): void
++ notifyOrarioCreato(orario: Orario): void
++ notifyOrarioRimosso(orario: Orario): void
+--
+*operations methods*
++ creaOrarioPreparazione(schema: SchemaPreparazione, dataInizio: Date, titolo?: String): Orario
++ creaOrarioServizio(schema: SchemaServizio, dataInizio: Date, titolo?: String): Orario
++ aggiungiOrario(orario: Orario): void
++ rimuoviOrario(titoloOrario: String): void
++ salvaSchemaDaOrario(orario: Orario): void
+--
++ getOrariServizio(): List<Orario>
++ getOrariPreparazione(): List<Orario>
++ getOrari(): List<Orario>
+--
+*visualization methods*
++ visualizzaTurniPreparazione(): List<TurnoPreparazione>
++ visualizzaTurniServizio(): List<TurnoServizio>
++ visualizzaOrari(): List<Orario>
++ visualizzaOrari(titolo: String): Orario
+
+---------------
+
+Orario
+--
+- dataInizio: Date
+--
++ Orario(schema: Schema, dataInizio: Date, titolo?: String)
+--
++ getSchema(): Schema
++ getDataInizio(): Date
++ getTitolo(): String
++ setTitolo(titolo: String): void
+
+---------------
+
+1
+ArchivioSchemi
+--
++ aggiungiSchema(schema: Schema): void
++ rimuoviSchema(titolo: String): void
+--
++ getSchemiPreparazione(): List<SchemaPreparazione>
++ getSchemiServizio(): List<SchemaServizio>
++ getSchemi(): List<Schema>
+
+---------------
+
+Schema 
+{abstract}
+--
+- titolo: String
+- durataTurno: int
+--
++ Schema(titoloSchema: String, durataTurno: int)
+--
++ aggiungiTurno(turno: Turno): void
++ rimuoviTurno(turno: Turno): void
++ raggruppaTurni(List<Turno>);
++ separaTurni(List<Turno>);
+--
++ getTitoloSchema(): String
++ setTitoloSchema(titoloSchema: String): void
++ getDurataTurno(): int
++ setDurataTurno(durata: int): void
++ getListaTurni(): List<Turno>
+
+---------------
+
+SchemaPreparazione : Schema
+--
+
+--
++ SchemaPreparazione(titolo: String, durataTurno: int)
+--
+
+---------------
+
+Turno
+{abstract}
+--
+- oraInizio: Ora
+- durata: int
+- giorno: int
+--
++ getOraInizio(): Ora
++ setOraInizio(ora: Ora): void
++ getDurata(): int
++ setDurata(durata: int): void
++ getGiorno(): int
++ setGiorno(giorno: int): void
+
+---------------
+
+GruppoTurni : Turno
+--
++ GruppoTurni()
+--
++ aggiungiTurno(turno: Turno): void
++ rimuoviTurno(turno: Turno): void
+--
++ getOraInizio(): Ora
++ setOraInizio(ora: Ora): void
++ getDurata(): int
++ setDurata(durata: int): void
++ getGiorno(): int
++ setGiorno(giorno: int): void
+
+---------------
+
+TurnoSingolo : Turno
+{abstract}
+--
+
+---------------
+
+SchemaServizio : Schema
+--
+- evento: Evento
+--
++ SchemaServizio(titolo: String, durataTurno: int, evento: Evento)
+--
++ getEvento(): Evento
++ setEvento(evento: Evento): void
+
+---------------
+
+TurnoSingolo : Turno
+{abstract}
+--
+
+---------------
+
+TurnoPreparazione : TurnoSingolo
+--
+- luogo: String
+--
++ TurnoPreparazione(oraInizio: Ora, durata: int, 
+      giorno: int, luogo: String)
+--
++ impostaRicorrenza(ricorrenza: Ricorrenza): void
++ rimuoviRicorrenza(): void
++ associaCuoco(cuoco: Cuoco): void
++ rimuoviCuoco(cuoco: Cuoco): void
+--
++ getLuogo(): String
++ getListaCuochi(): List<Cuoco>
+
+---------------
+
+TurnoServizio : TurnoSingolo
+--
+- giornoScadenza: int
+- stimaTempo: int
+--
++ TurnoServizio(oraInizio: Ora, durata: int, giorno: int, 
+           giornoScadenza: int, stimaTempo: int)
+--
++ associaCameriere(cameriere: Cameriere): void
++ associaCameriere(cameriere: Cameriere): void
+--
++ getGiornoScadenza(): int
++ setGiornoScadenza(giornoScadenza: int): void
++ getStimaTempo(): int
++ setStimaTempo(stimaTempo: int): void
++ getListaCamerieri(): List<Cameriere>
+
+---------------
+
+Ricorrenza
+--
+- giorni: int             # Maschera di bit        
+- dataInizio: int              
+- dataFine: int                
+--
++ Ricorrenza(giorni: int, dataInizio: int, dataFine: int)
+--
++ isGiornoRicorrente(giorno: int): boolean
++ aggiungiGiorno(giorno: int): void  
++ rimuoviGiorno(giorno: int): void
+--
++ getGiorniMask(): int
++ getGiorni(): List<String>
++ setGiorni(giorni: int): void
++ getDataInizio(): int
++ setDataInizio(data: int): void
++ getDataFine(): int
++ setDataFine(data: int): void
+
+---------------
+
+Cuoco
+--
+- nome: string
+
+---------------
+
+Cameriere
+--
+- nome: string
+
+---------------
+
+Compito
+--
+- tempo: int
+- daPreparare: boolean
+- completato: boolean
+--
++ create()
++ addMansione(mansione: Mansione): void
++ rimuoviMansione(mansione: Mansione): void
++ impostaTurno(turno: Turno): void
++ impostaCuoco(cuoco: Cuoco): void
++ associaTurnoECuoco(turno: Turno, cuoco: Cuoco): void
+--
++ setDaPreparare(daPreparare: boolean): void
++ setCompletato(completato: boolean): void
+--
++ calcolaDifficoltà(): int
++ calcolaImportanza(): int
++ calcolaTempoStandard(): int
+
+---------------
+
+
+TabelloneController contiene un riferimento al Tabellone ed e contiene una lista eventReceivers di TabelloneEventReceiver.
+Tabellone contiene una lista "orari" di Orario e un oggetto archivioSchemi di tipo ArchivioSchemi.
+ArchivioSchemi contiene una lista listaSchemi di oggetti Schema.
+Orario contiene un istanza schema di Schema.
+SchemaPreparazione e SchemaServizio estendono Schema.
+Schema contiene una lista di turni di Turni.
+Turni E BloccoTurni gestiti con Pattern Composite
+la lista può essere o di GruppoTurni o di TurnoSingolo (che estendono Turno).
+TurnoPreparazione e TurnoServizio estendono TurnoSingolo. 
+se lo schema è di tipo SchemaPreparazione avra solo TurnoPreparazione e se è di tipo SchemaServizio avra solo TurnoServizio.
+TurnoPreparazione contiene un oggetto ricorrenza di tipo Ricorrenza (che può essere null se il turno non è ricorrente).
+TurnoPreparazione contiene una lista cuochi di riferimenti ad oggetti Cuoco
+TurnoServizio contiene una lista camerieri di riferimenti ad oggetti Cameriere
+Compito contiene un riferimento turno ad un TurnoPreparazione e un riferimento cuoco ad un oggetto Cuoco (che deve essere presente nella lista cuochi di del turno associato al compito). 
+
+
