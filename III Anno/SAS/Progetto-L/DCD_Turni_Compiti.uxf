@@ -4,7 +4,7 @@
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>2620</x>
+      <x>2570</x>
       <y>140</y>
       <w>1800</w>
       <h>670</h>
@@ -15,7 +15,7 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2650</x>
+      <x>2600</x>
       <y>200</y>
       <w>660</w>
       <h>240</h>
@@ -42,7 +42,7 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>3490</x>
+      <x>3440</x>
       <y>200</y>
       <w>670</w>
       <h>180</h>
@@ -62,7 +62,7 @@ FoglioRiepilogativo
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3300</x>
+      <x>3250</x>
       <y>270</y>
       <w>210</w>
       <h>50</h>
@@ -75,9 +75,9 @@ m1=0..1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3570</x>
+      <x>3520</x>
       <y>370</y>
-      <w>80</w>
+      <w>70</w>
       <h>150</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
@@ -88,7 +88,7 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>3350</x>
+      <x>3300</x>
       <y>500</y>
       <w>450</w>
       <h>280</h>
@@ -118,7 +118,7 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>3990</x>
+      <x>3940</x>
       <y>500</y>
       <w>380</w>
       <h>240</h>
@@ -144,7 +144,7 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3790</x>
+      <x>3740</x>
       <y>620</y>
       <w>220</w>
       <h>50</h>
@@ -157,7 +157,7 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2650</x>
+      <x>2600</x>
       <y>540</y>
       <w>660</w>
       <h>90</h>
@@ -172,9 +172,9 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2970</x>
+      <x>2920</x>
       <y>430</y>
-      <w>140</w>
+      <w>120</w>
       <h>130</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
@@ -185,9 +185,9 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3540</x>
+      <x>3490</x>
       <y>770</y>
-      <w>70</w>
+      <w>60</w>
       <h>460</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
@@ -198,7 +198,7 @@ m1=0..1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>4310</x>
+      <x>4260</x>
       <y>1240</y>
       <w>140</w>
       <h>70</h>
@@ -210,9 +210,9 @@ m1=0..1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3700</x>
+      <x>3650</x>
       <y>770</y>
-      <w>730</w>
+      <w>720</w>
       <h>490</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
@@ -223,9 +223,9 @@ m1=0..1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>4150</x>
+      <x>4100</x>
       <y>330</y>
-      <w>200</w>
+      <w>190</w>
       <h>190</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
@@ -236,7 +236,7 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>3730</x>
+      <x>3680</x>
       <y>0</y>
       <w>160</w>
       <h>80</h>
@@ -248,7 +248,7 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3800</x>
+      <x>3750</x>
       <y>70</y>
       <w>80</w>
       <h>150</h>
@@ -261,7 +261,7 @@ m1=0..1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2440</x>
+      <x>2390</x>
       <y>1500</y>
       <w>380</w>
       <h>240</h>
@@ -288,7 +288,7 @@ m1=0..1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1640</x>
+      <x>1590</x>
       <y>1630</y>
       <w>820</w>
       <h>50</h>
@@ -302,7 +302,7 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2830</x>
+      <x>2780</x>
       <y>1230</y>
       <w>440</w>
       <h>100</h>
@@ -318,7 +318,7 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2590</x>
+      <x>2540</x>
       <y>1280</y>
       <w>260</w>
       <h>240</h>
@@ -330,7 +330,7 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2600</x>
+      <x>2550</x>
       <y>1730</y>
       <w>230</w>
       <h>420</h>
@@ -342,7 +342,7 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2810</x>
+      <x>2760</x>
       <y>2050</y>
       <w>490</w>
       <h>120</h>
@@ -360,7 +360,7 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2980</x>
+      <x>2930</x>
       <y>1510</y>
       <w>270</w>
       <h>220</h>
@@ -385,7 +385,7 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>3380</x>
+      <x>3330</x>
       <y>1210</y>
       <w>380</w>
       <h>210</h>
@@ -409,7 +409,7 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>3380</x>
+      <x>3330</x>
       <y>2040</y>
       <w>400</w>
       <h>230</h>
@@ -435,7 +435,7 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2680</x>
+      <x>2630</x>
       <y>1610</y>
       <w>320</w>
       <h>190</h>
@@ -449,7 +449,7 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3260</x>
+      <x>3210</x>
       <y>1270</y>
       <w>140</w>
       <h>40</h>
@@ -461,7 +461,7 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3290</x>
+      <x>3240</x>
       <y>2120</y>
       <w>110</w>
       <h>40</h>
@@ -473,7 +473,7 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2090</x>
+      <x>2040</x>
       <y>1180</y>
       <w>470</w>
       <h>230</h>
@@ -499,7 +499,7 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1190</x>
+      <x>1140</x>
       <y>1580</y>
       <w>460</w>
       <h>140</h>
@@ -518,7 +518,7 @@ ArchivioSchemi
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1090</x>
+      <x>1040</x>
       <y>1060</y>
       <w>720</w>
       <h>390</h>
@@ -533,15 +533,13 @@ Tabellone
 + notifyOrarioRimosso(orario: Orario): void
 --
 *operations methods*
-+ creaOrarioPreparazione(schema: SchemaPreparazione, dataInizio: Date, titolo?: String): Orario
-+ creaOrarioServizio(schema: SchemaServizio, dataInizio: Date, titolo?: String, 
-          dettagliAggiuntivi: Map&lt;String, Objec): Orario
++ creaOrario(tipo:String, schema: SchemaServizio, dataInizio: Date, titolo?: String, 
+                             dettagli: Map&lt;String, Objec): Orario
 + modificaOrario(titolo: String): Orario
 + rimuoviOrario(): void
 
-+aggiungiTurno(data: Date, oraInizio: Time, durata?: int, 
-         dettagliAggiuntivi?: Map&lt;String, Object&gt;): Turno
-+modificaTurno(id: String, nuoviDettagli: Map&lt;String, Object&gt;): void
++aggiungiTurno(data: Date, oraInizio: Time, durata?: int, dettagli?: Map&lt;String, Object&gt;): Turno
++modificaTurno(id: String, dettagli: Map&lt;String, Object&gt;): void
 +rimuoviTurno(id: String): void
 +unisciTurni(turni: List&lt;String&gt;): void
 +separaTurno(id: String): void
@@ -562,9 +560,9 @@ Tabellone
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1410</x>
+      <x>1360</x>
       <y>1440</y>
-      <w>140</w>
+      <w>120</w>
       <h>160</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
@@ -575,7 +573,7 @@ m1=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2310</x>
+      <x>2260</x>
       <y>1400</y>
       <w>150</w>
       <h>180</h>
@@ -588,7 +586,7 @@ m1=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1800</x>
+      <x>1750</x>
       <y>1240</y>
       <w>310</w>
       <h>50</h>
@@ -602,9 +600,9 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3550</x>
+      <x>3500</x>
       <y>1650</y>
-      <w>100</w>
+      <w>90</w>
       <h>410</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-
@@ -615,9 +613,9 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3550</x>
+      <x>3500</x>
       <y>1410</y>
-      <w>100</w>
+      <w>90</w>
       <h>180</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-
@@ -627,7 +625,7 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3750</x>
+      <x>3700</x>
       <y>1260</y>
       <w>580</w>
       <h>50</h>
@@ -641,7 +639,7 @@ m1=0..n
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>4310</x>
+      <x>4260</x>
       <y>2090</y>
       <w>140</w>
       <h>70</h>
@@ -653,7 +651,7 @@ m1=0..n
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3770</x>
+      <x>3720</x>
       <y>2110</y>
       <w>560</w>
       <h>50</h>
@@ -666,7 +664,7 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>3780</x>
+      <x>3730</x>
       <y>1500</y>
       <w>420</w>
       <h>280</h>
@@ -696,9 +694,9 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3750</x>
+      <x>3700</x>
       <y>1310</y>
-      <w>280</w>
+      <w>270</w>
       <h>210</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
@@ -709,7 +707,7 @@ m1=0..1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>3430</x>
+      <x>3380</x>
       <y>1570</y>
       <w>290</w>
       <h>90</h>
@@ -722,7 +720,7 @@ m1=0..1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>3190</x>
+      <x>3140</x>
       <y>1790</y>
       <w>290</w>
       <h>190</h>
@@ -746,7 +744,7 @@ m1=0..1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3090</x>
+      <x>3040</x>
       <y>1720</y>
       <w>120</w>
       <h>160</h>
@@ -758,7 +756,7 @@ m1=0..1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3240</x>
+      <x>3190</x>
       <y>1570</y>
       <w>210</w>
       <h>40</h>
@@ -770,7 +768,7 @@ m1=0..1</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>3280</x>
+      <x>3230</x>
       <y>1480</y>
       <w>260</w>
       <h>50</h>
@@ -784,7 +782,7 @@ con Pattern Composite</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>1870</x>
+      <x>1820</x>
       <y>1490</y>
       <w>360</w>
       <h>80</h>
@@ -799,7 +797,7 @@ come Servizio o Preparazione</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>3020</x>
+      <x>2970</x>
       <y>1140</y>
       <w>390</w>
       <h>60</h>
@@ -813,7 +811,7 @@ Turni come istanze di TurnoPreparazione</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>3350</x>
+      <x>3300</x>
       <y>2320</y>
       <w>340</w>
       <h>60</h>
@@ -827,7 +825,7 @@ Turni come istanze di TurnoServizio</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>4000</x>
+      <x>3950</x>
       <y>1350</y>
       <w>230</w>
       <h>60</h>
@@ -841,7 +839,7 @@ turno non è ricorrente</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>3930</x>
+      <x>3880</x>
       <y>870</y>
       <w>390</w>
       <h>80</h>
@@ -856,9 +854,9 @@ TurnoPreparazione associato al Compito</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3330</x>
+      <x>3280</x>
       <y>1650</y>
-      <w>190</w>
+      <w>180</w>
       <h>160</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;
@@ -869,7 +867,7 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>130</x>
+      <x>80</x>
       <y>1020</y>
       <w>4120</w>
       <h>1390</h>
@@ -880,7 +878,7 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>340</x>
+      <x>290</x>
       <y>1080</y>
       <w>620</w>
       <h>550</h>
@@ -901,12 +899,11 @@ m1=0..n</panel_attributes>
 --
 *operations methods*
 +aggiungiOrario(tipo: String, titolo?: String, schema?: Schema, durataTurno?: int, 
-         dettagliAggiuntivi?: Map&lt;String, Object&gt;): void
+         dettagli?: Map&lt;String, Object&gt;): void
 +modificaOrario(titolo:String): void
 +rimuoviOrario(): void
-+aggiungiTurno(data: Date, oraInizio: Time, durata?: int, 
-         dettagliAggiuntivi?: Map&lt;String, Object&gt;): Turno
-+modificaTurno(id: String, nuoviDettagli: Map&lt;String, Object&gt;): void
++aggiungiTurno(data: Date, oraInizio: Time, durata?: int, dettagli?: Map&lt;String, Object&gt;): Turno
++modificaTurno(id: String, dettagli: Map&lt;String, Object&gt;): void
 +rimuoviTurno(id: String): void
 +unisciTurni(turni: List&lt;String&gt;): void
 +separaTurno(id: String): void
@@ -926,7 +923,7 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>400</x>
+      <x>350</x>
       <y>1770</y>
       <w>510</w>
       <h>190</h>
@@ -948,9 +945,9 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>650</x>
+      <x>600</x>
       <y>1620</y>
-      <w>140</w>
+      <w>120</w>
       <h>170</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
@@ -961,7 +958,7 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>950</x>
+      <x>900</x>
       <y>1220</y>
       <w>160</w>
       <h>50</h>
@@ -974,7 +971,7 @@ m1=0..1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2970</x>
+      <x>2920</x>
       <y>2460</y>
       <w>140</w>
       <h>70</h>
@@ -986,9 +983,9 @@ m1=0..1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3030</x>
+      <x>2980</x>
       <y>2160</y>
-      <w>80</w>
+      <w>70</w>
       <h>320</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
@@ -999,7 +996,7 @@ m1=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1800</x>
+      <x>1750</x>
       <y>1110</y>
       <w>510</w>
       <h>90</h>

@@ -132,7 +132,7 @@ fg=blue</panel_attributes>
     <coordinates>
       <x>1267</x>
       <y>56</y>
-      <w>91</w>
+      <w>84</w>
       <h>91</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
@@ -164,7 +164,7 @@ fg=blue
     <coordinates>
       <x>952</x>
       <y>196</y>
-      <w>77</w>
+      <w>70</w>
       <h>98</h>
     </coordinates>
     <panel_attributes>lt=-
@@ -179,7 +179,7 @@ fg=black</panel_attributes>
     <coordinates>
       <x>1281</x>
       <y>203</y>
-      <w>112</w>
+      <w>105</w>
       <h>91</h>
     </coordinates>
     <panel_attributes>lt=-
@@ -223,7 +223,7 @@ fg=ORANGE</panel_attributes>
     <coordinates>
       <x>959</x>
       <y>315</y>
-      <w>98</w>
+      <w>91</w>
       <h>112</h>
     </coordinates>
     <panel_attributes>lt=-
@@ -270,7 +270,7 @@ servizio: testo</panel_attributes>
     <coordinates>
       <x>763</x>
       <y>259</y>
-      <w>77</w>
+      <w>70</w>
       <h>287</h>
     </coordinates>
     <panel_attributes>lt=-
@@ -296,7 +296,7 @@ riferito a v</panel_attributes>
     <coordinates>
       <x>1043</x>
       <y>728</y>
-      <w>98</w>
+      <w>91</w>
       <h>140</h>
     </coordinates>
     <panel_attributes>lt=-
@@ -462,7 +462,7 @@ fg=black</panel_attributes>
     <coordinates>
       <x>1085</x>
       <y>623</y>
-      <w>196</w>
+      <w>189</w>
       <h>91</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
@@ -476,7 +476,7 @@ consiste in &gt;</panel_attributes>
     <coordinates>
       <x>763</x>
       <y>728</y>
-      <w>266</w>
+      <w>259</w>
       <h>133</h>
     </coordinates>
     <panel_attributes>lt=-
@@ -508,7 +508,7 @@ fg=blue</panel_attributes>
     <coordinates>
       <x>1141</x>
       <y>336</y>
-      <w>105</w>
+      <w>98</w>
       <h>196</h>
     </coordinates>
     <panel_attributes>lt=-
@@ -1013,7 +1013,7 @@ m2=1</panel_attributes>
     <coordinates>
       <x>455</x>
       <y>1001</y>
-      <w>84</w>
+      <w>77</w>
       <h>112</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
@@ -1030,7 +1030,7 @@ fg=RED</panel_attributes>
     <coordinates>
       <x>833</x>
       <y>896</y>
-      <w>168</w>
+      <w>161</w>
       <h>133</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
