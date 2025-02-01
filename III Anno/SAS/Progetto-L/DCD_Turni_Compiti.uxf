@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.1">
-  <zoom_level>11</zoom_level>
+  <zoom_level>10</zoom_level>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>2904</x>
-      <y>154</y>
-      <w>1980</w>
-      <h>737</h>
+      <x>2640</x>
+      <y>140</y>
+      <w>1800</w>
+      <h>830</h>
     </coordinates>
     <panel_attributes>KitchenJobManagement</panel_attributes>
     <additional_attributes/>
@@ -15,10 +15,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2937</x>
-      <y>220</y>
-      <w>726</w>
-      <h>264</h>
+      <x>2670</x>
+      <y>200</y>
+      <w>630</w>
+      <h>390</h>
     </coordinates>
     <panel_attributes>FoglioRiepilogativoController
 --
@@ -32,66 +32,78 @@
 -notifyCompitoAssegnato(compito: Compito, turno: Turno)
 --
 *operations methods*
-+creaFoglioRiepilogativo(servizio: Servizio)
-+definisciCompito(mansioni: ArrayList&lt;Mansione&gt;, daPreparare: boolean, completato: boolean)
-+assegna(compito: Compito, turno: Turno, ch?: Cuoco, porzioni?: String, tempo?: int)
-+aggiornaCompito(compito: Compito, turno?: Turno, ch?: Cuoco, porzioni?: String, tempo?: int)
-</panel_attributes>
++ creaFoglioRiepilogativo(servizio: Servizio): FoglioRiepilogativo
++ modificaFoglioRiepilogativo(id: String): FoglioRiepilogativo
++ rimuoviFoglioRiepilogativo(): Boolean
++ modificaCompito(id: String, tempo?: int, daPreparare?: boolean, completato?: boolean): Compito 
++ rimuoviCompito(id: String): Boolean
++ impostaTurno(id: String, turno: Turno):Boolean
++ assegnaCompito(id: String, cuoco: Cuoco):Boolean
+--
++ ordinaCompitiImportanza(metodo: int): List&lt;Compiti&gt;
++ ordinaCompitiDifficoltà(metodo: int): List&lt;Compiti&gt;
+--
+*visualization methods*
++ visualizzaFoglioRiepilogativo(id: String): FoglioRiepilogativo
++ consultaFogliRiepilogativi(): List&lt;FoglioRiepilogativo&gt;
++ consultaCompiti(): List&lt;Compito&gt;</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>3861</x>
-      <y>220</y>
-      <w>737</w>
-      <h>198</h>
+      <x>3510</x>
+      <y>200</y>
+      <w>730</w>
+      <h>170</h>
     </coordinates>
-    <panel_attributes>																																																																									      																																																									1	
-*FoglioRiepilogativo*
+    <panel_attributes>*FoglioRiepilogativo*
 --
-
++ create(servizio: Servizio)
 --
-+create(servizio: Servizio)
-+creaCompito(daPreparare: boolean, completato: boolean)
-+aggiungiMansione(compito: Compito, mansione: Mansione)	
-+modificaCompito(compito: Compito, 
-																																																turno?: Turno, ch?: Cuoco, porzioni?: String, tempo?: int)																																					</panel_attributes>
++ aggiungiCompito(mansione: Mansione, turno?: Turno, ch?: Cuoco, tempo?: int, daPreparare?: boolean): Compito
++ modificaCompito(id: String, tempo?: int, daPreparare?: boolean, completato?: boolean): Compito 
++ rimuoviCompito(id: String): Boolean
++ impostaTurno(id: String, turno: Turno):Boolean
++ assegnaCompito(id: String, cuoco: Cuoco):Boolean
+--
++ ordinaCompitiImportanza(metodo: int): List&lt;Compiti&gt;
++ ordinaCompitiDifficoltà(metodo: int): List&lt;Compiti&gt;</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3652</x>
-      <y>297</y>
-      <w>231</w>
-      <h>55</h>
+      <x>3290</x>
+      <y>270</y>
+      <w>240</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 currentFoglio
 m1=0..1</panel_attributes>
-    <additional_attributes>190.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>220.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3949</x>
-      <y>407</y>
-      <w>77</w>
-      <h>165</h>
+      <x>3640</x>
+      <y>360</y>
+      <w>70</w>
+      <h>140</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 compiti
 m1=0..n</panel_attributes>
-    <additional_attributes>10.0;130.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;120.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>3707</x>
-      <y>550</y>
-      <w>495</w>
-      <h>308</h>
+      <x>3470</x>
+      <y>480</y>
+      <w>360</w>
+      <h>390</h>
     </coordinates>
     <panel_attributes>*Compito*
 --
@@ -99,29 +111,36 @@ m1=0..n</panel_attributes>
 - daPreparare: boolean
 - completato: boolean
 --
-+ create()
-+ addMansione(mansione: Mansione): void
-+ rimuoviMansione(mansione: Mansione): void
-+ impostaTurno(turno: Turno): void
-+ impostaCuoco(cuoco: Cuoco): void
-+ associaTurnoECuoco(turno: Turno, cuoco: Cuoco): void
++ create(mansione:Mansione)
 --
-+ setDaPreparare(daPreparare: boolean): void
-+ setCompletato(completato: boolean): void
++ getTurno(): Turno
++ setTurno(turno: Turno): Boolean
++ getCuoco(): Cuoco
++ setCuoco(cuoco: Cuoco): Boolean
 --
-+ calcolaDifficoltà(): int
-+ calcolaImportanza(): int
-+ calcolaTempoStandard(): int
-</panel_attributes>
++ getDaPreparare(): Boolean
++ setDaPreparare(daPreparare: boolean): Boolean
++ getCompletato(): Boolean
++ setCompletato(completato: boolean): Boolean
++ getTempo(): Int
++ setTempo(tempo: Int): Boolean
+--
++ getDifficoltàMansione(): String
++ getImportanzaMansione(): String
++ getNomeMansione(): String
++ getDescrizioneMansione(): String
++ getQuantitàMansione(): String
++ getPorzioniMansione(): String
++ getDifficoltàMansione(): String</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>4411</x>
-      <y>550</y>
-      <w>418</w>
-      <h>264</h>
+      <x>4010</x>
+      <y>500</y>
+      <w>380</w>
+      <h>320</h>
     </coordinates>
     <panel_attributes>*Mansione*
 --
@@ -133,34 +152,41 @@ m1=0..n</panel_attributes>
 -quantita: String
 -porzioni: String
 --
-+create(nome: String, descrizione: String, 
++ create(nome: String, descrizione: String, 
                tempo: int, quantita: String, porzioni: String)
 --
-+setDifficolta(difficolta: int)
-+setImportanza(importanza: int)
++ getNome(): String
++ getDescrizione(): String
++ getQuantità(): String
++ getPorzioni(): String
+--
++ getDifficoltà(): String
++ setDifficolta(difficolta: int): Boolean
++ getImportanza(): String
++ setImportanza(importanza: int): Boolean
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>4191</x>
-      <y>682</y>
-      <w>242</w>
-      <h>55</h>
+      <x>3820</x>
+      <y>620</y>
+      <w>210</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-mansioni
-m1=0..n</panel_attributes>
-    <additional_attributes>200.0;20.0;10.0;20.0</additional_attributes>
+mansione
+m1=1</panel_attributes>
+    <additional_attributes>190.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2937</x>
-      <y>594</y>
-      <w>726</w>
-      <h>99</h>
+      <x>2670</x>
+      <y>700</y>
+      <w>660</w>
+      <h>210</h>
     </coordinates>
     <panel_attributes>FoglioRiepilogativoEventReceiver
 {interface}
@@ -172,36 +198,35 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3289</x>
-      <y>473</y>
-      <w>132</w>
-      <h>143</h>
+      <x>2990</x>
+      <y>580</y>
+      <w>120</w>
+      <h>140</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-eventReceivers
-m1=0..n</panel_attributes>
-    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+eventReceiver</panel_attributes>
+    <additional_attributes>10.0;120.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3916</x>
-      <y>847</y>
-      <w>66</w>
-      <h>506</h>
+      <x>3560</x>
+      <y>860</y>
+      <w>60</w>
+      <h>520</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 turno
 m1=0..1</panel_attributes>
-    <additional_attributes>10.0;440.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;500.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>4763</x>
-      <y>1364</y>
-      <w>154</w>
-      <h>77</h>
+      <x>4330</x>
+      <y>1390</y>
+      <w>140</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>*Cuoco*
 --</panel_attributes>
@@ -210,36 +235,23 @@ m1=0..1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>4092</x>
-      <y>847</y>
-      <w>792</w>
-      <h>539</h>
+      <x>3700</x>
+      <y>860</y>
+      <w>740</w>
+      <h>550</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 cuoco
 m1=0..1</panel_attributes>
-    <additional_attributes>680.0;470.0;680.0;80.0;10.0;80.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>4587</x>
-      <y>363</y>
-      <w>209</w>
-      <h>209</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-
-listaMansioni
-m1=0..n</panel_attributes>
-    <additional_attributes>90.0;170.0;90.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>700.0;530.0;700.0;140.0;10.0;140.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>4125</x>
+      <x>3750</x>
       <y>0</y>
-      <w>176</w>
-      <h>88</h>
+      <w>160</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>servizio
 --</panel_attributes>
@@ -248,10 +260,10 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>4202</x>
-      <y>77</y>
-      <w>88</w>
-      <h>165</h>
+      <x>3820</x>
+      <y>70</y>
+      <w>80</w>
+      <h>150</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 servizio
@@ -261,10 +273,10 @@ m1=0..1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2332</x>
+      <x>2120</x>
       <y>1650</y>
-      <w>495</w>
-      <h>385</h>
+      <w>450</w>
+      <h>350</h>
     </coordinates>
     <panel_attributes>*Schema*
 {abstract}
@@ -273,7 +285,7 @@ m1=0..1</panel_attributes>
 - durataTurno: int
 - primoGiorno: int
 --
-aggiungiTurno(giorno: int, oraInizio?: Time, durata?: int, 
++ aggiungiTurno(giorno: int, oraInizio?: Time, durata?: int, 
             ricorrenza?: Ricorrenza, dettagli?: Map&lt;String, Object&gt;): Turno
 + modificaTurno(id: String, giorno: int, oraInizio?: Time, durata?: int, 
             ricorrenza?: Ricorrenza, dettagli?: Map&lt;String, Object&gt;): void
@@ -296,10 +308,10 @@ aggiungiTurno(giorno: int, oraInizio?: Time, durata?: int,
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1452</x>
-      <y>1892</y>
-      <w>902</w>
-      <h>55</h>
+      <x>1320</x>
+      <y>1870</y>
+      <w>820</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 listaSchemi:
@@ -310,26 +322,26 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2761</x>
-      <y>1353</y>
-      <w>429</w>
-      <h>110</h>
+      <x>2510</x>
+      <y>1380</y>
+      <w>390</w>
+      <h>100</h>
     </coordinates>
     <panel_attributes>SchemaPreparazione : Schema
 --
 
 --
-+ SchemaPreparazione(titolo: String, durataTurno: int)
++ create(titolo: String, durataTurno: int)
 --</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2541</x>
-      <y>1419</y>
-      <w>242</w>
-      <h>253</h>
+      <x>2310</x>
+      <y>1440</y>
+      <w>220</w>
+      <h>230</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-
 (extends)</panel_attributes>
@@ -338,10 +350,10 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2530</x>
-      <y>2024</y>
-      <w>231</w>
-      <h>429</h>
+      <x>2300</x>
+      <y>1990</y>
+      <w>210</w>
+      <h>390</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-
 (extends)</panel_attributes>
@@ -350,16 +362,16 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2739</x>
-      <y>2343</y>
-      <w>462</w>
-      <h>121</h>
+      <x>2490</x>
+      <y>2280</y>
+      <w>420</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes>SchemaServizio : Schema
 --
 
 --
-+ SchemaServizio(titolo: String, durataTurno: int, evento: Evento)
++ create(titolo: String, durataTurno: int, evento: Evento)
 --
 + getEvento(): Evento
 + setEvento(evento: Evento): void</panel_attributes>
@@ -368,10 +380,10 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>3146</x>
-      <y>1617</y>
-      <w>418</w>
-      <h>330</h>
+      <x>2860</x>
+      <y>1620</y>
+      <w>380</w>
+      <h>300</h>
     </coordinates>
     <panel_attributes>*Turno*
 {abstract}
@@ -399,16 +411,16 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>3740</x>
-      <y>1331</y>
-      <w>440</w>
-      <h>154</h>
+      <x>3400</x>
+      <y>1360</y>
+      <w>400</w>
+      <h>140</h>
     </coordinates>
     <panel_attributes>TurnoPreparazione : TurnoSingolo
 --
 - luogo: String
 --
-+ TurnoPreparazione(giorno: int, oraInizio?: Time, durata?: int, 
++ create(giorno: int, oraInizio?: Time, durata?: int, 
             ricorrenza?: Ricorrenza, luogo: String)
 --
 + getRicorrenza(): void
@@ -419,10 +431,10 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2816</x>
-      <y>1749</y>
-      <w>352</w>
-      <h>55</h>
+      <x>2560</x>
+      <y>1740</y>
+      <w>320</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 turni:
@@ -433,10 +445,10 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3179</x>
-      <y>1397</y>
-      <w>583</w>
-      <h>44</h>
+      <x>2890</x>
+      <y>1420</y>
+      <w>530</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=.
 </panel_attributes>
@@ -445,10 +457,10 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3190</x>
-      <y>2420</y>
-      <w>572</w>
-      <h>44</h>
+      <x>2900</x>
+      <y>2350</y>
+      <w>520</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=.
 </panel_attributes>
@@ -457,16 +469,16 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1914</x>
-      <y>1287</y>
-      <w>572</w>
-      <h>341</h>
+      <x>1740</x>
+      <y>1320</y>
+      <w>520</w>
+      <h>310</h>
     </coordinates>
     <panel_attributes>*Orario*
 --
 - dataInizio: Date
 --
-+ Orario(tipo:String,schema?: Schema, dataInizio: Date, titolo?: String)
++ create(tipo:String,schema?: Schema, dataInizio: Date, titolo?: String)
 --
 + aggiungiTurno(data: Date, oraInizio: Time, durata?: int, ricorrenza?: Ricorrenza,
                            dettagli?: Map&lt;String, Object&gt;): Turno
@@ -489,10 +501,10 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>957</x>
-      <y>1848</y>
-      <w>506</w>
-      <h>154</h>
+      <x>870</x>
+      <y>1830</y>
+      <w>460</w>
+      <h>140</h>
     </coordinates>
     <panel_attributes>1
 ArchivioSchemi
@@ -508,10 +520,10 @@ ArchivioSchemi
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>847</x>
-      <y>1166</y>
-      <w>792</w>
-      <h>550</h>
+      <x>770</x>
+      <y>1210</y>
+      <w>720</w>
+      <h>500</h>
     </coordinates>
     <panel_attributes>1
 *Tabellone*
@@ -552,10 +564,10 @@ ArchivioSchemi
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1199</x>
-      <y>1705</y>
-      <w>132</w>
-      <h>165</h>
+      <x>1090</x>
+      <y>1700</y>
+      <w>120</w>
+      <h>150</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 archivioSchemi
@@ -565,10 +577,10 @@ m1=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2156</x>
-      <y>1617</y>
-      <w>198</w>
-      <h>121</h>
+      <x>1960</x>
+      <y>1620</y>
+      <w>180</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 schema
@@ -578,10 +590,10 @@ m1=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1628</x>
-      <y>1364</y>
-      <w>308</w>
-      <h>55</h>
+      <x>1480</x>
+      <y>1390</y>
+      <w>280</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 orari:
@@ -592,10 +604,10 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3927</x>
-      <y>1815</y>
-      <w>99</w>
-      <h>539</h>
+      <x>3570</x>
+      <y>1800</y>
+      <w>90</w>
+      <h>490</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-
 (extends)
@@ -605,10 +617,10 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3927</x>
-      <y>1474</y>
-      <w>99</w>
-      <h>275</h>
+      <x>3570</x>
+      <y>1490</y>
+      <w>90</w>
+      <h>250</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-
 (extends)</panel_attributes>
@@ -617,10 +629,10 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>4169</x>
-      <y>1386</y>
-      <w>616</w>
-      <h>55</h>
+      <x>3790</x>
+      <y>1410</y>
+      <w>560</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 personale
@@ -631,10 +643,10 @@ m1=0..n
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>4763</x>
-      <y>2387</y>
-      <w>154</w>
-      <h>77</h>
+      <x>4330</x>
+      <y>2320</y>
+      <w>140</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>*Cameriere*
 --</panel_attributes>
@@ -643,10 +655,10 @@ m1=0..n
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>4191</x>
-      <y>2409</y>
-      <w>594</w>
-      <h>55</h>
+      <x>3810</x>
+      <y>2340</y>
+      <w>540</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 personale
@@ -656,10 +668,10 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>4180</x>
+      <x>3800</x>
       <y>1650</y>
-      <w>462</w>
-      <h>319</h>
+      <w>420</w>
+      <h>290</h>
     </coordinates>
     <panel_attributes>*Ricorrenza*
 --
@@ -667,7 +679,7 @@ m1=0..n</panel_attributes>
 - dataInizio: int              
 - dataFine: int                
 --
-+ Ricorrenza(giorni: int, dataInizio: int, dataFine: int)
++ create(giorni: int, dataInizio: int, dataFine: int)
 --
 + isGiornoRicorrente(giorno: int): boolean
 + aggiungiGiorno(giorno: int): void  
@@ -687,10 +699,10 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>4169</x>
-      <y>1441</y>
-      <w>275</w>
-      <h>231</h>
+      <x>3790</x>
+      <y>1460</y>
+      <w>250</w>
+      <h>210</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 ricorrenza
@@ -700,10 +712,10 @@ m1=0..1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>3795</x>
-      <y>1727</y>
-      <w>319</w>
-      <h>99</h>
+      <x>3450</x>
+      <y>1720</y>
+      <w>290</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>TurnoSingolo : Turno
 {abstract}
@@ -713,14 +725,14 @@ m1=0..1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>3465</x>
-      <y>2002</y>
-      <w>418</w>
-      <h>253</h>
+      <x>3150</x>
+      <y>1970</y>
+      <w>380</w>
+      <h>230</h>
     </coordinates>
     <panel_attributes>GruppoTurni : Turno
 --
-+ GruppoTurni()
++ create()
 --
 + aggiungiTurno(turno: Turno): void
 + rimuoviTurno(id: String): void
@@ -740,10 +752,10 @@ m1=0..1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3311</x>
-      <y>1936</y>
-      <w>176</w>
-      <h>198</h>
+      <x>3010</x>
+      <y>1910</y>
+      <w>160</w>
+      <h>180</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-
 (extends)</panel_attributes>
@@ -752,10 +764,10 @@ m1=0..1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3553</x>
-      <y>1727</y>
-      <w>264</w>
-      <h>44</h>
+      <x>3230</x>
+      <y>1720</y>
+      <w>240</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-
 (extends)</panel_attributes>
@@ -764,10 +776,10 @@ m1=0..1</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>2981</x>
-      <y>2013</y>
-      <w>286</w>
-      <h>55</h>
+      <x>2710</x>
+      <y>1980</y>
+      <w>260</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>bg=yellow
 fontsize=18
@@ -778,10 +790,10 @@ con Pattern Composite</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>1705</x>
-      <y>1639</y>
-      <w>396</w>
-      <h>88</h>
+      <x>1550</x>
+      <y>1640</y>
+      <w>360</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>bg=yellow
 fontsize=18
@@ -793,10 +805,10 @@ come Servizio o Preparazione</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>3344</x>
-      <y>1254</y>
-      <w>429</w>
-      <h>66</h>
+      <x>3040</x>
+      <y>1290</y>
+      <w>390</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>bg=yellow
 fontsize=18
@@ -807,10 +819,10 @@ Turni come istanze di TurnoPreparazione</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>3322</x>
-      <y>2552</y>
-      <w>374</w>
-      <h>66</h>
+      <x>3020</x>
+      <y>2470</y>
+      <w>340</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>bg=yellow
 fontsize=18
@@ -821,10 +833,10 @@ Turni come istanze di TurnoServizio</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>4422</x>
-      <y>1485</y>
-      <w>253</w>
-      <h>66</h>
+      <x>4020</x>
+      <y>1500</y>
+      <w>230</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>bg=yellow
 fontsize=18
@@ -835,10 +847,10 @@ turno non è ricorrente</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>4345</x>
-      <y>957</y>
-      <w>429</w>
-      <h>88</h>
+      <x>3950</x>
+      <y>1020</y>
+      <w>390</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>bg=yellow
 fontsize=18
@@ -850,10 +862,10 @@ TurnoPreparazione associato al Compito</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>3817</x>
-      <y>1815</y>
-      <w>99</w>
-      <h>209</h>
+      <x>3470</x>
+      <y>1800</y>
+      <w>90</w>
+      <h>190</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;
 sottoturni
@@ -864,9 +876,9 @@ m1=0..n</panel_attributes>
     <id>UMLPackage</id>
     <coordinates>
       <x>0</x>
-      <y>1100</y>
-      <w>4697</w>
-      <h>1562</h>
+      <y>1150</y>
+      <w>4270</w>
+      <h>1420</h>
     </coordinates>
     <panel_attributes>TabelloneManagement</panel_attributes>
     <additional_attributes/>
@@ -874,10 +886,10 @@ m1=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>22</x>
-      <y>1188</y>
-      <w>682</w>
-      <h>649</h>
+      <x>20</x>
+      <y>1230</y>
+      <w>620</w>
+      <h>590</h>
     </coordinates>
     <panel_attributes>TabelloneController
 --
@@ -924,10 +936,10 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>363</x>
-      <y>1826</y>
-      <w>132</w>
-      <h>209</h>
+      <x>330</x>
+      <y>1810</y>
+      <w>120</w>
+      <h>190</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 eventReceivers
@@ -937,10 +949,10 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>693</x>
-      <y>1342</y>
-      <w>176</w>
-      <h>55</h>
+      <x>630</x>
+      <y>1370</y>
+      <w>160</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 tabellone
@@ -950,10 +962,10 @@ m1=0..1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2915</x>
-      <y>2706</y>
-      <w>154</w>
-      <h>77</h>
+      <x>2650</x>
+      <y>2610</y>
+      <w>140</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>*Evento*
 --</panel_attributes>
@@ -962,10 +974,10 @@ m1=0..1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2981</x>
-      <y>2453</y>
-      <w>77</w>
-      <h>275</h>
+      <x>2710</x>
+      <y>2380</y>
+      <w>70</w>
+      <h>250</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 evento
@@ -975,10 +987,10 @@ m1=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1628</x>
-      <y>1221</y>
-      <w>528</w>
-      <h>88</h>
+      <x>1480</x>
+      <y>1260</y>
+      <w>480</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=.
 orarioAperto:
@@ -989,32 +1001,32 @@ String
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>88</x>
-      <y>2013</y>
-      <w>561</w>
-      <h>220</h>
+      <x>80</x>
+      <y>1980</y>
+      <w>510</w>
+      <h>200</h>
     </coordinates>
     <panel_attributes>TabelloneEventReceiver
 --
 *event receiver methods*
-+onOrarioAggiunto(orario: Orario): void
-+onOrarioModificato(orario: Orario): void
-+onOrarioRimosso(orario: Orario): void
-+onTurnoAggiunto(turno: Turno): void
-+onTurnoModificato(turno: Turno): void
-+onTurnoRimosso(turno: Turno): void
-+onRicorrenzaModificata(orario: Orario, ricorrenza: Ricorrenza): void
-+onSchemaSalvato(schema: Schema): void
-+onModificaPersonale(turno:Turno,personale:Personale)</panel_attributes>
++updateOrarioAggiunto(orario: Orario): void
++updateOrarioModificato(orario: Orario): void
++updateOrarioRimosso(orario: Orario): void
++updateTurnoAggiunto(turno: Turno): void
++updateTurnoModificato(turno: Turno): void
++updateTurnoRimosso(turno: Turno): void
++updateRicorrenzaModificata(orario: Orario, ricorrenza: Ricorrenza): void
++updateSchemaSalvato(schema: Schema): void
++updateModificaPersonale(turno:Turno,personale:Personale)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>4763</x>
-      <y>1848</y>
-      <w>154</w>
-      <h>77</h>
+      <x>4330</x>
+      <y>1830</y>
+      <w>140</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>Personale
 --</panel_attributes>
@@ -1023,10 +1035,10 @@ String
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>4829</x>
-      <y>1430</y>
-      <w>99</w>
-      <h>440</h>
+      <x>4390</x>
+      <y>1450</y>
+      <w>90</w>
+      <h>400</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-
 (extends)</panel_attributes>
@@ -1035,10 +1047,10 @@ String
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>4829</x>
-      <y>1914</y>
-      <w>99</w>
-      <h>495</h>
+      <x>4390</x>
+      <y>1890</y>
+      <w>90</w>
+      <h>450</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-
 (extends)</panel_attributes>
@@ -1047,17 +1059,17 @@ String
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>3740</x>
-      <y>2332</y>
-      <w>462</w>
-      <h>187</h>
+      <x>3400</x>
+      <y>2270</y>
+      <w>420</w>
+      <h>170</h>
     </coordinates>
     <panel_attributes>TurnoServizio : TurnoSingolo
 --
 - scadenza: int
 - stimaTempo: int
 --
-+ TurnoPreparazione(giorno: int, oraInizio?: Time, durata?: int, 
++ create(giorno: int, oraInizio?: Time, durata?: int, 
             ricorrenza?: Ricorrenza, scadenza: int, stimaTempo: int)
 --
 + getScadenza(): int
@@ -1069,10 +1081,10 @@ String
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>22</x>
-      <y>1408</y>
-      <w>682</w>
-      <h>297</h>
+      <x>20</x>
+      <y>1430</y>
+      <w>620</w>
+      <h>270</h>
     </coordinates>
     <panel_attributes>fg=white
 bg=PINK</panel_attributes>
@@ -1081,10 +1093,10 @@ bg=PINK</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>847</x>
-      <y>1298</y>
-      <w>792</w>
-      <h>286</h>
+      <x>770</x>
+      <y>1330</y>
+      <w>720</w>
+      <h>260</h>
     </coordinates>
     <panel_attributes>fg=white
 bg=PINK</panel_attributes>
@@ -1093,10 +1105,10 @@ bg=PINK</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>957</x>
-      <y>1892</y>
-      <w>506</w>
-      <h>44</h>
+      <x>870</x>
+      <y>1870</y>
+      <w>460</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>fg=white
 bg=PINK</panel_attributes>
@@ -1105,10 +1117,10 @@ bg=PINK</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1914</x>
-      <y>1353</y>
-      <w>572</w>
-      <h>176</h>
+      <x>1740</x>
+      <y>1380</y>
+      <w>520</w>
+      <h>160</h>
     </coordinates>
     <panel_attributes>fg=white
 bg=PINK</panel_attributes>
@@ -1117,10 +1129,10 @@ bg=PINK</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2332</x>
-      <y>1749</y>
-      <w>495</w>
-      <h>176</h>
+      <x>2120</x>
+      <y>1740</y>
+      <w>450</w>
+      <h>160</h>
     </coordinates>
     <panel_attributes>fg=white
 bg=PINK</panel_attributes>
@@ -1129,10 +1141,10 @@ bg=PINK</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>3146</x>
-      <y>1738</y>
-      <w>418</w>
-      <h>77</h>
+      <x>2860</x>
+      <y>1730</y>
+      <w>380</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>fg=white
 bg=PINK</panel_attributes>
@@ -1141,10 +1153,58 @@ bg=PINK</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>3465</x>
-      <y>2112</y>
-      <w>418</w>
-      <h>77</h>
+      <x>3150</x>
+      <y>2070</y>
+      <w>380</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>fg=white
+bg=PINK</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>3470</x>
+      <y>580</y>
+      <w>360</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>fg=white
+bg=PINK</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>4010</x>
+      <y>740</y>
+      <w>380</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>fg=white
+bg=PINK</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>3510</x>
+      <y>240</y>
+      <w>730</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>fg=white
+bg=PINK</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2670</x>
+      <y>340</y>
+      <w>630</w>
+      <h>180</h>
     </coordinates>
     <panel_attributes>fg=white
 bg=PINK</panel_attributes>
