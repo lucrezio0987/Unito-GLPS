@@ -186,16 +186,22 @@ m1=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>3204</x>
-      <y>1020</y>
-      <w>792</w>
-      <h>252</h>
+      <x>3348</x>
+      <y>1044</y>
+      <w>504</w>
+      <h>216</h>
     </coordinates>
     <panel_attributes>FoglioRiepilogativoEventReceiver
 {interface}
 --
-+updateFoglioRiepilogativoCreato(foglio: FoglioRiepilogativo)
-+updateCompitoAggiunto(foglio: FoglioRiepilogativo, compito: Compito)</panel_attributes>
++ updateFoglioRiepilogativoCreato(foglio: FoglioRiepilogativo)
++ updateFoglioRiepilogativoModificato(foglio: FoglioRiepilogativo)
++ updateFoglioRiepilogativoRimosso(foglio: FoglioRiepilogativo)
++ updateCompitoAggiunto(compito: Compito)
++ updateCompitoModificato(compito: Compito)
++ updateCompitoRimosso(compito: Compito)
++ updateTurnoImpostato(turno: Turno)
++ updateCuocoAssegnato(cuoco: Cuoco)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -204,11 +210,11 @@ m1=1</panel_attributes>
       <x>3588</x>
       <y>912</y>
       <w>144</w>
-      <h>132</h>
+      <h>156</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 eventReceiver</panel_attributes>
-    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
