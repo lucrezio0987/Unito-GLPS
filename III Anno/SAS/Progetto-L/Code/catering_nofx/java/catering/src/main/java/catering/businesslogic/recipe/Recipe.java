@@ -1,5 +1,6 @@
 package catering.businesslogic.recipe;
 
+import catering.businesslogic.KitchenJobManagement.Mansione;
 import catering.persistence.PersistenceManager;
 import catering.persistence.ResultHandler;
 
@@ -7,37 +8,43 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-public class Recipe {
+public class Recipe extends Mansione {
     private static Map<Integer, Recipe> all = new HashMap<>();
 
     private int id;
     private String name;
 
-    private Recipe() {
-
+    public Recipe(String nome, String descrizione, double tempo, double quantita) {
+        super(nome, descrizione, tempo, quantita);
+        id = 0;
+        this.name = nome;
     }
 
-    public Recipe(String name) {
-        id = 0;
-        this.name = name;
+    public static Map<Integer, Recipe> getAll() {
+        return all;
+    }
+    
+    public int getId() {
+        return id;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getId() {
-        return id;
+    public Recipe(String title){
+        super(title);
+        this.name = title;
     }
 
-    public String toString() {
-        return name;
+    public Recipe(){
+        super();
     }
 
     // STATIC METHODS FOR PERSISTENCE
 
     public static ArrayList<Recipe> loadAllRecipes() {
-        String query = "SELECT * FROM recipes";
+        String query = "SELECT r.id, mansione.name FROM recipes r JOIN mansioni mansione ON r.id = mansione.id";
         PersistenceManager.executeQuery(query, new ResultHandler() {
             @Override
             public void handle(ResultSet rs) throws SQLException {

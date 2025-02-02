@@ -56,7 +56,7 @@ public class User {
         if (loadedUsers.containsKey(uid)) return loadedUsers.get(uid);
 
         User load = new User();
-        String userQuery = "SELECT * FROM users WHERE id='"+uid+"'";
+        String userQuery = "SELECT * FROM Users WHERE id='"+uid+"'";
         PersistenceManager.executeQuery(userQuery, new ResultHandler() {
             @Override
             public void handle(ResultSet rs) throws SQLException {
@@ -66,7 +66,7 @@ public class User {
         });
         if (load.id > 0) {
             loadedUsers.put(load.id, load);
-            String roleQuery = "SELECT * FROM userroles WHERE user_id=" + load.id;
+            String roleQuery = "SELECT * FROM UserRoles WHERE user_id=" + load.id;
             PersistenceManager.executeQuery(roleQuery, new ResultHandler() {
                 @Override
                 public void handle(ResultSet rs) throws SQLException {
@@ -92,7 +92,7 @@ public class User {
 
     public static User loadUser(String username) {
         User u = new User();
-        String userQuery = "SELECT * FROM users WHERE username='"+username+"'";
+        String userQuery = "SELECT * FROM Users WHERE username='"+username+"'";
         PersistenceManager.executeQuery(userQuery, new ResultHandler() {
             @Override
             public void handle(ResultSet rs) throws SQLException {
@@ -102,7 +102,7 @@ public class User {
         });
         if (u.id > 0) {
             loadedUsers.put(u.id, u);
-            String roleQuery = "SELECT * FROM userroles WHERE user_id=" + u.id;
+            String roleQuery = "SELECT * FROM UserRoles WHERE user_id=" + u.id;
             PersistenceManager.executeQuery(roleQuery, new ResultHandler() {
                 @Override
                 public void handle(ResultSet rs) throws SQLException {

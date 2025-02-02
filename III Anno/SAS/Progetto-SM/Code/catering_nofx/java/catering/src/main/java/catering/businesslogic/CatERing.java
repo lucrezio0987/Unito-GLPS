@@ -25,6 +25,7 @@ public class CatERing {
     private RecipeManager recipeMgr;
     private UserManager userMgr;
     private EventManager eventMgr;
+
     private SummarySheetManager sheetMgr;
     private JobManager jobMgr;
     private BoardManager boardMgr;

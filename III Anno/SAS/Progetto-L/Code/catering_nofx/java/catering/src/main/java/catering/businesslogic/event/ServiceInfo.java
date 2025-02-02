@@ -1,5 +1,8 @@
 package catering.businesslogic.event;
 
+import catering.businesslogic.CatERing;
+import catering.businesslogic.KitchenJobManagement.Mansione;
+import catering.businesslogic.menu.Menu;
 import catering.persistence.PersistenceManager;
 import catering.persistence.ResultHandler;
 
@@ -26,6 +29,7 @@ public class ServiceInfo implements EventItemInfo {
     }
 
 
+
     public String toString() {
         return name + ": " + date + " (" + timeStart + "-" + timeEnd + "), " + participants + " pp.";
     }
@@ -35,7 +39,7 @@ public class ServiceInfo implements EventItemInfo {
     public static ArrayList<ServiceInfo> loadServiceInfoForEvent(int event_id) {
         ArrayList<ServiceInfo> result = new ArrayList<>();
         String query = "SELECT id, name, service_date, time_start, time_end, expected_participants " +
-                "FROM services WHERE event_id = " + event_id;
+                "FROM Services WHERE event_id = " + event_id;
         PersistenceManager.executeQuery(query, new ResultHandler() {
             @Override
             public void handle(ResultSet rs) throws SQLException {
@@ -52,4 +56,22 @@ public class ServiceInfo implements EventItemInfo {
 
         return result;
     }
+
+    public static ServiceInfo getService(int id) {
+        String getService = "SELECT * FROM services WHERE id = " + id;
+        final ServiceInfo[] service = new ServiceInfo[1];
+        PersistenceManager.executeQuery(getService, new ResultHandler() {
+            @Override
+            public void handle(ResultSet rs) throws SQLException {
+                service[0] = new ServiceInfo(rs.getString("name"));
+            }
+        });
+        return service[0];
+    }
+
+    public ArrayList<Mansione> getMansioni() {
+        Menu m = CatERing.getInstance().getMenuManager().getCurrentMenu();
+        return m.getMansioni();
+    }
 }
+

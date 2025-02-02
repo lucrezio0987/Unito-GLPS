@@ -5,14 +5,15 @@ import catering.businesslogic.menu.Menu;
 import catering.businesslogic.menu.MenuException;
 import catering.businesslogic.menu.Section;
 import catering.businesslogic.recipe.Recipe;
+import catering.persistence.PersistenceManager;
 
 import java.util.ArrayList;
 
 public class TestCatERing1b {
     public static void main(String[] args) {
         try {
-            /* System.out.println("TEST DATABASE CONNECTION");
-            PersistenceManager.testSQLConnection();*/
+            System.out.println("TEST DATABASE CONNECTION");
+            PersistenceManager.testSQLConnection();
             CatERing.getInstance().getUserManager().fakeLogin("Lidia");
             System.out.println(CatERing.getInstance().getUserManager().getCurrentUser());
 

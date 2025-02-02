@@ -67,7 +67,7 @@ public class MenuItem {
     // STATIC METHODS FOR PERSISTENCE
 
     public static void saveAllNewItems(int menuid, int sectionid, List<MenuItem> items) {
-        String itemInsert = "INSERT INTO menuitems (menu_id, section_id, description, recipe_id, position) VALUES (?, ?, ?, ?, ?);";
+        String itemInsert = "INSERT INTO MenuItems (menu_id, section_id, description, recipe_id, position) VALUES (?, ?, ?, ?, ?);";
         PersistenceManager.executeBatchUpdate(itemInsert, items.size(), new BatchUpdateHandler() {
             @Override
             public void handleBatchItem(PreparedStatement ps, int batchCount) throws SQLException {
@@ -85,7 +85,7 @@ public class MenuItem {
         });
     }
     public static void saveNewItem(int menuid, int sectionid, MenuItem mi, int pos) {
-        String itemInsert = "INSERT INTO menuitems (menu_id, section_id, description, recipe_id, position) VALUES (" +
+        String itemInsert = "INSERT INTO MenuItems (menu_id, section_id, description, recipe_id, position) VALUES (" +
                 menuid +
                 ", " +
                 sectionid +
@@ -101,7 +101,7 @@ public class MenuItem {
     public static ArrayList<MenuItem> loadItemsFor(int menu_id, int sec_id) {
         ArrayList<MenuItem> result = new ArrayList<>();
         ArrayList<Integer> recids = new ArrayList<>();
-        String query = "SELECT * FROM menuitems WHERE menu_id = " + menu_id +
+        String query = "SELECT * FROM MenuItems WHERE menu_id = " + menu_id +
                 " AND " +
                 "section_id = " + sec_id +
                 " ORDER BY position";
@@ -123,19 +123,19 @@ public class MenuItem {
         return result;
     }
     public static void saveSection(int sec_id, MenuItem mi) {
-        String upd = "UPDATE menuitems SET section_id = " + sec_id +
+        String upd = "UPDATE MenuItems SET section_id = " + sec_id +
                 " WHERE id = " + mi.id;
         PersistenceManager.executeUpdate(upd);
     }
 
     public static void saveDescription(MenuItem mi) {
-        String upd = "UPDATE menuitems SET description = '" + PersistenceManager.escapeString(mi.getDescription()) +
+        String upd = "UPDATE MenuItems SET description = '" + PersistenceManager.escapeString(mi.getDescription()) +
                 "' WHERE id = " + mi.id;
         PersistenceManager.executeUpdate(upd);
     }
 
     public static void removeItem(MenuItem mi) {
-        String rem = "DELETE FROM menuitems WHERE id = " + mi.getId();
+        String rem = "DELETE FROM MenuItems WHERE id = " + mi.getId();
         PersistenceManager.executeUpdate(rem);
     }
 }
