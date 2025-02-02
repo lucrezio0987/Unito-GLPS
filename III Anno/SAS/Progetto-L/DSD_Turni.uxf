@@ -652,7 +652,7 @@ orario</panel_attributes>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;
-rimuoviOrario(titolo)</panel_attributes>
+rimuoviOrario()</panel_attributes>
     <additional_attributes>10.0;20.0;460.0;20.0</additional_attributes>
   </element>
   <element>
@@ -746,7 +746,7 @@ Tabellone</panel_attributes>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;
-rimuoviOrario(titolo)</panel_attributes>
+rimuoviOrario()</panel_attributes>
     <additional_attributes>10.0;20.0;350.0;20.0</additional_attributes>
   </element>
   <element>
@@ -794,7 +794,7 @@ orario</panel_attributes>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-remove(titolo)</panel_attributes>
+remove(this.orarioAperto)</panel_attributes>
     <additional_attributes>10.0;20.0;280.0;20.0</additional_attributes>
   </element>
   <element>
